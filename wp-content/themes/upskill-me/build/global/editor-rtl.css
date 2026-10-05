@@ -1,0 +1,43 @@
+/*!****************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/global/scss/editor.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************/
+/*********************
+* BREAKPOINTS
+*
+* @example
+* for max-width case
+* @include breakpoint('smaller') {
+*	@content;
+* }
+*
+* for min-width case
+* @include breakpoint('smaller', true) {
+*	@content;
+*}
+*********************/
+/**
+* Mixin to declare Font-face
+*
+*/
+.acf-bf-block.padding-top-sm {
+  padding-block-start: 40px;
+}
+.acf-bf-block.padding-top-md {
+  padding-block-start: 80px;
+}
+.acf-bf-block.padding-top-lg {
+  padding-block-start: 120px;
+}
+.acf-bf-block.padding-bottom-sm {
+  padding-block-end: 40px;
+}
+.acf-bf-block.padding-bottom-md {
+  padding-block-end: 80px;
+}
+.acf-bf-block.padding-bottom-lg {
+  padding-block-end: 120px;
+}
+.editor-styles-wrapper .acf-block-preview.acf-block-component {
+  max-width: 100%;
+  margin-block: 0;
+}
