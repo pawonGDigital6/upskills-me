@@ -1,0 +1,16 @@
+@use "../../global/scss/abstracts/variables" as var;
+@use "../../global/scss/abstracts/mixins" as mix;
+
+.testimonials{
+    padding-block: 50px;
+}
+
+.testimonial-slider {
+    .swiper-slide {
+        min-height: 400px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f1f1f1;
+    }
+}

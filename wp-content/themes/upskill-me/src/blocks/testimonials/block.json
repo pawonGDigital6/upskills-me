@@ -1,0 +1,31 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/testimonials",
+	"version": "0.1.0",
+	"title": "Testimonials",
+	"category": "acf-blocks",
+	"icon": "block-default",
+	"description": "A custom ACF block template.",
+	"attributes": {
+		"previewImage": {
+			"type": "string",
+			"default": "preview.png"
+		}
+	},
+	"supports": {
+		"html": false,
+		"anchor": true
+	},
+	"textdomain": "testimonials",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewStyle": "file:./view.css",
+	"viewScript": "file:./view.js",
+	"viewStyle": "file:./view.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php"
+	}
+}

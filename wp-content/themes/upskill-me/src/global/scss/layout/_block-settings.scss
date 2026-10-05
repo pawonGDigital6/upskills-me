@@ -1,0 +1,43 @@
+@use "../abstracts/variables" as var;
+
+.acf-bf-block {
+	&.padding {
+		&-top {
+			&-sm {
+				padding-block-start: 40px;
+			}
+
+			&-md {
+				padding-block-start: 80px;
+			}
+
+			&-lg {
+				padding-block-start: 120px;
+			}
+		}
+
+		&-bottom {
+			&-sm {
+				padding-block-end: 40px;
+			}
+
+			&-md {
+				padding-block-end: 80px;
+			}
+
+			&-lg {
+				padding-block-end: 120px;
+			}
+		}
+	}
+
+	&.background {
+		&-primary {
+			// background-color: var.$color-primary;
+		}
+
+		&-secondary {
+			// background-color: var.$color-secondary;
+		}
+	}
+}

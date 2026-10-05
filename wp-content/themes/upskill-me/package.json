@@ -1,0 +1,30 @@
+{
+    "name": "acf-first-block",
+    "version": "1.0.0",
+    "description": "Example block scaffolded with Create Block tool.",
+    "author": "The WordPress Contributors",
+    "license": "GPL-2.0-or-later",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "cross-env COPY_PREVIEW_IMAGE=true wp-scripts build --webpack-copy-php --source-path=src/blocks --output-path=build/blocks",
+        "build:global": "wp-scripts build --source-path=src/global --output-path=build/global",
+        "format": "wp-scripts format",
+        "lint:css": "wp-scripts lint-style src/global/**/*.scss",
+        "lint:js": "wp-scripts lint-js",
+        "packages-update": "wp-scripts packages-update",
+        "plugin-zip": "wp-scripts plugin-zip",
+        "start": "cross-env COPY_PREVIEW_IMAGE=true wp-scripts start --webpack-copy-php --source-path=src/blocks --output-path=build/blocks",
+        "start:global": "wp-scripts start index.js editor.js --source-path=src/global --output-path=build/global",
+        "create-block": "cd src/blocks && npx @wordpress/create-block --no-plugin  --template ../../inc/acf-block-template"
+    },
+    "devDependencies": {
+        "@wordpress/scripts": "^30.8.1",
+        "@wordpress/stylelint-config": "^23.9.0",
+        "copy-webpack-plugin": "^12.0.2",
+        "cross-env": "^7.0.3"
+    },
+    "dependencies": {
+        "@wordpress/dom-ready": "^4.15.0",
+        "swiper": "^11.2.1"
+    }
+}

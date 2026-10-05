@@ -1,0 +1,15 @@
+@use "sass:map";
+
+// Breakpoints
+$breakpoints: (
+	"xxs": 320px,
+	"iPhone5": 374px,
+	"extraSmall": 479px,
+	"smaller": 575px,
+	"small": 767px,
+	"medium": 991px,
+	"ipadPro": 1024px,
+	"wide": 1199px,
+	"laptop": 1399px,
+	"extraWide": 1930px,
+);

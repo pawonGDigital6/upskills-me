@@ -1,0 +1,46 @@
+@use "sass:string";
+
+/**
+* Mixin to declare Font-face
+*
+*/
+@mixin font-face(
+	$font-name,
+	$font-path,
+    $font-ext,
+    $font-weight: normal,
+    $font-style: normal
+) {
+	// Declare a variable to store src string
+	$src: "";
+
+	// Iterate through each font-type and add the src to $src.
+	@each $ext in $font-ext {
+
+		@if $ext ==otf {
+			$src: $src + "url('#{$font-path}.#{$ext}') format('opentype'),";
+		} @else if $ext ==woff {
+			$src: $src + "url('#{$font-path}.#{$ext}') format('woff'),";
+		} @else if $ext ==woff2 {
+			$src: $src + "url('#{$font-path}.#{$ext}') format('woff2'),";
+		} @else if $ext ==ttf {
+			$src: $src + "url('#{$font-path}.#{$ext}') format('truetype'),";
+		} @else if $ext ==svg {
+			$src: $src + "url('#{$font-path}.#{$ext}') format('svg'),";
+		} @else if $ext ==eot {
+			$src: $src +
+				"url('#{$font-path}.#{$ext}') format('embedded-opentype'),";
+		}
+	}
+
+	// Remove comma(,) at the end of the src string
+	$src: string.slice($src, 0, -2);
+
+	@font-face {
+		font-family: "#{$font-name}";
+		src: #{$src};
+		font-display: swap;
+		font-weight: $font-weight;
+		font-style: $font-style;
+	}
+}
