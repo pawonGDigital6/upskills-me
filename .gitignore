@@ -103,4 +103,5 @@ node_modules/
 
 # ignore specific themes
 wp-content/themes/*
+tools/*
 !wp-content/themes/upskill-me
