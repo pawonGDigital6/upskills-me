@@ -79,7 +79,8 @@ $uid = wp_unique_id( 'hero-' );
 						$name  = $panel['term']->name;
 						$count = upskill_term_session_count( $panel['term'] );
 						?>
-						<a class="group relative isolate overflow-hidden rounded-[17px] lg:rounded-xl lg:transition-[flex-grow] lg:duration-500 lg:ease-out <?php echo 0 === $index ? 'col-span-2 h-[418px] is-active lg:h-auto' : 'h-[200px] lg:h-auto'; ?> lg:basis-0 lg:[&.is-active]:grow-[502] lg:[&:not(.is-active)]:grow-[156]" href="<?php echo esc_url( upskill_term_url( $panel['term'] ) ); ?>" data-showcase-item>
+						<?php // One grid cell holds the photo, gradient and labels stacked in normal flow; panel size comes from Figma ratios (390) or the 590 row (desktop). ?>
+						<a class="group grid grid-cols-1 grid-rows-1 overflow-hidden rounded-[17px] lg:rounded-xl lg:transition-[flex-grow] lg:duration-500 lg:ease-out <?php echo 0 === $index ? 'col-span-2 aspect-[362/418] is-active sm:aspect-[16/9]' : 'aspect-[170/200] sm:aspect-[4/3]'; ?> lg:aspect-auto lg:basis-0 lg:[&.is-active]:grow-[502] lg:[&:not(.is-active)]:grow-[156]" href="<?php echo esc_url( upskill_term_url( $panel['term'] ) ); ?>" data-showcase-item>
 							<?php
 							upskill_image(
 								$panel['image'],
@@ -87,18 +88,22 @@ $uid = wp_unique_id( 'hero-' );
 								// file plus its proportional sizes make the srcset.
 								'full',
 								array(
-									'class'   => 'absolute inset-0 -z-10 size-full object-cover ' . ( isset( $focus_classes[ $panel['focus'] ] ) ? $focus_classes[ $panel['focus'] ] : 'object-center' ),
+									'class'   => 'col-start-1 row-start-1 size-full object-cover ' . ( isset( $focus_classes[ $panel['focus'] ] ) ? $focus_classes[ $panel['focus'] ] : 'object-center' ),
 									'alt'     => '',
-									'loading' => 0 === $index ? 'eager' : 'lazy',
-									'sizes'   => '(min-width: 1025px) 502px, 90vw',
+									// Above the fold, so never lazy. Sizes are the width the photo is
+									// drawn at under object-cover, not the panel width: a folded 156px
+									// panel still shows ~502px of image at 590px tall.
+									'loading' => 'eager',
+									'sizes'   => 0 === $index ? '(min-width: 1025px) 502px, 92vw' : '(min-width: 1025px) 502px, 46vw',
 								)
 							);
 							?>
-							<span class="absolute inset-0 -z-10 bg-linear-to-b from-black/0 from-50% to-black/80" aria-hidden="true"></span>
+							<?php // `relative` keeps the gradient and labels painted above the photo while it zooms on hover (a transform lifts it into the positioned layer). ?>
+							<span class="relative col-start-1 row-start-1 bg-linear-to-b from-black/0 from-50% to-black/80" aria-hidden="true"></span>
 
 							<?php // The open panel's label: a translucent bar with the name and, on desktop, the topic count. ?>
-							<span class="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 bg-white/10 px-3 py-2 text-white lg:hidden lg:h-[120px] lg:pr-0 lg:pl-4 lg:group-[.is-active]:flex">
-								<span class="text-[24px] leading-[1.1] font-medium tracking-[-0.01em] lg:text-[clamp(2rem,3.3vw,3rem)]"><?php echo esc_html( $name ); ?></span>
+							<span class="relative col-start-1 row-start-1 flex items-center justify-between gap-4 self-end bg-white/10 px-3 py-2 text-white lg:hidden lg:py-[22px] lg:pr-0 lg:pl-4 lg:group-[.is-active]:flex">
+								<span class="min-w-0 text-[24px] leading-[1.1] font-medium tracking-[-0.01em] lg:text-[clamp(2rem,3.3vw,3rem)]"><?php echo esc_html( $name ); ?></span>
 								<?php if ( $count > 0 ) : ?>
 									<span class="hidden w-[91px] flex-none flex-col items-center text-center lg:flex">
 										<span class="text-[52px] leading-[52px]"><?php echo esc_html( number_format_i18n( $count ) ); ?></span>
@@ -109,10 +114,8 @@ $uid = wp_unique_id( 'hero-' );
 								<?php endif; ?>
 							</span>
 
-							<?php // A closed panel's label runs up its left edge on a deep purple tab. ?>
-							<span class="absolute bottom-0 left-0 hidden h-[206px] w-[58px] items-center justify-center lg:flex lg:group-[.is-active]:hidden" aria-hidden="true">
-								<span class="-rotate-90 bg-brand-950 p-4 text-[40px] leading-[1.1] font-medium tracking-[-0.01em] whitespace-nowrap text-white"><?php echo esc_html( $name ); ?></span>
-							</span>
+							<?php // A closed panel's label runs up its left edge on a deep purple tab, sized by its own text (vertical writing mode, read bottom to top). ?>
+							<span class="relative col-start-1 row-start-1 hidden self-end justify-self-start bg-brand-950 p-4 text-[40px] leading-[1.1] font-medium tracking-[-0.01em] whitespace-nowrap text-white [writing-mode:vertical-rl] rotate-180 lg:block lg:group-[.is-active]:hidden" aria-hidden="true"><?php echo esc_html( $name ); ?></span>
 						</a>
 					<?php endforeach; ?>
 				</div>
@@ -143,12 +146,12 @@ $uid = wp_unique_id( 'hero-' );
 						<ul class="flex flex-col lg:flex-row lg:items-center lg:gap-4 lg:pl-3" id="<?php echo esc_attr( $uid . '-panel-' . $key ); ?>"<?php echo count( $tabs ) > 1 ? ' role="tabpanel" aria-labelledby="' . esc_attr( $uid . '-tab-' . $key ) . '"' : ''; ?><?php echo $first ? '' : ' hidden'; ?>>
 							<?php foreach ( $tab['terms'] as $term ) : ?>
 								<li class="lg:min-w-[200px] lg:border-r lg:border-gray-100">
-									<a class="group relative flex items-center justify-between gap-4 px-5 py-3 lg:items-start lg:p-0 lg:pr-[53px] lg:whitespace-nowrap" href="<?php echo esc_url( upskill_term_url( $term ) ); ?>">
+									<a class="group flex items-center justify-between gap-4 px-5 py-3 lg:items-start lg:p-0 lg:pr-[7px] lg:whitespace-nowrap" href="<?php echo esc_url( upskill_term_url( $term ) ); ?>">
 										<span class="flex flex-col gap-1">
 											<span class="text-[17px] leading-[1.62] font-medium tracking-[-0.022em] text-gray-900 lg:text-h6 lg:leading-[1.1]"><?php echo esc_html( $term->name ); ?></span>
 											<?php upskill_session_chip( upskill_term_session_count( $term ) ); ?>
 										</span>
-										<span class="icon-link size-7 bg-gray-25 text-gray-900 group-hover:bg-brand-700 group-hover:text-white lg:absolute lg:top-0 lg:right-[7px] lg:size-[30px] lg:bg-[#ededef]" aria-hidden="true">
+										<span class="icon-link size-7 bg-gray-25 text-gray-900 group-hover:bg-brand-700 group-hover:text-white lg:size-[30px] lg:bg-[#ededef]" aria-hidden="true">
 											<?php upskill_icon( 'arrow-up-right', 'size-[11px] lg:size-3' ); ?>
 										</span>
 									</a>
@@ -160,11 +163,12 @@ $uid = wp_unique_id( 'hero-' );
 
 					<form class="border-t border-gray-900/10 px-5 py-4 lg:flex lg:w-full lg:items-center lg:gap-4 lg:border-0 lg:p-0 mc:ml-auto mc:w-auto" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 						<label class="screen-reader-text" for="<?php echo esc_attr( $uid . '-search' ); ?>"><?php esc_html_e( 'Search for training', 'upskill-me' ); ?></label>
-						<span class="relative block lg:flex-1 mc:w-[382px] mc:flex-none">
-							<?php upskill_icon( 'search', 'pointer-events-none absolute top-1/2 left-[17px] hidden size-[18px] -translate-y-1/2 text-[#6e6e74] lg:block' ); ?>
-							<input class="h-12 w-full rounded-full border border-gray-900/20 bg-white pr-12 pl-4 text-base text-gray-950 placeholder:text-[#6b6b72] lg:h-[46px] lg:pr-[18px] lg:pl-[46px]" id="<?php echo esc_attr( $uid . '-search' ); ?>" type="search" name="s" placeholder="<?php echo esc_attr( get_field( 'search_placeholder' ) ? get_field( 'search_placeholder' ) : __( 'Or describe what you need', 'upskill-me' ) ); ?>">
+						<?php // The pill is the field: icon, input and (on the 390 frame) the round submit sit side by side inside it. ?>
+						<span class="flex min-h-12 items-center gap-[11px] rounded-full border border-gray-900/20 bg-white py-1 pr-1 pl-4 focus-within:outline-2 focus-within:outline-offset-3 focus-within:outline-brand-700 lg:min-h-[46px] lg:flex-1 lg:py-0 lg:pr-[18px] lg:pl-[17px] mc:w-[382px] mc:flex-none">
+							<?php upskill_icon( 'search', 'hidden size-[18px] flex-none text-[#6e6e74] lg:block' ); ?>
+							<input class="min-w-0 flex-1 bg-transparent text-base text-gray-950 placeholder:text-[#6b6b72] focus:outline-none" id="<?php echo esc_attr( $uid . '-search' ); ?>" type="search" name="s" placeholder="<?php echo esc_attr( get_field( 'search_placeholder' ) ? get_field( 'search_placeholder' ) : __( 'Or describe what you need', 'upskill-me' ) ); ?>">
 							<?php // On the 390 frame the submit is a round button inside the field. ?>
-							<button class="absolute top-1/2 right-1 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-brand-700 text-white shadow-btn lg:hidden" type="submit">
+							<button class="grid size-10 flex-none place-items-center rounded-full bg-brand-700 text-white shadow-btn lg:hidden" type="submit">
 								<span class="screen-reader-text"><?php esc_html_e( 'Search', 'upskill-me' ); ?></span>
 								<span class="grid size-6 place-items-center rounded-full bg-white/20"><?php upskill_icon( 'arrow-up-right', 'size-3' ); ?></span>
 							</button>

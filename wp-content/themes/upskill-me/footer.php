@@ -25,7 +25,7 @@ $upskill_legal  = upskill_menu_tree( 'footer-legal' );
 	?>
 	<section class="cta-band is-dark" aria-labelledby="cta-band-heading">
 		<div class="cta-band__media" aria-hidden="true">
-			<?php upskill_image( $upskill_poster, 'full', array( 'class' => 'cta-band__poster', 'alt' => '', 'loading' => 'lazy' ) ); ?>
+			<?php upskill_image( $upskill_poster, 'full', array( 'class' => 'cta-band__poster', 'alt' => '', 'loading' => 'lazy', 'sizes' => '(max-width: 767px) 260vw, 100vw' ) ); ?>
 			<?php if ( $upskill_video ) : ?>
 				<?php // Loaded only once the band nears the viewport (deferred-video.js); hidden for reduced motion. ?>
 				<video class="cta-band__video" muted loop playsinline preload="none" data-deferred-video data-src="<?php echo esc_url( $upskill_video ); ?>"></video>

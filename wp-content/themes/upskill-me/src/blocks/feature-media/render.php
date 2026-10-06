@@ -63,10 +63,11 @@ $stat       = get_field( 'stat' );
 							<?php
 							upskill_image(
 								$image,
-								'large',
+								'full',
 								array(
 									'class' => 'aspect-[354/470] w-full lg:aspect-[614/460] rounded-[22px] bg-[#151519] object-cover shadow-float lg:rounded-[32px]',
-									'sizes' => '(min-width: 1025px) 614px, 92vw',
+									// Cover width: the 3:2 photo in a 614x460 frame (desktop) or a portrait frame (mobile) draws wider than the frame.
+									'sizes' => '(min-width: 1025px) 690px, 176vw',
 								)
 							);
 							?>

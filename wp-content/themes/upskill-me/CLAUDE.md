@@ -41,7 +41,16 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
   light sharpen after downscale (sharp: lanczos3 + sharpen σ0.6); never upscale a small source.
   Upload to the Media Library with real alt text (empty only when decorative). Render with
   `upskill_image( $id, 'full', [ 'sizes' => … ] )` so the srcset is the proportional set, and
-  write `sizes` from the actual layout breakpoints.
+  write `sizes` from the actual layout breakpoints. For `object-cover` images, `sizes` is the width
+  the photo is *drawn* at (box height × image ratio when that is wider than the box), not the box
+  width. WordPress's `sizes="auto"` is switched off (functions.php) because it uses the box width
+  and served soft images; images above the fold load `eager`. Before handing over, check every
+  image's chosen srcset candidate against its drawn width at 1x/2x/3x.
+- **Fluid layout first.** Avoid `position: absolute`/`fixed` and fixed heights unless genuinely
+  necessary. Stack layers in a one-cell grid (`grid grid-cols-1 grid-rows-1` + `col-start-1
+  row-start-1`), size media with `aspect-*` per breakpoint, give bars height through padding, and
+  use `writing-mode` for vertical labels so text always sizes its own box. (Hero showcase is the
+  reference implementation.)
 - **Change only what is asked.** Do not refactor, remove or "optimise" existing code, files or
   animations unless the instruction says so.
 - **Do not regress the Home page.** Changing a shared Home module for another page needs approval.

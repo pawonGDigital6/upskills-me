@@ -97,6 +97,17 @@ function upskill_asset_manifest( $entry ) {
 }
 
 /**
+ * Keep the theme's own sizes attributes.
+ *
+ * WordPress prefixes lazy images with sizes="auto", which picks a file from the
+ * image box's width. Most theme images are object-cover crops drawn wider than
+ * their box (hero panels, the Why photo), so "auto" fetched files far too small
+ * and they looked soft until a hover resized them. Every theme image passes an
+ * explicit sizes value instead.
+ */
+add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
+
+/**
  * Enqueue front-end scripts and styles.
  */
 function upskill_scripts() {
