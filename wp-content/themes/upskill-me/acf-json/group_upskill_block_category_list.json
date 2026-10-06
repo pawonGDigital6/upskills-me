@@ -1,0 +1,104 @@
+{
+    "key": "group_upskill_block_category_list",
+    "title": "Block: Category List",
+    "fields": [
+        {
+            "key": "field_upskill_category_list_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_category_list_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_category_list_acc_categories",
+            "label": "Categories",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_category_list_categories",
+            "label": "Categories",
+            "name": "categories",
+            "type": "taxonomy",
+            "taxonomy": "training_category",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "instructions": "In display order. Descriptions come from each category."
+        },
+        {
+            "key": "field_upskill_category_list_all_row",
+            "label": "Closing row",
+            "name": "all_row",
+            "type": "group",
+            "instructions": "Optional last row linking to the full library.",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_category_list_all_row_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array"
+                },
+                {
+                    "key": "field_upskill_category_list_all_row_description",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_category_list_all_row_image",
+                    "label": "Hover image",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp",
+                    "instructions": "Shown on desktop hover."
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/category-list"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

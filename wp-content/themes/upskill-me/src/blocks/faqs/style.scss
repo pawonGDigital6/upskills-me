@@ -1,0 +1,51 @@
+/**
+ * FAQs block — the plus/minus toggle and answer copy.
+ *
+ * Figma: the open question's toggle is a filled primary disc with a white
+ * minus; closed ones are outlined with a plus.
+ */
+
+.block-faqs .faq__toggle {
+	transition: background-color 0.25s ease, border-color 0.25s ease;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 12px;
+		height: 1.5px;
+		margin: -0.75px 0 0 -6px;
+		border-radius: 1px;
+		background-color: var(--color-gray-900);
+		transition: transform 0.25s cubic-bezier(0.22, 0.72, 0, 1), background-color 0.25s ease;
+	}
+
+	&::after {
+		transform: rotate(90deg);
+	}
+}
+
+.block-faqs .faq__question[aria-expanded="true"] .faq__toggle {
+	border-color: var(--color-brand-700);
+	background-color: var(--color-brand-700);
+
+	&::before,
+	&::after {
+		background-color: var(--color-white);
+	}
+
+	&::after {
+		transform: rotate(0deg);
+	}
+}
+
+.block-faqs .faq__answer > * + * {
+	margin-top: 0.75em;
+}
+
+.block-faqs .faq__answer a {
+	color: var(--color-brand-700);
+	text-decoration: underline;
+}

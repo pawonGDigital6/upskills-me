@@ -1,7 +1,16 @@
-// Layouts
+// Global SCSS. Imported after tailwind.css (see ../index.js) so deliberate
+// overrides win by source order rather than !important.
+//
+// layout/   site chrome the theme owns: header, mega menu, drawer, footer,
+//           and the shared Block Options overrides.
+// plugins/  restyling of markup the theme does not own (LearnDash,
+//           WooCommerce, Contact Form 7) — one partial per screen/component.
+
+// Layout
+@use "layout/accessibility";
+@use "layout/block-settings";
 @use "layout/header";
 @use "layout/footer";
-@use "layout/block-settings";
 
-// pages
-@use "pages/default";
+// Plugins
+@use "plugins/index";

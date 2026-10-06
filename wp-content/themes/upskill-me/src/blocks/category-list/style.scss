@@ -1,0 +1,77 @@
+/**
+ * Category List block — the row hover, from the designer's approved mockup.
+ *
+ * Desktop (1200+) with a mouse: the row tints and indents, the category photo
+ * rises into its reserved column with a slight tilt, and the arrow fills and
+ * turns from ↗ to →. Smaller screens and touch keep the colour change only.
+ */
+
+.category-row {
+	transition: background-color 320ms cubic-bezier(0.22, 0.72, 0, 1), padding 320ms cubic-bezier(0.22, 0.72, 0, 1), box-shadow 320ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.category-row__go svg {
+	transition: transform 320ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+// 150x105 photo centred in a 180px column. The column has no height of its own,
+// so the photo overhangs the row's centre line and the row keeps Figma's height.
+.category-row__pic {
+	width: 180px;
+	height: 0;
+
+	&.wd\:block {
+		@media (min-width: 1200px) {
+			display: flex;
+			align-items: center;
+		}
+	}
+
+	img {
+		width: 150px;
+		height: 105px;
+		margin-inline: auto;
+		object-fit: cover;
+		border-radius: 16px;
+		box-shadow: 0 22px 44px -22px rgb(47 26 81 / 45%), 0 2px 6px rgb(26 26 26 / 8%);
+		opacity: 0;
+		transform: translateY(10px) scale(0.94);
+		transition: opacity 360ms cubic-bezier(0.22, 0.72, 0, 1), transform 520ms cubic-bezier(0.22, 0.72, 0, 1), box-shadow 520ms cubic-bezier(0.22, 0.72, 0, 1);
+	}
+}
+
+// Below desktop the arrow keeps its nudge.
+@media (hover: hover) {
+
+	.category-row:hover .category-row__go svg {
+		transform: translate(2px, -2px);
+	}
+}
+
+@media (min-width: 1200px) and (hover: hover) {
+
+	.category-row:hover {
+		padding-inline: 24px 48px;
+		background-color: var(--color-brand-25);
+		box-shadow: 0 18px 40px -28px rgb(47 26 81 / 22%);
+	}
+
+	.category-row:hover .category-row__pic img {
+		opacity: 1;
+		transform: rotate(-3deg);
+		box-shadow: 0 30px 56px -24px rgb(47 26 81 / 50%), 0 4px 10px rgb(26 26 26 / 8%);
+	}
+
+	.category-row:hover .category-row__go svg {
+		transform: rotate(45deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.category-row,
+	.category-row__go svg,
+	.category-row__pic img {
+		transition: none;
+	}
+}

@@ -1,0 +1,53 @@
+{
+    "key": "group_upskill_taxonomy_landing",
+    "title": "Training Term: Landing Page",
+    "fields": [
+        {
+            "key": "field_upskill_term_landing_page",
+            "label": "Landing page",
+            "name": "landing_page",
+            "type": "post_object",
+            "instructions": "The designed page this term links to. Leave empty to use the term archive.",
+            "post_type": [
+                "page"
+            ],
+            "return_format": "id",
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "industry"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "training_category"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "cohort"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

@@ -1,0 +1,148 @@
+{
+    "key": "group_upskill_block_free_sessions",
+    "title": "Block: Free Sessions",
+    "fields": [
+        {
+            "key": "field_upskill_free_sessions_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_free_sessions_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_free_sessions_acc_sessions",
+            "label": "Sessions",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_free_sessions_sessions",
+            "label": "Sessions",
+            "name": "sessions",
+            "type": "repeater",
+            "instructions": "The first session is the large card. Interim content: these become LearnDash sample lessons once LearnDash is installed.",
+            "layout": "block",
+            "min": 0,
+            "max": 3,
+            "button_label": "Add session",
+            "collapsed": "field_upskill_free_sessions_sessions_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_free_sessions_sessions_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "60"
+                    }
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_code",
+                    "label": "Session code",
+                    "name": "code",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "20"
+                    },
+                    "placeholder": "OH002"
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_is_free",
+                    "label": "Free tag",
+                    "name": "is_free",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1,
+                    "wrapper": {
+                        "width": "20"
+                    }
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_category",
+                    "label": "Category label",
+                    "name": "category",
+                    "type": "text",
+                    "placeholder": "Safety & Compliance"
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_description",
+                    "label": "Description",
+                    "name": "description",
+                    "type": "textarea",
+                    "rows": 3,
+                    "new_lines": "",
+                    "instructions": "Shown on the large card only."
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_video",
+                    "label": "Video (MP4)",
+                    "name": "video",
+                    "type": "file",
+                    "return_format": "array",
+                    "library": "all",
+                    "mime_types": "mp4",
+                    "wrapper": {
+                        "width": "50"
+                    }
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_poster",
+                    "label": "Poster image",
+                    "name": "poster",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp",
+                    "wrapper": {
+                        "width": "50"
+                    }
+                },
+                {
+                    "key": "field_upskill_free_sessions_sessions_link",
+                    "label": "Watch link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array",
+                    "instructions": "Large card only, e.g. the session page."
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/free-sessions"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

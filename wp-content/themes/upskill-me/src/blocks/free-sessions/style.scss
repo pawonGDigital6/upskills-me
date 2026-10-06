@@ -1,0 +1,80 @@
+/**
+ * Free Sessions block — the video transport bar.
+ *
+ * Figma: "Play bar" in 49325:14394. A row of 32px icon buttons and a seek
+ * slider in white over the card's bottom gradient.
+ */
+
+.video-card__btn {
+	display: grid;
+	flex: none;
+	place-items: center;
+	padding: 8px;
+	border: 0;
+	border-radius: var(--radius-sm);
+	background: none;
+	color: inherit;
+	transition: background-color 0.2s ease;
+
+	&:hover {
+		background-color: rgb(255 255 255 / 12%);
+	}
+
+	&[aria-pressed="true"] {
+		opacity: 0.6;
+	}
+}
+
+.video-card__icon {
+	width: 16px;
+	height: 16px;
+}
+
+.video-card__icon--pause,
+.video-card.is-playing .video-card__icon--play {
+	display: none;
+}
+
+.video-card.is-playing .video-card__icon--pause {
+	display: block;
+}
+
+// Seek slider: an 8px pill, the played part solid white.
+.video-card__progress {
+	flex: 1;
+	min-width: 0;
+	height: 8px;
+	border-radius: 999px;
+	background: linear-gradient(90deg, var(--color-white) var(--progress, 0%), rgb(255 255 255 / 30%) var(--progress, 0%));
+	appearance: none;
+	cursor: pointer;
+
+	&::-webkit-slider-thumb {
+		width: 12px;
+		height: 12px;
+		border-radius: 999px;
+		background: var(--color-white);
+		appearance: none;
+	}
+
+	&::-moz-range-thumb {
+		width: 12px;
+		height: 12px;
+		border: 0;
+		border-radius: 999px;
+		background: var(--color-white);
+	}
+}
+
+// While playing, ease the darkening so the session itself is what you see.
+.video-card [data-video-overlay] {
+	transition: opacity 0.4s ease;
+}
+
+.video-card.is-playing [data-video-overlay] {
+	opacity: 0.45;
+}
+
+.video-card video {
+	cursor: pointer;
+}

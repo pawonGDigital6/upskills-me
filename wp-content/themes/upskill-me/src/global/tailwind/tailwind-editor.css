@@ -1,0 +1,58 @@
+/**
+ * Block editor Tailwind entry.
+ *
+ * Imports Tailwind WITHOUT preflight: ACF blocks use apiVersion 2, so the post
+ * editor is not iframed and a global reset would leak into the admin chrome.
+ * Blocks get the tokens, utilities and components; element defaults are
+ * re-applied scoped to the editor canvas only.
+ */
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@source "../../blocks/**/*.php";
+@source "../../../inc/**/*.php";
+@source "../../../template-parts/**/*.php";
+@source "../../../*.php";
+
+@import "./design-system.css";
+
+.editor-styles-wrapper .acf-block {
+	font-family: var(--font-sans);
+	font-size: var(--text-base);
+	font-weight: 400;
+	line-height: 1.5;
+	color: var(--color-gray-950);
+}
+
+.editor-styles-wrapper .acf-block :is(h1, h2, h3, h4, h5, h6, p, figure, ul, ol) {
+	margin: 0;
+}
+
+.editor-styles-wrapper .acf-block :is(h1, h2, h3, h4, h5, h6) {
+	font-family: var(--font-sans);
+	font-weight: 500;
+	line-height: 1.1;
+}
+
+.editor-styles-wrapper .acf-block :is(ul, ol) {
+	padding: 0;
+	list-style: none;
+}
+
+.editor-styles-wrapper .acf-block :is(img, video, svg) {
+	display: block;
+	max-width: 100%;
+}
+
+.editor-styles-wrapper .acf-block a {
+	text-decoration: none;
+}
+
+/* Blocks are drawn edge to edge on the front end; let them fill the canvas. */
+.editor-styles-wrapper .acf-block-preview.acf-block-component {
+	max-width: 100%;
+	margin-block: 0;
+}

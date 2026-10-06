@@ -1,0 +1,78 @@
+{
+    "key": "group_upskill_component_section_header",
+    "title": "Component: Section Header",
+    "fields": [
+        {
+            "key": "field_upskill_section_header_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_section_header_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_section_header_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_section_header_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_section_header_button",
+            "label": "Button",
+            "name": "button",
+            "type": "link",
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": false,
+    "description": "Cloned into blocks; never shown on its own.",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

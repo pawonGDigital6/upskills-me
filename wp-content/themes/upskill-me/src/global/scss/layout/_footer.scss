@@ -1,2 +1,291 @@
-@use "../abstracts/variables" as var;
 @use "../abstracts/mixins" as mix;
+
+/**
+ * "Get a head start" band and site footer.
+ *
+ * Figma: Frame 38 (49325:14551, 1440) / Frame 114 (49343:29335, 390).
+ */
+
+/* ---------------------------------------------
+   Call to action band
+--------------------------------------------- */
+.cta-band {
+	position: relative;
+	isolation: isolate;
+	overflow: hidden;
+	padding-block: var(--spacing-section);
+	background-color: var(--color-gray-950);
+	color: var(--color-white);
+	text-align: center;
+}
+
+.cta-band__media {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	// Figma draws the waves as a faint texture; full strength fights the copy.
+	opacity: 0.45;
+
+	// The wave texture sits under a fade into the footer below.
+	&::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(180deg, rgb(13 13 13 / 0%) 55%, var(--color-gray-950) 100%);
+	}
+}
+
+.cta-band__poster,
+.cta-band__video {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.cta-band__video {
+	opacity: 0;
+	transition: opacity 0.8s ease;
+
+	&.is-playing {
+		opacity: 1;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		display: none;
+	}
+}
+
+.cta-band__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 24px;
+}
+
+.cta-band__heading {
+	// Figma sets the line on one row at 1440 (the 880 box overflows).
+	max-width: 1100px;
+	color: var(--color-white);
+}
+
+.cta-band__text {
+	max-width: 760px;
+	color: rgb(255 255 255 / 66%);
+	font-size: var(--text-lg);
+	line-height: 1.55;
+
+	@include mix.breakpoint("lg", true) {
+		font-size: var(--text-xl);
+	}
+}
+
+.cta-band__actions {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+
+	@include mix.breakpoint("sm", true) {
+		flex-direction: row;
+	}
+}
+
+/* ---------------------------------------------
+   Footer
+--------------------------------------------- */
+.site-footer {
+	padding-top: 40px;
+	background-color: var(--color-gray-950);
+	color: var(--color-white);
+
+	@include mix.breakpoint("lg", true) {
+		padding-top: 64px;
+	}
+}
+
+// 390: brand + Industries side by side, then two columns.
+// 1440: brand column (259) and five 193px link columns.
+.site-footer__grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 40px 16px;
+
+	@include mix.breakpoint("lg", true) {
+		grid-template-columns: minmax(0, 259px) repeat(5, minmax(0, 1fr));
+		gap: 24px;
+	}
+
+	@include mix.breakpoint("mc", true) {
+		column-gap: 40px;
+	}
+}
+
+.site-footer__brand {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 32px;
+
+	@include mix.breakpoint("lg") {
+		grid-row: span 1;
+	}
+}
+
+.site-footer__logo img {
+	width: 168px;
+	height: auto;
+
+	@include mix.breakpoint("lg", true) {
+		width: 185px;
+	}
+}
+
+.site-footer__text {
+	margin-top: -16px;
+	color: rgb(255 255 255 / 60%);
+	font-family: "Geist", var(--font-sans);
+	font-size: 15px;
+	line-height: 1.62;
+	letter-spacing: -0.006em;
+}
+
+// Below lg the button breaks out of the brand column and spans the grid,
+// under the logo/Industries pair, as drawn on the 390 frame.
+@include mix.breakpoint("lg") {
+
+	// The first row is only as tall as the logo, so the spanning Industries
+	// column pushes its extra height into the second row, not between the logo
+	// and its intro text.
+	.site-footer__grid {
+		grid-template-rows: auto 1fr;
+	}
+
+	.site-footer__brand {
+		display: contents;
+	}
+
+	.site-footer__logo,
+	.site-footer__text {
+		grid-column: 1;
+	}
+
+	// 16px under the logo rather than the grid's 40px row gap.
+	.site-footer__text {
+		margin-top: -24px;
+	}
+
+	.site-footer__brand > .btn {
+		grid-column: 1 / -1;
+		justify-self: start;
+	}
+
+	.site-footer__logo {
+		grid-row: 1;
+	}
+
+	.site-footer__text {
+		grid-row: 2;
+	}
+
+	.site-footer__nav--industries {
+		grid-column: 2;
+		grid-row: 1 / span 2;
+	}
+}
+
+.footer-nav__title {
+	color: rgb(255 255 255 / 42%);
+	font-weight: 600;
+	font-size: var(--text-2xs);
+	line-height: 1.62;
+	letter-spacing: 1.4px;
+	text-transform: uppercase;
+}
+
+.footer-nav__list {
+	display: flex;
+	flex-direction: column;
+	gap: 11px;
+	padding-top: 16px;
+}
+
+.footer-nav__link {
+	color: rgb(255 255 255 / 66%);
+	font-family: "Geist", var(--font-sans);
+	font-size: 15px;
+	line-height: 1.62;
+	letter-spacing: -0.006em;
+	transition: color 0.2s ease;
+
+	&:hover,
+	&[aria-current="page"] {
+		color: var(--color-white);
+	}
+}
+
+.site-footer__bottom {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
+	margin-top: 40px;
+	padding-block: 24px;
+	border-top: 1px solid var(--color-gray-900);
+	font-family: "Geist", var(--font-sans);
+	font-size: var(--text-xs);
+	line-height: 1.62;
+
+	@include mix.breakpoint("lg", true) {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+
+.site-footer__copyright {
+	color: rgb(255 255 255 / 42%);
+}
+
+.site-footer__legal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px 20px;
+
+	a {
+		color: rgb(255 255 255 / 66%);
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: var(--color-white);
+		}
+	}
+}
+
+.site-footer__social {
+	display: flex;
+	gap: 8px;
+
+	a {
+		display: grid;
+		place-items: center;
+		width: 38px;
+		height: 38px;
+		border: 1px solid rgb(255 255 255 / 14%);
+		border-radius: 999px;
+		color: rgb(255 255 255 / 66%);
+		transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+
+		&:hover {
+			border-color: var(--color-brand-700);
+			background-color: var(--color-brand-700);
+			color: var(--color-white);
+		}
+	}
+
+	svg {
+		width: 15px;
+		height: 15px;
+	}
+}

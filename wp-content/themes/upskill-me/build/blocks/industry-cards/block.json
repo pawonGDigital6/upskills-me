@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/industry-cards",
+  "version": "1.0.0",
+  "title": "Industry Cards",
+  "category": "acf-blocks",
+  "icon": "grid-view",
+  "description": "Cards for selected industries, styled per industry.",
+  "keywords": [
+    "industry",
+    "cards"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": true
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}

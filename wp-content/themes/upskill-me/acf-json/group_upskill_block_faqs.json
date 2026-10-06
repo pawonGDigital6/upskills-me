@@ -1,0 +1,178 @@
+{
+    "key": "group_upskill_block_faqs",
+    "title": "Block: FAQs",
+    "fields": [
+        {
+            "key": "field_upskill_faqs_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_faqs_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_faqs_acc_questions",
+            "label": "Questions",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_faqs_selection_mode",
+            "label": "Show",
+            "name": "selection_mode",
+            "type": "button_group",
+            "choices": {
+                "topic": "By topic",
+                "selected": "Hand-picked"
+            },
+            "default_value": "topic",
+            "return_format": "value"
+        },
+        {
+            "key": "field_upskill_faqs_faq_topic",
+            "label": "Topic",
+            "name": "faq_topic",
+            "type": "taxonomy",
+            "taxonomy": "faq_category",
+            "field_type": "select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "instructions": "Leave empty for all topics.",
+            "wrapper": {
+                "width": "60"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_faqs_selection_mode",
+                        "operator": "==",
+                        "value": "topic"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_faqs_number_of_faqs",
+            "label": "Number of questions",
+            "name": "number_of_faqs",
+            "type": "number",
+            "default_value": 6,
+            "min": 1,
+            "max": 30,
+            "wrapper": {
+                "width": "40"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_faqs_selection_mode",
+                        "operator": "==",
+                        "value": "topic"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_faqs_selected_faqs",
+            "label": "Questions",
+            "name": "selected_faqs",
+            "type": "relationship",
+            "post_type": [
+                "faq"
+            ],
+            "filters": [
+                "search",
+                "taxonomy"
+            ],
+            "return_format": "id",
+            "elements": "",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_faqs_selection_mode",
+                        "operator": "==",
+                        "value": "selected"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_faqs_acc_help",
+            "label": "Help card",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_faqs_help_card",
+            "label": "Help card",
+            "name": "help_card",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_faqs_help_card_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_faqs_help_card_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 3,
+                    "new_lines": ""
+                },
+                {
+                    "key": "field_upskill_faqs_help_card_button",
+                    "label": "Button",
+                    "name": "button",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/faqs"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

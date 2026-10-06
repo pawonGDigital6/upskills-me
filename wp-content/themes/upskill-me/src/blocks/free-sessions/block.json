@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/free-sessions",
+	"version": "1.0.0",
+	"title": "Free Sessions",
+	"category": "acf-blocks",
+	"icon": "format-video",
+	"description": "The free sessions showcase: one featured video card and two smaller ones.",
+	"keywords": [
+		"free",
+		"video",
+		"sessions"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": true
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

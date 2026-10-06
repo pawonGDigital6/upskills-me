@@ -1,2 +1,716 @@
-@use "../abstracts/variables" as var;
 @use "../abstracts/mixins" as mix;
+
+/**
+ * Site chrome: announcement bar, sticky nav bar, desktop mega panels, mobile
+ * drawer and search dialog.
+ *
+ * Styled here rather than with utilities because nearly every rule is a state
+ * (aria-expanded, .is-open, .is-stuck) changing a descendant. Values are the
+ * Figma tokens from tailwind/design-system.css.
+ *
+ * Figma: Frame 28 (1440) / Frame 94 (390) / drawer 49475:48697. The header
+ * switches to the drawer below `wd` (1200), where the full nav stops fitting.
+ */
+
+/* ---------------------------------------------
+   Announcement bar
+--------------------------------------------- */
+.announcement {
+	position: relative;
+	z-index: 41;
+	background-color: var(--color-gray-950);
+	color: var(--color-white);
+}
+
+.announcement__inner {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	min-height: 44px;
+	padding-block: 8px;
+	font-size: var(--text-sm);
+	line-height: 1.5;
+}
+
+.announcement__tag {
+	flex: none;
+	height: auto;
+	padding: 3px 8px;
+	line-height: 16.2px;
+}
+
+.announcement__message {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 12px;
+}
+
+.announcement__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding-bottom: 1px;
+	border-bottom: 1px solid rgb(255 255 255 / 35%);
+	color: var(--color-signal);
+	font-weight: 500;
+	transition: border-color 0.25s ease;
+
+	&:hover {
+		border-color: var(--color-signal);
+	}
+}
+
+.announcement__icon {
+	width: 11px;
+	height: 11px;
+	transition: transform 0.25s var(--ease-out);
+
+	.announcement__link:hover & {
+		transform: translate(2px, -2px);
+	}
+}
+
+.announcement__close {
+	position: absolute;
+	top: 50%;
+	right: var(--spacing-gutter);
+	display: none;
+	place-items: center;
+	width: 32px;
+	height: 32px;
+	border: 0;
+	border-radius: 999px;
+	background: none;
+	color: rgb(255 255 255 / 50%);
+	transform: translateY(-50%);
+	transition: color 0.25s ease, background-color 0.25s ease;
+
+	svg {
+		width: 13px;
+		height: 13px;
+	}
+
+	&:hover {
+		background-color: rgb(255 255 255 / 10%);
+		color: var(--color-white);
+	}
+
+	@include mix.breakpoint("md", true) {
+		display: grid;
+	}
+}
+
+// Below md the whole bar is the link: the label collapses to its arrow, which
+// Figma pins to the right edge of the 390 frame.
+@include mix.breakpoint("md") {
+
+	.announcement__inner {
+		justify-content: flex-start;
+		padding-right: calc(var(--spacing-gutter) + 20px);
+	}
+
+	.announcement__link {
+		padding: 0;
+		border: 0;
+		color: var(--color-white);
+
+		&::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+		}
+	}
+
+	.announcement__link-label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+
+	.announcement__icon {
+		position: absolute;
+		top: 50%;
+		right: var(--spacing-gutter);
+		width: 12px;
+		height: 12px;
+		margin-top: -6px;
+	}
+}
+
+/* ---------------------------------------------
+   Nav bar
+--------------------------------------------- */
+.site-header {
+	position: sticky;
+	top: 0;
+	z-index: 40;
+	border-bottom: 1px solid var(--color-white);
+	background-color: var(--color-brand-50);
+	transition: box-shadow 0.3s ease, background-color 0.3s ease;
+
+	&.is-stuck {
+		background-color: rgb(249 247 253 / 94%);
+		box-shadow: 0 1px 0 var(--color-gray-100);
+		backdrop-filter: blur(12px);
+	}
+}
+
+.admin-bar .site-header {
+	top: var(--wp-admin--admin-bar--height, 0px);
+
+	// Below 601px core's admin bar scrolls away with the page.
+	@media (max-width: 600px) {
+		top: 0;
+	}
+}
+
+.site-header__bar {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	min-height: 64px;
+
+	// Figma draws the desktop bar with 48px sides, wider than the 40px content gutter.
+	@include mix.breakpoint("wd", true) {
+		min-height: 76px;
+		padding-inline: 48px;
+	}
+}
+
+.site-header__logo {
+	flex: none;
+
+	img {
+		width: 139px;
+		height: auto;
+
+		@include mix.breakpoint("wd", true) {
+			width: 192px;
+		}
+	}
+}
+
+.site-header__nav {
+	display: none;
+
+	@include mix.breakpoint("wd", true) {
+		display: block;
+		padding-left: 16px;
+	}
+}
+
+.site-header__actions {
+	display: flex;
+	align-items: center;
+	gap: 4px;
+	margin-left: auto;
+
+	@include mix.breakpoint("wd", true) {
+		gap: 8px;
+	}
+}
+
+.site-header__icon {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	border: 0;
+	border-radius: 999px;
+	background: none;
+	color: var(--color-gray-800);
+	transition: background-color 0.25s ease;
+
+	svg {
+		width: 19px;
+		height: 19px;
+	}
+
+	&:hover {
+		background-color: rgb(26 26 26 / 6%);
+	}
+}
+
+.site-header__cta {
+	display: none;
+
+	@include mix.breakpoint("wd", true) {
+		display: inline-flex;
+	}
+}
+
+.site-header__burger {
+	@include mix.breakpoint("wd", true) {
+		display: none;
+	}
+}
+
+// Three lines that cross into an X while the drawer is open.
+.site-header__burger-lines {
+	position: relative;
+	width: 18px;
+	height: 2px;
+	border-radius: 2px;
+	background-color: currentColor;
+	transition: background-color 0.2s ease;
+
+	&::before,
+	&::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		border-radius: 2px;
+		background-color: currentColor;
+		transition: transform 0.3s var(--ease-out);
+	}
+
+	&::before {
+		transform: translateY(-6px);
+	}
+
+	&::after {
+		transform: translateY(6px);
+	}
+
+	[aria-expanded="true"] > & {
+		background-color: transparent;
+
+		&::before {
+			transform: rotate(45deg);
+		}
+
+		&::after {
+			transform: rotate(-45deg);
+		}
+	}
+}
+
+/* ---------------------------------------------
+   Primary nav (desktop)
+--------------------------------------------- */
+.site-nav {
+	display: flex;
+	align-items: center;
+	gap: 2px;
+}
+
+.site-nav__link {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	height: 44px;
+	padding: 10px 14px;
+	border: 0;
+	border-radius: 999px;
+	background: none;
+	color: var(--color-gray-950);
+	font-weight: 500;
+	font-size: var(--text-base);
+	line-height: 1.5;
+	white-space: nowrap;
+	transition: background-color 0.25s ease, color 0.25s ease;
+
+	&:hover {
+		background-color: rgb(26 26 26 / 5.5%);
+	}
+
+	&[aria-expanded="true"] {
+		background-color: rgb(26 26 26 / 7.5%);
+	}
+
+	&.is-current {
+		background-color: var(--color-brand-100);
+		color: var(--color-brand-700);
+	}
+}
+
+.site-nav__chevron {
+	width: 10px;
+	height: 10px;
+	transition: transform 0.25s var(--ease-out);
+
+	[aria-expanded="true"] > & {
+		transform: rotate(180deg);
+	}
+}
+
+/* ---------------------------------------------
+   Mega panel (desktop)
+--------------------------------------------- */
+.mega {
+	position: absolute;
+	top: calc(100% + 6px);
+	left: 50%;
+	width: min(1040px, calc(100vw - 48px));
+	opacity: 0;
+	transform: translate(-50%, -6px);
+	transition: opacity 0.22s ease, transform 0.22s var(--ease-out);
+
+	&.is-open {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
+
+	// Bridges the 6px gap so the pointer can travel from trigger to panel.
+	&::before {
+		content: "";
+		position: absolute;
+		right: 0;
+		bottom: 100%;
+		left: 0;
+		height: 8px;
+	}
+}
+
+.mega__panel {
+	display: grid;
+	grid-template-columns: minmax(0, 300px) minmax(0, 1fr) minmax(0, 268px);
+	gap: clamp(20px, 2.4vw, 38px);
+	padding: clamp(20px, 2.2vw, 30px);
+	border: 1px solid var(--color-gray-100);
+	border-radius: var(--radius-2xl);
+	background-color: var(--color-white);
+	box-shadow: var(--shadow-float);
+}
+
+.mega__head {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.mega__title {
+	color: var(--color-gray-900);
+	font-weight: 600;
+	font-size: 22px;
+	line-height: 1.2;
+	letter-spacing: -0.022em;
+}
+
+.mega__go {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 30px;
+	height: 30px;
+	border-radius: 999px;
+	background-color: var(--color-gray-50);
+	color: var(--color-gray-900);
+	transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--ease-out);
+
+	svg {
+		width: 12px;
+		height: 12px;
+	}
+
+	&:hover,
+	.mega__row:hover & {
+		background-color: var(--color-brand-700);
+		color: var(--color-white);
+		transform: translate(1px, -1px);
+	}
+}
+
+.mega__text {
+	margin-top: 10px;
+	color: var(--color-gray-500);
+	font-size: var(--text-sm);
+	line-height: 1.5;
+}
+
+.mega__figure {
+	margin-top: 18px;
+	aspect-ratio: 16 / 11;
+	overflow: hidden;
+	border-radius: var(--radius-md);
+	background-color: var(--color-gray-50);
+}
+
+.mega__image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.mega__list {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding-left: clamp(16px, 2vw, 28px);
+	border-left: 1px solid var(--color-gray-100);
+}
+
+.mega__row {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 16px;
+	padding: 12px 10px;
+	border-radius: var(--radius-md);
+	transition: background-color 0.2s ease;
+
+	&:hover {
+		background-color: var(--color-brand-50);
+	}
+}
+
+.mega__row-title {
+	display: block;
+	color: var(--color-gray-900);
+	font-weight: 500;
+	font-size: 17px;
+	line-height: 1.3;
+	letter-spacing: -0.018em;
+}
+
+.mega__row-desc {
+	display: block;
+	margin-top: 4px;
+	color: var(--color-gray-500);
+	font-size: 13px;
+	line-height: 1.45;
+}
+
+/* ---------------------------------------------
+   Menu promo card (mega + drawer)
+--------------------------------------------- */
+.menu-promo {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 22px 20px;
+	border-radius: var(--radius-lg);
+	background-color: var(--color-brand-100);
+}
+
+.menu-promo__title {
+	color: var(--color-gray-900);
+	font-weight: 600;
+	font-size: var(--text-xl);
+	line-height: 1.2;
+	letter-spacing: -0.022em;
+}
+
+.menu-promo__text {
+	margin-top: 10px;
+	color: var(--color-gray-500);
+	font-size: var(--text-sm);
+	line-height: 1.5;
+}
+
+.menu-promo__button {
+	margin-top: 18px;
+}
+
+.menu-promo--drawer {
+	margin-top: 24px;
+	padding: 24px;
+	border: 1px solid var(--color-brand-300);
+
+	.menu-promo__title {
+		font-weight: 500;
+		font-size: 24px;
+	}
+
+	.menu-promo__text {
+		margin-top: 8px;
+		font-size: var(--text-base);
+	}
+
+	.menu-promo__button {
+		min-height: 50px;
+		margin-top: 24px;
+	}
+}
+
+/* ---------------------------------------------
+   Mobile drawer
+--------------------------------------------- */
+.drawer {
+	position: fixed;
+	top: var(--upskill-drawer-top, 108px);
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	flex-direction: column;
+	background-color: var(--color-gray-50);
+	opacity: 0;
+	transition: opacity 0.25s ease;
+
+	&.is-open {
+		opacity: 1;
+	}
+
+	@include mix.breakpoint("wd", true) {
+		display: none !important;
+	}
+}
+
+.drawer__body {
+	flex: 1;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	padding: 8px var(--spacing-gutter) 24px;
+}
+
+.drawer__item {
+	border-bottom: 1px solid var(--color-gray-100);
+}
+
+.drawer__link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 22px 0;
+	border: 0;
+	background: none;
+	color: var(--color-gray-950);
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 1.3;
+	letter-spacing: -0.01em;
+	text-align: left;
+}
+
+.drawer__chevron {
+	width: 14px;
+	height: 14px;
+	transition: transform 0.25s var(--ease-out);
+
+	[aria-expanded="true"] > & {
+		transform: rotate(180deg);
+	}
+}
+
+.drawer__sub {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 0 0 20px 16px;
+}
+
+.drawer__sublink {
+	color: var(--color-gray-950);
+	font-size: 20px;
+	line-height: 1.3;
+
+	&:hover,
+	&[aria-current="page"] {
+		color: var(--color-brand-700);
+	}
+}
+
+.drawer__foot {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding: 16px var(--spacing-gutter) calc(16px + env(safe-area-inset-bottom));
+	border-top: 1px solid var(--color-gray-100);
+	background-color: var(--color-white);
+}
+
+.drawer__cta,
+.drawer__actions .btn {
+	justify-content: center;
+	width: 100%;
+}
+
+.drawer__actions {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+}
+
+.has-drawer {
+	overflow: hidden;
+}
+
+/* ---------------------------------------------
+   Search dialog
+--------------------------------------------- */
+.search-dialog {
+	width: min(720px, calc(100vw - 32px));
+	max-width: none;
+	margin: 96px auto 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+
+	&::backdrop {
+		background-color: rgb(13 13 13 / 45%);
+		backdrop-filter: blur(4px);
+	}
+}
+
+.search-dialog__panel {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px;
+	border-radius: var(--radius-2xl);
+	background-color: var(--color-white);
+	box-shadow: var(--shadow-float);
+}
+
+.search-dialog__form {
+	display: flex;
+	flex: 1;
+	align-items: center;
+	gap: 10px;
+	min-width: 0;
+	padding: 4px 4px 4px 18px;
+	border: 1px solid rgb(26 26 26 / 20%);
+	border-radius: 999px;
+}
+
+.search-dialog__icon {
+	flex: none;
+	width: 18px;
+	height: 18px;
+	color: var(--color-gray-500);
+}
+
+.search-dialog__input {
+	flex: 1;
+	min-width: 0;
+	border: 0;
+	background: none;
+	color: var(--color-gray-950);
+	font-size: var(--text-base);
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.search-dialog__close {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	border: 0;
+	border-radius: 999px;
+	background: none;
+	color: var(--color-gray-800);
+
+	svg {
+		width: 14px;
+		height: 14px;
+	}
+
+	&:hover {
+		background-color: var(--color-gray-50);
+	}
+}

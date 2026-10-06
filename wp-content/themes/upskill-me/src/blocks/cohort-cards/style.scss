@@ -1,0 +1,13 @@
+/**
+ * Cohort Cards block.
+ *
+ * Layout is utilities in render.php; cards rise slightly on hover.
+ */
+
+.block-cohort-cards li.group {
+	transition: box-shadow 0.4s ease;
+}
+
+.block-cohort-cards li.group:hover {
+	box-shadow: var(--shadow-card);
+}

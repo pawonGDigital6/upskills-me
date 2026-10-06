@@ -1,0 +1,127 @@
+{
+    "key": "group_upskill_block_feature_media",
+    "title": "Block: Feature List With Media",
+    "fields": [
+        {
+            "key": "field_upskill_feature_media_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_feature_media_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_feature_media_acc_features",
+            "label": "Features",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_feature_media_features",
+            "label": "Features",
+            "name": "features",
+            "type": "repeater",
+            "layout": "table",
+            "min": 0,
+            "max": 10,
+            "button_label": "Add feature",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_feature_media_features_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_feature_media_features_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": ""
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_feature_media_acc_media",
+            "label": "Media",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_feature_media_image",
+            "label": "Image",
+            "name": "image",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp"
+        },
+        {
+            "key": "field_upskill_feature_media_stat",
+            "label": "Stat card",
+            "name": "stat",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_feature_media_stat_number",
+                    "label": "Number",
+                    "name": "number",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "25"
+                    }
+                },
+                {
+                    "key": "field_upskill_feature_media_stat_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "75"
+                    }
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/feature-media"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

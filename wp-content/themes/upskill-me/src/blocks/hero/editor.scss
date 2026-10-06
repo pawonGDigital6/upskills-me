@@ -1,0 +1,8 @@
+/**
+ * Home Hero block — block editor only styles.
+ */
+
+// Interactions are front-end only; keep the editor preview static.
+.editor-styles-wrapper .block-hero a {
+	pointer-events: none;
+}

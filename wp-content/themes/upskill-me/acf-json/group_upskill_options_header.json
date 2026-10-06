@@ -1,0 +1,157 @@
+{
+    "key": "group_upskill_options_header",
+    "title": "Options: Header",
+    "fields": [
+        {
+            "key": "field_upskill_header_tab_announcement",
+            "label": "Announcement",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_header_announcement",
+            "label": "Announcement bar",
+            "name": "announcement",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_header_announcement_status",
+                    "label": "Show",
+                    "name": "status",
+                    "type": "true_false",
+                    "ui": 1,
+                    "default_value": 1
+                },
+                {
+                    "key": "field_upskill_header_announcement_tag",
+                    "label": "Tag",
+                    "name": "tag",
+                    "type": "text",
+                    "default_value": "Free",
+                    "wrapper": {
+                        "width": "25"
+                    }
+                },
+                {
+                    "key": "field_upskill_header_announcement_message",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "75"
+                    }
+                },
+                {
+                    "key": "field_upskill_header_announcement_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_header_tab_actions",
+            "label": "Actions",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_header_header_cta",
+            "label": "Header button",
+            "name": "header_cta",
+            "type": "link",
+            "return_format": "array",
+            "instructions": "Also the main button in the mobile menu."
+        },
+        {
+            "key": "field_upskill_header_account_link",
+            "label": "Account link",
+            "name": "account_link",
+            "type": "link",
+            "return_format": "array",
+            "instructions": "The person icon. The link title is its accessible name."
+        },
+        {
+            "key": "field_upskill_header_learner_signin",
+            "label": "Learner sign in",
+            "name": "learner_signin",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_header_organisation_signin",
+            "label": "Organisation sign in",
+            "name": "organisation_signin",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_header_tab_promo",
+            "label": "Menu promo",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_header_menu_promo",
+            "label": "Menu promo card",
+            "name": "menu_promo",
+            "type": "group",
+            "instructions": "Shown in every mega panel and the mobile menu.",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_header_menu_promo_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_header_menu_promo_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_header_menu_promo_link",
+                    "label": "Button",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "site-settings-header"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

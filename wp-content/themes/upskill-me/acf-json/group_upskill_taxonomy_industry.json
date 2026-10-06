@@ -1,0 +1,81 @@
+{
+    "key": "group_upskill_taxonomy_industry",
+    "title": "Industry: Card",
+    "fields": [
+        {
+            "key": "field_upskill_industry_card_style",
+            "label": "Card style",
+            "name": "card_style",
+            "type": "select",
+            "choices": {
+                "dark": "Dark",
+                "light": "Light",
+                "brand": "Purple",
+                "outline": "Outlined"
+            },
+            "default_value": "light",
+            "return_format": "value",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_industry_card_icon",
+            "label": "Card icon",
+            "name": "card_icon",
+            "type": "select",
+            "choices": {
+                "industry": "Industry",
+                "training": "Training",
+                "work-alert": "Work alert",
+                "future": "Future"
+            },
+            "default_value": "industry",
+            "return_format": "value",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_industry_card_link_label",
+            "label": "Card link label",
+            "name": "card_link_label",
+            "type": "text",
+            "placeholder": "Explore Manufacturing"
+        },
+        {
+            "key": "field_upskill_industry_card_tags",
+            "label": "Card tags",
+            "name": "card_tags",
+            "type": "text",
+            "instructions": "Comma separated, e.g. Safety, Machinery, Compliance."
+        },
+        {
+            "key": "field_upskill_industry_coming_soon",
+            "label": "Coming soon",
+            "name": "coming_soon",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "industry"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

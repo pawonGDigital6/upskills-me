@@ -1,154 +1,127 @@
 <?php
 /**
- * Class ACF_Block_Register
+ * ACF block registration.
  *
- * This class handles the registration and management of ACF blocks in WordPress.
- * It sets the block path, registers blocks, reorders block assets, and adds custom block categories.
+ * Every directory under build/blocks that carries a block.json is registered
+ * automatically, so creating src/blocks/<name>/ is the whole job.
+ *
+ * @package upskill-me
  */
-class ACF_Block_Register {
-	private $block_path;
-	private $acf_blocks;
-	private $block_namespace = 'upskill-acf-block';
-	private $text_domain     = 'upskill-me';
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Registers the theme's ACF blocks and keeps their assets off pages that do not
+ * use them.
+ */
+class Upskill_ACF_Blocks {
+
+	/**
+	 * Namespace every block registers under. Must match the "name" prefix in
+	 * each block.json — the conditional asset loading matches against it.
+	 *
+	 * @var string
+	 */
+	private $namespace = 'acf-block';
+
+	/**
+	 * Absolute path to the compiled blocks directory.
+	 *
+	 * @var string
+	 */
+	private $path;
+
+	/**
+	 * Constructor.
+	 */
 	public function __construct() {
-		// Set the block path.
-		$this->block_path = dirname( __FILE__, 2 ) . '/build/blocks/';
-		$this->acf_blocks = array_filter( glob( $this->block_path . '*' ), 'is_dir' );
+		$this->path = get_template_directory() . '/build/blocks/';
 
-		// Register actions.
 		add_action( 'init', array( $this, 'register_blocks' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'reorder_editor_block_assets' ), 20 );
-		add_action( 'wp_enqueue_scripts', array( $this, 'conditionally_enqueue_block_assets' ), 20 );
-		add_filter( 'block_categories_all', array( $this, 'custom_block_category' ), 10, 2 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'dequeue_unused_block_assets' ), 20 );
+		add_filter( 'block_categories_all', array( $this, 'register_block_category' ) );
 	}
 
 	/**
-	 * Register ACF Blocks.
+	 * Register every compiled block directory.
+	 *
+	 * @return void
 	 */
 	public function register_blocks() {
-		foreach ( $this->acf_blocks as $block ) {
-			// Register each block using the directory path.
-			register_block_type_from_metadata( $block );
+		if ( ! is_dir( $this->path ) ) {
+			return;
+		}
+
+		foreach ( (array) glob( $this->path . '*', GLOB_ONLYDIR ) as $directory ) {
+			if ( is_readable( $directory . '/block.json' ) ) {
+				register_block_type_from_metadata( $directory );
+			}
 		}
 	}
 
 	/**
-	 * Get asset handles for all registered ACF blocks.
+	 * Drop the front-end style and script of any theme block not on the page.
 	 *
-	 * @return array Array of block data (block_name, editor_script, editor_style, script, style).
+	 * @return void
 	 */
-	private function get_block_data() {
-		$block_registry    = WP_Block_Type_Registry::get_instance();
-		$registered_blocks = $block_registry->get_all_registered();
-
-		$block_index = 0;
-
-		$block_data = array(
-			$block_index => array(
-				'block_name'    => '',
-				'editor_script' => '',
-				'editor_style'  => '',
-				'script'        => '',
-				'style'         => '',
-				'view_style'    => '',
-				'view_script'    => '',
-			),
-		);
-
-		foreach ( $registered_blocks as $block_name => $block_type ) {
-			if ( strpos( $block_name, $this->block_namespace ) !== 0 ) {
+	public function dequeue_unused_block_assets() {
+		foreach ( WP_Block_Type_Registry::get_instance()->get_all_registered() as $name => $block_type ) {
+			if ( 0 !== strpos( $name, $this->namespace . '/' ) || has_block( $name ) ) {
 				continue;
 			}
 
-			$block_data[ $block_index ]['block_name'] = $block_name;
+			$handles = array_merge(
+				(array) $block_type->style_handles,
+				(array) $block_type->view_style_handles,
+				(array) $block_type->view_script_handles
+			);
 
-			// Check if scripts or styles are defined for the block.
-			if ( ! empty( $block_type->editor_script_handles ) ) {
-				$block_data[ $block_index ]['editor_script'] = $block_type->editor_script_handles;
-			}
-			if ( ! empty( $block_type->view_script_handles ) ) {
-				$block_data[ $block_index ]['script'] = $block_type->view_script_handles;
-			}
-			if ( ! empty( $block_type->editor_style_handles ) ) {
-				$block_data[ $block_index ]['editor_style'] = $block_type->editor_style_handles;
-			}
-			if ( ! empty( $block_type->style_handles ) ) {
-				$block_data[ $block_index ]['style'] = $block_type->style_handles;
-			}
-			if ( ! empty( $block_type->view_style_handles ) ) {
-				$block_data[ $block_index ]['view_style'] = $block_type->view_style_handles;
-			}
-			if ( ! empty( $block_type->view_script_handles ) ) {
-				$block_data[ $block_index ]['view_script'] = $block_type->view_script_handles;
-			}
-			$block_index++;
-		}
-
-		return $block_data;
-	}
-
-	/**
-	 * Reorder editor block assets by dequeuing and enqueuing them.
-	 */
-	public function reorder_editor_block_assets() {
-		$blocks = $this->get_block_data();
-
-		foreach ( $blocks as $block ) {
-			$script_handle = $block['editor_script'];
-			$style_handle  = $block['editor_style'];
-	
-			wp_dequeue_script( $script_handle );
-			wp_enqueue_script( $script_handle );
-	
-			wp_dequeue_style( $style_handle );
-			wp_enqueue_style( $style_handle );
-		}
-	}
-
-	/**
-	 * Reorder front-end block assets by dequeuing and enqueuing them.
-	 */
-	public function conditionally_enqueue_block_assets() {
-		$blocks = $this->get_block_data();
-
-		foreach ( $blocks as $block ) {
-			$script_handle     = $block['script'];
-			$style_handle      = $block['style'];
-			$view_style_handle = $block['view_style'];
-			$view_script_handle     = $block['view_script'];
-
-
-			// Dequeue the block assets.
-			wp_dequeue_script( $script_handle );
-			wp_dequeue_script( $view_script_handle );
-			wp_dequeue_style( $view_style_handle );
-			wp_dequeue_style( $style_handle );
-			
-			// Enqueue the block assets if the block is present on the page.
-			if ( has_block( $block['block_name'] ) ) {
-				wp_enqueue_script( $script_handle );
-				wp_enqueue_script( $view_script_handle );
-				wp_enqueue_style( $view_style_handle );
-				wp_enqueue_style( $style_handle );
+			foreach ( array_filter( $handles ) as $handle ) {
+				wp_dequeue_style( $handle );
+				wp_dequeue_script( $handle );
 			}
 		}
 	}
 
 	/**
-	 * Add custom block category.
+	 * Add the theme's block category so the blocks group together in the inserter.
+	 *
+	 * @param array $categories Registered categories.
+	 * @return array
 	 */
-	public function custom_block_category( $categories, $post ) {
-        array_unshift(
-            $categories, 
-            array(
-                'slug'  => 'acf-blocks',
-                'title' => __( 'ACF Blocks', $this->text_domain ),
-            )
-        );
-        return $categories;
-    }
+	public function register_block_category( $categories ) {
+		array_unshift(
+			$categories,
+			array(
+				'slug'  => 'acf-blocks',
+				'title' => __( 'UpSkill Me Blocks', 'upskill-me' ),
+			)
+		);
+
+		return $categories;
+	}
 }
 
-// Instantiate the ACF_Block_Register class
-new ACF_Block_Register();
+new Upskill_ACF_Blocks();
+
+/**
+ * Keep ACF's local JSON in the theme so field groups stay in version control.
+ *
+ * @return string
+ */
+function upskill_acf_json_save_point() {
+	return get_template_directory() . '/acf-json';
+}
+add_filter( 'acf/settings/save_json', 'upskill_acf_json_save_point' );
+
+/**
+ * Load field groups from the theme's acf-json directory.
+ *
+ * @return array
+ */
+function upskill_acf_json_load_point() {
+	return array( get_template_directory() . '/acf-json' );
+}
+add_filter( 'acf/settings/load_json', 'upskill_acf_json_load_point' );

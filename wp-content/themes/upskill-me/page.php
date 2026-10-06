@@ -1,11 +1,10 @@
 <?php
 /**
- * The template for displaying all pages
+ * The template for displaying pages.
  *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site may use a
- * different template.
+ * A page composed from the theme's ACF blocks brings its own sections and is
+ * rendered edge to edge. Anything else (legal copy typed into the editor) falls
+ * through to the default content layout.
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/
  *
@@ -16,23 +15,18 @@ get_header();
 ?>
 
 	<main id="primary" class="site-main">
-
 		<?php
 		while ( have_posts() ) :
 			the_post();
 
-			get_template_part( 'template-parts/content', 'page' );
-
-			// If comments are open or we have at least one comment, load up the comment template.
-			if ( comments_open() || get_comments_number() ) :
-				comments_template();
-			endif;
-
-		endwhile; // End of the loop.
+			if ( upskill_is_block_composed() ) {
+				the_content();
+			} else {
+				get_template_part( 'template-parts/content', 'page' );
+			}
+		endwhile;
 		?>
-
-	</main><!-- #main -->
+	</main>
 
 <?php
-get_sidebar();
 get_footer();

@@ -1,0 +1,1 @@
+.block-hero [data-showcase-item] img{transition:transform .8s cubic-bezier(.22,.72,0,1)}.block-hero [data-showcase-item]:hover img{transform:scale(1.03)}@media(prefers-reduced-motion:reduce){.block-hero [data-showcase-item],.block-hero [data-showcase-item] img{transition:none}}

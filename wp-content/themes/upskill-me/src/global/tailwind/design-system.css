@@ -1,0 +1,638 @@
+/**
+ * UpSkill Me design system — tokens, layout utilities and shared components.
+ *
+ * Imported by both the front-end entry (tailwind.css) and the block editor
+ * entry (tailwind-editor.css) so blocks look identical in both contexts.
+ *
+ * Every value comes from the Figma file "UpSkill Me (Working File)", canvas
+ * "Mobile & Sitemap" — the 1440 desktop and 390 mobile frames. A token that
+ * differs between the two is a clamp() interpolating linearly between them, so
+ * 390px and 1440px reproduce the frames and everything between is a straight
+ * line:
+ *   clamp(<mobile>, <mobile - slope*390>rem + <slope*100>vw, <desktop>)
+ *   slope = (desktop - mobile) / (1440 - 390)
+ */
+
+@theme {
+
+	/* Tailwind's default palette and breakpoints are switched off so only the
+	   design's own values exist. */
+	--color-*: initial;
+	--breakpoint-*: initial;
+
+	/* ----------------------------------------------
+	   Colours — the Figma variable collection.
+	   The designer's HTML carried 120+ custom properties;
+	   only the Figma variables actually used remain.
+	---------------------------------------------- */
+	--color-white: #ffffff;
+	--color-black: #000000;
+	--color-transparent: transparent;
+	--color-current: currentColor;
+
+	/* primary/* */
+	--color-brand-25: #fbf9fe;
+	--color-brand-50: #f9f7fd;
+	--color-brand-100: #f1ecfb;
+	--color-brand-200: #e6ddf7;
+	--color-brand-300: #d2c2f0;
+	--color-brand-400: #b59ae6;
+	--color-brand-500: #9973d9;
+	/* "primary/700 (Main)" — buttons, highlights, links. */
+	--color-brand-700: #6d42af;
+	/* Hover step. Figma draws no hover state; one step darker keeps the hue. */
+	--color-brand-800: #5a3d8c;
+	--color-brand-900: #4c3073;
+	/* "primary/950" — the deep purple panels. */
+	--color-brand-950: #311853;
+
+	/* Gray/* */
+	--color-gray-25: #f7f7f7;
+	--color-gray-50: #f2f2f2;
+	--color-gray-100: #e6e6e6;
+	--color-gray-200: #cccccc;
+	--color-gray-500: #666666;
+	--color-gray-700: #4d4d4d;
+	--color-gray-800: #333333;
+	--color-gray-900: #1a1a1a;
+	--color-gray-950: #0d0d0d;
+
+	/* "Highligheter" — the lime FREE tags and announcement link. */
+	--color-signal: #d4f55c;
+
+	/* ----------------------------------------------
+	   Fonts
+	   Lay Grotesk is every text style in Figma. The trial
+	   build only covers A-Z a-z 0-9 ! , . ? — Geist draws
+	   the rest (see inc/fonts.php).
+	---------------------------------------------- */
+	--font-sans: "Lay Grotesk", "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+	/* ----------------------------------------------
+	   Type scale. Line-height 1.1 and -1% tracking on
+	   headings, 1.5 on body copy, per the Figma styles.
+	---------------------------------------------- */
+	/* Hero "Learn. Grow. Progress." — 48 -> 80. Tracking is recorded as a
+	   fixed px value at each mode (-0.48 / -4.2), so it interpolates too. */
+	--text-h1: clamp(3rem, 2.2571rem + 3.0476vw, 5rem);
+	--text-h1--line-height: 1.1;
+	--text-h1--letter-spacing: clamp(-4.2px, 0.9017px - 0.3543vw, -0.48px);
+
+	/* "Font Sizes/Heading/h2" — the footer call to action, 40 -> 56. */
+	--text-h2: clamp(2.5rem, 2.1286rem + 1.5238vw, 3.5rem);
+	--text-h2--line-height: 1.1;
+	--text-h2--letter-spacing: -0.01em;
+
+	/* "Font Sizes/Heading/h3" — every section heading, 40 -> 48. */
+	--text-h3: clamp(2.5rem, 2.3143rem + 0.7619vw, 3rem);
+	--text-h3--line-height: 1.1;
+	--text-h3--letter-spacing: -0.01em;
+
+	/* "Font Sizes/Heading/h4" — category rows, 24 -> 40. */
+	--text-h4: clamp(1.5rem, 1.1286rem + 1.5238vw, 2.5rem);
+	--text-h4--line-height: 1.1;
+	--text-h4--letter-spacing: -0.01em;
+
+	/* "Font Sizes/Heading/h5" — industry card titles, 28 -> 36. */
+	--text-h5: clamp(1.75rem, 1.5643rem + 0.7619vw, 2.25rem);
+	--text-h5--line-height: 1.1;
+	--text-h5--letter-spacing: -0.01em;
+
+	/* "Font Sizes/Heading/h6" — card headings, 24 in both modes. */
+	--text-h6: 1.5rem;
+	--text-h6--line-height: 1.1;
+	--text-h6--letter-spacing: -0.01em;
+
+	/* Hero intro — Body/XL on desktop, Body/Md on mobile: 16 -> 20. */
+	--text-lead: clamp(1rem, 0.9071rem + 0.381vw, 1.25rem);
+	--text-lead--line-height: 1.5;
+
+	/* Fixed Figma body sizes. */
+	--text-xl: 1.25rem;
+	--text-xl--line-height: 1.5;
+	--text-lg: 1.125rem;
+	--text-lg--line-height: 1.5;
+	--text-base: 1rem;
+	--text-base--line-height: 1.5;
+	--text-sm: 0.875rem;
+	--text-sm--line-height: 1.5;
+	--text-xs: 0.75rem;
+	--text-xs--line-height: 1.5;
+	/* "Body/XS" — the FREE tag and session codes. */
+	--text-2xs: 0.625rem;
+	--text-2xs--line-height: 1.5;
+
+	/* ----------------------------------------------
+	   Spacing. Tailwind's native 4px scale covers the
+	   design; only the values that scale between the two
+	   frames are named.
+	---------------------------------------------- */
+	/* Artboard side padding: 16 -> 40. */
+	--spacing-gutter: clamp(1rem, 0.4429rem + 2.2857vw, 2.5rem);
+	/* Section top/bottom padding: 46 -> 80. */
+	--spacing-section: clamp(2.875rem, 2.0857rem + 3.2381vw, 5rem);
+	/* Section header to content: 32 -> 48. */
+	--spacing-stack: clamp(2rem, 1.6286rem + 1.5238vw, 3rem);
+
+	/* ----------------------------------------------
+	   Layout
+	---------------------------------------------- */
+	/* 1440 artboard, 40px gutters = 1360 of content. */
+	--upskill-container: 1440px;
+	/* Announcement bar (44) + nav bar (64 mobile, 76 desktop). */
+	--upskill-header-height: 108px;
+
+	/* ----------------------------------------------
+	   Radius
+	---------------------------------------------- */
+	--radius-sm: 6px;
+	--radius-md: 12px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
+	--radius-2xl: 24px;
+	/* Cards: 16 on the 390 frames, 32 on the 1440 frames. */
+	--radius-card: clamp(1rem, 0.6286rem + 1.5238vw, 2rem);
+
+	/* ----------------------------------------------
+	   Shadows — the purple-tinted elevations Figma uses.
+	---------------------------------------------- */
+	--shadow-btn: 0 1px 2px 0 rgb(26 26 26 / 4%), 0 4px 14px 0 rgb(47 26 81 / 10%);
+	--shadow-card: 0 1px 2px 0 rgb(26 26 26 / 4%), 0 4px 14px -6px rgb(47 26 81 / 10%);
+	--shadow-float: 0 4px 10px 0 rgb(26 26 26 / 3%), 0 32px 70px -20px rgb(47 26 81 / 22%);
+
+	/* ----------------------------------------------
+	   Breakpoints — the established Digital Six set
+	   (BLG). `lg` is the desktop/mobile switch for
+	   content; the header switches at `wd`, where the
+	   full nav first fits.
+	---------------------------------------------- */
+	--breakpoint-xxs: 320px;
+	--breakpoint-xs: 375px;
+	--breakpoint-sml: 480px;
+	--breakpoint-smlr: 576px;
+	--breakpoint-sm: 768px;
+	--breakpoint-md: 992px;
+	--breakpoint-lg: 1025px;
+	--breakpoint-wd: 1200px;
+	--breakpoint-mc: 1280px;
+	--breakpoint-lp: 1400px;
+	--breakpoint-xl: 1930px;
+
+	--ease-out: cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+/* --------------------------------------------------
+   Layout utilities
+-------------------------------------------------- */
+
+/* The page container: 1440 including gutters, as drawn. */
+@utility container {
+	width: 100%;
+	max-width: var(--upskill-container);
+	margin-inline: auto;
+	padding-inline: var(--spacing-gutter);
+}
+
+/* Standard vertical rhythm for a section. */
+@utility section-y {
+	padding-block: var(--spacing-section);
+}
+
+/* --------------------------------------------------
+   Components — modules that would otherwise repeat
+   verbatim in every render.php.
+-------------------------------------------------- */
+@layer components {
+
+	/* A heading's highlighted phrase: "Get a <em>head start.</em>". */
+	.heading em {
+		font-style: normal;
+		color: var(--color-brand-700);
+	}
+
+	.is-dark .heading em {
+		color: var(--color-brand-500);
+	}
+
+	/**
+	 * The pill button. Figma draws a pill holding the label and a round "nest"
+	 * carrying the icon.
+	 */
+	.btn {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		gap: 12px;
+		min-height: 40px;
+		padding: 8px 8px 8px 18px;
+		border: 1px solid transparent;
+		border-radius: 999px;
+		box-shadow: var(--shadow-btn);
+		font-weight: 500;
+		font-size: 13px;
+		line-height: 1.62;
+		letter-spacing: -0.01em;
+		white-space: nowrap;
+		cursor: pointer;
+		transition:
+			background-color 0.25s ease,
+			border-color 0.25s ease,
+			color 0.25s ease,
+			transform 0.25s var(--ease-out);
+	}
+
+	.btn__nest {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 24px;
+		height: 24px;
+		border-radius: 999px;
+		transition: transform 0.4s var(--ease-out), background-color 0.25s ease;
+	}
+
+	.btn__icon {
+		width: 13px;
+		height: 13px;
+	}
+
+	.btn:hover .btn__nest,
+	.btn:focus-visible .btn__nest {
+		transform: translate(2px, -2px);
+	}
+
+	/* The play triangle stays put: the nudge reads as "go", not "play". */
+	.btn--play:hover .btn__nest,
+	.btn--play:focus-visible .btn__nest {
+		transform: none;
+	}
+
+	.btn:active {
+		transform: scale(0.98);
+	}
+
+	/* Sizes: sm = header (40), md = section CTAs (52; the card buttons set 50), lg = dark bands (15px text). */
+	.btn--md {
+		min-height: 52px;
+		padding-block: 12px;
+	}
+
+	.btn--lg {
+		min-height: 48px;
+		padding: 12px 12px 12px 24px;
+		font-size: 15px;
+		line-height: 1.62;
+	}
+
+	.btn--lg .btn__nest {
+		width: 28px;
+		height: 28px;
+	}
+
+	/* Solid purple — the default. */
+	.btn--primary {
+		background-color: var(--color-brand-700);
+		color: var(--color-white);
+	}
+
+	.btn--primary .btn__nest {
+		background-color: rgb(255 255 255 / 16%);
+	}
+
+	.btn--primary:hover {
+		background-color: var(--color-brand-800);
+	}
+
+	/* White pill on light sections ("Watch Free Training"). */
+	.btn--light {
+		background-color: var(--color-white);
+		color: var(--color-gray-950);
+	}
+
+	.btn--light .btn__nest {
+		background-color: rgb(26 26 26 / 7%);
+	}
+
+	.btn--light:hover {
+		background-color: var(--color-brand-50);
+	}
+
+	/* Translucent pill on dark sections with a lilac nest ("Get Started Today"). */
+	.btn--glass {
+		background-color: rgb(255 255 255 / 4%);
+		border-color: rgb(255 255 255 / 14%);
+		color: var(--color-white);
+	}
+
+	.btn--glass .btn__nest {
+		background-color: var(--color-brand-100);
+		color: var(--color-gray-900);
+	}
+
+	.btn--glass:hover {
+		background-color: rgb(255 255 255 / 10%);
+	}
+
+	/* Outline pill on dark sections ("Watch Free Sessions"). */
+	.btn--outline {
+		border-color: rgb(255 255 255 / 14%);
+		box-shadow: none;
+		color: var(--color-white);
+	}
+
+	.btn--outline .btn__nest {
+		background-color: rgb(255 255 255 / 12%);
+	}
+
+	.btn--outline:hover {
+		background-color: rgb(255 255 255 / 8%);
+	}
+
+
+	/**
+	 * Section eyebrow — the white pill with an icon and a tracked uppercase line.
+	 */
+	.eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 6px 12px 6px 8px;
+		border: 1px solid rgb(26 26 26 / 10%);
+		border-radius: 999px;
+		background-color: var(--color-white);
+		color: #55555a;
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 16.2px;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+	}
+
+	.eyebrow__icon {
+		flex: none;
+		width: 20px;
+		height: 20px;
+		color: var(--color-brand-700);
+	}
+
+	.eyebrow > span {
+		padding-top: 2px;
+	}
+
+	.eyebrow--dark {
+		border-color: var(--color-gray-800);
+		background-color: rgb(51 51 51 / 20%);
+		color: var(--color-gray-100);
+	}
+
+	.eyebrow--dark .eyebrow__icon {
+		color: var(--color-brand-500);
+	}
+
+	/**
+	 * Section header. `split` puts the heading left and the intro + button in a
+	 * 380px column on the right (stacked below lg); `center` centres everything.
+	 */
+	.section-header {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	.section-header__title {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	.section-header__heading {
+		color: var(--color-gray-900);
+	}
+
+	.section-header.is-dark .section-header__heading {
+		color: var(--color-white);
+	}
+
+	.section-header__aside {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 24px;
+	}
+
+	.section-header__intro {
+		color: var(--color-gray-500);
+		font-size: var(--text-base);
+		line-height: 1.5;
+	}
+
+	.section-header.is-dark .section-header__intro {
+		color: var(--color-gray-100);
+	}
+
+	/* `stack` keeps everything in one column with a larger intro (the dark
+	   "Why UpSkill Me" section). */
+	.section-header--stack {
+		gap: 20px;
+	}
+
+	.section-header--stack .section-header__intro {
+		font-size: var(--text-lead);
+	}
+
+	/* Figma leaves 38px between a centred heading and its intro. */
+	.section-header--center {
+		align-items: center;
+		gap: 38px;
+		text-align: center;
+	}
+
+	.section-header--center .section-header__title,
+	.section-header--center .section-header__aside {
+		align-items: center;
+	}
+
+	.section-header--center .section-header__aside {
+		max-width: 666px;
+	}
+
+	@media (width >= 1025px) {
+
+		.section-header__title {
+			gap: 20px;
+		}
+
+		.section-header--split {
+			flex-direction: row;
+			align-items: flex-end;
+			justify-content: space-between;
+			gap: 40px;
+		}
+
+		/* The heading takes whatever the 380px aside leaves: Figma lets short
+		   headings run on one line past their 642 box. Force a break with <br>. */
+		.section-header--split .section-header__title {
+			flex: 1 1 auto;
+			min-width: 0;
+		}
+
+		.section-header--split .section-header__aside {
+			flex: none;
+			width: 380px;
+			gap: 16px;
+		}
+	}
+
+	/**
+	 * The "76 sessions" chip: a dashed lilac box around the number.
+	 */
+	.session-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		color: #6e6e74;
+		font-weight: 500;
+		font-size: 10px;
+		line-height: 1.5;
+	}
+
+	.session-chip__count {
+		padding: 0 2px;
+		border: 1px dashed var(--color-brand-300);
+		border-radius: 4px;
+		background-color: var(--color-brand-50);
+		color: var(--color-brand-700);
+	}
+
+	/* The large version on the category rows (scaled 1.966x in Figma). */
+	.session-chip--lg {
+		gap: 12px;
+		/* 14 -> 19.66 */
+		font-size: clamp(0.875rem, 0.7436rem + 0.539vw, 1.2288rem);
+	}
+
+	.session-chip--lg .session-chip__count {
+		padding: 0 4px;
+		border-width: 2px;
+		border-radius: 8px;
+	}
+
+	/**
+	 * The FREE / session-code tags on video cards.
+	 */
+	.tag {
+		display: inline-flex;
+		align-items: center;
+		height: 26px;
+		padding: 0 10px;
+		border-radius: var(--radius-sm);
+		font-weight: 500;
+		font-size: 10px;
+		line-height: 1.5;
+	}
+
+	.tag--free {
+		background-color: var(--color-signal);
+		color: var(--color-gray-900);
+		font-weight: 600;
+		letter-spacing: 1.4px;
+		text-transform: uppercase;
+	}
+
+	.tag--code {
+		background-color: var(--color-brand-25);
+		color: var(--color-brand-700);
+	}
+
+	/**
+	 * Round icon link (category rows, industry cards).
+	 */
+	.icon-link {
+		display: grid;
+		flex: none;
+		place-items: center;
+		border-radius: 999px;
+		transition:
+			background-color 0.25s ease,
+			border-color 0.25s ease,
+			color 0.25s ease,
+			transform 0.25s var(--ease-out);
+	}
+
+	/**
+	 * Collapsible panel. Animating grid-template-rows 0fr -> 1fr gives a real
+	 * slide toggle without measuring heights in JavaScript.
+	 */
+	.collapse {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.32s var(--ease-out);
+	}
+
+	/* Closed content is also made invisible, so links inside a collapsed panel
+	   drop out of the tab order; visibility flips after the slide finishes. */
+	.collapse > * {
+		overflow: hidden;
+		min-height: 0;
+		visibility: hidden;
+		transition: visibility 0s linear 0.32s;
+	}
+
+	.collapse.is-open {
+		grid-template-rows: 1fr;
+	}
+
+	.collapse.is-open > * {
+		visibility: visible;
+		transition-delay: 0s;
+	}
+
+	/**
+	 * Scroll reveal (fade up). JS only adds .is-in, so without JS everything is
+	 * visible. It is an animation rather than a transition so a card's own hover
+	 * transition (lift, shadow) can never cancel it; `--i` staggers siblings by
+	 * 90ms, as the template's data-reveal-delay does.
+	 */
+	.js .reveal {
+		opacity: 0;
+	}
+
+	.js .reveal.is-in {
+		opacity: 1;
+		animation: upskill-fade-up 0.76s var(--ease-out) backwards;
+		animation-delay: calc(var(--i, 0) * 90ms);
+	}
+}
+
+@keyframes upskill-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(24px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.collapse,
+	.collapse > * {
+		transition: none;
+	}
+
+	.js .reveal,
+	.js .reveal.is-in {
+		opacity: 1;
+		animation: none;
+	}
+
+	.btn,
+	.btn__nest {
+		transition: none;
+	}
+
+	.btn:hover .btn__nest,
+	.btn:focus-visible .btn__nest,
+	.btn:active {
+		transform: none;
+	}
+}

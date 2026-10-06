@@ -1,0 +1,11 @@
+// Plugin UI refinements.
+//
+// Markup produced by plugins (LearnDash, WooCommerce, Contact Form 7) cannot
+// carry Tailwind utilities, so it is styled here — one partial per plugin
+// screen or component, forwarded below, e.g.
+//
+//   @use "learndash/course-content";
+//   @use "woocommerce/checkout";
+//
+// Read colours, fonts and radii from the design tokens (var(--color-brand-700),
+// var(--font-sans), var(--radius-card)) rather than repeating hex values.

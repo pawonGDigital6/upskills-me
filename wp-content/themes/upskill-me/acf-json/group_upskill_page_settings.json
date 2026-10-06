@@ -1,0 +1,34 @@
+{
+    "key": "group_upskill_page_settings",
+    "title": "Page: Settings",
+    "fields": [
+        {
+            "key": "field_upskill_page_hide_footer_cta",
+            "label": "Hide footer call to action",
+            "name": "hide_footer_cta",
+            "type": "true_false",
+            "instructions": "For account, cart and checkout style pages.",
+            "ui": 1,
+            "default_value": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

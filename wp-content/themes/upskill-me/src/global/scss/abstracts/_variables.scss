@@ -1,15 +1,18 @@
 @use "sass:map";
 
-// Breakpoints
+// Breakpoints, as max-width values. These mirror the Tailwind `--breakpoint-*`
+// tokens in tailwind/design-system.css (each Tailwind value is this + 1px), so
+// SCSS and utility classes switch at exactly the same widths.
 $breakpoints: (
-	"xxs": 320px,
-	"iPhone5": 374px,
-	"extraSmall": 479px,
-	"smaller": 575px,
-	"small": 767px,
-	"medium": 991px,
-	"ipadPro": 1024px,
-	"wide": 1199px,
-	"laptop": 1399px,
-	"extraWide": 1930px,
+	"xxs": 319px,
+	"xs": 374px,
+	"sml": 479px,
+	"smlr": 575px,
+	"sm": 767px,
+	"md": 991px,
+	"lg": 1024px,
+	"wd": 1199px,
+	"mc": 1279px,
+	"lp": 1399px,
+	"xl": 1929px,
 );

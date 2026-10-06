@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/hero",
+  "version": "1.0.0",
+  "title": "Home Hero",
+  "category": "acf-blocks",
+  "icon": "cover-image",
+  "description": "Home page hero: headline, image showcase and the industry/category pathway selector with search.",
+  "keywords": [
+    "hero",
+    "banner",
+    "pathway",
+    "search"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": false
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "viewScript": "file:./view.js",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}

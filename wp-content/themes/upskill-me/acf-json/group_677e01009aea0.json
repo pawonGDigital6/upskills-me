@@ -1,82 +1,207 @@
 {
     "key": "group_677e01009aea0",
-    "title": "Block: Spacing",
+    "title": "Block: Options",
     "fields": [
         {
-            "key": "field_677e0100ab877",
-            "label": "Block Spacing",
+            "key": "field_upskill_options_tab_options",
+            "label": "Block Options",
             "name": "",
-            "aria-label": "",
-            "type": "accordion",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "open": 0,
-            "multi_expand": 0,
+            "type": "tab",
+            "placement": "top",
             "endpoint": 0
         },
         {
-            "key": "field_677e012cab878",
-            "label": "Spacing Top",
-            "name": "spacing_top",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "default": "Default",
-                "small": "Small",
-                "medium": "Medium",
-                "large": "Large"
-            },
-            "default_value": "default",
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": ""
+            "key": "field_upskill_options_spacing",
+            "label": "Section Spacing",
+            "name": "spacing",
+            "type": "group",
+            "layout": "block",
+            "instructions": "Leave inactive to keep the spacing the block's design specifies.",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_options_spacing_desktop",
+                    "label": "Desktop",
+                    "name": "desktop",
+                    "type": "group",
+                    "layout": "block",
+                    "instructions": "1025px and above.",
+                    "sub_fields": [
+                        {
+                            "key": "field_upskill_options_spacing_desktop_status",
+                            "label": "Override",
+                            "name": "status",
+                            "type": "true_false",
+                            "ui": 1,
+                            "ui_on_text": "Active",
+                            "ui_off_text": "Inactive",
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_upskill_options_spacing_desktop_top",
+                            "label": "Top (px)",
+                            "name": "top",
+                            "type": "number",
+                            "min": 0,
+                            "max": 400,
+                            "step": 1,
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_upskill_options_spacing_desktop_status",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_upskill_options_spacing_desktop_bottom",
+                            "label": "Bottom (px)",
+                            "name": "bottom",
+                            "type": "number",
+                            "min": 0,
+                            "max": 400,
+                            "step": 1,
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_upskill_options_spacing_desktop_status",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "key": "field_upskill_options_spacing_mobile",
+                    "label": "Mobile",
+                    "name": "mobile",
+                    "type": "group",
+                    "layout": "block",
+                    "instructions": "Below 1025px.",
+                    "sub_fields": [
+                        {
+                            "key": "field_upskill_options_spacing_mobile_status",
+                            "label": "Override",
+                            "name": "status",
+                            "type": "true_false",
+                            "ui": 1,
+                            "ui_on_text": "Active",
+                            "ui_off_text": "Inactive",
+                            "default_value": 0
+                        },
+                        {
+                            "key": "field_upskill_options_spacing_mobile_top",
+                            "label": "Top (px)",
+                            "name": "top",
+                            "type": "number",
+                            "min": 0,
+                            "max": 400,
+                            "step": 1,
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_upskill_options_spacing_mobile_status",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ]
+                        },
+                        {
+                            "key": "field_upskill_options_spacing_mobile_bottom",
+                            "label": "Bottom (px)",
+                            "name": "bottom",
+                            "type": "number",
+                            "min": 0,
+                            "max": 400,
+                            "step": 1,
+                            "wrapper": {
+                                "width": "50"
+                            },
+                            "conditional_logic": [
+                                [
+                                    {
+                                        "field": "field_upskill_options_spacing_mobile_status",
+                                        "operator": "==",
+                                        "value": "1"
+                                    }
+                                ]
+                            ]
+                        }
+                    ]
+                }
+            ]
         },
         {
-            "key": "field_677e016bab879",
-            "label": "Spacing Bottom",
-            "name": "spacing_bottom",
-            "aria-label": "",
-            "type": "select",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "choices": {
-                "default": "Default",
-                "small": "Small",
-                "medium": "Medium",
-                "large": "Large"
-            },
-            "default_value": "default",
-            "return_format": "value",
-            "multiple": 0,
-            "allow_null": 0,
-            "allow_in_bindings": 0,
-            "ui": 0,
-            "ajax": 0,
-            "placeholder": ""
+            "key": "field_upskill_options_background",
+            "label": "Background",
+            "name": "background",
+            "type": "group",
+            "layout": "block",
+            "instructions": "Leave inactive to keep the block's designed surface.",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_options_background_status",
+                    "label": "Override",
+                    "name": "status",
+                    "type": "true_false",
+                    "ui": 1,
+                    "ui_on_text": "Active",
+                    "ui_off_text": "Inactive",
+                    "default_value": 0
+                },
+                {
+                    "key": "field_upskill_options_background_color",
+                    "label": "Colour",
+                    "name": "color",
+                    "type": "color_picker",
+                    "enable_opacity": 1,
+                    "return_format": "string",
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_upskill_options_background_status",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "key": "field_upskill_options_background_scheme",
+                    "label": "Text colour",
+                    "name": "scheme",
+                    "type": "button_group",
+                    "choices": {
+                        "": "Leave as designed",
+                        "light": "Dark text",
+                        "dark": "Light text"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_upskill_options_background_status",
+                                "operator": "==",
+                                "value": "1"
+                            }
+                        ]
+                    ]
+                }
+            ]
         }
     ],
     "location": [
@@ -97,5 +222,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1736334100
+    "modified": 1791258008
 }

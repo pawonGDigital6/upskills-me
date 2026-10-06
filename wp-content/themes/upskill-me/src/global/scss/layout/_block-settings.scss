@@ -1,43 +1,49 @@
-@use "../abstracts/variables" as var;
+@use "../abstracts/mixins" as mix;
 
-.acf-bf-block {
-	&.padding {
-		&-top {
-			&-sm {
-				padding-block-start: 40px;
-			}
+/**
+ * Overrides from the shared "Block Options" ACF tab.
+ *
+ * Deliberate per-instance overrides of a block's own spacing or surface, so
+ * they must beat the Tailwind utilities in the block markup. They do without
+ * !important: main.scss loads after tailwind.css, and `.acf-block.<modifier>`
+ * (0,2,0) outranks a single utility (0,1,0). A block with no override switched
+ * on emits none of these classes and keeps its designed defaults.
+ */
+.acf-block {
 
-			&-md {
-				padding-block-start: 80px;
-			}
+	@include mix.breakpoint("lg") {
 
-			&-lg {
-				padding-block-start: 120px;
-			}
+		&.has-pt-mobile {
+			padding-block-start: var(--upskill-pt-mobile);
 		}
 
-		&-bottom {
-			&-sm {
-				padding-block-end: 40px;
-			}
-
-			&-md {
-				padding-block-end: 80px;
-			}
-
-			&-lg {
-				padding-block-end: 120px;
-			}
+		&.has-pb-mobile {
+			padding-block-end: var(--upskill-pb-mobile);
 		}
 	}
 
-	&.background {
-		&-primary {
-			// background-color: var.$color-primary;
+	@include mix.breakpoint("lg", true) {
+
+		&.has-pt-desktop {
+			padding-block-start: var(--upskill-pt-desktop);
 		}
 
-		&-secondary {
-			// background-color: var.$color-secondary;
+		&.has-pb-desktop {
+			padding-block-end: var(--upskill-pb-desktop);
 		}
+	}
+
+	&.has-background-color {
+		background-color: var(--upskill-block-background);
+	}
+
+	// Only for when an editor-chosen background flips the surface between light
+	// and dark, which the block's own markup cannot know about.
+	&.is-dark {
+		color: var(--color-white);
+	}
+
+	&.is-light {
+		color: var(--color-gray-950);
 	}
 }

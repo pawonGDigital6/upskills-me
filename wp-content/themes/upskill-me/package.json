@@ -1,13 +1,12 @@
 {
-    "name": "acf-first-block",
+    "name": "upskill-me-theme",
     "version": "1.0.0",
-    "description": "Example block scaffolded with Create Block tool.",
-    "author": "The WordPress Contributors",
+    "description": "UpSkill Me — WordPress ACF block theme.",
+    "author": "Digital Six",
     "license": "GPL-2.0-or-later",
-    "main": "build/index.js",
     "scripts": {
         "build": "cross-env COPY_PREVIEW_IMAGE=true wp-scripts build --webpack-copy-php --source-path=src/blocks --output-path=build/blocks",
-        "build:global": "wp-scripts build --source-path=src/global --output-path=build/global",
+        "build:global": "wp-scripts build index.js editor.js --source-path=src/global --output-path=build/global",
         "format": "wp-scripts format",
         "lint:css": "wp-scripts lint-style src/global/**/*.scss",
         "lint:js": "wp-scripts lint-js",
@@ -24,7 +23,10 @@
         "cross-env": "^7.0.3"
     },
     "dependencies": {
+        "@tailwindcss/postcss": "^4.3.3",
         "@wordpress/dom-ready": "^4.15.0",
-        "swiper": "^11.2.1"
-    }
+        "postcss": "^8.5.29",
+        "tailwindcss": "^4.3.3"
+    },
+    "private": true
 }

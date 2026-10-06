@@ -1,0 +1,28 @@
+/**
+ * Industry Cards block.
+ *
+ * Layout and colour are utilities in render.php; this only lifts the card on
+ * hover, which needs the reduced-motion guard.
+ */
+
+.block-industry-cards li.group {
+	transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+@media (hover: hover) {
+
+	.block-industry-cards li.group:hover {
+		transform: translateY(-4px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.block-industry-cards li.group {
+		transition: none;
+	}
+
+	.block-industry-cards li.group:hover {
+		transform: none;
+	}
+}

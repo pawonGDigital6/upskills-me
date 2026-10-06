@@ -1,0 +1,11 @@
+/**
+ * FAQs block — block editor only styles.
+ */
+
+.editor-styles-wrapper .block-faqs .collapse {
+	grid-template-rows: 1fr;
+}
+
+.editor-styles-wrapper .block-faqs .collapse > * {
+	visibility: visible;
+}

@@ -1,0 +1,138 @@
+{
+    "key": "group_upskill_block_how_it_works",
+    "title": "Block: How It Works",
+    "fields": [
+        {
+            "key": "field_upskill_how_it_works_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_how_it_works_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_how_it_works_acc_tracks",
+            "label": "Tracks",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_how_it_works_tracks",
+            "label": "Tracks",
+            "name": "tracks",
+            "type": "repeater",
+            "layout": "block",
+            "min": 0,
+            "max": 2,
+            "button_label": "Add track",
+            "collapsed": "field_upskill_how_it_works_tracks_label",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_how_it_works_tracks_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "60"
+                    }
+                },
+                {
+                    "key": "field_upskill_how_it_works_tracks_theme",
+                    "label": "Style",
+                    "name": "theme",
+                    "type": "button_group",
+                    "choices": {
+                        "dark": "Dark",
+                        "light": "Light"
+                    },
+                    "default_value": "light",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "40"
+                    }
+                },
+                {
+                    "key": "field_upskill_how_it_works_tracks_steps",
+                    "label": "Steps",
+                    "name": "steps",
+                    "type": "repeater",
+                    "layout": "table",
+                    "min": 0,
+                    "max": 8,
+                    "button_label": "Add step",
+                    "sub_fields": [
+                        {
+                            "key": "field_upskill_how_it_works_tracks_steps_title",
+                            "label": "Title",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_upskill_how_it_works_tracks_steps_text",
+                            "label": "Text",
+                            "name": "text",
+                            "type": "textarea",
+                            "rows": 2,
+                            "new_lines": ""
+                        }
+                    ]
+                },
+                {
+                    "key": "field_upskill_how_it_works_tracks_primary_button",
+                    "label": "Primary button",
+                    "name": "primary_button",
+                    "type": "link",
+                    "return_format": "array",
+                    "wrapper": {
+                        "width": "50"
+                    }
+                },
+                {
+                    "key": "field_upskill_how_it_works_tracks_secondary_button",
+                    "label": "Secondary button",
+                    "name": "secondary_button",
+                    "type": "link",
+                    "return_format": "array",
+                    "wrapper": {
+                        "width": "50"
+                    }
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/how-it-works"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

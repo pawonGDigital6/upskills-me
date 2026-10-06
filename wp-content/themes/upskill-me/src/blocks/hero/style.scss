@@ -1,0 +1,20 @@
+/**
+ * Home Hero block — front-end styles not expressible as utilities.
+ */
+
+// The panel photography eases in scale as a panel opens.
+.block-hero [data-showcase-item] img {
+	transition: transform 0.8s cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.block-hero [data-showcase-item]:hover img {
+	transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.block-hero [data-showcase-item],
+	.block-hero [data-showcase-item] img {
+		transition: none;
+	}
+}

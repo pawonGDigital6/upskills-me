@@ -1,0 +1,1 @@
+.block-feature-media .feature{transition:background-color .35s ease,border-color .35s ease}.block-feature-media .feature.is-active{background-color:var(--color-brand-900);border-color:var(--color-brand-700)}@media(prefers-reduced-motion:reduce){.block-feature-media .feature{transition:none}}

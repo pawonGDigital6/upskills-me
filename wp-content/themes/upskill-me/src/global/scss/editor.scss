@@ -1,10 +1,1 @@
-@use "./abstracts/variables" as var;
-@use "./abstracts/mixins" as mix;
-@use "./layout/block-settings";
-
-.editor-styles-wrapper{
-	.acf-block-preview.acf-block-component {
-		max-width: 100%;
-		margin-block: 0;
-	}
-} 
+@use "layout/block-settings";

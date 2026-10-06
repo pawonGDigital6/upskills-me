@@ -1,0 +1,260 @@
+{
+    "key": "group_upskill_block_hero",
+    "title": "Block: Home Hero",
+    "fields": [
+        {
+            "key": "field_upskill_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs"
+            },
+            "default_value": "video-book",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_hero_acc_showcase",
+            "label": "Showcase",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_hero_showcase",
+            "label": "Showcase panels",
+            "name": "showcase",
+            "type": "repeater",
+            "instructions": "The first panel starts open. Name, link and count come from the chosen term.",
+            "layout": "block",
+            "min": 0,
+            "max": 4,
+            "button_label": "Add panel",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_hero_showcase_taxonomy",
+                    "label": "Term type",
+                    "name": "taxonomy",
+                    "type": "button_group",
+                    "choices": {
+                        "industry": "Industry",
+                        "training_category": "Category"
+                    },
+                    "default_value": "industry",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "30"
+                    }
+                },
+                {
+                    "key": "field_upskill_hero_showcase_industry",
+                    "label": "Industry",
+                    "name": "industry",
+                    "type": "taxonomy",
+                    "taxonomy": "industry",
+                    "field_type": "select",
+                    "allow_null": 1,
+                    "add_term": 0,
+                    "save_terms": 0,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0,
+                    "wrapper": {
+                        "width": "35"
+                    },
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_upskill_hero_showcase_taxonomy",
+                                "operator": "==",
+                                "value": "industry"
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "key": "field_upskill_hero_showcase_category",
+                    "label": "Category",
+                    "name": "category",
+                    "type": "taxonomy",
+                    "taxonomy": "training_category",
+                    "field_type": "select",
+                    "allow_null": 1,
+                    "add_term": 0,
+                    "save_terms": 0,
+                    "load_terms": 0,
+                    "return_format": "id",
+                    "multiple": 0,
+                    "wrapper": {
+                        "width": "35"
+                    },
+                    "conditional_logic": [
+                        [
+                            {
+                                "field": "field_upskill_hero_showcase_taxonomy",
+                                "operator": "==",
+                                "value": "training_category"
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "key": "field_upskill_hero_showcase_image",
+                    "label": "Image",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp",
+                    "wrapper": {
+                        "width": "60"
+                    }
+                },
+                {
+                    "key": "field_upskill_hero_showcase_focus",
+                    "label": "Image focus",
+                    "name": "focus",
+                    "type": "select",
+                    "instructions": "Which part of the photo stays in view when the panel folds.",
+                    "choices": {
+                        "left": "Left",
+                        "left-center": "Left of centre",
+                        "center": "Centre",
+                        "right-center": "Right of centre",
+                        "right": "Right"
+                    },
+                    "default_value": "center",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "40"
+                    }
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_hero_showcase_count_label",
+            "label": "Count label",
+            "name": "showcase_count_label",
+            "type": "text",
+            "default_value": "Topics",
+            "instructions": "Shown under the number on the open panel."
+        },
+        {
+            "key": "field_upskill_hero_acc_pathway",
+            "label": "Pathway selector",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_hero_pathway_industries",
+            "label": "By Industry",
+            "name": "pathway_industries",
+            "type": "taxonomy",
+            "taxonomy": "industry",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "instructions": "In display order."
+        },
+        {
+            "key": "field_upskill_hero_pathway_categories",
+            "label": "By Category",
+            "name": "pathway_categories",
+            "type": "taxonomy",
+            "taxonomy": "training_category",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "instructions": "In display order."
+        },
+        {
+            "key": "field_upskill_hero_pathway_text",
+            "label": "Helper text",
+            "name": "pathway_text",
+            "type": "text"
+        },
+        {
+            "key": "field_upskill_hero_search_placeholder",
+            "label": "Search placeholder",
+            "name": "search_placeholder",
+            "type": "text",
+            "default_value": "Or describe what you need"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791258008
+}

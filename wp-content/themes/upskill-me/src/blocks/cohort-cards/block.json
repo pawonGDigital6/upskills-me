@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/cohort-cards",
+	"version": "1.0.0",
+	"title": "Cohort Cards",
+	"category": "acf-blocks",
+	"icon": "groups",
+	"description": "Image cards for selected training levels (Team Member, Manager, Director).",
+	"keywords": [
+		"cohort",
+		"level",
+		"role"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": true
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

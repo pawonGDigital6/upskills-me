@@ -1,0 +1,132 @@
+/**
+ * How It Works block — the step flight, from the designer's template.
+ *
+ * view.js adds `.is-in` to each step list as it enters view (the steps cascade
+ * in) and then walks every step through data-state default -> active ->
+ * complete: the active dot fills and rings, the line below it fills, and a
+ * completed dot swaps its number for a check. Without JS the markup's resting
+ * state (step 1 active) is what shows.
+ */
+
+$ease: cubic-bezier(0.22, 0.72, 0, 1);
+
+// Entrance: each step rises in turn.
+.js [data-flight] .step {
+	opacity: 0;
+}
+
+[data-flight].is-in .step {
+	opacity: 1;
+	animation: upskill-step-in 560ms $ease backwards;
+	animation-delay: calc(160ms + var(--i, 0) * 150ms);
+}
+
+@keyframes upskill-step-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+}
+
+// Dot.
+.step__dot {
+	transition: background-color 320ms $ease, border-color 320ms $ease, color 320ms $ease, transform 320ms $ease, box-shadow 320ms $ease;
+}
+
+.step__num {
+	transition: opacity 220ms $ease, transform 220ms $ease;
+}
+
+.step__check {
+	color: var(--color-white);
+	opacity: 0;
+	transform: scale(0.4);
+	transition: opacity 220ms $ease 60ms, transform 260ms $ease 60ms;
+}
+
+.step[data-state="active"] .step__dot,
+.step[data-state="complete"] .step__dot {
+	border-color: var(--color-brand-700);
+	background-color: var(--color-brand-700);
+	color: var(--color-white);
+}
+
+.step[data-state="active"] .step__dot {
+	transform: scale(1.12);
+	box-shadow: 0 0 0 5px rgb(103 68 168 / 16%);
+}
+
+.is-dark .step[data-state="active"] .step__dot {
+	box-shadow: 0 0 0 5px rgb(103 68 168 / 32%);
+}
+
+.step[data-state="complete"] .step__num {
+	opacity: 0;
+	transform: scale(0.5);
+}
+
+.step[data-state="complete"] .step__check {
+	opacity: 1;
+	transform: none;
+}
+
+// Line: the dashed rule fills from the top as its step becomes active.
+.step__fill {
+	position: absolute;
+	top: 0;
+	left: -1px;
+	width: 1px;
+	height: 0;
+	background-color: var(--color-brand-700);
+	transition: height 640ms $ease;
+}
+
+.is-dark .step__fill {
+	background-color: var(--color-brand-300);
+}
+
+.step[data-state="active"] .step__fill,
+.step[data-state="complete"] .step__fill {
+	height: 100%;
+}
+
+// Copy: upcoming steps recede, the active one leads.
+.step__body {
+	transition: opacity 320ms $ease;
+}
+
+.step[data-state="default"] .step__body {
+	opacity: 0.5;
+}
+
+.step[data-state="complete"] .step__body {
+	opacity: 0.82;
+}
+
+.step__title {
+	transition: color 320ms $ease;
+}
+
+.step[data-state="active"] .step__title {
+	color: var(--color-brand-700);
+}
+
+.is-dark .step[data-state="active"] .step__title {
+	color: var(--color-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	[data-flight].is-in .step {
+		animation: none;
+	}
+
+	.step__dot,
+	.step__num,
+	.step__check,
+	.step__fill,
+	.step__body,
+	.step__title {
+		transition: none;
+	}
+}

@@ -1,55 +1,59 @@
-document.addEventListener("mouseover", (e) => {
-    const previewContainer = document.querySelector(
-        ".block-editor-inserter__preview-content-missing"
-    );
+/**
+ * Show each ACF block's preview.png in the block inserter.
+ *
+ * The inserter renders a "no preview available" panel for blocks that use a
+ * server-side render template. Each block ships a preview.png next to its
+ * block.json (copied into build/blocks by the build), and its file name is
+ * declared as the block's `previewImage` attribute, so the image can be
+ * resolved from whichever block is being hovered.
+ */
+( function () {
+	'use strict';
 
-    if (!previewContainer) return;
+	var PREFIX = 'editor-block-list-item-acf-block-';
 
-    if (e.target.closest(".block-editor-block-types-list__item")) {
-        const hoveredBlock = e.target.closest(
-            ".block-editor-block-types-list__item"
-        );
+	document.addEventListener( 'mouseover', function ( event ) {
+		var panel = document.querySelector( '.block-editor-inserter__preview-content-missing' );
 
-        // to find a name of the block we can extract it from block classes
-        // Retrieve classes from the block on which the mouse is hovered
-        const blockClasses = hoveredBlock.className.split(" ");
+		if ( ! panel || ! event.target.closest ) {
+			return;
+		}
 
-        // Finding a class that starts with "editor-block-list-item-acf-block-"
-        const blockClass = blockClasses.find((cls) =>
-            cls.startsWith("editor-block-list-item-acf-block-")
-        );
+		var item = event.target.closest( '.block-editor-block-types-list__item' );
 
-        // If such a class is found, extract the name from it
-        if (blockClass) {
-            const blockName = blockClass.replace(
-                "editor-block-list-item-acf-block-",
-                ""
-            );
+		if ( ! item ) {
+			return;
+		}
 
-            // Get the image URL for this block
-            const preimageUrl = wp.data
-                .select("core/blocks")
-                .getBlockType("acf-block/" + blockName)?.attributes
-                ?.previewImage?.default;
-            //Not ideal to make two const, but you get the idea, the next line write the absolute URL with the theme folder as template
-            const imageUrl =
-                passed_data.templateUrl +
-                "/build/blocks/" +
-                blockName +
-                "/" +
-                preimageUrl;
+		var match = Array.prototype.find.call( item.classList, function ( name ) {
+			return 0 === name.indexOf( PREFIX );
+		} );
 
-            // adding our styles if there is a link to the picture
-            if (imageUrl) {
-                previewContainer.style.background = `url(${imageUrl}) no-repeat center`;
-                previewContainer.style.backgroundSize = "contain";
-                previewContainer.style.fontSize = "0px";
-            } else {
-                // remove our styles if there is no link
-                previewContainer.style.background = "";
-                previewContainer.style.backgroundSize = "";
-                previewContainer.style.fontSize = "";
-            }
-        }
-    }
-});
+		var reset = function () {
+			panel.style.background = '';
+			panel.style.backgroundSize = '';
+			panel.style.fontSize = '';
+		};
+
+		if ( ! match || ! window.wp || ! window.wp.data ) {
+			reset();
+			return;
+		}
+
+		var slug = match.slice( PREFIX.length );
+		var type = window.wp.data.select( 'core/blocks' ).getBlockType( 'acf-block/' + slug );
+		var file = type && type.attributes && type.attributes.previewImage
+			? type.attributes.previewImage.default
+			: null;
+
+		if ( ! file ) {
+			reset();
+			return;
+		}
+
+		panel.style.background =
+			'url(' + upskillBlockPreview.templateUrl + '/build/blocks/' + slug + '/' + file + ') no-repeat center';
+		panel.style.backgroundSize = 'contain';
+		panel.style.fontSize = '0px';
+	} );
+}() );
