@@ -83,7 +83,9 @@ $uid = wp_unique_id( 'hero-' );
 							<?php
 							upskill_image(
 								$panel['image'],
-								0 === $index ? 'upskill-portrait' : 'upskill-card',
+								// Images are uploaded pre-cropped to the panel ratio at 2x, so the full
+								// file plus its proportional sizes make the srcset.
+								'full',
 								array(
 									'class'   => 'absolute inset-0 -z-10 size-full object-cover ' . ( isset( $focus_classes[ $panel['focus'] ] ) ? $focus_classes[ $panel['focus'] ] : 'object-center' ),
 									'alt'     => '',

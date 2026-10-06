@@ -35,6 +35,13 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
   do not nudge their icon. Change interactions only when explicitly asked.
 - **Hold plugin-dependent work.** Anything that needs LearnDash/WooCommerce is not developed or
   customised until the plugin is installed. Free Sessions is held off the Home page as built.
+- **Image standard (every module).** Export from the Figma original (never the designer HTML or a
+  screenshot), crop to the design's frame/ratio as Figma frames it, and size to 2x the largest
+  display width (enough for 3x on the 390 frame). WebP, quality ~84, effort 6, smart subsampling,
+  light sharpen after downscale (sharp: lanczos3 + sharpen σ0.6); never upscale a small source.
+  Upload to the Media Library with real alt text (empty only when decorative). Render with
+  `upskill_image( $id, 'full', [ 'sizes' => … ] )` so the srcset is the proportional set, and
+  write `sizes` from the actual layout breakpoints.
 - **Change only what is asked.** Do not refactor, remove or "optimise" existing code, files or
   animations unless the instruction says so.
 - **Do not regress the Home page.** Changing a shared Home module for another page needs approval.

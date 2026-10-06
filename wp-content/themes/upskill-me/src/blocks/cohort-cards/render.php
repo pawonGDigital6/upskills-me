@@ -29,10 +29,10 @@ $terms      = upskill_selected_terms( get_field( 'cohorts' ), 'cohort' );
 							<?php
 							upskill_image(
 								get_field( 'card_image', $term ),
-								'upskill-card',
+								'full',
 								array(
 									'class' => 'size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]',
-									'sizes' => '(min-width: 768px) 33vw, 92vw',
+									'sizes' => '(min-width: 992px) 33vw, 92vw',
 								)
 							);
 							?>
