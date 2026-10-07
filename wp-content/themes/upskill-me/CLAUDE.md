@@ -129,4 +129,13 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   `key-takeaways` (article content). `how-it-works` gained an optional image (single track + photo);
   Home output is unchanged. `single-post.php` is the Blog detail (contents list with scroll-spy,
   share links, related posts). Held for LearnDash: "Related Training" links on blog cards/articles.
-- Not started (by instruction): FAQ, Case Study detail, Guides, Contact, Privacy, Terms, Returns, 404.
+- **FAQs, Guides, Case Study detail, Contact, 404, Privacy, Terms, Returns** — built 2026-10-07,
+  awaiting review. New blocks: `statement` (centred two-tone statement + details row), `contact-hero`
+  (photo card + Contact Form 7 form card), `location-map` (Google embed). Options added: FAQs "Grouped
+  by topic" (grouped.php, phone chips + search in view.js), page-hero "Text only", card-grid styles
+  `rows` / `outcome` and the "Faint waves" surface, media-story social links + "boxed". Templates:
+  `single-case_study.php` (hero image field, related case studies via template-parts/related-posts),
+  `template-policy.php` (native editor content, "Policy navigation" from its headings, texturize off so
+  hyphens stay hyphens), `404.php` (no CTA band). CF7: inc/contact-form-7.php (no plugin CSS/autop,
+  `<i data-icon>` placeholders) + scss/plugins/_contact-form-7.scss. Held: case study "Industry Training
+  Resources" (LearnDash sessions). Nine FAQ answers are placeholders awaiting approved copy.

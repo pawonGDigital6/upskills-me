@@ -51,6 +51,12 @@ if ( 'selected' === get_field( 'selection_mode' ) && $selected ) {
 
 $faqs = new WP_Query( $query_args );
 $card = get_field( 'help_card' );
+
+// The FAQs page lists every question under its topic (grouped.php).
+if ( 'grouped' === get_field( 'layout' ) ) {
+	require __DIR__ . '/grouped.php';
+	return;
+}
 $uid  = wp_unique_id( 'faq-' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
@@ -68,26 +74,7 @@ $uid  = wp_unique_id( 'faq-' );
 				);
 				?>
 
-				<?php if ( ! empty( $card['title'] ) ) : ?>
-					<div class="flex flex-col items-start gap-6 rounded-card border border-gray-100 bg-gray-25 p-4 shadow-[0_1px_1px_rgb(10_13_18/5%)]">
-						<div class="flex flex-col gap-4 text-lg">
-							<p class="font-medium text-gray-950"><?php echo esc_html( $card['title'] ); ?></p>
-							<?php if ( ! empty( $card['text'] ) ) : ?>
-								<p class="text-gray-500"><?php echo esc_html( $card['text'] ); ?></p>
-							<?php endif; ?>
-						</div>
-						<?php
-						upskill_button(
-							isset( $card['button'] ) ? $card['button'] : array(),
-							array(
-								'variant' => 'light',
-								'icon'    => 'play',
-								'class'   => 'min-h-[50px]',
-							)
-						);
-						?>
-					</div>
-				<?php endif; ?>
+				<?php get_template_part( 'template-parts/faq-help-card', null, array( 'card' => $card ) ); ?>
 			</div>
 
 			<?php if ( $faqs->have_posts() ) : ?>

@@ -16,6 +16,17 @@
             "return_format": "id",
             "multiple": 0,
             "instructions": "Shown on the case study card."
+        },
+        {
+            "key": "field_upskill_case_study_hero_image",
+            "label": "Hero image",
+            "name": "hero_image",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp",
+            "instructions": "The photo beside the title on the case study page. Leave empty to use the featured image (which the cards use)."
         }
     ],
     "location": [
@@ -36,5 +47,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791282962
+    "modified": 1791351143
 }

@@ -125,3 +125,66 @@
 		}
 	}
 }
+
+// Policy pages (Figma: Privacy Policy 49325:18785 / 49375:119288) share the
+// article body, with 24px section headings, a tighter list and the 12px notes.
+.policy-body {
+
+	h2 {
+		color: var(--color-gray-950);
+		font-size: var(--text-xl);
+		letter-spacing: 0;
+
+		+ * {
+			margin-top: 16px;
+		}
+	}
+
+	.wp-block-list {
+		gap: 15px;
+	}
+
+	.has-small-font-size {
+		font-size: var(--text-xs);
+		line-height: 1.5;
+	}
+}
+
+@media (width >= 1025px) {
+
+	.policy-body h2 {
+		font-size: var(--text-h6);
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+
+		+ * {
+			margin-top: 14px;
+		}
+	}
+}
+
+// Phones: 14px between paragraphs, 40px above a heading, darker copy.
+@media (width < 1025px) {
+
+	.policy-body {
+		color: #3b3b42;
+
+		> * + * {
+			margin-top: 14px;
+		}
+
+		h2 {
+			margin-top: 40px;
+		}
+	}
+
+	// The first four headings, until "See more".
+	.policy-nav__list:not(.is-expanded) .policy-nav__extra {
+		display: none;
+	}
+}
+
+.policy-nav .article-contents__link.is-active {
+	color: var(--color-gray-950);
+	font-weight: 500;
+}

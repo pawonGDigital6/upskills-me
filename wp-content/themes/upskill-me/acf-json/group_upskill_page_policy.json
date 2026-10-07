@@ -1,0 +1,40 @@
+{
+    "key": "group_upskill_page_policy",
+    "title": "Page: Policy",
+    "fields": [
+        {
+            "key": "field_upskill_policy_display_title",
+            "label": "Hero title",
+            "name": "display_title",
+            "type": "text",
+            "instructions": "Optional, with its highlighted phrase, e.g. Privacy <em>Policy</em>. Leave empty to use the page title."
+        },
+        {
+            "key": "field_upskill_policy_last_updated",
+            "label": "Last updated",
+            "name": "last_updated",
+            "type": "text",
+            "instructions": "Shown under the title. Leave empty to use the date the page was last saved.",
+            "placeholder": "8 September 2026"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-policy.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791351143
+}

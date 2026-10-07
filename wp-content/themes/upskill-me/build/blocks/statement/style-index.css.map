@@ -1,0 +1,1 @@
+{"version":3,"file":"statement/style-index.css","mappings":";;;AAAA;;;;EAAA,C","sources":["webpack://upskill-me-theme/./src/blocks/statement/style.scss"],"sourcesContent":["/**\n * Statement block.\n *\n * Layout and colour are utilities in render.php.\n */\n"],"names":[],"sourceRoot":""}

@@ -1,0 +1,85 @@
+{
+    "key": "group_upskill_block_location_map",
+    "title": "Block: Location Map",
+    "fields": [
+        {
+            "key": "field_upskill_location_map_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_location_map_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_location_map_acc_map",
+            "label": "Map",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_location_map_place",
+            "label": "Place",
+            "name": "place",
+            "type": "text",
+            "instructions": "An address, or latitude,longitude (e.g. -33.7965729,151.1861214).",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_location_map_zoom",
+            "label": "Zoom",
+            "name": "zoom",
+            "type": "number",
+            "default_value": 16,
+            "min": 3,
+            "max": 21,
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_location_map_map_title",
+            "label": "Map description",
+            "name": "map_title",
+            "type": "text",
+            "instructions": "For screen readers.",
+            "placeholder": "Map showing our location"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/location-map"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791351143
+}

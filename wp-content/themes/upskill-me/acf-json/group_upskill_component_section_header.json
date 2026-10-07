@@ -29,7 +29,10 @@
                 "book-open-alt": "Open book (outline)",
                 "book-open-text": "Open book (text)",
                 "blogs": "Blogs",
-                "project": "Project"
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person"
             },
             "default_value": "",
             "return_format": "value",
@@ -87,5 +90,5 @@
     "active": false,
     "description": "Cloned into blocks; never shown on its own.",
     "show_in_rest": 0,
-    "modified": 1791282962
+    "modified": 1791351143
 }

@@ -1,25 +1,44 @@
 <?php
 /**
- * "Keep exploring" — related posts under a blog article.
+ * "Keep exploring" — related posts under a blog article or a case study.
  *
- * Figma: Blog Detail 49325:16710. Posts sharing the article's category come
- * first, topped up with the latest posts.
+ * Figma: Blog Detail 49325:16710, Project Case Study Detail 49325:16857.
+ * Posts sharing the article's category (case studies: the same industry)
+ * come first, topped up with the latest of the same type.
  *
  * @package upskill-me
  */
 
-$current  = get_the_ID();
-$category = upskill_primary_category( $current );
-$related  = array();
+$current   = get_the_ID();
+$post_type = get_post_type( $current );
+$related   = array();
 
-if ( $category ) {
-	$related = get_posts(
-		array(
-			'numberposts' => 3,
-			'category'    => $category->term_id,
-			'exclude'     => array( $current ),
-		)
-	);
+if ( 'case_study' === $post_type ) {
+	$industry = (int) get_field( 'industry', $current );
+
+	if ( $industry ) {
+		$related = get_posts(
+			array(
+				'post_type'   => 'case_study',
+				'numberposts' => 3,
+				'exclude'     => array( $current ),
+				'meta_key'    => 'industry', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- three posts at most.
+				'meta_value'  => $industry, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+			)
+		);
+	}
+} else {
+	$category = upskill_primary_category( $current );
+
+	if ( $category ) {
+		$related = get_posts(
+			array(
+				'numberposts' => 3,
+				'category'    => $category->term_id,
+				'exclude'     => array( $current ),
+			)
+		);
+	}
 }
 
 if ( count( $related ) < 3 ) {
@@ -27,6 +46,7 @@ if ( count( $related ) < 3 ) {
 		$related,
 		get_posts(
 			array(
+				'post_type'   => $post_type,
 				'numberposts' => 3 - count( $related ),
 				'exclude'     => array_merge( array( $current ), wp_list_pluck( $related, 'ID' ) ),
 			)
@@ -50,8 +70,8 @@ if ( ! $related ) {
 				<?php
 				upskill_button(
 					array(
-						'url'   => upskill_listing_page_url( 'post' ),
-						'title' => __( 'See All Blogs', 'upskill-me' ),
+						'url'   => upskill_listing_page_url( $post_type ),
+						'title' => 'case_study' === $post_type ? __( 'See All Case Studies', 'upskill-me' ) : __( 'See All Blogs', 'upskill-me' ),
 					)
 				);
 				?>

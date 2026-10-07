@@ -57,6 +57,54 @@
             ]
         },
         {
+            "key": "field_upskill_media_story_acc_links",
+            "label": "Links",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_media_story_links",
+            "label": "Social links",
+            "name": "links",
+            "type": "repeater",
+            "instructions": "Shown under the intro instead of (or after) the checklist.",
+            "layout": "table",
+            "min": 0,
+            "max": 4,
+            "button_label": "Add link",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_media_story_links_network",
+                    "label": "Network",
+                    "name": "network",
+                    "type": "select",
+                    "choices": {
+                        "linkedin": "LinkedIn",
+                        "facebook": "Facebook",
+                        "youtube": "YouTube"
+                    },
+                    "default_value": "linkedin",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_media_story_links_url",
+                    "label": "URL",
+                    "name": "url",
+                    "type": "url"
+                },
+                {
+                    "key": "field_upskill_media_story_links_text",
+                    "label": "Link text",
+                    "name": "text",
+                    "type": "text",
+                    "placeholder": "Follow Upskillme"
+                }
+            ]
+        },
+        {
             "key": "field_upskill_media_story_acc_image",
             "label": "Image",
             "name": "",
@@ -74,6 +122,14 @@
             "preview_size": "medium",
             "library": "all",
             "mime_types": "jpg, jpeg, png, webp"
+        },
+        {
+            "key": "field_upskill_media_story_boxed",
+            "label": "White card on the grey page",
+            "name": "boxed",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0
         },
         {
             "key": "field_upskill_media_story_quote",
@@ -117,5 +173,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791282962
+    "modified": 1791351143
 }

@@ -93,7 +93,10 @@ $header_args = array(
 	'reveal' => true,
 );
 
-$grid = static function ( $items ) use ( $variant ) {
+// Guide cards number themselves across pages (01, 02 … then 04 on page two).
+$number_offset = 'listing' === $layout ? ( max( 1, (int) get_query_var( 'paged' ) ) - 1 ) * $count : 0;
+
+$grid = static function ( $items ) use ( $variant, $number_offset ) {
 	if ( ! $items ) {
 		return;
 	}
@@ -108,6 +111,7 @@ $grid = static function ( $items ) use ( $variant ) {
 					'post'    => $item,
 					'variant' => $variant,
 					'index'   => $index,
+					'number'  => $number_offset + $index + 1,
 				)
 			);
 		}
@@ -187,7 +191,7 @@ $grid = static function ( $items ) use ( $variant ) {
 			<?php upskill_section_header( $header_args ); ?>
 
 			<?php if ( $featured instanceof WP_Post && ( 'featured' === $layout || 1 === max( 1, (int) get_query_var( 'paged' ) ) ) ) : ?>
-				<div class="mt-stack<?php echo 'listing' === $layout ? ' lg:mt-[70px]' : ''; ?>">
+				<div class="<?php echo 'listing' === $layout ? ( 'guide' === $post_type ? 'mt-12 lg:mt-[70px]' : 'mt-stack lg:mt-[70px]' ) : 'mt-stack'; ?>">
 					<?php
 					get_template_part(
 						'template-parts/cards/resource',
@@ -204,7 +208,8 @@ $grid = static function ( $items ) use ( $variant ) {
 			<?php endif; ?>
 
 			<?php if ( $posts ) : ?>
-				<div class="<?php echo 'listing' === $layout && $featured ? 'mt-4' : 'mt-stack'; ?>">
+				<?php // Guides leave 38px under the featured guide (Guides 49325:18297); blogs 16. ?>
+				<div class="<?php echo 'listing' === $layout && $featured ? ( 'guide' === $post_type ? 'mt-4 lg:mt-[38px]' : 'mt-4' ) : 'mt-stack'; ?>">
 					<?php $grid( $posts ); ?>
 				</div>
 			<?php endif; ?>

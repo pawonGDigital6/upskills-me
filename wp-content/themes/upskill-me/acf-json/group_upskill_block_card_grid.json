@@ -59,6 +59,7 @@
                 "tint": "Lilac",
                 "pale": "Pale lilac",
                 "waves": "Light waves",
+                "faint": "Faint waves",
                 "dark": "Dark"
             },
             "default_value": "white",
@@ -93,7 +94,9 @@
                 "stacked": "Icon or accent bar, then text",
                 "principle": "Label top right, text at the foot",
                 "link": "Link card with arrow",
-                "texture": "Tall textured card"
+                "texture": "Tall textured card",
+                "rows": "Rows: icon, title and text on one line (dark backgrounds)",
+                "outcome": "Outcome columns in one outlined box"
             },
             "default_value": "stacked",
             "return_format": "value",
@@ -213,7 +216,9 @@
                         "users": "People",
                         "help": "Help",
                         "industry": "Industry",
-                        "future": "Future"
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
                     },
                     "default_value": "info",
                     "return_format": "value",
@@ -305,6 +310,8 @@
                         "help": "Help",
                         "industry": "Industry",
                         "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)",
                         "bar": "Accent bar (no icon)"
                     },
                     "return_format": "value",
@@ -381,5 +388,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791282962
+    "modified": 1791351143
 }

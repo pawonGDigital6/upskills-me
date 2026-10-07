@@ -33,6 +33,19 @@
             "endpoint": 0
         },
         {
+            "key": "field_upskill_faqs_layout",
+            "label": "Layout",
+            "name": "layout",
+            "type": "button_group",
+            "instructions": "Grouped lists every question under its topic heading (the FAQs page).",
+            "choices": {
+                "list": "One list",
+                "grouped": "Grouped by topic"
+            },
+            "default_value": "list",
+            "return_format": "value"
+        },
+        {
             "key": "field_upskill_faqs_selection_mode",
             "label": "Show",
             "name": "selection_mode",
@@ -42,7 +55,16 @@
                 "selected": "Hand-picked"
             },
             "default_value": "topic",
-            "return_format": "value"
+            "return_format": "value",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_faqs_layout",
+                        "operator": "==",
+                        "value": "list"
+                    }
+                ]
+            ]
         },
         {
             "key": "field_upskill_faqs_faq_topic",
@@ -64,6 +86,11 @@
             "conditional_logic": [
                 [
                     {
+                        "field": "field_upskill_faqs_layout",
+                        "operator": "==",
+                        "value": "list"
+                    },
+                    {
                         "field": "field_upskill_faqs_selection_mode",
                         "operator": "==",
                         "value": "topic"
@@ -84,6 +111,11 @@
             },
             "conditional_logic": [
                 [
+                    {
+                        "field": "field_upskill_faqs_layout",
+                        "operator": "==",
+                        "value": "list"
+                    },
                     {
                         "field": "field_upskill_faqs_selection_mode",
                         "operator": "==",
@@ -109,9 +141,38 @@
             "conditional_logic": [
                 [
                     {
+                        "field": "field_upskill_faqs_layout",
+                        "operator": "==",
+                        "value": "list"
+                    },
+                    {
                         "field": "field_upskill_faqs_selection_mode",
                         "operator": "==",
                         "value": "selected"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_faqs_faq_topics",
+            "label": "Topics",
+            "name": "faq_topics",
+            "type": "taxonomy",
+            "taxonomy": "faq_category",
+            "field_type": "multi_select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "instructions": "In the order they should appear. Leave empty for every topic that has questions.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_faqs_layout",
+                        "operator": "==",
+                        "value": "grouped"
                     }
                 ]
             ]
@@ -174,5 +235,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791258008
+    "modified": 1791351143
 }

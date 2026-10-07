@@ -1,6 +1,7 @@
 /**
- * Blog article: the "In this article" reading position and the copy-link
- * share button.
+ * Blog article and policy pages: the contents list's reading position, the
+ * phone "See more" toggle on long contents lists, and the copy-link share
+ * button.
  */
 
 /**
@@ -52,6 +53,31 @@ function contents() {
 }
 
 /**
+ * Long contents lists show their first items on phones; the toggle reveals
+ * the rest (the list carries .is-expanded) and swaps its label.
+ */
+function contentsMore() {
+	document.querySelectorAll( '[data-contents-more]' ).forEach( ( button ) => {
+		const list = document.getElementById( button.getAttribute( 'aria-controls' ) );
+		const label = button.querySelector( '[data-contents-more-label]' );
+
+		if ( ! list || ! label ) {
+			return;
+		}
+
+		const more = label.textContent;
+
+		button.addEventListener( 'click', () => {
+			const expanded = button.getAttribute( 'aria-expanded' ) !== 'true';
+
+			button.setAttribute( 'aria-expanded', String( expanded ) );
+			list.classList.toggle( 'is-expanded', expanded );
+			label.textContent = expanded ? button.dataset.lessLabel : more;
+		} );
+	} );
+}
+
+/**
  * Copy the article URL; the button's accessible name confirms it.
  */
 function copyLink() {
@@ -78,5 +104,6 @@ function copyLink() {
 
 export function Article() {
 	contents();
+	contentsMore();
 	copyLink();
 }

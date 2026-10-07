@@ -1,0 +1,175 @@
+{
+    "key": "group_upskill_block_contact_hero",
+    "title": "Block: Contact Hero",
+    "fields": [
+        {
+            "key": "field_upskill_contact_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_contact_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person"
+            },
+            "default_value": "free-video",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_contact_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_contact_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_contact_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_contact_hero_primary_button",
+            "label": "Primary button",
+            "name": "primary_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_contact_hero_secondary_button",
+            "label": "Secondary button (play)",
+            "name": "secondary_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_contact_hero_note",
+            "label": "Note",
+            "name": "note",
+            "type": "text",
+            "instructions": "The ticked line under the buttons."
+        },
+        {
+            "key": "field_upskill_contact_hero_image",
+            "label": "Background photo",
+            "name": "image",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp"
+        },
+        {
+            "key": "field_upskill_contact_hero_acc_form",
+            "label": "Form",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_contact_hero_form_title",
+            "label": "Form title",
+            "name": "form_title",
+            "type": "text"
+        },
+        {
+            "key": "field_upskill_contact_hero_form_text",
+            "label": "Form intro",
+            "name": "form_text",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_contact_hero_form",
+            "label": "Form",
+            "name": "form",
+            "type": "post_object",
+            "instructions": "A Contact Form 7 form.",
+            "post_type": [
+                "wpcf7_contact_form"
+            ],
+            "return_format": "id",
+            "allow_null": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_upskill_contact_hero_form_note",
+            "label": "Note under the form",
+            "name": "form_note",
+            "type": "text",
+            "placeholder": "No obligation · Talk to our team"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/contact-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791351143
+}

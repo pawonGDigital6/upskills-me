@@ -86,12 +86,16 @@ if ( ! function_exists( 'upskill_hide_footer_cta' ) ) {
 	 * Has the current page switched off the "Get a head start" band?
 	 *
 	 * The band sits above the footer on every marketing page in the design and
-	 * is absent from the account, cart and checkout screens, so it is on by
-	 * default and a page opts out.
+	 * is absent from the account, cart and checkout screens and the 404 page,
+	 * so it is on by default and a page opts out.
 	 *
 	 * @return bool
 	 */
 	function upskill_hide_footer_cta() {
+		if ( is_404() ) {
+			return true;
+		}
+
 		if ( ! is_singular() || ! function_exists( 'get_field' ) ) {
 			return false;
 		}

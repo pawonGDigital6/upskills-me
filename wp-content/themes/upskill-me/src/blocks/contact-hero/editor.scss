@@ -1,0 +1,7 @@
+/**
+ * contact-hero block — block editor only styles.
+ */
+
+.editor-styles-wrapper .block-contact-hero :is(a, iframe, form) {
+	pointer-events: none;
+}

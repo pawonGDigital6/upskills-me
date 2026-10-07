@@ -1,0 +1,7 @@
+/**
+ * location-map block — block editor only styles.
+ */
+
+.editor-styles-wrapper .block-location-map :is(a, iframe, form) {
+	pointer-events: none;
+}

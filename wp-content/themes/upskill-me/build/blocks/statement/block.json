@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/statement",
+  "version": "1.0.0",
+  "title": "Statement",
+  "category": "acf-blocks",
+  "icon": "editor-quote",
+  "description": "A centred eyebrow and two-tone statement, with an optional button and a row of details.",
+  "keywords": [
+    "statement",
+    "overview",
+    "case study"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": true
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}

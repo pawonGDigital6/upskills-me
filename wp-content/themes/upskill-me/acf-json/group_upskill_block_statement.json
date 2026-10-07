@@ -1,0 +1,139 @@
+{
+    "key": "group_upskill_block_statement",
+    "title": "Block: Statement",
+    "fields": [
+        {
+            "key": "field_upskill_statement_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_statement_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person"
+            },
+            "default_value": "overview",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_statement_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_statement_lead",
+            "label": "Opening phrase",
+            "name": "lead",
+            "type": "text",
+            "instructions": "Shown dark; the rest of the statement follows in grey."
+        },
+        {
+            "key": "field_upskill_statement_text",
+            "label": "Rest of the statement",
+            "name": "text",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_statement_button",
+            "label": "Button",
+            "name": "button",
+            "type": "link",
+            "return_format": "array"
+        },
+        {
+            "key": "field_upskill_statement_details",
+            "label": "Details",
+            "name": "details",
+            "type": "repeater",
+            "instructions": "Optional row under a rule, e.g. Industry, Focus, Need.",
+            "layout": "table",
+            "min": 0,
+            "max": 3,
+            "button_label": "Add detail",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_statement_details_term",
+                    "label": "Label",
+                    "name": "term",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_statement_details_description",
+                    "label": "Value",
+                    "name": "description",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_statement_surface",
+            "label": "Background",
+            "name": "surface",
+            "type": "button_group",
+            "choices": {
+                "pale": "Pale lilac",
+                "white": "White"
+            },
+            "default_value": "pale",
+            "return_format": "value"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/statement"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791351143
+}

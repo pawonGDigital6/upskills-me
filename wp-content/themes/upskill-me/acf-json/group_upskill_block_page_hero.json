@@ -17,7 +17,8 @@
             "type": "button_group",
             "choices": {
                 "split": "Split (media beside)",
-                "center": "Centred"
+                "center": "Centred",
+                "text": "Text only"
             },
             "default_value": "split",
             "return_format": "value"
@@ -49,7 +50,10 @@
                 "book-open-alt": "Open book (outline)",
                 "book-open-text": "Open book (text)",
                 "blogs": "Blogs",
-                "project": "Project"
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person"
             },
             "default_value": "",
             "return_format": "value",
@@ -243,7 +247,9 @@
                         "users": "People",
                         "help": "Help",
                         "industry": "Industry",
-                        "future": "Future"
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
                     },
                     "return_format": "value"
                 },
@@ -373,7 +379,9 @@
                         "users": "People",
                         "help": "Help",
                         "industry": "Industry",
-                        "future": "Future"
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
                     },
                     "return_format": "value"
                 },
@@ -511,5 +519,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791282962
+    "modified": 1791351143
 }

@@ -1,0 +1,18 @@
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/location-map/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Location Map block.
+ *
+ * Layout and colour are utilities in render.php.
+ */
+/* Figma left-aligns the header on phones and tablets and centres it at desktop. */
+@media (width < 1025px) {
+  .block-location-map .section-header--center,
+  .block-location-map .section-header--center .section-header__title {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

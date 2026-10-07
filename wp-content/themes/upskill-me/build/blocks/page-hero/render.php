@@ -6,6 +6,8 @@
  * Why UpSkill Me 49325:15293, Case Studies 49325:18138 (centred). Mobile
  * frames 49374:46982, 49374:101478, 49372:42258.
  *
+ * Text (FAQs 49325:17983): eyebrow, headline and intro on a pale lilac panel.
+ *
  * Split: headline, intro, two buttons and a note beside a photo (optionally
  * carrying link chips) or an illustration. Centred: headline and intro, with
  * optional floating badges either side and "the ladder" row underneath.
@@ -15,7 +17,7 @@
  * @package upskill-me
  */
 
-$layout   = 'center' === get_field( 'layout' ) ? 'center' : 'split';
+$layout   = in_array( get_field( 'layout' ), array( 'center', 'text' ), true ) ? get_field( 'layout' ) : 'split';
 $center   = 'center' === $layout;
 $media    = get_field( 'media' );
 $is_photo = 'illustration' !== get_field( 'media_style' );
@@ -25,7 +27,9 @@ $ladder   = $center ? get_field( 'ladder' ) : array();
 $steps    = ! empty( $ladder['steps'] ) ? array_filter( (array) $ladder['steps'], static fn( $step ) => ! empty( $step['title'] ) ) : array();
 $note     = get_field( 'note' );
 
-$attributes = upskill_block_attributes( $block, 'block-page-hero overflow-hidden bg-gray-25 pt-7 pb-[46px] lg:pt-12 lg:pb-20' );
+// Inner pages leave 56px under the header before the hero section (Figma frames
+// start every inner hero at y 176): split heroes add their own 48px on top.
+$attributes = upskill_block_attributes( $block, 'block-page-hero overflow-hidden bg-gray-25 pt-7 pb-[46px] lg:pb-20 ' . ( 'split' === $layout ? 'lg:pt-[104px]' : 'lg:pt-14' ) );
 
 /*
  * Chip spots over the photo, from the Resources frame (a 680-wide photo):
@@ -46,7 +50,18 @@ $chip_tones = array(
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
-		<?php if ( $center ) : ?>
+		<?php if ( 'text' === $layout ) : ?>
+			<div class="flex flex-col gap-6 lg:bg-brand-25">
+				<div class="flex flex-col items-start gap-3">
+					<?php upskill_eyebrow( get_field( 'eyebrow' ), (string) get_field( 'eyebrow_icon' ) ); ?>
+					<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold' ); ?>
+				</div>
+				<?php if ( get_field( 'intro' ) ) : ?>
+					<p class="reveal text-lead text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
+				<?php endif; ?>
+			</div>
+
+		<?php elseif ( $center ) : ?>
 			<?php // The badges share the copy's grid cell so they float beside it without leaving the flow. ?>
 			<div class="grid grid-cols-1 grid-rows-1">
 				<div class="col-start-1 row-start-1 flex flex-col items-start gap-6 lg:mx-auto lg:max-w-[792px] lg:items-center lg:text-center">

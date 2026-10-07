@@ -25,3 +25,13 @@
     transform: none;
   }
 }
+/* The rows header (case study "The solution"): 12px under the eyebrow and a
+   559px intro at 66% white. */
+.block-card-grid .section-header--rows .section-header__title {
+  gap: 12px;
+}
+
+.block-card-grid .section-header--rows .section-header__intro {
+  max-width: 559px;
+  color: rgba(255, 255, 255, 0.66);
+}

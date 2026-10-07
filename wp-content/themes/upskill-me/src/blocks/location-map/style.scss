@@ -1,0 +1,15 @@
+/**
+ * Location Map block.
+ *
+ * Layout and colour are utilities in render.php.
+ */
+
+/* Figma left-aligns the header on phones and tablets and centres it at desktop. */
+@media (width < 1025px) {
+
+	.block-location-map .section-header--center,
+	.block-location-map .section-header--center .section-header__title {
+		align-items: flex-start;
+		text-align: left;
+	}
+}

@@ -1,0 +1,231 @@
+// Contact Form 7 — the enquiry form in the Contact hero.
+//
+// Figma: Contact 49325:20116 (1440) / 49375:115528 (390). Fields stack 16px
+// apart: a 14px label 6px above a 50px grey input with its icon in a small
+// disc; Role and Team size share a row from tablet up. The form template
+// supplies the wrappers (.upskill-form__*) and icons (inc/contact-form-7.php).
+
+.upskill-form {
+
+	.upskill-form__fields {
+		display: grid;
+		gap: 16px;
+	}
+
+	.upskill-form__row {
+		display: grid;
+		gap: 16px;
+
+		@media (width >= 640px) {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.upskill-form__field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		min-width: 0;
+	}
+
+	label {
+		color: var(--color-gray-900);
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 1.5;
+	}
+
+	// "What training do you need?" is drawn a size down.
+	.upskill-form__field--message label {
+		font-size: 13px;
+		line-height: 1.62;
+		letter-spacing: -0.008em;
+	}
+
+	.wpcf7-form-control-wrap {
+		display: block;
+	}
+
+	.upskill-form__control {
+		position: relative;
+		display: block;
+	}
+
+	.wpcf7-field-icon {
+		position: absolute;
+		top: 13px;
+		left: 13px;
+		display: grid;
+		place-items: center;
+		width: 24px;
+		height: 24px;
+		border-radius: 999px;
+		background-color: var(--color-gray-100);
+		color: var(--color-gray-800);
+		pointer-events: none;
+	}
+
+	input:where([type="text"], [type="email"], [type="tel"]),
+	select,
+	textarea {
+		display: block;
+		width: 100%;
+		min-height: 50px;
+		padding: 12px;
+		border: 1px solid rgb(26 26 26 / 20%);
+		border-radius: 8px;
+		background-color: var(--color-gray-25);
+		color: var(--color-gray-950);
+		font: inherit;
+		font-size: 16px;
+		line-height: 1.5;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+		&::placeholder {
+			color: #999;
+			opacity: 1;
+		}
+
+		&:hover {
+			border-color: rgb(26 26 26 / 32%);
+		}
+
+		&:focus {
+			border-color: var(--color-brand-700);
+			outline: none;
+			background-color: var(--color-white);
+			box-shadow: 0 0 0 3px rgb(109 66 175 / 14%);
+		}
+
+		&[aria-invalid="true"] {
+			border-color: #d92d20;
+		}
+	}
+
+	// Room for the icon disc: 12 + 24 + 8.
+	.wpcf7-field-icon ~ .wpcf7-form-control-wrap input {
+		padding-left: 44px;
+	}
+
+	// The placeholder option reads as a placeholder until a size is chosen.
+	select {
+		padding-right: 44px;
+		appearance: none;
+		cursor: pointer;
+
+		&:has(option[value=""]:checked) {
+			color: #999;
+		}
+	}
+
+	.upskill-form__chevron {
+		position: absolute;
+		top: 13px;
+		right: 12px;
+		width: 24px;
+		height: 24px;
+		color: var(--color-gray-800);
+		pointer-events: none;
+	}
+
+	textarea {
+		min-height: 78px;
+		height: 78px;
+		padding: 12px 16px;
+		border-radius: 12px;
+		resize: vertical;
+	}
+
+	.upskill-form__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px;
+		padding-top: 16px;
+	}
+
+	.wpcf7-not-valid-tip {
+		display: block;
+		padding-top: 6px;
+		color: #d92d20;
+		font-size: 13px;
+		line-height: 1.4;
+	}
+
+	.wpcf7-spinner {
+		visibility: hidden;
+		width: 20px;
+		height: 20px;
+		border: 2px solid var(--color-brand-200);
+		border-top-color: var(--color-brand-700);
+		border-radius: 999px;
+		animation: upskill-form-spin 0.8s linear infinite;
+	}
+
+	&.submitting .wpcf7-spinner {
+		visibility: visible;
+	}
+
+	.wpcf7-response-output {
+		margin-top: 16px;
+		padding: 12px 14px;
+		border: 1px solid var(--color-line);
+		border-radius: 12px;
+		color: var(--color-gray-800);
+		font-size: 14px;
+		line-height: 1.5;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	&.invalid .wpcf7-response-output,
+	&.unaccepted .wpcf7-response-output,
+	&.failed .wpcf7-response-output,
+	&.aborted .wpcf7-response-output,
+	&.spam .wpcf7-response-output {
+		border-color: rgb(217 45 32 / 30%);
+		background-color: #fef3f2;
+		color: #b42318;
+	}
+
+	&.sent .wpcf7-response-output {
+		border-color: rgb(77 124 15 / 30%);
+		background-color: #f3fbe8;
+		color: #3f6212;
+	}
+
+	// Hidden fields CF7 prints.
+	.hidden-fields-container {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+	}
+}
+
+// CF7 announces results in a live region before the form (outside .upskill-form).
+.wpcf7 .screen-reader-response {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+@keyframes upskill-form-spin {
+
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.upskill-form .wpcf7-spinner {
+		animation-duration: 2s;
+	}
+}

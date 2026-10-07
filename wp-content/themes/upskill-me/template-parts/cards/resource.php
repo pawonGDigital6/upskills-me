@@ -18,6 +18,7 @@
  *     @type int     $index   Position, for the reveal stagger.
  *     @type string  $tag     Title heading tag.
  *     @type array   $links   Featured only: extra ACF links shown after "Read".
+ *     @type int     $number  Guide cards: the 01/02 badge on the photo.
  * }
  *
  * @package upskill-me
@@ -82,10 +83,10 @@ if ( 'featured' === $variant ) :
 				)
 			);
 			?>
-			<span class="relative col-start-1 row-start-1 m-5 self-start justify-self-start rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php esc_html_e( 'Featured', 'upskill-me' ); ?></span>
+			<span class="relative col-start-1 row-start-1 m-5 self-start justify-self-start rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php 'guide' === $type ? esc_html_e( 'Featured guide', 'upskill-me' ) : esc_html_e( 'Featured', 'upskill-me' ); ?></span>
 		</div>
 		<div class="flex flex-col p-6 lg:p-9">
-			<?php if ( 'post' === $type ) : ?>
+			<?php if ( 'case_study' !== $type ) : ?>
 				<?php $meta_row(); ?>
 			<?php else : ?>
 				<p class="self-start rounded-sm bg-brand-25 px-2.5 py-1 text-sm font-medium text-brand-700">
@@ -171,22 +172,33 @@ elseif ( 'case' === $variant ) :
 else :
 	?>
 	<article class="reveal group relative flex flex-col overflow-hidden rounded-[20px] border border-brand-200 bg-white" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
-		<div class="aspect-[358/216] overflow-hidden lg:aspect-[443/216]">
+		<div class="grid aspect-[358/216] grid-cols-1 grid-rows-1 overflow-hidden lg:aspect-[443/216]">
 			<?php
 			upskill_image(
 				$thumb,
 				'full',
 				array(
-					'class' => 'size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]',
-					'sizes' => '(min-width: 1025px) 33vw, (min-width: 768px) 46vw, 92vw',
+					'class' => 'col-start-1 row-start-1 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]',
+					// Guide renders (about 2:1) overfill the taller phone and tablet box: drawn ~113vw on phones, ~58vw on tablets.
+					'sizes' => 'guide' === $type ? '(min-width: 1025px) 33vw, (min-width: 768px) 58vw, 113vw' : '(min-width: 1025px) 33vw, (min-width: 768px) 46vw, 92vw',
 				)
 			);
 			?>
+			<?php if ( 'guide' === $type && ! empty( $args['number'] ) ) : ?>
+				<span class="relative col-start-1 row-start-1 m-3 grid h-7 min-w-7 place-items-center self-start justify-self-start rounded-lg bg-white/92 px-2 text-sm text-gray-700"><?php echo esc_html( str_pad( (string) $args['number'], 2, '0', STR_PAD_LEFT ) ); ?></span>
+			<?php endif; ?>
 		</div>
-		<div class="flex flex-1 flex-col gap-8 p-4 lg:gap-[60px]">
+		<div class="flex flex-1 flex-col p-4 <?php echo 'guide' === $type ? 'gap-11' : 'gap-8 lg:gap-[60px]'; ?>">
 			<div class="flex flex-col">
-				<?php $meta_row(); ?>
+				<?php if ( 'guide' === $type ) : ?>
+					<p class="self-start rounded-sm bg-gray-50 px-2.5 py-1 text-sm text-gray-500"><?php echo esc_html( upskill_post_type_label( $post_obj ) ); ?></p>
+				<?php else : ?>
+					<?php $meta_row(); ?>
+				<?php endif; ?>
 				<<?php echo esc_attr( $tag ); ?> class="py-2 text-h6 font-medium text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
+				<?php if ( 'guide' === $type && $excerpt ) : ?>
+					<p class="pt-4 text-base leading-[1.6] text-gray-500"><?php echo esc_html( $excerpt ); ?></p>
+				<?php endif; ?>
 			</div>
 			<?php $read_line( 'mt-auto pt-[18px] text-brand-800' ); ?>
 		</div>

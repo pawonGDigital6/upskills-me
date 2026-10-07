@@ -22,7 +22,7 @@ while ( have_posts() ) :
 	?>
 	<main id="primary" class="site-main">
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-			<header class="bg-gray-25 pt-7 pb-[46px] lg:pt-12 lg:pb-20">
+			<header class="bg-gray-25 pt-7 pb-[46px] lg:pt-[104px] lg:pb-20">
 				<div class="container flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-20">
 					<div class="flex flex-col lg:min-w-0 lg:flex-1">
 						<p class="reveal flex flex-wrap items-center gap-2.5 text-sm text-gray-500">
