@@ -1,0 +1,116 @@
+// Single blog post — the article body (Figma: Blog Detail 49325:16571 /
+// 49381:35435). Post content is editor markup (core paragraphs, headings,
+// lists, quotes), so it is styled here rather than with utilities.
+
+.article-body {
+	color: var(--color-gray-500);
+	font-size: var(--text-base);
+	line-height: 1.5;
+
+	> * + * {
+		margin-top: 18px;
+	}
+
+	h2 {
+		margin-top: 44px;
+		color: #0e0e14;
+		font-weight: 500;
+		font-size: var(--text-xl);
+		line-height: 1.5;
+		scroll-margin-top: calc(var(--upskill-header-height) - 20px);
+
+		+ * {
+			margin-top: 14px;
+		}
+	}
+
+	strong {
+		color: #2b2b34;
+		font-weight: 500;
+	}
+
+	a:not([class]) {
+		color: var(--color-brand-700);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	ul:not([class]),
+	.wp-block-list {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-top: 16px;
+		color: #2b2b34;
+
+		li {
+			position: relative;
+			padding-left: 26px;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: 0.6875em;
+				left: 6px;
+				width: 6px;
+				height: 6px;
+				border-radius: 999px;
+				background-color: var(--color-brand-500);
+			}
+		}
+	}
+
+	blockquote,
+	.wp-block-quote {
+		margin-top: 36px;
+		padding: 24px 26px;
+		border-left: 3px solid var(--color-brand-500);
+		border-radius: 0 16px 16px 0;
+		background-color: var(--color-brand-25);
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: var(--text-lg);
+
+		+ * {
+			margin-top: 36px;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		cite {
+			display: block;
+			margin-top: 8px;
+			color: var(--color-gray-500);
+			font-weight: 400;
+			font-size: var(--text-sm);
+			font-style: normal;
+		}
+	}
+
+	.block-key-takeaways {
+		margin-top: 40px;
+
+		h2 {
+			margin-top: 0;
+		}
+
+		+ * {
+			margin-top: 40px;
+		}
+	}
+}
+
+// "In this article": the reading position is marked with a lilac bar.
+.article-contents__link.is-active {
+	border-left-color: var(--color-brand-500);
+	background-color: var(--color-brand-25);
+}
+
+@media (width < 1025px) {
+
+	.article-body {
+		color: #4d4d4d;
+	}
+}

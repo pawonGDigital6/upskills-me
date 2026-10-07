@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/post-cards",
+	"version": "1.0.0",
+	"title": "Resource Cards",
+	"category": "acf-blocks",
+	"icon": "grid-view",
+	"description": "Blogs, case studies or guides as a grid, a side-by-side row, a featured card or a paginated listing.",
+	"keywords": [
+		"blog",
+		"posts",
+		"case studies",
+		"guides"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": true
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

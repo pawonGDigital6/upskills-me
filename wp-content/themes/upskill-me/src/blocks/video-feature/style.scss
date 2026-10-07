@@ -1,0 +1,10 @@
+/**
+ * Video Feature block.
+ *
+ * Layout and colour are utilities in render.php; this hides the poster layers
+ * once the player has taken over the card.
+ */
+
+.video-card.is-playing > :not(video) {
+	display: none;
+}

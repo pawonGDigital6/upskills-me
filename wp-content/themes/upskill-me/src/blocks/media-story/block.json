@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/media-story",
+	"version": "1.0.0",
+	"title": "Media Story",
+	"category": "acf-blocks",
+	"icon": "id-alt",
+	"description": "Photo with a quote card beside a heading, paragraphs and a checklist.",
+	"keywords": [
+		"story",
+		"about",
+		"image"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": true
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

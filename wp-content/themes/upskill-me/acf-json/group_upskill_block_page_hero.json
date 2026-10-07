@@ -1,0 +1,515 @@
+{
+    "key": "group_upskill_block_page_hero",
+    "title": "Block: Page Hero",
+    "fields": [
+        {
+            "key": "field_upskill_page_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_page_hero_layout",
+            "label": "Layout",
+            "name": "layout",
+            "type": "button_group",
+            "choices": {
+                "split": "Split (media beside)",
+                "center": "Centred"
+            },
+            "default_value": "split",
+            "return_format": "value"
+        },
+        {
+            "key": "field_upskill_page_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_page_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_page_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_page_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_page_hero_primary_button",
+            "label": "Primary button",
+            "name": "primary_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_page_hero_secondary_button",
+            "label": "Secondary button (play)",
+            "name": "secondary_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "split"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_note",
+            "label": "Note",
+            "name": "note",
+            "type": "text",
+            "instructions": "The ticked line under the buttons.",
+            "placeholder": "More than compliance. Built for the job.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "split"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_acc_media",
+            "label": "Media",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "split"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_media",
+            "label": "Image",
+            "name": "media",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp",
+            "wrapper": {
+                "width": "60"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "split"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_media_style",
+            "label": "Image type",
+            "name": "media_style",
+            "type": "button_group",
+            "choices": {
+                "photo": "Photo (cropped to fill)",
+                "illustration": "Illustration (shown whole)"
+            },
+            "default_value": "photo",
+            "return_format": "value",
+            "wrapper": {
+                "width": "40"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "split"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_chips",
+            "label": "Photo chips",
+            "name": "chips",
+            "type": "repeater",
+            "instructions": "Up to four labels floating over the photo (desktop).",
+            "layout": "table",
+            "min": 0,
+            "max": 4,
+            "button_label": "Add chip",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_page_hero_chips_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future"
+                    },
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_tone",
+                    "label": "Tone",
+                    "name": "tone",
+                    "type": "select",
+                    "choices": {
+                        "purple": "Purple",
+                        "blue": "Blue",
+                        "green": "Green"
+                    },
+                    "default_value": "purple",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_position",
+                    "label": "Position",
+                    "name": "position",
+                    "type": "select",
+                    "choices": {
+                        "upper-left": "Upper left",
+                        "top-right": "Top right",
+                        "lower-left": "Lower left",
+                        "bottom-right": "Bottom right"
+                    },
+                    "default_value": "upper-left",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "split"
+                    },
+                    {
+                        "field": "field_upskill_page_hero_media_style",
+                        "operator": "==",
+                        "value": "photo"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_acc_badges",
+            "label": "Badges",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_badges",
+            "label": "Floating badges",
+            "name": "badges",
+            "type": "repeater",
+            "instructions": "Small cards either side of the heading (desktop).",
+            "layout": "table",
+            "min": 0,
+            "max": 2,
+            "button_label": "Add badge",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_page_hero_badges_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_page_hero_badges_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_page_hero_badges_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future"
+                    },
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_badges_tone",
+                    "label": "Tone",
+                    "name": "tone",
+                    "type": "select",
+                    "choices": {
+                        "purple": "Purple",
+                        "green": "Green"
+                    },
+                    "default_value": "purple",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_badges_side",
+                    "label": "Side",
+                    "name": "side",
+                    "type": "select",
+                    "choices": {
+                        "left": "Left",
+                        "right": "Right"
+                    },
+                    "default_value": "left",
+                    "return_format": "value"
+                }
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_acc_ladder",
+            "label": "Ladder",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_ladder",
+            "label": "Ladder",
+            "name": "ladder",
+            "type": "group",
+            "instructions": "Optional row of numbered steps under the hero.",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_page_hero_ladder_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "placeholder": "The ladder"
+                },
+                {
+                    "key": "field_upskill_page_hero_ladder_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "60"
+                    }
+                },
+                {
+                    "key": "field_upskill_page_hero_ladder_steps",
+                    "label": "Steps",
+                    "name": "steps",
+                    "type": "repeater",
+                    "layout": "table",
+                    "min": 0,
+                    "max": 5,
+                    "button_label": "Add step",
+                    "sub_fields": [
+                        {
+                            "key": "field_upskill_page_hero_ladder_steps_title",
+                            "label": "Title",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_upskill_page_hero_ladder_steps_text",
+                            "label": "Text",
+                            "name": "text",
+                            "type": "text"
+                        }
+                    ]
+                }
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/page-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

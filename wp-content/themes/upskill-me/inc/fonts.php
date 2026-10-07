@@ -14,6 +14,13 @@
  * Geist, instead of a missing-glyph box. Replace the files with the licensed
  * build before launch and widen the range.
  *
+ * INTERIM: the trial OTFs are unhinted CFF, which Chrome on Windows draws
+ * 10-20% heavier than Figma at 13-16px (weight 500 read as near-semibold).
+ * The .woff2 files here are the same outlines converted to TrueType and
+ * auto-hinted (fontTools + ttfautohint), which measure within a few percent of
+ * Figma at small sizes and identical at heading sizes. The original .otf files
+ * are kept alongside as the source. The licensed webfont kit replaces both.
+ *
  * @package upskill-me
  */
 
@@ -43,8 +50,8 @@ if ( ! function_exists( 'upskill_font_files' ) ) {
 		) as $file => $weight ) {
 			$faces[] = array(
 				'family'  => 'Lay Grotesk',
-				'file'    => 'lay-grotesk/laygrotesk-trial-' . $file . '.otf',
-				'format'  => 'opentype',
+				'file'    => 'lay-grotesk/laygrotesk-trial-' . $file . '.woff2',
+				'format'  => 'woff2',
 				'weight'  => (string) $weight,
 				'range'   => $trial,
 				// Regular and medium carry almost every line of text.

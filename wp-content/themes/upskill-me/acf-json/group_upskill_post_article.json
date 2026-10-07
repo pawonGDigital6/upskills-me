@@ -1,0 +1,32 @@
+{
+    "key": "group_upskill_post_article",
+    "title": "Blog: Article",
+    "fields": [
+        {
+            "key": "field_upskill_post_display_title",
+            "label": "Display title",
+            "name": "display_title",
+            "type": "text",
+            "instructions": "Optional title for the article hero with its highlighted phrase, e.g. How practical training supports <em>better workplace learning</em>. Leave empty to use the post title."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

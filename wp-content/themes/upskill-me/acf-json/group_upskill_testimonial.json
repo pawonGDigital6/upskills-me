@@ -1,0 +1,46 @@
+{
+    "key": "group_upskill_testimonial",
+    "title": "Testimonial: Details",
+    "fields": [
+        {
+            "key": "field_upskill_testimonial_name",
+            "label": "Name",
+            "name": "name",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_testimonial_rating",
+            "label": "Rating (stars)",
+            "name": "rating",
+            "type": "number",
+            "default_value": 5,
+            "min": 0,
+            "max": 5,
+            "wrapper": {
+                "width": "30"
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "testimonial"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

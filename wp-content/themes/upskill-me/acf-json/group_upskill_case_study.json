@@ -1,0 +1,40 @@
+{
+    "key": "group_upskill_case_study",
+    "title": "Case Study: Details",
+    "fields": [
+        {
+            "key": "field_upskill_case_study_industry",
+            "label": "Industry",
+            "name": "industry",
+            "type": "taxonomy",
+            "taxonomy": "industry",
+            "field_type": "select",
+            "allow_null": 1,
+            "add_term": 0,
+            "save_terms": 0,
+            "load_terms": 0,
+            "return_format": "id",
+            "multiple": 0,
+            "instructions": "Shown on the case study card."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "case_study"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

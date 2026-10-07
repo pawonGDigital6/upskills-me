@@ -51,6 +51,8 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
   row-start-1`), size media with `aspect-*` per breakpoint, give bars height through padding, and
   use `writing-mode` for vertical labels so text always sizes its own box. (Hero showcase is the
   reference implementation.)
+- **Classes never contain `>`** (e.g. `[&>article]:flex-1`): WordPress's texturize turns it into
+  `&#8243;` and breaks the attribute. Use `*:` or a class on the child.
 - **Change only what is asked.** Do not refactor, remove or "optimise" existing code, files or
   animations unless the instruction says so.
 - **Do not regress the Home page.** Changing a shared Home module for another page needs approval.
@@ -85,6 +87,10 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   Term fields: landing page (term links resolve to it via `term_link`), industry card style/icon/tags,
   cohort card image/tagline. Counts come from `upskill_term_session_count()` — hidden while 0.
 - **FAQ** post type (not public) + `faq_category`.
+- **Resources**: blogs are core posts (category = topic chip; ACF "Display title" gives the article
+  hero its highlighted phrase). `case_study` (/case-study/slug/, ACF industry) and `guide`
+  (/guide/slug/) are public CPTs; `testimonial` (not public, ACF name + rating) feeds the carousel.
+  Listings are pages under Resources (Blogs, Case Studies, Guides) using the Resource Cards block.
 - Back-office spec vocabularies (jurisdiction, org type, compliance/performance) are deferred to the
   LearnDash phase.
 
@@ -98,7 +104,10 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   footer Account column render only when their option or menu location is set, and stay empty
   until LearnDash provides the screens.
 - **Session counts** ("76 sessions") render only above zero, i.e. once courses exist.
-- Lay Grotesk must be licensed before launch (trial build lacks ' & $ % – etc.).
+- Lay Grotesk must be licensed before launch (trial build lacks ' & $ % – etc.). Interim: the
+  theme serves auto-hinted WOFF2 conversions of the trial OTFs (see inc/fonts.php) because the
+  unhinted OTFs drew weight 500 noticeably heavier than Figma at 13–16px. Replace both with the
+  licensed webfont kit.
 - Commercial model (one-off tier × seats vs monthly subscription) decides WooCommerce Subscriptions.
 
 ## 5. Progress
@@ -106,3 +115,13 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 - **Home** (`49325:14379` / `49343:29333`) — built. Blocks: `hero`, `free-sessions`,
   `industry-cards`, `category-list`, `how-it-works`, `feature-media`, `cohort-cards`, `faqs`. Global:
   announcement bar, header + mega panels, mobile drawer, search dialog, CTA band, footer.
+- **Why UpSkill Me, About, Resources, Blogs, Blog detail, Case Studies** — built (non-LMS sections).
+  New reusable blocks: `page-hero` (split with photo + chips or illustration; centred with badges
+  and the ladder), `card-grid` (stacked / principle / link / textured cards, glass on dark; split,
+  centred, stacked or side-column header; template-parts/cards/feature.php), `video-feature`,
+  `media-story`, `post-cards` ("Resource Cards": grid, split row, guides, featured, paginated
+  listing; template-parts/cards/resource.php + guide.php), `testimonials` (scroll-snap carousel),
+  `key-takeaways` (article content). `how-it-works` gained an optional image (single track + photo);
+  Home output is unchanged. `single-post.php` is the Blog detail (contents list with scroll-spy,
+  share links, related posts). Held for LearnDash: "Related Training" links on blog cards/articles.
+- Not started (by instruction): FAQ, Case Study detail, Guides, Contact, Privacy, Terms, Returns, 404.

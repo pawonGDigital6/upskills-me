@@ -1,0 +1,121 @@
+{
+    "key": "group_upskill_block_media_story",
+    "title": "Block: Media Story",
+    "fields": [
+        {
+            "key": "field_upskill_media_story_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_media_story_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_media_story_acc_checklist",
+            "label": "Checklist",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_media_story_checklist",
+            "label": "Checklist",
+            "name": "checklist",
+            "type": "repeater",
+            "layout": "table",
+            "min": 0,
+            "max": 6,
+            "button_label": "Add item",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_media_story_checklist_title",
+                    "label": "Lead",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_media_story_checklist_text",
+                    "label": "Rest of the line",
+                    "name": "text",
+                    "type": "text"
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_media_story_acc_image",
+            "label": "Image",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_media_story_image",
+            "label": "Image",
+            "name": "image",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp"
+        },
+        {
+            "key": "field_upskill_media_story_quote",
+            "label": "Quote card",
+            "name": "quote",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_media_story_quote_text",
+                    "label": "Quote",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 3,
+                    "new_lines": ""
+                },
+                {
+                    "key": "field_upskill_media_story_quote_caption",
+                    "label": "Caption",
+                    "name": "caption",
+                    "type": "text"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/media-story"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

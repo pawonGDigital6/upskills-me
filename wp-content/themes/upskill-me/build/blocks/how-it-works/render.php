@@ -8,6 +8,9 @@
  * your organisation") and the light one ("For each learner"). The step under
  * the pointer or focus is highlighted, as the first one is by default.
  *
+ * Optional image (Why UpSkill Me 49325:15612, About 49325:14834): a single
+ * track with a photograph filling the second column of the frame.
+ *
  * @param array $block The block settings and attributes.
  *
  * @package upskill-me
@@ -20,6 +23,7 @@ $tracks     = array_filter(
 		return ! empty( $track['steps'] );
 	}
 );
+$image      = get_field( 'image' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
@@ -31,7 +35,7 @@ $tracks     = array_filter(
 
 				<?php foreach ( $tracks as $track ) : ?>
 					<?php $dark = isset( $track['theme'] ) && 'dark' === $track['theme']; ?>
-					<div class="relative isolate flex flex-1 flex-col overflow-hidden rounded-lg px-3.5 py-6 lg:px-6 lg:py-12<?php echo $dark ? ' is-dark bg-brand-950' : ''; ?>">
+					<div class="relative isolate flex flex-1 flex-col overflow-hidden rounded-lg px-3.5 py-6 lg:px-6<?php echo $image ? ' lg:py-6' : ' lg:py-12'; ?><?php echo $dark ? ' is-dark bg-brand-950' : ''; ?>">
 						<img class="pointer-events-none absolute -z-10 <?php echo $dark ? 'inset-0 size-full object-cover opacity-40' : 'right-0 bottom-0 w-[45.5%] max-w-[282px] object-contain'; ?>" src="<?php echo esc_url( upskill_theme_image( $dark ? 'how-it-works-dark.webp' : 'how-it-works-mark.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 
 						<?php if ( ! empty( $track['label'] ) ) : ?>
@@ -79,6 +83,22 @@ $tracks     = array_filter(
 						<?php endif; ?>
 					</div>
 				<?php endforeach; ?>
+
+				<?php if ( $image ) : ?>
+					<div class="relative overflow-hidden rounded-lg lg:flex-1">
+						<?php
+						upskill_image(
+							$image,
+							'full',
+							array(
+								'class' => 'aspect-[358/300] size-full object-cover sm:aspect-[4/3] lg:aspect-auto lg:min-h-[542px]',
+								// Half the 1312 frame on desktop (~640x542); full width below lg.
+								'sizes' => '(min-width: 1025px) 46vw, 92vw',
+							)
+						);
+						?>
+					</div>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 	</div>

@@ -1,0 +1,86 @@
+{
+    "key": "group_upskill_block_testimonials",
+    "title": "Block: Testimonials",
+    "fields": [
+        {
+            "key": "field_upskill_testimonials_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_testimonials_selection",
+            "label": "Show",
+            "name": "selection",
+            "type": "button_group",
+            "choices": {
+                "all": "Latest",
+                "selected": "Hand-picked"
+            },
+            "default_value": "all",
+            "return_format": "value"
+        },
+        {
+            "key": "field_upskill_testimonials_count",
+            "label": "Number of testimonials",
+            "name": "count",
+            "type": "number",
+            "default_value": 6,
+            "min": 1,
+            "max": 12,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_testimonials_selection",
+                        "operator": "==",
+                        "value": "all"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_testimonials_selected_testimonials",
+            "label": "Testimonials",
+            "name": "selected_testimonials",
+            "type": "relationship",
+            "post_type": [
+                "testimonial"
+            ],
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "elements": "",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_testimonials_selection",
+                        "operator": "==",
+                        "value": "selected"
+                    }
+                ]
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/testimonials"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

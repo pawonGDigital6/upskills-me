@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/card-grid",
+	"version": "1.0.0",
+	"title": "Card Grid",
+	"category": "acf-blocks",
+	"icon": "screenoptions",
+	"description": "Section header with a grid of icon, numbered, link or textured cards; optionally a side column with an image or note.",
+	"keywords": [
+		"cards",
+		"features",
+		"grid"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": true
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

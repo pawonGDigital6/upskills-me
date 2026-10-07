@@ -384,6 +384,8 @@ if ( ! function_exists( 'upskill_section_header' ) ) {
 	 *     @type string $tag    Heading tag.
 	 *     @type string $class  Extra wrapper classes.
 	 *     @type bool   $button False when the block draws the button elsewhere.
+	 *     @type bool   $lead   True for the 20px intro some split headers use.
+	 *     @type string $button_variant light for the white pill (Resources rows).
 	 * }
 	 * @return void
 	 */
@@ -413,6 +415,11 @@ if ( ! function_exists( 'upskill_section_header' ) ) {
 		if ( $args['dark'] ) {
 			$classes .= ' is-dark';
 		}
+
+		// The 20px intro some pages pair with a split header (Case Studies).
+		if ( ! empty( $args['lead'] ) ) {
+			$classes .= ' section-header--lead';
+		}
 		?>
 		<header class="<?php echo esc_attr( trim( $classes . ' ' . $args['class'] ) ); ?>">
 			<div class="section-header__title">
@@ -423,10 +430,8 @@ if ( ! function_exists( 'upskill_section_header' ) ) {
 			</div>
 			<?php if ( $intro || ! empty( $button['url'] ) ) : ?>
 				<div class="section-header__aside">
-					<?php if ( $intro ) : ?>
-						<p class="section-header__intro"><?php echo esc_html( $intro ); ?></p>
-					<?php endif; ?>
-					<?php upskill_button( $button ); ?>
+					<?php upskill_paragraphs( $intro, 'section-header__intro' ); ?>
+					<?php upskill_button( $button, empty( $args['button_variant'] ) ? array() : array( 'variant' => $args['button_variant'], 'class' => 'min-h-[50px]' ) ); ?>
 				</div>
 			<?php endif; ?>
 		</header>
@@ -535,5 +540,174 @@ if ( ! function_exists( 'upskill_selected_terms' ) ) {
 		}
 
 		return $terms;
+	}
+}
+
+if ( ! function_exists( 'upskill_paragraphs' ) ) {
+	/**
+	 * Echo plain text as paragraphs, one per blank-line separated block.
+	 *
+	 * Textareas store raw text; editors separate paragraphs with an empty line.
+	 *
+	 * @param string $text  Plain text.
+	 * @param string $class Class for each paragraph.
+	 * @return void
+	 */
+	function upskill_paragraphs( $text, $class = '' ) {
+		foreach ( preg_split( '/\R\s*\R/', trim( (string) $text ) ) as $paragraph ) {
+			if ( '' === trim( $paragraph ) ) {
+				continue;
+			}
+
+			printf( '<p class="%1$s">%2$s</p>', esc_attr( $class ), esc_html( trim( $paragraph ) ) );
+		}
+	}
+}
+
+if ( ! function_exists( 'upskill_text_link' ) ) {
+	/**
+	 * The small "Read Article ↗" text link used on cards.
+	 *
+	 * @param array  $link  ACF-style link array (url/title/target).
+	 * @param string $class Classes for the link (colour, size).
+	 * @return void
+	 */
+	function upskill_text_link( $link, $class = '' ) {
+		if ( empty( $link['url'] ) || empty( $link['title'] ) ) {
+			return;
+		}
+
+		printf(
+			'<a class="group/link inline-flex items-center gap-[7px] text-sm font-semibold %1$s"%2$s>%3$s%4$s</a>',
+			esc_attr( $class ),
+			upskill_link_attributes( $link ), // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
+			esc_html( $link['title'] ),
+			upskill_get_icon( 'arrow-up-right', 'size-3 transition-transform duration-300 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file.
+		);
+	}
+}
+
+if ( ! function_exists( 'upskill_post_type_label' ) ) {
+	/**
+	 * The resource type a card is labelled with: Blog, Case study or Guide.
+	 *
+	 * @param int|WP_Post $post Post.
+	 * @return string
+	 */
+	function upskill_post_type_label( $post ) {
+		$labels = array(
+			'post'       => __( 'Blog', 'upskill-me' ),
+			'case_study' => __( 'Case study', 'upskill-me' ),
+			'guide'      => __( 'Guide', 'upskill-me' ),
+		);
+		$type   = get_post_type( $post );
+
+		return isset( $labels[ $type ] ) ? $labels[ $type ] : '';
+	}
+}
+
+if ( ! function_exists( 'upskill_read_label' ) ) {
+	/**
+	 * The call to action under a resource card ("Read Article", "Read Case Study").
+	 *
+	 * @param int|WP_Post $post Post.
+	 * @return string
+	 */
+	function upskill_read_label( $post ) {
+		$labels = array(
+			'post'       => __( 'Read Article', 'upskill-me' ),
+			'case_study' => __( 'Read Case Study', 'upskill-me' ),
+			'guide'      => __( 'Read Guide', 'upskill-me' ),
+		);
+		$type   = get_post_type( $post );
+
+		return isset( $labels[ $type ] ) ? $labels[ $type ] : __( 'Read more', 'upskill-me' );
+	}
+}
+
+if ( ! function_exists( 'upskill_reading_time' ) ) {
+	/**
+	 * Minutes to read a post, at 200 words a minute.
+	 *
+	 * @param int|WP_Post $post Post.
+	 * @return int
+	 */
+	function upskill_reading_time( $post ) {
+		$words = str_word_count( wp_strip_all_tags( (string) get_post_field( 'post_content', $post ) ) );
+
+		return max( 1, (int) ceil( $words / 200 ) );
+	}
+}
+
+if ( ! function_exists( 'upskill_primary_category' ) ) {
+	/**
+	 * The first category of a post (the topic chip on blog cards), skipping
+	 * the default "Uncategorised".
+	 *
+	 * @param int|WP_Post $post Post.
+	 * @return WP_Term|null
+	 */
+	function upskill_primary_category( $post ) {
+		foreach ( (array) get_the_category( is_object( $post ) ? $post->ID : $post ) as $term ) {
+			if ( (int) get_option( 'default_category' ) !== (int) $term->term_id ) {
+				return $term;
+			}
+		}
+
+		return null;
+	}
+}
+
+if ( ! function_exists( 'upskill_pagination' ) ) {
+	/**
+	 * Previous / numbered / next pagination for a listing query.
+	 *
+	 * @param WP_Query $query The listing query.
+	 * @return void
+	 */
+	function upskill_pagination( $query ) {
+		$total = (int) $query->max_num_pages;
+
+		if ( $total < 2 ) {
+			return;
+		}
+
+		$current = max( 1, (int) get_query_var( 'paged' ) );
+		$links   = paginate_links(
+			array(
+				'current'   => $current,
+				'total'     => $total,
+				'type'      => 'array',
+				'mid_size'  => 1,
+				'end_size'  => 3,
+				'prev_next' => false,
+			)
+		);
+		$arrow   = upskill_get_icon( 'arrow-right', 'size-[15px]' );
+		?>
+		<nav class="pagination mt-8 flex items-center gap-3 border-t border-[#e9eaeb] pt-5" aria-label="<?php esc_attr_e( 'Pagination', 'upskill-me' ); ?>">
+			<div class="flex flex-1">
+				<?php if ( $current > 1 ) : ?>
+					<a class="pagination__step inline-flex items-center gap-2 text-sm font-medium text-brand-900" href="<?php echo esc_url( get_pagenum_link( $current - 1 ) ); ?>" rel="prev">
+						<span class="rotate-180"><?php echo $arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file. ?></span>
+						<?php esc_html_e( 'Previous', 'upskill-me' ); ?>
+					</a>
+				<?php endif; ?>
+			</div>
+			<ul class="flex items-center gap-0.5">
+				<?php foreach ( (array) $links as $link ) : ?>
+					<li class="pagination__number"><?php echo wp_kses_post( $link ); ?></li>
+				<?php endforeach; ?>
+			</ul>
+			<div class="flex flex-1 justify-end">
+				<?php if ( $current < $total ) : ?>
+					<a class="pagination__step inline-flex items-center gap-2 text-sm font-medium text-brand-900" href="<?php echo esc_url( get_pagenum_link( $current + 1 ) ); ?>" rel="next">
+						<?php esc_html_e( 'Next', 'upskill-me' ); ?>
+						<?php echo $arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file. ?>
+					</a>
+				<?php endif; ?>
+			</div>
+		</nav>
+		<?php
 	}
 }

@@ -16,7 +16,20 @@
                 "how-it-works": "How it works",
                 "book-open": "Open book",
                 "cohorts": "Cohorts",
-                "faqs": "FAQs"
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project"
             },
             "default_value": "",
             "return_format": "value",
@@ -74,5 +87,5 @@
     "active": false,
     "description": "Cloned into blocks; never shown on its own.",
     "show_in_rest": 0,
-    "modified": 1791258008
+    "modified": 1791282962
 }

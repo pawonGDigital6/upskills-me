@@ -1,0 +1,16 @@
+/**
+ * Media Story block.
+ *
+ * Layout and colour are utilities in render.php; the story paragraphs are the
+ * section header's intro, set at Figma's 17.5/28.9 reading size.
+ */
+
+.block-media-story__header .section-header__aside {
+	gap: 18px;
+}
+
+.block-media-story__header .section-header__intro {
+	color: #55555f;
+	font-size: 1.09375rem;
+	line-height: 1.65;
+}

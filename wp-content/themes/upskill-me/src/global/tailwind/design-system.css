@@ -60,6 +60,10 @@
 	/* "Highligheter" — the lime FREE tags and announcement link. */
 	--color-signal: #d4f55c;
 
+	/* The pale lilac card outline the resource and feature cards share (Figma
+	   draws it as a raw #e8e5f2 on every card rather than a variable). */
+	--color-line: #e8e5f2;
+
 	/* ----------------------------------------------
 	   Fonts
 	   Lay Grotesk is every text style in Figma. The trial
@@ -156,6 +160,8 @@
 	/* ----------------------------------------------
 	   Shadows — the purple-tinted elevations Figma uses.
 	---------------------------------------------- */
+	/* "Shadows/shadow-xs-skeuomorphic" outer part — card lift. */
+	--shadow-xs: 0 1px 2px 0 rgb(10 13 18 / 5%);
 	--shadow-btn: 0 1px 2px 0 rgb(26 26 26 / 4%), 0 4px 14px 0 rgb(47 26 81 / 10%);
 	--shadow-card: 0 1px 2px 0 rgb(26 26 26 / 4%), 0 4px 14px -6px rgb(47 26 81 / 10%);
 	--shadow-float: 0 4px 10px 0 rgb(26 26 26 / 3%), 0 32px 70px -20px rgb(47 26 81 / 22%);
@@ -441,6 +447,17 @@
 		font-size: var(--text-lead);
 	}
 
+	/* A stacked header whose intro stays at body size (16px). */
+	.section-header--base .section-header__intro {
+		font-size: var(--text-base);
+	}
+
+	/* The 20px grey intro of the Case Studies split headers. */
+	.section-header--lead .section-header__intro {
+		color: #6b6b72;
+		font-size: var(--text-lead);
+	}
+
 	/* Figma leaves 38px between a centred heading and its intro. */
 	.section-header--center {
 		align-items: center;
@@ -481,6 +498,10 @@
 			flex: none;
 			width: 380px;
 			gap: 16px;
+		}
+
+		.section-header--split.section-header--lead .section-header__aside {
+			width: 400px;
 		}
 	}
 

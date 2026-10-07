@@ -1,0 +1,268 @@
+{
+    "key": "group_upskill_block_post_cards",
+    "title": "Block: Resource Cards",
+    "fields": [
+        {
+            "key": "field_upskill_post_cards_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_post_cards_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_post_cards_acc_posts",
+            "label": "Posts",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_post_cards_post_type",
+            "label": "Show",
+            "name": "post_type",
+            "type": "button_group",
+            "choices": {
+                "post": "Blogs",
+                "case_study": "Case studies",
+                "guide": "Guides"
+            },
+            "default_value": "post",
+            "return_format": "value",
+            "wrapper": {
+                "width": "40"
+            }
+        },
+        {
+            "key": "field_upskill_post_cards_layout",
+            "label": "Layout",
+            "name": "layout",
+            "type": "select",
+            "choices": {
+                "grid": "Grid under the header",
+                "split": "Header left, three cards right",
+                "guides": "Header left, featured guide and list",
+                "featured": "One featured card",
+                "listing": "Listing: featured post, grid and pages"
+            },
+            "default_value": "grid",
+            "return_format": "value",
+            "wrapper": {
+                "width": "60"
+            }
+        },
+        {
+            "key": "field_upskill_post_cards_selection",
+            "label": "Choose",
+            "name": "selection",
+            "type": "button_group",
+            "choices": {
+                "latest": "Latest",
+                "selected": "Hand-picked"
+            },
+            "default_value": "latest",
+            "return_format": "value",
+            "wrapper": {
+                "width": "40"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_post_cards_layout",
+                        "operator": "!=",
+                        "value": "listing"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_post_cards_count",
+            "label": "Number of posts",
+            "name": "count",
+            "type": "number",
+            "instructions": "Per page on a listing.",
+            "default_value": 3,
+            "min": 1,
+            "max": 24,
+            "wrapper": {
+                "width": "30"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_post_cards_selection",
+                        "operator": "!=",
+                        "value": "selected"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_post_cards_posts",
+            "label": "Posts",
+            "name": "posts",
+            "type": "relationship",
+            "post_type": [
+                "post",
+                "case_study",
+                "guide"
+            ],
+            "filters": [
+                "search",
+                "post_type"
+            ],
+            "return_format": "id",
+            "elements": [
+                "featured_image"
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_post_cards_selection",
+                        "operator": "==",
+                        "value": "selected"
+                    },
+                    {
+                        "field": "field_upskill_post_cards_layout",
+                        "operator": "!=",
+                        "value": "listing"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_post_cards_featured_post",
+            "label": "Featured post",
+            "name": "featured_post",
+            "type": "post_object",
+            "instructions": "Leave empty to feature the latest.",
+            "post_type": [
+                "post",
+                "case_study",
+                "guide"
+            ],
+            "return_format": "id",
+            "allow_null": 1,
+            "ui": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_post_cards_layout",
+                        "operator": "==",
+                        "value": "listing"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_post_cards_featured_link_one",
+            "label": "Featured card link",
+            "name": "featured_link_one",
+            "type": "link",
+            "return_format": "array",
+            "instructions": "Replaces \"Read …\" on the featured card.",
+            "wrapper": {
+                "width": "50"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_post_cards_layout",
+                        "operator": "==",
+                        "value": "featured"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_post_cards_featured_link_two",
+            "label": "Second link",
+            "name": "featured_link_two",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_post_cards_layout",
+                        "operator": "==",
+                        "value": "featured"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_post_cards_acc_appearance",
+            "label": "Appearance",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_post_cards_surface",
+            "label": "Background",
+            "name": "surface",
+            "type": "select",
+            "choices": {
+                "white": "White",
+                "tint": "Lilac",
+                "pale": "Pale lilac",
+                "gray": "Light grey"
+            },
+            "default_value": "white",
+            "return_format": "value",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_post_cards_lead_intro",
+            "label": "Large intro (20px)",
+            "name": "lead_intro",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/post-cards"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

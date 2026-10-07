@@ -1,0 +1,385 @@
+{
+    "key": "group_upskill_block_card_grid",
+    "title": "Block: Card Grid",
+    "fields": [
+        {
+            "key": "field_upskill_card_grid_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_card_grid_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_card_grid_acc_layout",
+            "label": "Layout",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_card_grid_layout",
+            "label": "Header",
+            "name": "layout",
+            "type": "select",
+            "choices": {
+                "split": "Split (heading left, intro right)",
+                "center": "Centred",
+                "stack": "Stacked",
+                "side": "Side column (cards two-up on the right)"
+            },
+            "default_value": "split",
+            "return_format": "value",
+            "wrapper": {
+                "width": "34"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_surface",
+            "label": "Background",
+            "name": "surface",
+            "type": "select",
+            "choices": {
+                "white": "White",
+                "tint": "Lilac",
+                "pale": "Pale lilac",
+                "waves": "Light waves",
+                "dark": "Dark"
+            },
+            "default_value": "white",
+            "return_format": "value",
+            "wrapper": {
+                "width": "33"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_columns",
+            "label": "Columns",
+            "name": "columns",
+            "type": "button_group",
+            "choices": {
+                "2": "2",
+                "3": "3",
+                "4": "4"
+            },
+            "default_value": 3,
+            "return_format": "value",
+            "wrapper": {
+                "width": "33"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_card_style",
+            "label": "Card style",
+            "name": "card_style",
+            "type": "select",
+            "instructions": "Dark backgrounds always use the translucent card.",
+            "choices": {
+                "stacked": "Icon or accent bar, then text",
+                "principle": "Label top right, text at the foot",
+                "link": "Link card with arrow",
+                "texture": "Tall textured card"
+            },
+            "default_value": "stacked",
+            "return_format": "value",
+            "wrapper": {
+                "width": "34"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_show_numbers",
+            "label": "Number the cards",
+            "name": "show_numbers",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0,
+            "wrapper": {
+                "width": "22"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_large_titles",
+            "label": "Large titles (24px)",
+            "name": "large_titles",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0,
+            "wrapper": {
+                "width": "22"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_roomy_cards",
+            "label": "Roomy cards (30px padding)",
+            "name": "roomy_cards",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0,
+            "wrapper": {
+                "width": "22"
+            }
+        },
+        {
+            "key": "field_upskill_card_grid_large_intro",
+            "label": "Large intro (20px)",
+            "name": "large_intro",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_card_grid_layout",
+                        "operator": "==",
+                        "value": "side"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_card_grid_side_image",
+            "label": "Side image",
+            "name": "side_image",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp",
+            "instructions": "Shown under the intro. Leave empty to show the note instead.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_card_grid_layout",
+                        "operator": "==",
+                        "value": "side"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_card_grid_callout",
+            "label": "Side note",
+            "name": "callout",
+            "type": "group",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_card_grid_callout_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future"
+                    },
+                    "default_value": "info",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "30"
+                    }
+                },
+                {
+                    "key": "field_upskill_card_grid_callout_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "70"
+                    }
+                },
+                {
+                    "key": "field_upskill_card_grid_callout_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 3,
+                    "new_lines": ""
+                }
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_card_grid_layout",
+                        "operator": "==",
+                        "value": "side"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_card_grid_acc_cards",
+            "label": "Cards",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_card_grid_cards",
+            "label": "Cards",
+            "name": "cards",
+            "type": "repeater",
+            "layout": "block",
+            "min": 0,
+            "max": 8,
+            "button_label": "Add card",
+            "collapsed": "field_upskill_card_grid_cards_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_card_grid_cards_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "bar": "Accent bar (no icon)"
+                    },
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "30"
+                    }
+                },
+                {
+                    "key": "field_upskill_card_grid_cards_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "35"
+                    },
+                    "instructions": "e.g. Essential, Principle 01, Blog."
+                },
+                {
+                    "key": "field_upskill_card_grid_cards_tone",
+                    "label": "Tone",
+                    "name": "tone",
+                    "type": "select",
+                    "choices": {
+                        "light": "Light",
+                        "dark": "Dark",
+                        "brand": "Purple (textured cards)"
+                    },
+                    "default_value": "light",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "35"
+                    }
+                },
+                {
+                    "key": "field_upskill_card_grid_cards_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_card_grid_cards_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": ""
+                },
+                {
+                    "key": "field_upskill_card_grid_cards_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array",
+                    "instructions": "Makes the whole card a link."
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/card-grid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791282962
+}

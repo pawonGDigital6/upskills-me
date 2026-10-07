@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! defined( 'UPSKILL_VERSION' ) ) {
 	// Bump on release. Also keys the one-time rewrite flush in inc/taxonomies.php.
-	define( 'UPSKILL_VERSION', '1.0.0' );
+	define( 'UPSKILL_VERSION', '1.1.0' );
 }
 
 /**
@@ -165,6 +165,7 @@ add_action( 'admin_enqueue_scripts', 'upskill_admin_assets' );
 
 require get_template_directory() . '/inc/fonts.php';
 require get_template_directory() . '/inc/template-helpers.php';
+require get_template_directory() . '/inc/article.php';
 require get_template_directory() . '/inc/taxonomies.php';
 require get_template_directory() . '/inc/post-types.php';
 require get_template_directory() . '/inc/options.php';

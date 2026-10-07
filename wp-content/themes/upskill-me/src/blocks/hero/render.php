@@ -61,7 +61,7 @@ $uid = wp_unique_id( 'hero-' );
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
 		<div class="flex flex-col gap-[46px] lg:flex-row lg:items-stretch lg:gap-16">
-			<div class="flex flex-col justify-center gap-6 lg:min-w-0 lg:flex-1">
+			<div class="flex flex-col justify-center gap-8 lg:min-w-0 lg:flex-1">
 				<div class="flex flex-col items-start gap-3">
 					<?php upskill_eyebrow( get_field( 'eyebrow' ), (string) get_field( 'eyebrow_icon' ) ); ?>
 					<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold' ); ?>

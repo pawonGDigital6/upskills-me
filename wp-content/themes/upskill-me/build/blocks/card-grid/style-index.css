@@ -1,0 +1,1 @@
+.block-card-grid .feature-card--lift{transition:transform .4s cubic-bezier(.22,.72,0,1)}@media(hover:hover){.block-card-grid .feature-card--lift:hover{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){.block-card-grid .feature-card--lift{transition:none}.block-card-grid .feature-card--lift:hover{transform:none}}

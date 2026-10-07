@@ -114,6 +114,26 @@
                     }
                 }
             ]
+        },
+        {
+            "key": "field_upskill_how_it_works_acc_image",
+            "label": "Image",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_how_it_works_image",
+            "label": "Image",
+            "name": "image",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp",
+            "instructions": "Optional. With a single track, the photo fills the second column of the frame."
         }
     ],
     "location": [
@@ -134,5 +154,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791258008
+    "modified": 1791282962
 }

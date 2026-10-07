@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/page-hero",
+  "version": "1.0.0",
+  "title": "Page Hero",
+  "category": "acf-blocks",
+  "icon": "cover-image",
+  "description": "Inner page hero: split with a photo or illustration, or centred with optional badges and a ladder row.",
+  "keywords": [
+    "hero",
+    "banner",
+    "intro"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": true
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}
