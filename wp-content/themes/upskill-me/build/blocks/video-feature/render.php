@@ -34,6 +34,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 						'layout' => 'stack',
 						'dark'   => true,
 						'button' => false,
+						'reveal' => true,
 						'class'  => 'section-header--base block-video-feature__header',
 					)
 				);
@@ -43,7 +44,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 			<?php if ( $poster || ! empty( $video['url'] ) ) : ?>
 				<div class="flex flex-col gap-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:min-w-0">
 					<?php // Poster, play button and caption share one grid cell; the video replaces them once started. ?>
-					<div class="video-card grid aspect-[358/256] grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(157deg,#241946_8%,#14102a_54%,#0e0c1a_92%)] sm:aspect-[652/476]" data-video-card>
+					<div class="reveal video-card grid aspect-[358/256] grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(157deg,#241946_8%,#14102a_54%,#0e0c1a_92%)] sm:aspect-[652/476]" data-video-card>
 						<?php
 						upskill_image(
 							$poster,

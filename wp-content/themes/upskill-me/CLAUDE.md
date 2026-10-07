@@ -55,6 +55,11 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
   `&#8243;` and breaks the attribute. Use `*:` or a class on the child.
 - **Change only what is asked.** Do not refactor, remove or "optimise" existing code, files or
   animations unless the instruction says so.
+- **QA gate.** A page, block or template is not done until the `figma-qa` skill has passed:
+  `cd tools/qa && node run.mjs <page>` (visual diff vs Figma at 1440/390, style audit, designer-template
+  interactions, overflow/images/console at 320–1920), every flagged diff image looked at, findings fixed
+  or accepted with a reason, re-run clean. Add new pages to `tools/qa/pages.json` first. When a shared
+  file changes, also run `node run.mjs home --checks=visual,template`.
 - **Do not regress the Home page.** Changing a shared Home module for another page needs approval.
 
 ## 2. Architecture

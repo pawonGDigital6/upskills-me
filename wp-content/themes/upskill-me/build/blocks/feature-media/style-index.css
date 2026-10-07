@@ -1,1 +1,25 @@
-.block-feature-media .feature{transition:background-color .35s ease,border-color .35s ease}.block-feature-media .feature.is-active{background-color:var(--color-brand-900);border-color:var(--color-brand-700)}@media(prefers-reduced-motion:reduce){.block-feature-media .feature{transition:none}}
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/feature-media/style.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+/**
+ * Feature List With Media block — the lit feature.
+ *
+ * Figma draws the current feature on primary/900 with a primary/700 border.
+ */
+.block-feature-media .feature {
+  transition: background-color 0.35s ease, border-color 0.35s ease;
+}
+
+.block-feature-media .feature.is-active {
+  border-color: var(--color-brand-700);
+  background-color: var(--color-brand-900);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .block-feature-media .feature {
+    transition: none;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

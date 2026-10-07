@@ -1,0 +1,1 @@
+{"version":3,"file":"how-it-works/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/how-it-works/editor.scss"],"sourcesContent":["/**\n * How It Works block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-how-it-works a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

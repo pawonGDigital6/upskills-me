@@ -1,0 +1,1 @@
+{"version":3,"file":"video-feature/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/video-feature/editor.scss"],"sourcesContent":["/**\n * Video Feature block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-video-feature a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

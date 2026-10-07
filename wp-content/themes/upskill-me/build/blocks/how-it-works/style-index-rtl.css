@@ -1,1 +1,126 @@
-.js [data-flight] .step{opacity:0}[data-flight].is-in .step{animation:upskill-step-in .56s cubic-bezier(.22,.72,0,1) backwards;animation-delay:calc(.16s + var(--i, 0)*.15s);opacity:1}@keyframes upskill-step-in{0%{opacity:0;transform:translateY(14px)}}.step__dot{transition:background-color .32s cubic-bezier(.22,.72,0,1),border-color .32s cubic-bezier(.22,.72,0,1),color .32s cubic-bezier(.22,.72,0,1),transform .32s cubic-bezier(.22,.72,0,1),box-shadow .32s cubic-bezier(.22,.72,0,1)}.step__num{transition:opacity .22s cubic-bezier(.22,.72,0,1),transform .22s cubic-bezier(.22,.72,0,1)}.step__check{color:var(--color-white);opacity:0;transform:scale(.4);transition:opacity .22s cubic-bezier(.22,.72,0,1) 60ms,transform .26s cubic-bezier(.22,.72,0,1) 60ms}.step[data-state=active] .step__dot,.step[data-state=complete] .step__dot{background-color:var(--color-brand-700);border-color:var(--color-brand-700);color:var(--color-white)}.step[data-state=active] .step__dot{box-shadow:0 0 0 5px rgba(103,68,168,.16);transform:scale(1.12)}.is-dark .step[data-state=active] .step__dot{box-shadow:0 0 0 5px rgba(103,68,168,.32)}.step[data-state=complete] .step__num{opacity:0;transform:scale(.5)}.step[data-state=complete] .step__check{opacity:1;transform:none}.step__fill{background-color:var(--color-brand-700);height:0;right:-1px;position:absolute;top:0;transition:height .64s cubic-bezier(.22,.72,0,1);width:1px}.is-dark .step__fill{background-color:var(--color-brand-300)}.step[data-state=active] .step__fill,.step[data-state=complete] .step__fill{height:100%}.step__body{transition:opacity .32s cubic-bezier(.22,.72,0,1)}.step[data-state=default] .step__body{opacity:.5}.step[data-state=complete] .step__body{opacity:.82}.step__title{transition:color .32s cubic-bezier(.22,.72,0,1)}.step[data-state=active] .step__title{color:var(--color-brand-700)}.is-dark .step[data-state=active] .step__title{color:var(--color-white)}@media(prefers-reduced-motion:reduce){[data-flight].is-in .step{animation:none}.step__body,.step__check,.step__dot,.step__fill,.step__num,.step__title{transition:none}}
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/how-it-works/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+/**
+ * How It Works block — the step flight, from the designer's template.
+ *
+ * view.js adds `.is-in` to each step list as it enters view (the steps cascade
+ * in) and then walks every step through data-state default -> active ->
+ * complete: the active dot fills and rings, the line below it fills, and a
+ * completed dot swaps its number for a check. Without JS the markup's resting
+ * state (step 1 active) is what shows.
+ */
+.js [data-flight] .step {
+  opacity: 0;
+}
+
+[data-flight].is-in .step {
+  opacity: 1;
+  animation: upskill-step-in 560ms cubic-bezier(0.22, 0.72, 0, 1) backwards;
+  animation-delay: calc(160ms + var(--i, 0) * 150ms);
+}
+
+@keyframes upskill-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+.step__dot {
+  transition: background-color 320ms cubic-bezier(0.22, 0.72, 0, 1), border-color 320ms cubic-bezier(0.22, 0.72, 0, 1), color 320ms cubic-bezier(0.22, 0.72, 0, 1), transform 320ms cubic-bezier(0.22, 0.72, 0, 1), box-shadow 320ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.step__num {
+  transition: opacity 220ms cubic-bezier(0.22, 0.72, 0, 1), transform 220ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.step__check {
+  color: var(--color-white);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 220ms cubic-bezier(0.22, 0.72, 0, 1) 60ms, transform 260ms cubic-bezier(0.22, 0.72, 0, 1) 60ms;
+}
+
+.step[data-state=active] .step__dot,
+.step[data-state=complete] .step__dot {
+  border-color: var(--color-brand-700);
+  background-color: var(--color-brand-700);
+  color: var(--color-white);
+}
+
+.step[data-state=active] .step__dot {
+  transform: scale(1.12);
+  box-shadow: 0 0 0 5px rgba(103, 68, 168, 0.16);
+}
+
+.is-dark .step[data-state=active] .step__dot {
+  box-shadow: 0 0 0 5px rgba(103, 68, 168, 0.32);
+}
+
+.step[data-state=complete] .step__num {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.step[data-state=complete] .step__check {
+  opacity: 1;
+  transform: none;
+}
+
+.step__fill {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  width: 1px;
+  height: 0;
+  background-color: var(--color-brand-700);
+  transition: height 640ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.is-dark .step__fill {
+  background-color: var(--color-brand-300);
+}
+
+.step[data-state=active] .step__fill,
+.step[data-state=complete] .step__fill {
+  height: 100%;
+}
+
+.step__body {
+  transition: opacity 320ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.step[data-state=default] .step__body {
+  opacity: 0.5;
+}
+
+.step[data-state=complete] .step__body {
+  opacity: 0.82;
+}
+
+.step__title {
+  transition: color 320ms cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+.step[data-state=active] .step__title {
+  color: var(--color-brand-700);
+}
+
+.is-dark .step[data-state=active] .step__title {
+  color: var(--color-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-flight].is-in .step {
+    animation: none;
+  }
+  .step__dot,
+  .step__num,
+  .step__check,
+  .step__fill,
+  .step__body,
+  .step__title {
+    transition: none;
+  }
+}

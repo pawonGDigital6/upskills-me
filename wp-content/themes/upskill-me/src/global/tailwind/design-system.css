@@ -164,6 +164,8 @@
 	--shadow-xs: 0 1px 2px 0 rgb(10 13 18 / 5%);
 	--shadow-btn: 0 1px 2px 0 rgb(26 26 26 / 4%), 0 4px 14px 0 rgb(47 26 81 / 10%);
 	--shadow-card: 0 1px 2px 0 rgb(26 26 26 / 4%), 0 4px 14px -6px rgb(47 26 81 / 10%);
+	/* Hovered button: the template's --e-2 elevation. */
+	--shadow-btn-hover: 0 2px 4px rgb(26 26 26 / 3%), 0 14px 34px -10px rgb(47 26 81 / 14%);
 	--shadow-float: 0 4px 10px 0 rgb(26 26 26 / 3%), 0 32px 70px -20px rgb(47 26 81 / 22%);
 
 	/* ----------------------------------------------
@@ -220,6 +222,15 @@
 		color: var(--color-brand-500);
 	}
 
+	/* Forced breaks are a desktop composition: below lg Figma lets headings wrap
+	   naturally (write them as "…<br> next" so a space remains). */
+	@media (width < 1025px) {
+
+		.heading br {
+			display: none;
+		}
+	}
+
 	/**
 	 * The pill button. Figma draws a pill holding the label and a round "nest"
 	 * carrying the icon.
@@ -243,6 +254,7 @@
 		transition:
 			background-color 0.25s ease,
 			border-color 0.25s ease,
+			box-shadow 0.25s ease,
 			color 0.25s ease,
 			transform 0.25s var(--ease-out);
 	}
@@ -307,6 +319,7 @@
 
 	.btn--primary:hover {
 		background-color: var(--color-brand-800);
+		box-shadow: var(--shadow-btn-hover);
 	}
 
 	/* White pill on light sections ("Watch Free Training"). */
@@ -321,6 +334,7 @@
 
 	.btn--light:hover {
 		background-color: var(--color-brand-50);
+		box-shadow: var(--shadow-btn-hover);
 	}
 
 	/* Translucent pill on dark sections with a lilac nest ("Get Started Today"). */
@@ -405,11 +419,12 @@
 		gap: 16px;
 	}
 
+	/* Figma keeps 20px between eyebrow and heading in both frames. */
 	.section-header__title {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 8px;
+		gap: 20px;
 	}
 
 	.section-header__heading {
@@ -475,10 +490,6 @@
 	}
 
 	@media (width >= 1025px) {
-
-		.section-header__title {
-			gap: 20px;
-		}
 
 		.section-header--split {
 			flex-direction: row;

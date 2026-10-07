@@ -17,6 +17,7 @@
 		font-weight: 500;
 		font-size: var(--text-xl);
 		line-height: 1.5;
+		letter-spacing: -0.024em;
 		scroll-margin-top: calc(var(--upskill-header-height) - 20px);
 
 		+ * {
@@ -108,9 +109,19 @@
 	background-color: var(--color-brand-25);
 }
 
+// Phones (Figma 49381:35435): darker body copy, bolder list leads, quote at body size.
 @media (width < 1025px) {
 
 	.article-body {
-		color: #4d4d4d;
+		color: #2b2b34;
+
+		strong {
+			font-weight: 700;
+		}
+
+		blockquote,
+		.wp-block-quote {
+			font-size: var(--text-base);
+		}
 	}
 }

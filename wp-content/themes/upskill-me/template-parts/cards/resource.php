@@ -171,7 +171,7 @@ elseif ( 'case' === $variant ) :
 else :
 	?>
 	<article class="reveal group relative flex flex-col overflow-hidden rounded-[20px] border border-brand-200 bg-white" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
-		<div class="aspect-[443/216] overflow-hidden">
+		<div class="aspect-[358/216] overflow-hidden lg:aspect-[443/216]">
 			<?php
 			upskill_image(
 				$thumb,
@@ -183,7 +183,7 @@ else :
 			);
 			?>
 		</div>
-		<div class="flex flex-1 flex-col gap-3 p-4 lg:gap-[60px]">
+		<div class="flex flex-1 flex-col gap-8 p-4 lg:gap-[60px]">
 			<div class="flex flex-col">
 				<?php $meta_row(); ?>
 				<<?php echo esc_attr( $tag ); ?> class="py-2 text-h6 font-medium text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>

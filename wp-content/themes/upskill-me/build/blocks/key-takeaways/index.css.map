@@ -1,0 +1,1 @@
+{"version":3,"file":"key-takeaways/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/key-takeaways/editor.scss"],"sourcesContent":["/**\n * Key Takeaways block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-key-takeaways a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

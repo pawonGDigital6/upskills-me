@@ -1,0 +1,1 @@
+{"version":3,"file":"page-hero/style-index.css","mappings":";;;AAAA;;;;EAAA,C","sources":["webpack://upskill-me-theme/./src/blocks/page-hero/style.scss"],"sourcesContent":["/**\n * Page Hero block.\n *\n * Layout, colour and type are utilities in render.php; nothing here yet.\n */\n"],"names":[],"sourceRoot":""}

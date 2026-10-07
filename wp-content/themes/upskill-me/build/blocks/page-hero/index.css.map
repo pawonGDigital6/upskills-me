@@ -1,0 +1,1 @@
+{"version":3,"file":"page-hero/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/page-hero/editor.scss"],"sourcesContent":["/**\n * Page Hero block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-page-hero a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

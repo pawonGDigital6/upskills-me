@@ -1,0 +1,1 @@
+{"version":3,"file":"free-sessions/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/free-sessions/editor.scss"],"sourcesContent":["/**\n * Free Sessions block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-free-sessions video {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

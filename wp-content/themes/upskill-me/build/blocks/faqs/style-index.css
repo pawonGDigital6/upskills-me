@@ -1,1 +1,59 @@
-.block-faqs .faq__toggle{transition:background-color .25s ease,border-color .25s ease}.block-faqs .faq__toggle:after,.block-faqs .faq__toggle:before{background-color:var(--color-gray-900);border-radius:1px;content:"";height:1.5px;left:50%;margin:-.75px 0 0 -6px;position:absolute;top:50%;transition:transform .25s cubic-bezier(.22,.72,0,1),background-color .25s ease;width:12px}.block-faqs .faq__toggle:after{transform:rotate(90deg)}.block-faqs .faq__question[aria-expanded=true] .faq__toggle{background-color:var(--color-brand-700);border-color:var(--color-brand-700)}.block-faqs .faq__question[aria-expanded=true] .faq__toggle:after,.block-faqs .faq__question[aria-expanded=true] .faq__toggle:before{background-color:var(--color-white)}.block-faqs .faq__question[aria-expanded=true] .faq__toggle:after{transform:rotate(0deg)}.block-faqs .faq__answer>*+*{margin-top:.75em}.block-faqs .faq__answer a{color:var(--color-brand-700);text-decoration:underline}
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/faqs/style.scss ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+@charset "UTF-8";
+/**
+ * FAQs block — the plus/minus toggle and answer copy.
+ *
+ * Figma: the open question's toggle is a filled primary disc with a white
+ * minus; closed ones are outlined with a plus.
+ */
+.block-faqs .faq__toggle {
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.block-faqs .faq__toggle::before, .block-faqs .faq__toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 1.5px;
+  margin: -0.75px 0 0 -6px;
+  border-radius: 1px;
+  background-color: var(--color-gray-900);
+  transition: transform 0.25s cubic-bezier(0.22, 0.72, 0, 1), background-color 0.25s ease;
+}
+.block-faqs .faq__toggle::after {
+  transform: rotate(90deg);
+}
+
+.block-faqs .faq__question[aria-expanded=true] .faq__toggle {
+  border-color: var(--color-brand-700);
+  background-color: var(--color-brand-700);
+}
+.block-faqs .faq__question[aria-expanded=true] .faq__toggle::before, .block-faqs .faq__question[aria-expanded=true] .faq__toggle::after {
+  background-color: var(--color-white);
+}
+.block-faqs .faq__question[aria-expanded=true] .faq__toggle::after {
+  transform: rotate(0deg);
+}
+
+.block-faqs .faq__answer > * + * {
+  margin-top: 0.75em;
+}
+
+.block-faqs .faq__answer a {
+  color: var(--color-brand-700);
+  text-decoration: underline;
+}
+
+.block-faqs .faq__question {
+  transition: color 0.25s ease;
+}
+
+.block-faqs .faq__question:hover,
+.block-faqs .faq__question:focus-visible {
+  color: var(--color-brand-700);
+}
+
+/*# sourceMappingURL=style-index.css.map*/

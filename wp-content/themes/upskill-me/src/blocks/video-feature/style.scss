@@ -8,3 +8,8 @@
 .video-card.is-playing > :not(video) {
 	display: none;
 }
+
+// Figma sets this section's intro at white 66% (49325:15435), softer than the shared dark intro.
+.block-video-feature__header .section-header__intro {
+	color: rgb(255 255 255 / 66%);
+}

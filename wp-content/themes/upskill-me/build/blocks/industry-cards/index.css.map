@@ -1,0 +1,1 @@
+{"version":3,"file":"industry-cards/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/industry-cards/editor.scss"],"sourcesContent":["/**\n * Industry Cards block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-industry-cards a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

@@ -55,7 +55,7 @@ $chip_tones = array(
 						<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold lg:tracking-[-0.01em]' ); ?>
 					</div>
 					<?php if ( get_field( 'intro' ) ) : ?>
-						<p class="max-w-[666px] text-base text-gray-500"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
+						<p class="reveal max-w-[666px] text-base text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
 					<?php endif; ?>
 					<?php upskill_button( get_field( 'primary_button' ) ); ?>
 				</div>
@@ -77,8 +77,8 @@ $chip_tones = array(
 			</div>
 
 			<?php if ( $steps ) : ?>
-				<?php // 1200 of the 1360 box: the ladder sits 44px inside the 1288 frame Figma draws. ?>
-				<div class="mt-6 rounded-[24px] border border-line bg-white px-4 py-6 shadow-xs lg:mx-auto lg:mt-12 lg:flex lg:max-w-[1200px] lg:px-8 lg:py-7">
+				<?php // 1200 of the 1360 box: the ladder sits 44px inside the 1288 frame Figma draws; Figma leaves 62px under the button (its 138px intro box + 48px gap). ?>
+				<div class="reveal mt-6 rounded-[24px] border border-line bg-white px-4 py-6 shadow-xs lg:mx-auto lg:mt-[62px] lg:flex lg:max-w-[1200px] lg:px-8 lg:py-7">
 					<div class="flex flex-col gap-2.5 lg:w-[210px] lg:flex-none lg:border-r lg:border-line lg:pr-7">
 						<?php if ( ! empty( $ladder['label'] ) ) : ?>
 							<p class="text-sm font-medium text-brand-700 uppercase"><?php echo esc_html( $ladder['label'] ); ?></p>
@@ -113,11 +113,11 @@ $chip_tones = array(
 						<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold' ); ?>
 					</div>
 					<?php if ( get_field( 'intro' ) ) : ?>
-						<p class="mt-6 text-lead text-gray-500"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
+						<p class="reveal mt-6 text-lead text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
 					<?php endif; ?>
 
 					<?php if ( get_field( 'primary_button' ) || get_field( 'secondary_button' ) ) : ?>
-						<div class="reveal flex flex-wrap gap-2 pt-8">
+						<div class="reveal flex flex-wrap gap-2 pt-8" style="--i:2">
 							<?php
 							upskill_button( get_field( 'primary_button' ), array( 'class' => 'min-h-[50px]' ) );
 							upskill_button(

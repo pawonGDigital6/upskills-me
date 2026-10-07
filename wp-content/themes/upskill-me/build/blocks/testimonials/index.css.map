@@ -1,0 +1,1 @@
+{"version":3,"file":"testimonials/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/testimonials/editor.scss"],"sourcesContent":["/**\n * Testimonials block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-testimonials a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

@@ -1,0 +1,1 @@
+{"version":3,"file":"card-grid/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/card-grid/editor.scss"],"sourcesContent":["/**\n * Card Grid block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-card-grid a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

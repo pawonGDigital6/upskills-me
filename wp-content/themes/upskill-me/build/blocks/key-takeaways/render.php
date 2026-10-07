@@ -20,7 +20,7 @@ $attributes = upskill_block_attributes( $block, 'block-key-takeaways my-10 round
 ?>
 <aside<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<?php if ( get_field( 'label' ) ) : ?>
-		<p class="text-sm text-brand-700"><?php echo esc_html( get_field( 'label' ) ); ?></p>
+		<p class="text-sm font-medium tracking-[0.08em] text-[#6b2fe3] uppercase lg:font-normal lg:tracking-normal lg:text-brand-700 lg:normal-case"><?php echo esc_html( get_field( 'label' ) ); ?></p>
 	<?php endif; ?>
 	<?php if ( get_field( 'title' ) ) : ?>
 		<?php // The article's contents list names this panel by its label ("Key takeaways"). ?>

@@ -1,1 +1,16 @@
-.video-card.is-playing>:not(video){display:none}
+/*!************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/video-feature/style.scss ***!
+  \************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Video Feature block.
+ *
+ * Layout and colour are utilities in render.php; this hides the poster layers
+ * once the player has taken over the card.
+ */
+.video-card.is-playing > :not(video) {
+  display: none;
+}
+
+.block-video-feature__header .section-header__intro {
+  color: rgba(255, 255, 255, 0.66);
+}

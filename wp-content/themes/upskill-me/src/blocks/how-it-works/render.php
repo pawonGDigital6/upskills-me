@@ -57,9 +57,9 @@ $image      = get_field( 'image' );
 										<?php endif; ?>
 									</span>
 									<span class="step__body flex flex-1 flex-col gap-1 <?php echo $last ? '' : 'pb-4'; ?>">
-										<span class="step__title text-[20px] leading-[1.24] font-medium tracking-[-0.016em] lg:text-[23.2px] <?php echo $dark ? 'text-white' : 'text-gray-900'; ?>"><?php echo esc_html( $step['title'] ); ?></span>
+										<span class="step__title <?php echo $image ? 'text-[23.2px]' : 'text-[20px] lg:text-[23.2px]'; ?> leading-[1.24] font-medium tracking-[-0.016em] <?php echo $dark ? 'text-white' : 'text-gray-900'; ?>"><?php echo esc_html( $step['title'] ); ?></span>
 										<?php if ( ! empty( $step['text'] ) ) : ?>
-											<span class="text-[15px] leading-[1.6] lg:text-base <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $step['text'] ); ?></span>
+											<span class="<?php echo $image ? 'text-base leading-normal' : 'text-[15px] leading-[1.6] lg:text-base'; ?> <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $step['text'] ); ?></span>
 										<?php endif; ?>
 									</span>
 								</li>
@@ -85,15 +85,15 @@ $image      = get_field( 'image' );
 				<?php endforeach; ?>
 
 				<?php if ( $image ) : ?>
-					<div class="relative overflow-hidden rounded-lg lg:flex-1">
+					<div class="relative mx-4 mb-4 overflow-hidden rounded-lg lg:m-0 lg:flex-1">
 						<?php
 						upskill_image(
 							$image,
 							'full',
 							array(
-								'class' => 'aspect-[358/300] size-full object-cover sm:aspect-[4/3] lg:aspect-auto lg:min-h-[542px]',
-								// Half the 1312 frame on desktop (~640x542); full width below lg.
-								'sizes' => '(min-width: 1025px) 46vw, 92vw',
+								'class' => 'aspect-[324/545] size-full object-cover sm:aspect-[4/3] lg:aspect-auto lg:min-h-[542px]',
+								// Half the 1312 frame on desktop (~640x542); on phones a 324x545 portrait inset in the frame (Figma 49374:45131), where the photo draws ~165vw wide.
+								'sizes' => '(min-width: 1025px) 46vw, (min-width: 576px) 92vw, 165vw',
 							)
 						);
 						?>

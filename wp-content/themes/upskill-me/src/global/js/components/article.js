@@ -4,37 +4,51 @@
  */
 
 /**
- * Mark the contents link of the section being read.
+ * Mark the contents link of the section being read: the last heading that has
+ * passed the top third of the screen (the first one until any has). Worked out
+ * from scroll position, so scrolling back up always lands on the right item.
  */
 function contents() {
 	const list = document.querySelector( '[data-article-contents]' );
 
-	if ( ! list || ! ( 'IntersectionObserver' in window ) ) {
+	if ( ! list ) {
 		return;
 	}
 
 	const links = Array.from( list.querySelectorAll( 'a[href^="#"]' ) );
-	const headings = links
-		.map( ( link ) => document.getElementById( decodeURIComponent( link.hash.slice( 1 ) ) ) )
-		.filter( Boolean );
+	const pairs = links
+		.map( ( link ) => [ link, document.getElementById( decodeURIComponent( link.hash.slice( 1 ) ) ) ] )
+		.filter( ( [ , heading ] ) => heading );
 
-	const activate = ( id ) => {
-		links.forEach( ( link ) => link.classList.toggle( 'is-active', link.hash === '#' + id ) );
+	if ( ! pairs.length ) {
+		return;
+	}
+
+	let frame = 0;
+
+	const update = () => {
+		const line = window.innerHeight / 3;
+		let current = pairs[ 0 ][ 0 ];
+
+		pairs.forEach( ( [ link, heading ] ) => {
+			if ( heading.getBoundingClientRect().top <= line ) {
+				current = link;
+			}
+		} );
+
+		links.forEach( ( link ) => link.classList.toggle( 'is-active', link === current ) );
 	};
 
-	// A heading becomes current once it passes the top third of the screen.
-	const observer = new IntersectionObserver(
-		( entries ) => {
-			entries.forEach( ( entry ) => {
-				if ( entry.isIntersecting ) {
-					activate( entry.target.id );
-				}
-			} );
+	window.addEventListener(
+		'scroll',
+		() => {
+			window.cancelAnimationFrame( frame );
+			frame = window.requestAnimationFrame( update );
 		},
-		{ rootMargin: '0px 0px -66% 0px' }
+		{ passive: true }
 	);
 
-	headings.forEach( ( heading ) => observer.observe( heading ) );
+	update();
 }
 
 /**

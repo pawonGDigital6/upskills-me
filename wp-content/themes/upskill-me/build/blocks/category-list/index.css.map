@@ -1,0 +1,1 @@
+{"version":3,"file":"category-list/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/category-list/editor.scss"],"sourcesContent":["/**\n * Category List block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-category-list a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

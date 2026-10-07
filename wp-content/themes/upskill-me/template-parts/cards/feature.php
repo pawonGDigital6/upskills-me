@@ -86,7 +86,7 @@ if ( 'texture' === $style ) :
 				<span class="text-sm font-medium uppercase" aria-hidden="true"><?php echo esc_html( $number ); ?></span>
 			</div>
 			<div class="mt-auto flex flex-col gap-1 pt-10">
-				<?php $title_markup( 'text-h5 font-medium lg:pr-[34px]' ); ?>
+				<?php $title_markup( 'text-h6 font-medium lg:pr-[34px] lg:text-h5' ); ?>
 				<?php if ( $text ) : ?>
 					<p class="text-base <?php echo esc_attr( $t[3] ); ?>"><?php echo esc_html( $text ); ?></p>
 				<?php endif; ?>
@@ -108,7 +108,7 @@ elseif ( 'glass' === $style ) :
 	<?php
 elseif ( 'link' === $style ) :
 	?>
-	<li class="reveal feature-card feature-card--lift group relative flex min-h-[268px] flex-col rounded-[22px] border border-brand-200 bg-white p-[30px] shadow-xs lg:min-h-[323px]" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
+	<li class="reveal feature-card feature-card--lift group relative flex min-h-[323px] flex-col rounded-[22px] border border-brand-200 bg-white p-[30px] shadow-xs" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
 		<div class="flex items-start justify-between gap-4">
 			<?php if ( $label ) : ?>
 				<span class="rounded-sm bg-brand-25 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-brand-700 uppercase"><?php echo esc_html( $label ); ?></span>
@@ -129,7 +129,8 @@ elseif ( 'link' === $style ) :
 else :
 	$principle = 'principle' === $style;
 	$roomy     = ! empty( $args['roomy'] );
-	$title_cls = ( ! empty( $args['large'] ) ? 'text-h6' : 'text-lg' ) . ' font-medium ' . ( $dark ? 'text-white' : 'text-gray-950' );
+	// The dark highlight card of a roomy grid takes the 20px title Figma gives it ("Managed Compliance").
+	$title_cls = ( ! empty( $args['large'] ) ? 'text-h6' : ( $dark && $roomy ? 'text-xl' : 'text-lg' ) ) . ' font-medium ' . ( $dark ? 'text-white' : 'text-gray-950' );
 	$chip      = $dark ? 'bg-white/7 text-white' : 'bg-brand-100 text-brand-700';
 	// The principle card's dark tone is a plain gradient in Figma (49325:15598); the others are textured.
 	$surface   = $dark ? ( $principle ? 'border-transparent bg-[linear-gradient(163deg,#17132b_8%,#0b0b10_92%)]' : 'border-transparent bg-gray-950' ) : 'border-line bg-white';
@@ -138,7 +139,7 @@ else :
 		<?php if ( $dark && ! $principle ) : ?>
 			<?php $texture(); ?>
 		<?php endif; ?>
-		<div class="flex flex-1 flex-col <?php echo esc_attr( $principle ? 'p-6 lg:min-h-[236px] lg:p-4' : ( $roomy ? 'p-6 lg:p-[30px]' : 'p-4' ) ); ?>">
+		<div class="flex flex-1 flex-col <?php echo esc_attr( $principle ? 'p-6 lg:min-h-[236px] lg:p-4' : ( $roomy ? 'p-6 lg:p-[30px]' : 'min-h-[240px] p-4' ) ); ?>">
 			<?php if ( $principle ) : ?>
 				<?php // Phones: label, icon, then text (Figma 49374:44476). Desktop: icon left, label right. ?>
 				<div class="flex flex-col items-start gap-3 lg:flex-row lg:justify-between lg:gap-4">

@@ -1,0 +1,1 @@
+{"version":3,"file":"media-story/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/media-story/editor.scss"],"sourcesContent":["/**\n * Media Story block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-media-story a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

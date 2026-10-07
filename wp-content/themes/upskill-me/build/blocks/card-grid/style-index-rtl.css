@@ -1,1 +1,27 @@
-.block-card-grid .feature-card--lift{transition:transform .4s cubic-bezier(.22,.72,0,1)}@media(hover:hover){.block-card-grid .feature-card--lift:hover{transform:translateY(-4px)}}@media(prefers-reduced-motion:reduce){.block-card-grid .feature-card--lift{transition:none}.block-card-grid .feature-card--lift:hover{transform:none}}
+/*!********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/card-grid/style.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Card Grid block.
+ *
+ * Layout and colour are utilities in render.php and
+ * template-parts/cards/feature.php; this only adds the hover lift (with its
+ * reduced-motion guard).
+ */
+.block-card-grid .feature-card--lift {
+  transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+@media (hover: hover) {
+  .block-card-grid .feature-card--lift:hover {
+    transform: translateY(-4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .block-card-grid .feature-card--lift {
+    transition: none;
+  }
+  .block-card-grid .feature-card--lift:hover {
+    transform: none;
+  }
+}

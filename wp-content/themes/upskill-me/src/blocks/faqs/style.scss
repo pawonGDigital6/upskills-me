@@ -49,3 +49,13 @@
 	color: var(--color-brand-700);
 	text-decoration: underline;
 }
+
+// The question turns purple under the pointer, as in the designer template (.acc__btn:hover).
+.block-faqs .faq__question {
+	transition: color 0.25s ease;
+}
+
+.block-faqs .faq__question:hover,
+.block-faqs .faq__question:focus-visible {
+	color: var(--color-brand-700);
+}

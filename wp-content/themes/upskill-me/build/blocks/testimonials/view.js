@@ -1,1 +1,79 @@
-(()=>{const e=window.matchMedia("(min-width: 1025px)");document.querySelectorAll("[data-carousel]").forEach(t=>{const a=t.querySelector("[data-carousel-track]"),l=Array.from(t.querySelectorAll("[data-carousel-slide]")),r=Array.from(t.querySelectorAll("[data-carousel-bar]")),o=t.querySelector("[data-carousel-prev]"),s=t.querySelector("[data-carousel-next]");if(!a||l.length<2)return;const c=()=>{const t=e.matches,r=t?a.scrollLeft+a.clientWidth/2:a.scrollLeft;let o=0,s=1/0;return l.forEach((e,l)=>{const c=t?e.offsetLeft+e.offsetWidth/2:e.offsetLeft-parseFloat(getComputedStyle(a).scrollPaddingInlineStart||0),n=Math.abs(c-r);n<s&&(s=n,o=l)}),o},n=(t,r)=>{const o=l[Math.max(0,Math.min(t,l.length-1))],s=e.matches?o.offsetLeft-(a.clientWidth-o.offsetWidth)/2:o.offsetLeft-parseFloat(getComputedStyle(a).scrollPaddingInlineStart||0);a.scrollTo({left:s,behavior:r})},i=()=>{const e=c();r.forEach((t,a)=>t.classList.toggle("is-filled",a<=e)),o&&(o.disabled=0===e),s&&(s.disabled=l.length-1===e)};o?.addEventListener("click",()=>n(c()-1)),s?.addEventListener("click",()=>n(c()+1));let d=0;a.addEventListener("scroll",()=>{window.cancelAnimationFrame(d),d=window.requestAnimationFrame(i)},{passive:!0}),e.matches&&l.length>2&&n(1,"instant"),i()})})();
+/******/ (() => { // webpackBootstrap
+/*!*****************************************!*\
+  !*** ./src/blocks/testimonials/view.js ***!
+  \*****************************************/
+/**
+ * Testimonials carousel.
+ *
+ * The track is a native scroll-snap row; this adds the arrow buttons and the
+ * progress bars (every bar up to the current card is filled, as Figma draws).
+ * With three or more cards the desktop row starts on the second, so a card
+ * peeks in on both sides.
+ */
+
+const DESKTOP = window.matchMedia('(min-width: 1025px)');
+document.querySelectorAll('[data-carousel]').forEach(carousel => {
+  const track = carousel.querySelector('[data-carousel-track]');
+  const slides = Array.from(carousel.querySelectorAll('[data-carousel-slide]'));
+  const bars = Array.from(carousel.querySelectorAll('[data-carousel-bar]'));
+  const prev = carousel.querySelector('[data-carousel-prev]');
+  const next = carousel.querySelector('[data-carousel-next]');
+  if (!track || slides.length < 2) {
+    return;
+  }
+
+  /**
+   * The slide whose snap point is nearest the current scroll position.
+   *
+   * @return {number} Slide index.
+   */
+  const current = () => {
+    const centre = DESKTOP.matches;
+    const anchor = centre ? track.scrollLeft + track.clientWidth / 2 : track.scrollLeft;
+    let best = 0;
+    let distance = Infinity;
+    slides.forEach((slide, index) => {
+      const point = centre ? slide.offsetLeft + slide.offsetWidth / 2 : slide.offsetLeft - parseFloat(getComputedStyle(track).scrollPaddingInlineStart || 0);
+      const gap = Math.abs(point - anchor);
+      if (gap < distance) {
+        distance = gap;
+        best = index;
+      }
+    });
+    return best;
+  };
+  const goTo = (index, behavior) => {
+    const slide = slides[Math.max(0, Math.min(index, slides.length - 1))];
+    const left = DESKTOP.matches ? slide.offsetLeft - (track.clientWidth - slide.offsetWidth) / 2 : slide.offsetLeft - parseFloat(getComputedStyle(track).scrollPaddingInlineStart || 0);
+    track.scrollTo({
+      left,
+      behavior
+    });
+  };
+  const update = () => {
+    const index = current();
+    bars.forEach((bar, i) => bar.classList.toggle('is-filled', i <= index));
+    if (prev) {
+      prev.disabled = 0 === index;
+    }
+    if (next) {
+      next.disabled = slides.length - 1 === index;
+    }
+  };
+  prev?.addEventListener('click', () => goTo(current() - 1));
+  next?.addEventListener('click', () => goTo(current() + 1));
+  let frame = 0;
+  track.addEventListener('scroll', () => {
+    window.cancelAnimationFrame(frame);
+    frame = window.requestAnimationFrame(update);
+  }, {
+    passive: true
+  });
+  if (DESKTOP.matches && slides.length > 2) {
+    goTo(1, 'instant');
+  }
+  update();
+});
+/******/ })()
+;
+//# sourceMappingURL=view.js.map

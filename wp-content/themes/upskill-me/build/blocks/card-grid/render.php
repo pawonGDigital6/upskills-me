@@ -102,6 +102,7 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args ) {
 						array(
 							'layout' => 'stack',
 							'button' => false,
+							'reveal' => true,
 							'class'  => get_field( 'large_intro' ) ? '' : 'section-header--base',
 						)
 					);
@@ -113,14 +114,14 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args ) {
 							$image,
 							'full',
 							array(
-								'class' => 'aspect-[358/240] w-full rounded-[24px] object-cover lg:aspect-[652/240]',
+								'class' => 'reveal aspect-[358/240] w-full rounded-[24px] object-cover lg:aspect-[652/240]',
 								// 652x240 at desktop draws the 3:2 photo 652 wide; the column is full width below lg.
 								'sizes' => '(min-width: 1025px) 46vw, 92vw',
 							)
 						);
 						?>
 					<?php elseif ( ! empty( $callout['title'] ) ) : ?>
-						<div class="flex items-start gap-4 rounded-[20px] border border-line bg-white p-6 lg:max-w-[507px]">
+						<div class="reveal flex items-start gap-4 rounded-[20px] border border-line bg-white p-6 lg:max-w-[507px]" style="--i:2">
 							<span class="grid size-11 flex-none place-items-center rounded-[13px] bg-brand-100 text-brand-700" aria-hidden="true"><?php upskill_icon( $callout['icon'] ? $callout['icon'] : 'info', 'size-5' ); ?></span>
 							<div class="flex flex-col gap-2">
 								<p class="text-lg font-medium text-gray-950"><?php echo esc_html( $callout['title'] ); ?></p>
@@ -141,6 +142,7 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args ) {
 				array(
 					'layout' => in_array( $layout, array( 'split', 'center', 'stack' ), true ) ? $layout : 'split',
 					'dark'   => $dark,
+					'reveal' => true,
 				)
 			);
 			$render_cards( 'mt-stack ' . $grid_columns[ $columns ] . ( 'texture' === $style ? ' lg:items-end' : '' ) );

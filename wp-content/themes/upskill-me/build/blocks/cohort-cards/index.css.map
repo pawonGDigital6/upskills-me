@@ -1,0 +1,1 @@
+{"version":3,"file":"cohort-cards/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/cohort-cards/editor.scss"],"sourcesContent":["/**\n * Cohort Cards block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-cohort-cards a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

@@ -90,6 +90,7 @@ $attributes = upskill_block_attributes( $block, 'block-post-cards section-y ' . 
 $header_args = array(
 	'layout' => 'split',
 	'lead'   => (bool) get_field( 'lead_intro' ),
+	'reveal' => true,
 );
 
 $grid = static function ( $items ) use ( $variant ) {
@@ -125,6 +126,7 @@ $grid = static function ( $items ) use ( $variant ) {
 						array(
 							'layout'         => 'stack',
 							'button_variant' => 'light',
+							'reveal'         => true,
 							'class'          => 'section-header--base block-post-cards__side',
 						)
 					);

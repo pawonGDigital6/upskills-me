@@ -25,7 +25,7 @@ while ( have_posts() ) :
 			<header class="bg-gray-25 pt-7 pb-[46px] lg:pt-12 lg:pb-20">
 				<div class="container flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-20">
 					<div class="flex flex-col lg:min-w-0 lg:flex-1">
-						<p class="flex flex-wrap items-center gap-2.5 text-sm text-gray-500">
+						<p class="reveal flex flex-wrap items-center gap-2.5 text-sm text-gray-500">
 							<span class="rounded-sm bg-brand-200 px-2.5 py-1 font-medium text-brand-700"><?php echo esc_html( upskill_post_type_label( get_post() ) ); ?></span>
 							<span class="size-1 rounded-full bg-[#cfcadb]" aria-hidden="true"></span>
 							<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'd F Y' ) ); ?></time>
@@ -39,11 +39,11 @@ while ( have_posts() ) :
 						</p>
 						<?php upskill_heading( $display_title ? $display_title : esc_html( get_the_title() ), 'h1', 'pt-[18px] text-h3 font-medium text-gray-950 lg:max-w-[600px]' ); ?>
 						<?php if ( has_excerpt() ) : ?>
-							<p class="pt-4 text-base text-gray-500 lg:max-w-[600px]"><?php echo esc_html( get_the_excerpt() ); ?></p>
+							<p class="reveal pt-4 text-base text-gray-500 lg:max-w-[600px]" style="--i:1"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
 					</div>
 					<?php if ( has_post_thumbnail() ) : ?>
-						<div class="overflow-hidden rounded-[20px] lg:min-w-0 lg:flex-1">
+						<div class="reveal overflow-hidden rounded-[20px] lg:min-w-0 lg:flex-1" style="--i:2">
 							<?php
 							the_post_thumbnail(
 								'full',
@@ -66,7 +66,7 @@ while ( have_posts() ) :
 						<aside class="article-aside rounded-[20px] border border-line bg-white p-4 lg:sticky lg:top-[calc(var(--upskill-header-height)-20px)] lg:w-[236px] lg:flex-none lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0">
 							<?php if ( $contents['items'] ) : ?>
 								<nav aria-labelledby="article-contents-title">
-									<p class="text-sm font-medium tracking-[0.08em] text-gray-500 uppercase" id="article-contents-title"><?php esc_html_e( 'In this article', 'upskill-me' ); ?></p>
+									<p class="text-sm font-medium tracking-[0.08em] text-[#8b8b97] uppercase lg:text-gray-500" id="article-contents-title"><?php esc_html_e( 'In this article', 'upskill-me' ); ?></p>
 									<ol class="flex flex-col gap-1.5 pt-3.5" data-article-contents>
 										<?php foreach ( $contents['items'] as $index => $item ) : ?>
 											<li>

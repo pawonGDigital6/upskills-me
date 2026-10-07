@@ -386,6 +386,7 @@ if ( ! function_exists( 'upskill_section_header' ) ) {
 	 *     @type bool   $button False when the block draws the button elsewhere.
 	 *     @type bool   $lead   True for the 20px intro some split headers use.
 	 *     @type string $button_variant light for the white pill (Resources rows).
+	 *     @type bool   $reveal True to fade the eyebrow and intro in on scroll, as the designer template does.
 	 * }
 	 * @return void
 	 */
@@ -398,6 +399,7 @@ if ( ! function_exists( 'upskill_section_header' ) ) {
 				'tag'    => 'h2',
 				'class'  => '',
 				'button' => true,
+				'reveal' => false,
 			)
 		);
 
@@ -424,12 +426,12 @@ if ( ! function_exists( 'upskill_section_header' ) ) {
 		<header class="<?php echo esc_attr( trim( $classes . ' ' . $args['class'] ) ); ?>">
 			<div class="section-header__title">
 				<?php
-				upskill_eyebrow( $eyebrow, (string) get_field( 'eyebrow_icon' ), $args['dark'] ? 'eyebrow--dark' : '' );
+				upskill_eyebrow( $eyebrow, (string) get_field( 'eyebrow_icon' ), trim( ( $args['dark'] ? 'eyebrow--dark' : '' ) . ( $args['reveal'] ? ' reveal' : '' ) ) );
 				upskill_heading( $heading, $args['tag'], 'section-header__heading text-h3' );
 				?>
 			</div>
 			<?php if ( $intro || ! empty( $button['url'] ) ) : ?>
-				<div class="section-header__aside">
+				<div class="section-header__aside<?php echo $args['reveal'] ? ' reveal' : ''; ?>"<?php echo $args['reveal'] ? ' style="--i:1"' : ''; ?>>
 					<?php upskill_paragraphs( $intro, 'section-header__intro' ); ?>
 					<?php upskill_button( $button, empty( $args['button_variant'] ) ? array() : array( 'variant' => $args['button_variant'], 'class' => 'min-h-[50px]' ) ); ?>
 				</div>

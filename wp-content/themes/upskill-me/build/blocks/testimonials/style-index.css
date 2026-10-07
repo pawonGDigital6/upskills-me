@@ -1,1 +1,38 @@
-.testimonials__track{scroll-behavior:smooth;scroll-padding-inline:var(--spacing-gutter)}.testimonials__track::-webkit-scrollbar{display:none}@media(width >= 1025px){.testimonials__track{padding-inline:calc((100% - min(1120px,78vw))/2);scroll-padding-inline:0}}.testimonials__bar{transition:background-color .3s ease}.testimonials__bar.is-filled{background-color:var(--color-brand-500)}@media(prefers-reduced-motion:reduce){.testimonials__track{scroll-behavior:auto}}
+/*!***********************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/testimonials/style.scss ***!
+  \***********************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Testimonials block.
+ *
+ * Layout and colour are utilities in render.php. The track's snap padding and
+ * the desktop centring live here: from 1025px the current card (78vw, capped
+ * at Figma's 1120) sits centred with its neighbours peeking in either side.
+ */
+.testimonials__track {
+  scroll-padding-inline: var(--spacing-gutter);
+  scroll-behavior: smooth;
+}
+.testimonials__track::-webkit-scrollbar {
+  display: none;
+}
+
+@media (width >= 1025px) {
+  .testimonials__track {
+    padding-inline: calc((100% - min(1120px, 78vw)) / 2);
+    scroll-padding-inline: 0;
+  }
+}
+.testimonials__bar {
+  transition: background-color 0.3s ease;
+}
+.testimonials__bar.is-filled {
+  background-color: var(--color-brand-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials__track {
+    scroll-behavior: auto;
+  }
+}
+
+/*# sourceMappingURL=style-index.css.map*/

@@ -52,6 +52,7 @@ $attributes = upskill_block_attributes( $block, 'block-media-story section-y bg-
 					array(
 						'layout' => 'stack',
 						'button' => false,
+					'reveal' => true,
 						'class'  => 'block-media-story__header',
 					)
 				);
