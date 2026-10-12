@@ -55,7 +55,6 @@
 	padding-bottom: 1px;
 	border-bottom: 1px solid rgb(255 255 255 / 35%);
 	color: var(--color-signal);
-	font-weight: 500;
 	transition: border-color 0.25s ease;
 
 	&:hover {
@@ -86,7 +85,9 @@
 	background: none;
 	color: rgb(255 255 255 / 50%);
 	transform: translateY(-50%);
-	transition: color 0.25s ease, background-color 0.25s ease;
+	transition:
+		color 0.25s ease,
+		background-color 0.25s ease;
 
 	svg {
 		width: 13px;
@@ -106,7 +107,6 @@
 // Below md the whole bar is the link: the label collapses to its arrow, which
 // Figma pins to the right edge of the 390 frame.
 @include mix.breakpoint("md") {
-
 	.announcement__inner {
 		justify-content: flex-start;
 		padding-right: calc(var(--spacing-gutter) + 20px);
@@ -151,7 +151,12 @@
 	z-index: 40;
 	border-bottom: 1px solid var(--color-white);
 	background-color: var(--color-brand-50);
-	transition: box-shadow 0.3s ease, background-color 0.3s ease;
+	transition:
+		box-shadow 0.3s ease,
+		background-color 0.3s ease;
+	@include mix.breakpoint("sm") {
+		border-bottom: 0;
+	}
 
 	&.is-stuck {
 		background-color: rgb(249 247 253 / 94%);
@@ -217,6 +222,7 @@
 }
 
 .site-header__icon {
+	position: relative;
 	display: grid;
 	flex: none;
 	place-items: center;
@@ -254,19 +260,19 @@
 
 // Three lines that cross into an X while the drawer is open.
 .site-header__burger-lines {
-	position: relative;
-	width: 18px;
+	width: 10px;
 	height: 2px;
 	border-radius: 2px;
 	background-color: currentColor;
 	transition: background-color 0.2s ease;
+	margin-left: 6px;
 
 	&::before,
 	&::after {
 		content: "";
 		position: absolute;
-		left: 0;
-		width: 100%;
+		left: 14px;
+		width: 16px;
 		height: 2px;
 		border-radius: 2px;
 		background-color: currentColor;
@@ -274,11 +280,11 @@
 	}
 
 	&::before {
-		transform: translateY(-6px);
+		transform: translateY(-7px);
 	}
 
 	&::after {
-		transform: translateY(6px);
+		transform: translateY(7px);
 	}
 
 	[aria-expanded="true"] > & {
@@ -317,7 +323,9 @@
 	font-size: var(--text-base);
 	line-height: 1.5;
 	white-space: nowrap;
-	transition: background-color 0.25s ease, color 0.25s ease;
+	transition:
+		background-color 0.25s ease,
+		color 0.25s ease;
 
 	&:hover {
 		background-color: rgb(26 26 26 / 5.5%);
@@ -353,7 +361,9 @@
 	width: min(1040px, calc(100vw - 48px));
 	opacity: 0;
 	transform: translate(-50%, -6px);
-	transition: opacity 0.22s ease, transform 0.22s var(--ease-out);
+	transition:
+		opacity 0.22s ease,
+		transform 0.22s var(--ease-out);
 
 	&.is-open {
 		opacity: 1;
@@ -373,7 +383,7 @@
 
 .mega__panel {
 	display: grid;
-	grid-template-columns: minmax(0, 300px) minmax(0, 1fr) minmax(0, 268px);
+	grid-template-columns: minmax(0, 282px) minmax(0, 1fr) minmax(0, 268px);
 	gap: clamp(20px, 2.4vw, 38px);
 	padding: clamp(20px, 2.2vw, 30px);
 	border: 1px solid var(--color-gray-100);
@@ -406,7 +416,10 @@
 	border-radius: 999px;
 	background-color: var(--color-gray-50);
 	color: var(--color-gray-900);
-	transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--ease-out);
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease,
+		transform 0.2s var(--ease-out);
 
 	svg {
 		width: 12px;
@@ -430,9 +443,9 @@
 
 .mega__figure {
 	margin-top: 18px;
-	aspect-ratio: 16 / 11;
+	aspect-ratio: 16/8.4;
 	overflow: hidden;
-	border-radius: var(--radius-md);
+	border-radius: var(--radius-lg);
 	background-color: var(--color-gray-50);
 }
 
@@ -673,6 +686,9 @@
 	padding: 4px 4px 4px 18px;
 	border: 1px solid rgb(26 26 26 / 20%);
 	border-radius: 999px;
+	@include mix.breakpoint(sm) {
+		padding-left: 11px;
+	}
 }
 
 .search-dialog__icon {
@@ -704,10 +720,18 @@
 	border-radius: 999px;
 	background: none;
 	color: var(--color-gray-800);
+	@include mix.breakpoint(sm) {
+		width: 30px;
+		height: 30px;
+	}
 
 	svg {
 		width: 14px;
 		height: 14px;
+		@include mix.breakpoint(sm) {
+			width: 12px;
+			height: 12px;
+		}
 	}
 
 	&:hover {
