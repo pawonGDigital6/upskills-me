@@ -226,7 +226,7 @@ if ( ! function_exists( 'upskill_render_mega_panel' ) ) {
 			<div class="mega__panel">
 				<div class="mega__intro">
 					<div class="mega__head">
-						<p class="mega__title"><?php echo esc_html( $item->title ); ?></p>
+						<p class="mega__title text-h6 font-medium mb-2"><?php echo esc_html( $item->title ); ?></p>
 						<?php if ( $item->url && '#' !== $item->url ) : ?>
 							<a class="mega__go" href="<?php echo esc_url( $item->url ); ?>">
 								<span class="screen-reader-text">
@@ -240,10 +240,10 @@ if ( ! function_exists( 'upskill_render_mega_panel' ) ) {
 						<?php endif; ?>
 					</div>
 					<?php if ( $item->description ) : ?>
-						<p class="mega__text"><?php echo esc_html( $item->description ); ?></p>
+						<p class="mega__text text-base text-gray-500"><?php echo esc_html( $item->description ); ?></p>
 					<?php endif; ?>
 					<?php if ( $image ) : ?>
-						<figure class="mega__figure">
+						<figure class="mega__figure mt-10!">
 							<?php upskill_image( $image, 'medium_large', array( 'class' => 'mega__image', 'loading' => 'lazy' ) ); ?>
 						</figure>
 					<?php endif; ?>

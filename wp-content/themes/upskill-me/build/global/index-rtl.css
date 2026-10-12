@@ -490,6 +490,9 @@
   .my-10 {
     margin-block: calc(var(--spacing) * 10);
   }
+  .\!mt-10 {
+    margin-top: calc(var(--spacing) * 10) !important;
+  }
   .mt-0\.5 {
     margin-top: calc(var(--spacing) * 0.5);
   }
@@ -513,6 +516,9 @@
   }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
+  }
+  .mt-10\! {
+    margin-top: calc(var(--spacing) * 10) !important;
   }
   .mt-12 {
     margin-top: calc(var(--spacing) * 12);
@@ -552,6 +558,9 @@
   }
   .-mb-9 {
     margin-bottom: calc(var(--spacing) * -9);
+  }
+  .mb-2 {
+    margin-bottom: calc(var(--spacing) * 2);
   }
   .mb-4 {
     margin-bottom: calc(var(--spacing) * 4);
@@ -1787,6 +1796,9 @@
   }
   .text-\[52px\] {
     font-size: 52px;
+  }
+  .text-h6--line-height {
+    font-size: var(--text-h6--line-height);
   }
   .leading-\[1\.1\] {
     --tw-leading: 1.1;
@@ -4409,11 +4421,10 @@
   display: grid;
   grid-template-columns: minmax(0, 282px) minmax(0, 1fr) minmax(0, 268px);
   gap: clamp(20px, 2.4vw, 38px);
-  padding: clamp(20px, 2.2vw, 30px);
+  padding: 16px clamp(20px, 2.2vw, 24px);
   border: 1px solid var(--color-gray-100);
-  border-radius: var(--radius-2xl);
+  border-radius: 8px;
   background-color: var(--color-white);
-  box-shadow: var(--shadow-float);
 }
 
 .mega__head {
@@ -4423,28 +4434,20 @@
   gap: 12px;
 }
 
-.mega__title {
-  color: var(--color-gray-900);
-  font-weight: 600;
-  font-size: 22px;
-  line-height: 1.2;
-  letter-spacing: -0.022em;
-}
-
 .mega__go {
   display: grid;
   flex: none;
   place-items: center;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   border-radius: 999px;
   background-color: var(--color-gray-50);
   color: var(--color-gray-900);
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s var(--ease-out);
 }
 .mega__go svg {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 .mega__go:hover, .mega__row:hover .mega__go {
   background-color: var(--color-brand-700);
@@ -4452,15 +4455,7 @@
   transform: translate(-1px, -1px);
 }
 
-.mega__text {
-  margin-top: 10px;
-  color: var(--color-gray-500);
-  font-size: var(--text-sm);
-  line-height: 1.5;
-}
-
 .mega__figure {
-  margin-top: 18px;
   aspect-ratio: 16/8.4;
   overflow: hidden;
   border-radius: var(--radius-lg);
