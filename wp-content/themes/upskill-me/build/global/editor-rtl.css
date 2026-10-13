@@ -1978,6 +1978,10 @@
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
   }
+  .blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,);
+  }
   .drop-shadow-\[0_12px_16px_rgb\(20_12_48\/7\%\)\] {
     --tw-drop-shadow-size: drop-shadow(0 12px 16px var(--tw-drop-shadow-color, rgb(20 12 48/7%)));
     --tw-drop-shadow: var(--tw-drop-shadow-size);

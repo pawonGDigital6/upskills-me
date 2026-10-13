@@ -162,6 +162,22 @@
 		background-color: rgb(249 247 253 / 94%);
 		box-shadow: 0 1px 0 var(--color-gray-100);
 		backdrop-filter: blur(12px);
+
+		// Below wd the drawer (position: fixed) lives inside the header, and a
+		// backdrop-filter makes the header its containing block: the sheet then
+		// sizes to the 64px bar, not the viewport. The blur moves to a layer.
+		@include mix.breakpoint("wd") {
+			backdrop-filter: none;
+
+			&::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				z-index: -1;
+				backdrop-filter: blur(12px);
+				pointer-events: none;
+			}
+		}
 	}
 }
 
@@ -561,6 +577,16 @@
 
 	[aria-expanded="true"] > & {
 		transform: rotate(180deg);
+	}
+}
+
+// Height is animated by navigation.js (slideToggle-style); `hidden` when closed.
+.drawer__panel {
+	overflow: hidden;
+	transition: height 0.32s var(--ease-out);
+
+	@media (prefers-reduced-motion: reduce) {
+		transition: none;
 	}
 }
 

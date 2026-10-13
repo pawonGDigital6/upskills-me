@@ -280,6 +280,7 @@ __webpack_require__.r(__webpack_exports__);
 const DESKTOP = window.matchMedia('(min-width: 1200px)');
 const HOVER = window.matchMedia('(hover: hover) and (pointer: fine)');
 const TRANSITION = 220;
+const SLIDE = 320;
 
 /**
  * Show or hide a `hidden` panel with a CSS transition on `.is-open`.
@@ -304,6 +305,32 @@ function setPanel(panel, open) {
       panel.hidden = true;
     }
   }, TRANSITION);
+}
+
+/**
+ * Slide a `hidden` panel open or shut by animating its height (what jQuery's
+ * slideToggle does; jQuery is not loaded on the front end).
+ *
+ * The slide always starts from the panel's current height, so toggling again
+ * mid-slide reverses smoothly. Once settled the inline height is cleared and a
+ * closed panel gets `hidden` back, dropping its links out of the tab order.
+ *
+ * @param {HTMLElement} panel Panel element with a CSS height transition.
+ * @param {boolean}     open  Target state.
+ */
+function slide(panel, open) {
+  window.clearTimeout(panel.upskillTimer);
+  const from = panel.hidden ? 0 : panel.getBoundingClientRect().height;
+  panel.hidden = false;
+  panel.style.height = '';
+  const to = open ? panel.getBoundingClientRect().height : 0;
+  panel.style.height = `${from}px`;
+  panel.getBoundingClientRect(); // Commit the start height before the transition.
+  panel.style.height = `${to}px`;
+  panel.upskillTimer = window.setTimeout(() => {
+    panel.style.height = '';
+    panel.hidden = !open;
+  }, SLIDE);
 }
 
 /**
@@ -434,6 +461,19 @@ function drawer(header) {
     }
   };
   toggle.addEventListener('click', () => setOpen('true' !== toggle.getAttribute('aria-expanded')));
+
+  // Parent rows expand their sub-menu in place.
+  sheet.querySelectorAll('[data-drawer-sub]').forEach(button => {
+    const panel = document.getElementById(button.getAttribute('aria-controls'));
+    if (!panel) {
+      return;
+    }
+    button.addEventListener('click', () => {
+      const open = 'true' !== button.getAttribute('aria-expanded');
+      button.setAttribute('aria-expanded', String(open));
+      slide(panel, open);
+    });
+  });
   document.addEventListener('keydown', event => {
     if ('Escape' === event.key && 'true' === toggle.getAttribute('aria-expanded')) {
       setOpen(false);

@@ -32,7 +32,7 @@ $upskill_legal  = upskill_menu_tree( 'footer-legal' );
 			<?php endif; ?>
 		</div>
 		<div class="container cta-band__inner">
-			<?php upskill_eyebrow( isset( $upskill_band['eyebrow'] ) ? $upskill_band['eyebrow'] : '', 'book-open', 'eyebrow--dark' ); ?>
+			<?php upskill_eyebrow( isset( $upskill_band['eyebrow'] ) ? $upskill_band['eyebrow'] : '', 'site-logo-sm', 'eyebrow--dark' ); ?>
 			<h2 class="heading cta-band__heading text-h2" id="cta-band-heading"><?php echo wp_kses( $upskill_band['heading'], upskill_inline_kses() ); ?></h2>
 			<?php if ( ! empty( $upskill_band['text'] ) ) : ?>
 				<p class="cta-band__text"><?php echo esc_html( $upskill_band['text'] ); ?></p>

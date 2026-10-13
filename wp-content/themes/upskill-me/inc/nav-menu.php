@@ -264,7 +264,7 @@ if (!function_exists('upskill_render_mega_panel')) {
 							<a<?php echo upskill_menu_item_link_atts($child, 'mega__row'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 								<span class="mega__row-text flex justify-between gap-2">
 									<span
-										class="mega__row-title text-xl leading-[1.5em] font-normal text-gray-950 block"><?php echo esc_html($child->title); ?></span>
+										class="mega__row-title text-xl leading-[1.5em] font-medium text-gray-950 block"><?php echo esc_html($child->title); ?></span>
 									<span class="mega__go" aria-hidden="true"><?php upskill_icon('arrow-up-right'); ?></span>
 								</span>
 								<?php if ($child->description): ?>
@@ -308,11 +308,11 @@ if (!function_exists('upskill_render_mobile_nav')) {
 							<?php if ($item->children): ?>
 								<?php $sub_id = 'drawer-sub-' . $item->ID; ?>
 								<button class="drawer__link" type="button" aria-expanded="false"
-									aria-controls="<?php echo esc_attr($sub_id); ?>" data-disclosure>
+									aria-controls="<?php echo esc_attr($sub_id); ?>" data-drawer-sub>
 									<?php echo esc_html($item->title); ?>
 									<?php upskill_icon('chevron-down', 'drawer__chevron'); ?>
 								</button>
-								<div class="collapse" id="<?php echo esc_attr($sub_id); ?>">
+								<div class="drawer__panel" id="<?php echo esc_attr($sub_id); ?>" hidden>
 									<ul class="drawer__sub">
 										<?php foreach ($item->children as $child): ?>
 											<li>
