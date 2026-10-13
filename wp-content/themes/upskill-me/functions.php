@@ -172,5 +172,7 @@ require get_template_directory() . '/inc/options.php';
 require get_template_directory() . '/inc/nav-menu.php';
 require get_template_directory() . '/inc/acf-register-blocks.php';
 require get_template_directory() . '/inc/contact-form-7.php';
+require get_template_directory() . '/inc/learndash.php';
+require get_template_directory() . '/inc/woocommerce.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/template-tags.php';

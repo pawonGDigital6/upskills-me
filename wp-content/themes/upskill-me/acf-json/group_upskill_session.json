@@ -1,0 +1,86 @@
+{
+    "key": "group_upskill_session",
+    "title": "Session: Details",
+    "fields": [
+        {
+            "key": "field_upskill_session_session_code",
+            "label": "Session code",
+            "name": "session_code",
+            "type": "text",
+            "instructions": "e.g. OH002. Shown on session cards.",
+            "wrapper": {
+                "width": "34"
+            }
+        },
+        {
+            "key": "field_upskill_session_version",
+            "label": "Version",
+            "name": "version",
+            "type": "number",
+            "instructions": "Two decimal places, e.g. 1.01.",
+            "step": 0.01,
+            "min": 0,
+            "default_value": 1,
+            "wrapper": {
+                "width": "33"
+            }
+        },
+        {
+            "key": "field_upskill_session_format",
+            "label": "Video format",
+            "name": "format",
+            "type": "button_group",
+            "choices": {
+                "landscape": "Landscape",
+                "portrait": "Portrait"
+            },
+            "default_value": "landscape",
+            "return_format": "value",
+            "wrapper": {
+                "width": "33"
+            }
+        },
+        {
+            "key": "field_upskill_session_duration",
+            "label": "Duration",
+            "name": "duration",
+            "type": "text",
+            "instructions": "Video length as m:ss or h:mm:ss, e.g. 14:30.",
+            "placeholder": "14:30",
+            "wrapper": {
+                "width": "34"
+            }
+        },
+        {
+            "key": "field_upskill_session_key_points",
+            "label": "Key points",
+            "name": "key_points",
+            "type": "textarea",
+            "rows": 4,
+            "new_lines": "",
+            "instructions": "One point per line (the \"Key points\" list beside the player).",
+            "wrapper": {
+                "width": "66"
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "sfwd-lessons"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1791791358
+}

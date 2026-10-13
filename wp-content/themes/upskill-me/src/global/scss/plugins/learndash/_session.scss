@@ -1,0 +1,475 @@
+// LearnDash session (lesson) page — learndash/ld30/lesson.php.
+//
+// Figma: User Course Flow 49325:18592 (1440) / 49374:113832 (390).
+// The course progress strip (one segment and label per session), the header,
+// the video card with previous/next session below it, and the "Session
+// information" panel beside it (stacked on phones). The player itself is
+// WordPress/LearnDash's MediaElement video, framed and lightly restyled.
+
+// Figma colours with no design token: the panel's deep purple text and the
+// progress track.
+$session-ink: #311853;
+$session-ink-soft: #4c3073;
+$session-track: #ededef;
+$session-bar: #6744a8;
+
+.session {
+	background-color: var(--color-gray-25);
+	color: var(--color-gray-950);
+
+	// Progress strip: 56px under the header on desktop (as every inner page), 32 on phones.
+	&__progress {
+		padding-top: 32px;
+
+		@media (width >= 1025px) {
+			padding: 56px 0 48px;
+		}
+	}
+
+	&__progress-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		font-weight: 500;
+		font-size: var(--text-base);
+		line-height: 1.55;
+
+		@media (width >= 1025px) {
+			flex-direction: row;
+			flex-wrap: wrap;
+			column-gap: clamp(24px, 16.4vw, 236px);
+			font-size: var(--text-lg);
+			line-height: 1.5;
+		}
+	}
+
+	&__tabs {
+		display: grid;
+		grid-template-columns: repeat(var(--sessions, 1), minmax(0, 1fr));
+		gap: 4px;
+		margin: 0;
+		padding: 20px 0 0;
+		list-style: none;
+
+		@media (width >= 1025px) {
+			gap: 6px;
+		}
+	}
+
+	&__tab-link {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		color: #6b6b72;
+		text-decoration: none;
+
+		@media (width >= 1025px) {
+			gap: 10px;
+		}
+
+		&:hover {
+			color: var(--color-gray-900);
+		}
+
+		&:focus-visible {
+			border-radius: 4px;
+			outline: 2px solid var(--color-brand-700);
+			outline-offset: 4px;
+		}
+	}
+
+	// Each segment fills when its session is complete; the current one shows
+	// a quarter fill, as drawn, to read as "in progress".
+	&__tab-bar {
+		display: block;
+		height: 5px;
+		border-radius: 999px;
+		background: linear-gradient($session-bar, $session-bar) left / 0 100% no-repeat, $session-track;
+
+		@media (width >= 1025px) {
+			height: 6px;
+			border-radius: 3px;
+		}
+	}
+
+	&__tab.is-current &__tab-bar {
+		background-size: 25% 100%, auto;
+	}
+
+	&__tab.is-complete &__tab-bar {
+		background-size: 100% 100%, auto;
+	}
+
+	// Phones: six labels share 350px, so they wrap (as drawn) and the tick is
+	// left to the filled bar.
+	&__tab-label {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
+		font-size: 11px;
+		line-height: 1.1;
+		overflow-wrap: anywhere;
+
+		@media (width >= 640px) {
+			white-space: nowrap;
+		}
+
+		@media (width >= 1025px) {
+			gap: 5px;
+			font-size: var(--text-sm);
+			line-height: 1.62;
+			letter-spacing: -0.007em;
+		}
+	}
+
+	&__tab.is-current &__tab-label {
+		color: var(--color-gray-900);
+		font-weight: 600;
+
+		@media (width >= 1025px) {
+			font-weight: 500;
+		}
+	}
+
+	&__tab-icon {
+		display: none;
+		flex: none;
+		width: 11px;
+		height: 11px;
+		color: $session-bar;
+
+		@media (width >= 640px) {
+			display: block;
+		}
+	}
+
+	// Main: 52px on phones, 48 on desktop; 36/48 below.
+	&__main {
+		padding: 52px 0 36px;
+
+		@media (width >= 1025px) {
+			padding: 48px 0;
+		}
+	}
+
+	&__header {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	&__course-title {
+		padding-top: 17px;
+		font-weight: 500;
+		// 25 → 36 (390 → 1440).
+		font-size: clamp(1.5625rem, 1.3009rem + 1.0476vw, 2.25rem);
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+
+		@media (width >= 1025px) {
+			padding-top: 16px;
+		}
+	}
+
+	&__title {
+		padding-top: 14px;
+		font-size: var(--text-base);
+		line-height: 1.5;
+
+		@media (width >= 1025px) {
+			padding-top: 24px;
+		}
+	}
+
+	&__layout {
+		display: grid;
+		gap: 24px;
+		margin-top: 38px;
+
+		@media (width >= 1025px) {
+			grid-template-columns: minmax(0, 745fr) minmax(0, 575fr);
+			gap: 40px;
+			align-items: start;
+			margin-top: 40px;
+		}
+	}
+
+	&__primary {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	// The dark video card: 18px frame, 37px corners (Figma 36.7).
+	&__player {
+		padding: 12px;
+		border: 1px solid var(--color-gray-100);
+		border-radius: 24px;
+		background-color: #0e0e10;
+		box-shadow: 0 16px 32px -12px rgb(14 14 16 / 18%), 0 2px 4px rgb(14 14 16 / 6%);
+
+		@media (width >= 1025px) {
+			padding: 18px;
+			border-radius: 37px;
+		}
+
+		.ld-video {
+			overflow: hidden;
+			border-radius: 16px;
+
+			@media (width >= 1025px) {
+				border-radius: 28px;
+			}
+		}
+
+		.wp-video,
+		.mejs-container,
+		video {
+			width: 100% !important;
+			max-width: 100%;
+			height: auto;
+		}
+
+		// MediaElement controls: translucent bar, white/60 times, as drawn.
+		.mejs-container,
+		.mejs-container .mejs-controls {
+			background: transparent;
+		}
+
+		.mejs-controls {
+			padding: 0 12px;
+			background: linear-gradient(transparent, rgb(0 0 0 / 55%));
+		}
+
+		.mejs-time {
+			color: rgb(255 255 255 / 60%);
+			font-family: var(--font-sans);
+			font-size: 14px;
+		}
+
+		.mejs-time-total {
+			background: rgb(255 255 255 / 14%);
+		}
+
+		.mejs-time-current {
+			background: var(--color-white);
+		}
+	}
+
+	// LearnDash keeps Mark Complete disabled until the video has been watched,
+	// then video auto-completion submits it. Figma draws no button, so it only
+	// shows once LearnDash enables it.
+	&__complete {
+		padding-top: 24px;
+
+		&:has(input[disabled], button[disabled]) {
+			display: none;
+		}
+	}
+
+	// Previous / next session cards.
+	&__nav {
+		display: grid;
+		gap: 10px;
+		padding-top: 24px;
+
+		@media (width >= 640px) {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	&__nav-link {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 12px 14px;
+		border: 1px solid var(--color-gray-100);
+		border-radius: 16px;
+		background-color: var(--color-gray-50);
+		color: inherit;
+		text-decoration: none;
+		transition: border-color 0.25s ease, background-color 0.25s ease;
+
+		&:hover {
+			border-color: var(--color-brand-500);
+			background-color: var(--color-white);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--color-brand-700);
+			outline-offset: 2px;
+		}
+	}
+
+	&__nav-link--next {
+		justify-content: flex-end;
+		text-align: right;
+
+		@media (width >= 640px) {
+			grid-column: 2;
+		}
+	}
+
+	&__nav-icon {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 42px;
+		height: 42px;
+		border-radius: 999px;
+		background-color: var(--color-brand-700);
+		box-shadow: var(--shadow-btn);
+		color: var(--color-white);
+		transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1);
+	}
+
+	&__nav-arrow {
+		width: 15px;
+		height: 15px;
+	}
+
+	&__nav-link--previous &__nav-arrow {
+		transform: rotate(180deg);
+	}
+
+	&__nav-link--previous:hover &__nav-icon {
+		transform: translateX(-2px);
+	}
+
+	&__nav-link--next:hover &__nav-icon {
+		transform: translateX(2px);
+	}
+
+	&__nav-text {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+		font-size: var(--text-sm);
+		line-height: 1.55;
+	}
+
+	&__nav-label {
+		color: $session-ink-soft;
+	}
+
+	&__nav-title {
+		overflow: hidden;
+		color: $session-ink;
+		font-weight: 500;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	// "Session information" panel.
+	&__info {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		padding: 20px;
+		border: 1px solid var(--color-gray-100);
+		border-radius: 24px;
+		background-color: var(--color-white);
+		box-shadow: var(--shadow-xs);
+
+		@media (width >= 1025px) {
+			padding: 28px;
+		}
+	}
+
+	&__info-label,
+	&__info-subtitle {
+		font-weight: 500;
+		font-size: var(--text-sm);
+		line-height: 1.55;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+	}
+
+	&__info-label {
+		color: #55555a;
+	}
+
+	&__info-title {
+		padding-top: 16px;
+		color: $session-ink;
+		font-weight: 500;
+		font-size: var(--text-h6);
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+	}
+
+	&__info-text {
+		padding-top: 16px;
+		color: #55555a;
+		font-size: var(--text-sm);
+		line-height: 1.55;
+
+		> * + * {
+			margin-top: 12px;
+		}
+	}
+
+	&__info-subtitle {
+		padding-top: 22px;
+		color: $session-ink;
+	}
+
+	&__points {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin: 0;
+		padding: 16px 0 0;
+		list-style: none;
+
+		li {
+			display: flex;
+			align-items: flex-start;
+			gap: 12px;
+			font-size: var(--text-base);
+			line-height: 1.5;
+		}
+	}
+
+	&__point-icon {
+		flex: none;
+		width: 14px;
+		height: 14px;
+		margin-top: 5px;
+		color: var(--color-brand-700);
+	}
+
+	&__materials {
+		padding-top: 12px;
+		color: #55555a;
+		font-size: var(--text-sm);
+		line-height: 1.55;
+
+		a {
+			color: var(--color-brand-700);
+			text-decoration: underline;
+			text-underline-offset: 3px;
+		}
+	}
+
+	.session__info-button {
+		margin-top: 18px;
+		border-color: rgb(26 26 26 / 20%);
+		box-shadow: none;
+	}
+
+	// LearnDash's own alerts (step completed, lesson progression) keep their
+	// markup; give them the theme's spacing and corners.
+	.ld-alert {
+		margin-top: 24px;
+		border-radius: 16px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+	.session__nav-icon {
+		transition: none;
+	}
+}
