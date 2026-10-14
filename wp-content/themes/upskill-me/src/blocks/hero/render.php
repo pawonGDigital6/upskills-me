@@ -61,7 +61,7 @@ $uid = wp_unique_id( 'hero-' );
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
 		<div class="flex flex-col gap-[46px] lg:flex-row lg:items-stretch lg:gap-16">
-			<div class="flex flex-col justify-center gap-8 lg:min-w-0 lg:flex-1">
+			<div class="flex flex-col justify-center sm:gap-8 gap-7 lg:min-w-0 lg:flex-1">
 				<div class="flex flex-col items-start gap-3">
 					<?php upskill_eyebrow( get_field( 'eyebrow' ), (string) get_field( 'eyebrow_icon' ) ); ?>
 					<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold' ); ?>
@@ -102,7 +102,7 @@ $uid = wp_unique_id( 'hero-' );
 							<span class="relative col-start-1 row-start-1 bg-linear-to-b from-black/0 from-50% to-black/80" aria-hidden="true"></span>
 
 							<?php // The open panel's label: a translucent bar with the name and, on desktop, the topic count. ?>
-							<span class="relative col-start-1 row-start-1 flex items-center justify-between gap-4 self-end bg-white/10 px-3 py-2 text-white lg:hidden lg:py-[22px] lg:pr-0 lg:pl-4 lg:group-[.is-active]:flex">
+							<span class="relative col-start-1 row-start-1 flex items-center justify-between gap-4 self-end bg-white/10 px-3 py-2 text-white lg:hidden lg:py-[22px] lg:pr-0 lg:pl-4 lg:group-[.is-active]:flex max-lg:border-t max-lg:border-[rgba(255,255,255,0.10)]">
 								<span class="min-w-0 text-[24px] leading-[1.1] font-medium tracking-[-0.01em] lg:text-[clamp(2rem,3.3vw,3rem)]"><?php echo esc_html( $name ); ?></span>
 								<?php if ( $count > 0 ) : ?>
 									<span class="hidden w-[91px] flex-none flex-col items-center text-center lg:flex">
