@@ -201,6 +201,21 @@ if ( ! function_exists( 'upskill_login_redirect_landing' ) ) {
 }
 
 /**
+ * Learners keep WordPress's own profile screen (name, email, password,
+ * sessions), which the dashboard's "Profile" and "Password & Security" link
+ * to. WooCommerce otherwise turns away everyone without editing rights from
+ * wp-admin, sending them to its My Account page.
+ */
+add_filter(
+	'woocommerce_prevent_admin_access',
+	static function ( $prevent ) {
+		global $pagenow;
+
+		return 'profile.php' === $pagenow ? false : $prevent;
+	}
+);
+
+/**
  * Logging out returns to the "Log in" page with a confirmation, instead of
  * wp-login.php.
  */
