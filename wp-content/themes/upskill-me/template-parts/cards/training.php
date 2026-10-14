@@ -33,6 +33,9 @@ $upskill_title = wp_unique_id( 'training-card-' );
 						<source src="<?php echo esc_url( $upskill_card['video'] . '#t=1' ); ?>" type="video/mp4">
 					</video>
 				<?php endif; ?>
+			<?php else : ?>
+				<?php // No picture or video yet: the brand mark, so the card never shows an empty box. ?>
+				<img class="w-2/5 max-w-[160px] place-self-center opacity-80" src="<?php echo esc_url( upskill_theme_image( 'logo-white.webp' ) ); ?>" alt="" width="192" height="44" loading="lazy" decoding="async">
 			<?php endif; ?>
 
 			<div class="pointer-events-none relative z-10 flex items-start gap-[7px] self-start justify-self-start p-2">
