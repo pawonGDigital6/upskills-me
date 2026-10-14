@@ -102,6 +102,10 @@
 	@include mix.breakpoint("lg", true) {
 		padding-top: 64px;
 	}
+
+	.btn {
+		padding-block: 9px;
+	}
 }
 
 // 390: brand + Industries side by side, then two columns.
@@ -109,9 +113,14 @@
 .site-footer__grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 40px 16px;
+	gap: 26px 24px;
 
-	@include mix.breakpoint("lg", true) {
+	@include mix.breakpoint("sm", true) {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 40px;
+	}
+
+	@include mix.breakpoint("wd", true) {
 		grid-template-columns: minmax(0, 259px) repeat(5, minmax(0, 1fr));
 		gap: 24px;
 	}
@@ -129,6 +138,9 @@
 
 	@include mix.breakpoint("lg") {
 		grid-row: span 1;
+	}
+	@include mix.breakpoint("sm") {
+		padding-right: 13px;
 	}
 }
 
@@ -149,7 +161,6 @@
 // Below lg the button breaks out of the brand column and spans the grid,
 // under the logo/Industries pair, as drawn on the 390 frame.
 @include mix.breakpoint("lg") {
-
 	// The first row is only as tall as the logo, so the spanning Industries
 	// column pushes its extra height into the second row, not between the logo
 	// and its intro text.
@@ -157,9 +168,9 @@
 		grid-template-rows: auto 1fr;
 	}
 
-	.site-footer__brand {
-		display: contents;
-	}
+	// .site-footer__brand {
+	// 	display: contents;
+	// }
 
 	.site-footer__logo,
 	.site-footer__text {
@@ -168,7 +179,7 @@
 
 	// 16px under the logo rather than the grid's 40px row gap.
 	.site-footer__text {
-		margin-top: -24px;
+		margin-top: -12px;
 	}
 
 	.site-footer__brand > .btn {
@@ -183,12 +194,14 @@
 	.site-footer__text {
 		grid-row: 2;
 	}
-
-	.site-footer__nav--industries {
-		grid-column: 2;
-		grid-row: 1 / span 2;
-	}
 }
+
+// @include mix.breakpoint("md") {
+// 	.site-footer__nav--industries {
+// 		grid-column: 2;
+// 		grid-row: 1 / span 2;
+// 	}
+// }
 
 .footer-nav__title {
 	color: rgb(255 255 255 / 42%);
@@ -225,22 +238,28 @@
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 24px;
-	margin-top: 40px;
+	margin-top: 74px;
 	padding-block: 24px;
 	border-top: 1px solid var(--color-gray-900);
 	font-family: "Geist", var(--font-sans);
 	font-size: var(--text-xs);
 	line-height: 1.62;
+	letter-spacing: -0.096px;
 
-	@include mix.breakpoint("lg", true) {
+	@include mix.breakpoint("sm", true) {
 		flex-direction: row;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
+	}
+	@include mix.breakpoint("sm") {
+		margin-top: 26px;
 	}
 }
 
 .site-footer__copyright {
 	color: rgb(255 255 255 / 42%);
+	letter-spacing: -0.096px;
 }
 
 .site-footer__legal {
@@ -270,7 +289,10 @@
 		border: 1px solid rgb(255 255 255 / 14%);
 		border-radius: 999px;
 		color: rgb(255 255 255 / 66%);
-		transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+		transition:
+			background-color 0.2s ease,
+			color 0.2s ease,
+			border-color 0.2s ease;
 
 		&:hover {
 			border-color: var(--color-brand-700);
