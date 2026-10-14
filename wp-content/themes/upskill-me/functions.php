@@ -177,5 +177,6 @@ require get_template_directory() . '/inc/woocommerce.php';
 require get_template_directory() . '/inc/lms-content.php';
 require get_template_directory() . '/inc/lms-accounts.php';
 require get_template_directory() . '/inc/lms-learner.php';
+require get_template_directory() . '/inc/lms-library.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/template-tags.php';

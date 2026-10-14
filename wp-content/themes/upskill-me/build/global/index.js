@@ -260,6 +260,55 @@ function Disclosure(root = document) {
 
 /***/ },
 
+/***/ "./src/global/js/components/library.js"
+/*!*********************************************!*\
+  !*** ./src/global/js/components/library.js ***!
+  \*********************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Library: () => (/* binding */ Library)
+/* harmony export */ });
+/**
+ * Training library (template-library.php).
+ *
+ * The filters are a plain GET form that works without JavaScript. Here:
+ * - on desktop a ticked filter applies at once (the form submits);
+ * - on phones the filters sit in a bottom sheet (<dialog>) opened by the
+ *   filter button; choices apply with its "Show results" button;
+ * - "Sort by" applies at once everywhere.
+ */
+function Library(root = document) {
+  const form = root.querySelector('[data-library]');
+  if (!form) {
+    return;
+  }
+  const sheet = form.querySelector('[data-library-filters]');
+  const isSheet = () => sheet?.open && sheet.matches(':modal');
+  form.querySelector('[data-library-open]')?.addEventListener('click', () => sheet?.showModal());
+  form.querySelector('[data-library-close]')?.addEventListener('click', () => sheet?.close());
+
+  // A tap on the backdrop (outside the sheet's box) closes it.
+  sheet?.addEventListener('click', event => {
+    if (event.target === sheet && isSheet()) {
+      const box = sheet.getBoundingClientRect();
+      const inside = event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom;
+      if (!inside) {
+        sheet.close();
+      }
+    }
+  });
+  form.addEventListener('change', event => {
+    const always = event.target.matches('[data-library-submit]');
+    if (always || !isSheet()) {
+      form.requestSubmit();
+    }
+  });
+}
+
+/***/ },
+
 /***/ "./src/global/js/components/navigation.js"
 /*!************************************************!*\
   !*** ./src/global/js/components/navigation.js ***!
@@ -684,6 +733,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_deferred_video__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/deferred-video */ "./src/global/js/components/deferred-video.js");
 /* harmony import */ var _components_article__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/article */ "./src/global/js/components/article.js");
 /* harmony import */ var _components_password_toggle__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/password-toggle */ "./src/global/js/components/password-toggle.js");
+/* harmony import */ var _components_library__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/library */ "./src/global/js/components/library.js");
+
 
 
 
@@ -702,6 +753,7 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(() => {
   (0,_components_deferred_video__WEBPACK_IMPORTED_MODULE_6__.DeferredVideo)();
   (0,_components_article__WEBPACK_IMPORTED_MODULE_7__.Article)();
   (0,_components_password_toggle__WEBPACK_IMPORTED_MODULE_8__.PasswordToggle)();
+  (0,_components_library__WEBPACK_IMPORTED_MODULE_9__.Library)();
 });
 
 /***/ },

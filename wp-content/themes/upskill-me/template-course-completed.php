@@ -9,8 +9,9 @@
  *
  * Shows the course only if the signed-in learner has completed it; without a
  * valid course it shows their most recent completion. "Print Certificate"
- * appears when LearnDash has a certificate for the course. The "What's next?"
- * session cards follow in Phase 4 with the library cards.
+ * appears when LearnDash has a certificate for the course. "What's next?"
+ * suggests up to three courses the learner does not have yet, same category
+ * first, as library cards (template-parts/cards/training.php).
  *
  * @package upskill-me
  */
@@ -110,6 +111,30 @@ $upskill_back   = upskill_learner_dashboard_url();
 				<?php endforeach; ?>
 			</dl>
 		</section>
+
+		<?php $upskill_next = function_exists( 'upskill_library_next' ) ? upskill_library_next( $upskill_course['id'], $upskill_user->ID ) : array(); ?>
+		<?php if ( $upskill_next ) : ?>
+			<section class="bg-white py-12 lg:py-20" aria-labelledby="next-heading">
+				<div class="container">
+					<header class="section-header section-header--split">
+						<div class="section-header__title">
+							<?php upskill_eyebrow( __( 'Keep building your knowledge', 'upskill-me' ), 'search-list' ); ?>
+							<h2 id="next-heading" class="heading section-header__heading text-h3"><?php echo wp_kses( __( 'What’s <em>next?</em>', 'upskill-me' ), upskill_inline_kses() ); ?></h2>
+						</div>
+						<div class="section-header__aside">
+							<p class="section-header__intro"><?php esc_html_e( 'Continue your learning with another practical On The Job training session.', 'upskill-me' ); ?></p>
+						</div>
+					</header>
+					<div class="mt-8 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3">
+						<?php
+						foreach ( $upskill_next as $upskill_id ) {
+							get_template_part( 'template-parts/cards/training', null, array( 'card' => upskill_library_card( $upskill_id ) ) );
+						}
+						?>
+					</div>
+				</div>
+			</section>
+		<?php endif; ?>
 	<?php endif; ?>
 </main>
 <?php

@@ -7,6 +7,7 @@ import { Reveal } from './components/reveal';
 import { DeferredVideo } from './components/deferred-video';
 import { Article } from './components/article';
 import { PasswordToggle } from './components/password-toggle';
+import { Library } from './components/library';
 
 domReady( () => {
 	Announcement();
@@ -17,4 +18,5 @@ domReady( () => {
 	DeferredVideo();
 	Article();
 	PasswordToggle();
+	Library();
 } );
