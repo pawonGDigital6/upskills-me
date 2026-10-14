@@ -42,9 +42,14 @@ $upskill_parts = explode( '<!--upskill-session-text-->', (string) $content, 2 );
 $upskill_video = 2 === count( $upskill_parts ) ? $upskill_parts[0] : '';
 $upskill_text  = 2 === count( $upskill_parts ) ? $upskill_parts[1] : (string) $content;
 
-$upskill_session_label = static function ( $index, $session ) {
+// A title written as "Session: Fire safety" reads "Fire safety" where the page already says "Session".
+$upskill_session_name = static function ( $session ) {
+	return preg_replace( '/^\s*session\s*\d*\s*[:\-]\s*/i', '', get_the_title( $session ) );
+};
+
+$upskill_session_label = static function ( $index, $session ) use ( $upskill_session_name ) {
 	/* translators: 1: session number, 2: session title. */
-	return sprintf( __( 'Session %1$d - %2$s', 'upskill-me' ), $index + 1, get_the_title( $session ) );
+	return sprintf( __( 'Session %1$d - %2$s', 'upskill-me' ), $index + 1, $upskill_session_name( $session ) );
 };
 ?>
 <div class="<?php echo esc_attr( learndash_the_wrapper_class() ); ?> session">
@@ -83,7 +88,7 @@ $upskill_session_label = static function ( $index, $session ) {
 								/* translators: %d: session number. */
 								printf( esc_html__( 'Session %d', 'upskill-me' ), (int) $upskill_i + 1 );
 								?>
-								<span class="screen-reader-text"><?php echo esc_html( ': ' . get_the_title( $upskill_session_id ) ); ?></span>
+								<span class="screen-reader-text"><?php echo esc_html( ': ' . $upskill_session_name( $upskill_session_id ) ); ?></span>
 							</span>
 						</a>
 					</li>
@@ -163,7 +168,7 @@ $upskill_session_label = static function ( $index, $session ) {
 										<span class="session__nav-icon" aria-hidden="true"><?php upskill_icon( 'arrow-right', 'session__nav-arrow' ); ?></span>
 										<span class="session__nav-text">
 											<span class="session__nav-label"><?php esc_html_e( 'Previous session', 'upskill-me' ); ?></span>
-											<span class="session__nav-title"><?php echo esc_html( get_the_title( $upskill_previous ) ); ?></span>
+											<span class="session__nav-title"><?php echo esc_html( $upskill_session_name( $upskill_previous ) ); ?></span>
 										</span>
 									</a>
 								<?php endif; ?>
@@ -171,7 +176,7 @@ $upskill_session_label = static function ( $index, $session ) {
 									<a class="session__nav-link session__nav-link--next" href="<?php echo esc_url( learndash_get_step_permalink( $upskill_next->ID, $course_id ) ); ?>">
 										<span class="session__nav-text">
 											<span class="session__nav-label"><?php esc_html_e( 'Next session', 'upskill-me' ); ?></span>
-											<span class="session__nav-title"><?php echo esc_html( get_the_title( $upskill_next ) ); ?></span>
+											<span class="session__nav-title"><?php echo esc_html( $upskill_session_name( $upskill_next ) ); ?></span>
 										</span>
 										<span class="session__nav-icon" aria-hidden="true"><?php upskill_icon( 'arrow-right', 'session__nav-arrow' ); ?></span>
 									</a>
