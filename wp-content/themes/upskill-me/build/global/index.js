@@ -501,6 +501,47 @@ function Navigation() {
 
 /***/ },
 
+/***/ "./src/global/js/components/password-toggle.js"
+/*!*****************************************************!*\
+  !*** ./src/global/js/components/password-toggle.js ***!
+  \*****************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   PasswordToggle: () => (/* binding */ PasswordToggle)
+/* harmony export */ });
+/**
+ * Show / hide password (the eye button in the sign-in form).
+ *
+ * A `[data-password-toggle]` button controls the input named by
+ * aria-controls and holds two icons: eye-off (hidden, the default as Figma
+ * draws it) and eye (shown).
+ */
+function PasswordToggle(root = document) {
+  root.querySelectorAll('[data-password-toggle]').forEach(button => {
+    const input = document.getElementById(button.getAttribute('aria-controls'));
+    const label = button.querySelector('.screen-reader-text');
+    const [hiddenIcon, shownIcon] = button.querySelectorAll('svg');
+    if (!input) {
+      return;
+    }
+    const showLabel = label?.textContent;
+    button.addEventListener('click', () => {
+      const show = 'password' === input.type;
+      input.type = show ? 'text' : 'password';
+      button.setAttribute('aria-pressed', String(show));
+      hiddenIcon?.classList.toggle('hidden', show);
+      shownIcon?.classList.toggle('hidden', !show);
+      if (label) {
+        label.textContent = show ? button.dataset.hideLabel || 'Hide password' : showLabel;
+      }
+    });
+  });
+}
+
+/***/ },
+
 /***/ "./src/global/js/components/reveal.js"
 /*!********************************************!*\
   !*** ./src/global/js/components/reveal.js ***!
@@ -642,6 +683,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_reveal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/reveal */ "./src/global/js/components/reveal.js");
 /* harmony import */ var _components_deferred_video__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/deferred-video */ "./src/global/js/components/deferred-video.js");
 /* harmony import */ var _components_article__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/article */ "./src/global/js/components/article.js");
+/* harmony import */ var _components_password_toggle__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/password-toggle */ "./src/global/js/components/password-toggle.js");
+
 
 
 
@@ -658,6 +701,7 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(() => {
   (0,_components_reveal__WEBPACK_IMPORTED_MODULE_5__.Reveal)();
   (0,_components_deferred_video__WEBPACK_IMPORTED_MODULE_6__.DeferredVideo)();
   (0,_components_article__WEBPACK_IMPORTED_MODULE_7__.Article)();
+  (0,_components_password_toggle__WEBPACK_IMPORTED_MODULE_8__.PasswordToggle)();
 });
 
 /***/ },

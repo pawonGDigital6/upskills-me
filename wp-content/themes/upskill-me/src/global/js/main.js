@@ -6,6 +6,7 @@ import { Disclosure } from './components/disclosure';
 import { Reveal } from './components/reveal';
 import { DeferredVideo } from './components/deferred-video';
 import { Article } from './components/article';
+import { PasswordToggle } from './components/password-toggle';
 
 domReady( () => {
 	Announcement();
@@ -15,4 +16,5 @@ domReady( () => {
 	Reveal();
 	DeferredVideo();
 	Article();
+	PasswordToggle();
 } );

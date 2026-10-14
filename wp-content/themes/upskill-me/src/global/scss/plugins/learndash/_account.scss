@@ -1,0 +1,219 @@
+// LearnDash account pages: Registration, Registration Success, Reset Password
+// (template-account.php wraps the page content in .account-content).
+//
+// Figma draws only "Log in" (49325:21367 / 49375:115106); LearnDash's forms
+// take the same field, button and alert treatment as the sign-in form
+// (template-parts/account/login-form.php): 14px medium labels 6px above 50px
+// grey inputs, 20px between fields, a full-width purple pill.
+//
+// LearnDash styles these forms through their wrapper IDs
+// (.learndash-wrapper #learndash-…-wrapper form input), so the field rules
+// are scoped the same way to outrank them.
+
+.account-content {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	color: var(--color-gray-700);
+	font-size: 16px;
+	line-height: 1.5;
+
+	.learndash-wrapper {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.learndash-wrapper :is(#learndash-registration-wrapper, #learndash-reset-password-wrapper) {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		width: 100%;
+		margin: 0;
+
+		form {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			margin: 0;
+		}
+
+		form p {
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			margin: 0;
+		}
+
+		form label {
+			display: block;
+			margin: 0;
+			color: var(--color-gray-900);
+			font-weight: 500;
+			font-size: 14px;
+			line-height: 1.5;
+		}
+
+		#learndash_registerform .learndash-required-field {
+			color: var(--color-brand-700);
+		}
+
+		form input:where([type="text"], [type="email"], [type="password"]) {
+			box-sizing: border-box;
+			display: block;
+			width: 100%;
+			height: 50px;
+			margin: 0;
+			padding: 12px;
+			border: 1px solid rgb(26 26 26 / 20%);
+			border-radius: 8px;
+			background-color: var(--color-gray-25);
+			color: var(--color-gray-950);
+			font: inherit;
+			font-size: 16px;
+			line-height: 1.5;
+			transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+
+			&:hover {
+				border-color: rgb(26 26 26 / 32%);
+			}
+
+			&:focus {
+				border-color: var(--color-brand-700);
+				outline: none;
+				background-color: var(--color-white);
+				box-shadow: 0 0 0 3px rgb(109 66 175 / 14%);
+			}
+		}
+
+		form input[type="submit"] {
+			box-sizing: border-box;
+			width: 100%;
+			min-height: 50px;
+			margin: 0;
+			padding: 12px 18px;
+			border: 0;
+			border-radius: 999px;
+			background-color: var(--color-brand-700);
+			box-shadow: var(--shadow-btn);
+			color: var(--color-white);
+			font: inherit;
+			font-weight: 500;
+			font-size: 13px;
+			line-height: 1.62;
+			letter-spacing: -0.01em;
+			cursor: pointer;
+			transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s var(--ease-out);
+
+			&:hover {
+				background-color: var(--color-brand-800);
+				box-shadow: var(--shadow-btn-hover);
+			}
+
+			&:active {
+				transform: scale(0.98);
+			}
+		}
+
+		// Remember me (the login form LearnDash shows after a password reset).
+		form .login-remember label {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			color: var(--color-gray-500);
+			font-weight: 400;
+			font-size: 16px;
+		}
+
+		form input[type="checkbox"] {
+			width: 16px;
+			height: 16px;
+			margin: 0;
+			border: 0;
+			accent-color: var(--color-brand-700);
+		}
+
+		// Registration: LearnDash's "Already have an account? Log In" links to the
+		// "Log in" page (inc/lms-accounts.php); its duplicate hidden login form
+		// and the links that toggle it stay shut.
+		.registration-login {
+			margin: 0;
+			color: var(--color-gray-500);
+			text-align: center;
+		}
+
+		.registration-login-link {
+			margin: 0;
+		}
+
+		.registration-login-form,
+		.show-password-reset-link,
+		.show-register-form {
+			display: none !important; // LearnDash's script toggles these inline.
+		}
+	}
+
+	// Text written in the page editor (e.g. Registration Success).
+	> p {
+		margin: 0;
+		text-align: center;
+	}
+
+	a {
+		color: var(--color-brand-700);
+		font-weight: 500;
+		text-underline-offset: 4px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	// Status and error messages (LearnDash modules/alert.php).
+	.learndash-wrapper .ld-alert {
+		display: block;
+		margin: 0;
+		padding: 12px 14px;
+		border: 1px solid var(--color-line);
+		border-radius: 8px;
+		background-color: var(--color-brand-50);
+		color: var(--color-gray-800);
+		min-height: 0;
+		font-size: 14px;
+		line-height: 1.5;
+		text-align: left;
+		box-shadow: none;
+
+		.ld-alert-content {
+			display: block;
+			min-height: 0;
+			margin: 0;
+			padding: 0;
+		}
+
+		.ld-alert-icon {
+			display: none;
+		}
+
+		.ld-alert-messages {
+			color: inherit;
+			font-size: inherit;
+			font-weight: 400;
+		}
+	}
+
+	.learndash-wrapper .ld-alert-warning {
+		border-color: #fecdca;
+		background-color: #fef3f2;
+		color: #b42318;
+	}
+
+	.learndash-wrapper .ld-alert-success {
+		border-color: rgb(77 124 15 / 30%);
+		background-color: #f3fbe8;
+		color: #3f6212;
+	}
+}
