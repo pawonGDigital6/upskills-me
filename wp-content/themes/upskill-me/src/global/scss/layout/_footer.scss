@@ -31,7 +31,8 @@
 		content: "";
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(180deg, rgb(13 13 13 / 0%) 55%, var(--color-gray-950) 100%);
+		background: var(--color-gray-950);
+		opacity: 0.76;
 	}
 }
 
@@ -73,12 +74,10 @@
 .cta-band__text {
 	max-width: 760px;
 	color: rgb(255 255 255 / 66%);
-	font-size: var(--text-lg);
+	font-size: var(--text-xl);
+	font-family: var(--font-secondary);
 	line-height: 1.55;
-
-	@include mix.breakpoint("lg", true) {
-		font-size: var(--text-xl);
-	}
+	letter-spacing: -0.096px;
 }
 
 .cta-band__actions {
@@ -136,10 +135,6 @@
 .site-footer__logo img {
 	width: 168px;
 	height: auto;
-
-	@include mix.breakpoint("lg", true) {
-		width: 185px;
-	}
 }
 
 .site-footer__text {

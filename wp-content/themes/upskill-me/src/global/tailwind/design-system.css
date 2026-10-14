@@ -71,6 +71,7 @@
 	   the rest (see inc/fonts.php).
 	---------------------------------------------- */
 	--font-sans: "Lay Grotesk", "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
+	--font-secondary: "Geist", sans-serif;
 
 	/* ----------------------------------------------
 	   Type scale. Line-height 1.1 and -1% tracking on
@@ -299,7 +300,7 @@
 		min-height: 48px;
 		padding: 12px 12px 12px 24px;
 		font-size: 15px;
-		line-height: 1.62;
+		line-height: 1;
 	}
 
 	.btn--lg .btn__nest {
@@ -395,7 +396,7 @@
 		color: var(--color-brand-700);
 	}
 
-	.eyebrow > span {
+	.eyebrow>span {
 		padding-top: 2px;
 	}
 
@@ -489,7 +490,7 @@
 		max-width: 666px;
 	}
 
-	@media (width >= 1025px) {
+	@media (width >=1025px) {
 
 		.section-header--split {
 			flex-direction: row;
@@ -604,7 +605,7 @@
 
 	/* Closed content is also made invisible, so links inside a collapsed panel
 	   drop out of the tab order; visibility flips after the slide finishes. */
-	.collapse > * {
+	.collapse>* {
 		overflow: hidden;
 		min-height: 0;
 		visibility: hidden;
@@ -615,7 +616,7 @@
 		grid-template-rows: 1fr;
 	}
 
-	.collapse.is-open > * {
+	.collapse.is-open>* {
 		visibility: visible;
 		transition-delay: 0s;
 	}
@@ -647,7 +648,7 @@
 @media (prefers-reduced-motion: reduce) {
 
 	.collapse,
-	.collapse > * {
+	.collapse>* {
 		transition: none;
 	}
 
