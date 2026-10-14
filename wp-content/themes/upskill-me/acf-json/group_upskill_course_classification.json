@@ -1,0 +1,79 @@
+{
+    "key": "group_upskill_course_classification",
+    "title": "Course: Classification",
+    "fields": [
+        {
+            "key": "field_upskill_course_training_type",
+            "label": "Training type",
+            "name": "training_type",
+            "type": "taxonomy",
+            "taxonomy": "training_type",
+            "field_type": "radio",
+            "instructions": "Compliance or Performance (one only). Compliance content uses the black/white branding.",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "wrapper": {
+                "width": "34"
+            }
+        },
+        {
+            "key": "field_upskill_course_organisation_type",
+            "label": "Organisation types",
+            "name": "organisation_type",
+            "type": "taxonomy",
+            "taxonomy": "organisation_type",
+            "field_type": "checkbox",
+            "instructions": "Which kinds of organisation this training suits.",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 0,
+            "wrapper": {
+                "width": "33"
+            }
+        },
+        {
+            "key": "field_upskill_course_jurisdiction",
+            "label": "Jurisdictions",
+            "name": "jurisdiction",
+            "type": "taxonomy",
+            "taxonomy": "jurisdiction",
+            "field_type": "checkbox",
+            "instructions": "Where the content applies (laws differ by state and country).",
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 0,
+            "wrapper": {
+                "width": "33"
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "sfwd-courses"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Specification \"Admin - Uploading content\": type, organisation type and jurisdiction. Admin-only lists (inc/lms-content.php).",
+    "show_in_rest": 0,
+    "modified": 1791996717
+}

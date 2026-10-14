@@ -56,7 +56,7 @@ $styles = array(
 		<?php upskill_section_header( array( 'layout' => 'center' ) ); ?>
 
 		<?php if ( $terms ) : ?>
-			<ul class="mt-stack grid gap-4 sm:grid-cols-2 lg:flex lg:items-end">
+			<ul class="sm:mt-18 mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3 wd:flex wd:items-end">
 				<?php foreach ( $terms as $index => $term ) : ?>
 					<?php
 					$style       = get_field( 'card_style', $term );
@@ -68,10 +68,10 @@ $styles = array(
 					// Figma staggers the row: the outer cards stand taller (524) than the inner two (404).
 					$tall = in_array( $index % 4, array( 0, 3 ), true );
 					?>
-					<li class="reveal group relative isolate flex min-h-[340px] flex-col overflow-hidden rounded-card p-4 shadow-[0_1px_1px_rgb(10_13_18/5%)] lg:flex-1 <?php echo esc_attr( $tokens['surface'] . ( $tall ? ' lg:min-h-[524px]' : ' lg:min-h-[404px]' ) ); ?>" style="--i:<?php echo (int) min( $index, 3 ); ?>">
+					<li class="reveal group relative isolate flex min-h-[404px] flex-col overflow-hidden sm:rounded-card rounded-4xl p-4 shadow-[0_1px_1px_rgb(10_13_18/5%)] wd:flex-1 <?php echo esc_attr( $tokens['surface'] . ( $tall ? ' wd:min-h-[524px]' : ' wd:min-h-[414px]' ) ); ?>" style="--i:<?php echo (int) min( $index, 3 ); ?>">
 						<img class="absolute inset-0 -z-10 size-full object-cover opacity-20 transition-transform duration-700 ease-out group-hover:scale-105" src="<?php echo esc_url( upskill_theme_image( $tokens['texture'] ) ); ?>" alt="" loading="lazy" decoding="async">
 
-						<div class="relative flex items-center justify-between pt-10">
+						<div class="relative flex items-center justify-between sm:pt-10">
 							<span class="grid size-10 place-items-center rounded-full <?php echo esc_attr( $tokens['chip'] ); ?>" aria-hidden="true">
 								<?php upskill_icon( get_field( 'card_icon', $term ) ? get_field( 'card_icon', $term ) : 'industry', 'size-6' ); ?>
 							</span>
@@ -79,7 +79,7 @@ $styles = array(
 						</div>
 
 						<div class="mt-10 flex flex-col gap-1">
-							<h3 class="text-h5 font-medium">
+							<h3 class="text-h5 max-sm:text-[36px] font-medium">
 								<?php // The whole card is the link; the title carries its name. ?>
 								<a class="after:absolute after:inset-0 after:z-10 focus-visible:outline-none" href="<?php echo esc_url( $url ); ?>"><?php echo esc_html( $term->name ); ?></a>
 							</h3>
@@ -87,7 +87,7 @@ $styles = array(
 								<span class="self-start rounded-sm bg-brand-100/10 px-[9px] py-1 text-2xs font-medium text-brand-500"><?php esc_html_e( 'Coming Soon', 'upskill-me' ); ?></span>
 							<?php endif; ?>
 							<?php if ( $term->description ) : ?>
-								<p class="min-h-[90px] text-base <?php echo esc_attr( $tokens['text'] ); ?>"><?php echo esc_html( $term->description ); ?></p>
+								<p class="mb-4 text-base <?php echo esc_attr( $tokens['text'] ); ?>"><?php echo esc_html( $term->description ); ?></p>
 							<?php endif; ?>
 							<?php if ( $link_label ) : ?>
 								<span class="inline-flex items-center gap-2 text-sm font-medium <?php echo esc_attr( $tokens['link'] ); ?>" aria-hidden="true">
@@ -97,11 +97,11 @@ $styles = array(
 							<?php endif; ?>
 						</div>
 
-						<div class="mt-auto flex items-end justify-between gap-4 pt-10">
+						<div class="mt-auto flex items-end justify-between gap-4 wd:pt-1 pt-3">
 							<?php if ( $tags ) : ?>
 								<ul class="flex flex-wrap gap-1.5<?php echo $tall ? ' max-w-[141px]' : ''; ?>" aria-label="<?php esc_attr_e( 'Topics', 'upskill-me' ); ?>">
 									<?php foreach ( $tags as $tag ) : ?>
-										<li class="rounded-full border border-white/28 bg-[rgb(14_14_16/34%)] px-[9px] py-0.5 font-[Geist] text-xs leading-[1.62] tracking-[-0.008em] whitespace-nowrap text-white"><?php echo esc_html( $tag ); ?></li>
+										<li class="rounded-full border border-white/28 bg-[rgb(14_14_16/34%)] px-2.25 py-1.5 font-[Geist] text-xs leading-none tracking-[-0.008em] whitespace-nowrap text-white"><?php echo esc_html( $tag ); ?></li>
 									<?php endforeach; ?>
 								</ul>
 							<?php endif; ?>

@@ -292,8 +292,11 @@
 
 	/* Sizes: sm = header (40), md = section CTAs (52; the card buttons set 50), lg = dark bands (15px text). */
 	.btn--md {
-		min-height: 52px;
 		padding-block: 12px;
+
+		@media screen and (min-width: 768px) {
+			min-height: 52px;
+		}
 	}
 
 	.btn--lg {
@@ -428,6 +431,12 @@
 		gap: 20px;
 	}
 
+	@media screen and (max-width: 767px) {
+		.section-header__title {
+			gap: 12px;
+		}
+	}
+
 	.section-header__heading {
 		color: var(--color-gray-900);
 	}
@@ -477,8 +486,14 @@
 	/* Figma leaves 38px between a centred heading and its intro. */
 	.section-header--center {
 		align-items: center;
-		gap: 38px;
+		gap: 24px;
 		text-align: center;
+	}
+
+	@media screen and (max-width: 767px) {
+		.section-header--center {
+			gap: 16px;
+		}
 	}
 
 	.section-header--center .section-header__title,

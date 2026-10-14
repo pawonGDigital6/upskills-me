@@ -62,6 +62,46 @@
             "wrapper": {
                 "width": "66"
             }
+        },
+        {
+            "key": "field_upskill_session_notes",
+            "label": "Notes",
+            "name": "notes",
+            "type": "repeater",
+            "instructions": "Internal notes about this video (not shown on the site). Each note is stamped with the date and time it is saved; newest first.",
+            "layout": "table",
+            "button_label": "Add note",
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_session_note_text",
+                    "label": "Note",
+                    "name": "note",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": "",
+                    "parent_repeater": "field_upskill_session_notes",
+                    "wrapper": {
+                        "width": "75"
+                    }
+                },
+                {
+                    "key": "field_upskill_session_note_date",
+                    "label": "Added",
+                    "name": "date",
+                    "type": "date_time_picker",
+                    "instructions": "Filled in automatically on save.",
+                    "display_format": "d M Y g:i a",
+                    "return_format": "Y-m-d H:i:s",
+                    "first_day": 1,
+                    "parent_repeater": "field_upskill_session_notes",
+                    "wrapper": {
+                        "width": "25"
+                    }
+                }
+            ]
         }
     ],
     "location": [
@@ -82,5 +122,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791791358
+    "modified": 1791996717
 }
