@@ -69,7 +69,7 @@ $meta_row = static function () use ( $post_obj, $type ) {
 if ( 'featured' === $variant ) :
 	$links = isset( $args['links'] ) ? array_filter( (array) $args['links'], static fn( $link ) => ! empty( $link['url'] ) ) : array();
 	?>
-	<article class="reveal group relative grid overflow-hidden rounded-[20px] border border-line bg-white shadow-xs lg:min-h-[380px] lg:grid-cols-[671fr_527fr]">
+	<article class="reveal group relative grid overflow-hidden rounded-[20px] border border-line bg-white shadow-xs lg:min-h-[380px] lg:grid-cols-[671fr_688fr]">
 		<?php // From lg the photo fills its column (lg:absolute) so the copy, not the photo's proportions, sets the card height. ?>
 		<div class="relative grid grid-cols-1 grid-rows-1 overflow-hidden">
 			<?php

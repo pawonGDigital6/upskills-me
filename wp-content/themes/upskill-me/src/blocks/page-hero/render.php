@@ -149,7 +149,8 @@ $chip_tones = array(
 					<?php endif; ?>
 
 					<?php if ( $note ) : ?>
-						<p class="flex items-center gap-2 pt-4 font-[Geist] text-[13px] leading-[1.62] tracking-[-0.007em] text-[#6b6b72]">
+						<?php // Hidden on phones: the About, Blogs and Guides phone frames leave it out (Resources alone keeps it). ?>
+						<p class="hidden items-center gap-2 pt-4 sm:flex font-secondary text-[13px] leading-[1.62] tracking-[-0.007em] text-[#6b6b72]">
 							<?php upskill_icon( 'check', 'size-3.5 flex-none text-brand-700' ); ?>
 							<?php echo esc_html( $note ); ?>
 						</p>
