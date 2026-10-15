@@ -450,6 +450,10 @@
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 24px;
+
+		@media screen and (max-width: 767px) {
+			gap: 20px;
+		}
 	}
 
 	.section-header__intro {
@@ -503,6 +507,7 @@
 
 	.section-header--center .section-header__aside {
 		max-width: 666px;
+		gap: 24px;
 	}
 
 	@media (width >=1025px) {
@@ -546,11 +551,19 @@
 	}
 
 	.session-chip__count {
-		padding: 0 2px;
-		border: 1px dashed var(--color-brand-300);
+		border: 1px dotted var(--color-brand-300);
 		border-radius: 4px;
 		background-color: var(--color-brand-50);
 		color: var(--color-brand-700);
+		padding: 8px 4px 4px;
+		text-align: center;
+		line-height: 1;
+		min-width: 32px;
+
+		@media screen and (max-width: 767px) {
+			min-width: 35px;
+			min-height: 31px;
+		}
 	}
 
 	/* The large version on the category rows (scaled 1.966x in Figma). */
@@ -558,10 +571,12 @@
 		gap: 12px;
 		/* 14 -> 19.66 */
 		font-size: clamp(0.875rem, 0.7436rem + 0.539vw, 1.2288rem);
+		@media screen and (max-width: 767px) {
+			gap: 8px;
+		}
 	}
 
 	.session-chip--lg .session-chip__count {
-		padding: 0 4px;
 		border-width: 2px;
 		border-radius: 8px;
 	}

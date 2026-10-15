@@ -9,6 +9,12 @@
  * rises into its reserved column with a slight tilt, and the arrow fills and
  * turns from ↗ to →. Smaller screens and touch keep the colour change only.
  */
+@media (min-width: 1401px) {
+  .block-category-list .section-header__intro {
+    padding-left: 24px;
+  }
+}
+
 .category-row {
   transition: background-color 320ms cubic-bezier(0.22, 0.72, 0, 1), padding 320ms cubic-bezier(0.22, 0.72, 0, 1), box-shadow 320ms cubic-bezier(0.22, 0.72, 0, 1);
 }

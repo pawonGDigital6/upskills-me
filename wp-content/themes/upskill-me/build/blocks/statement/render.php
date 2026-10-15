@@ -53,7 +53,7 @@ $attributes = upskill_block_attributes(
 
 		<?php if ( $details ) : ?>
 			<?php // Two up then one on phones (Need wraps); three across from tablet. ?>
-			<dl class="reveal mx-auto mt-8 grid max-w-[720px] grid-cols-2 gap-x-5 border-t border-gray-900/10 pt-8 text-left sm:grid-cols-3" style="--i:2">
+			<dl class="reveal mx-auto mt-8 grid max-w-[720px] grid-cols-2 gap-x-5 gap-y-7 border-t border-gray-900/10 pt-8 text-left sm:grid-cols-3" style="--i:2">
 				<?php foreach ( array_values( $details ) as $index => $row ) : ?>
 					<div class="flex flex-col gap-1.5<?php echo 2 === $index ? ' col-span-2 sm:col-span-1' : ''; ?>">
 						<dt class="text-sm font-medium text-[#6b6b72] uppercase"><?php echo esc_html( $row['term'] ); ?></dt>

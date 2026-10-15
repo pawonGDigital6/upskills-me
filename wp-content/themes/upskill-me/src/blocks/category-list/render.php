@@ -53,15 +53,15 @@ if ( ! empty( $all['link']['url'] ) ) {
 		<?php upskill_section_header(); ?>
 
 		<?php if ( $rows ) : ?>
-			<ol class="mt-stack border-t border-gray-900/10">
+			<ol class="sm:mt-stack mt-10 border-t border-gray-900/10">
 				<?php foreach ( $rows as $index => $row ) : ?>
 					<li class="reveal border-b border-gray-100" style="--i:<?php echo (int) min( $index, 3 ); ?>">
-						<a class="category-row group grid grid-cols-[28px_1fr] items-start gap-x-4 gap-y-6 py-6 lg:flex lg:items-center" href="<?php echo esc_url( $row['url'] ); ?>">
-							<span class="w-7 flex-none pt-1 text-sm text-[#6e6e74] lg:pt-0 lg:font-bold" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-							<span class="flex min-w-0 flex-1 flex-col gap-1.5">
+						<a class="category-row group grid grid-cols-[28px_1fr] items-start sm:gap-x-4 gap-[18px] gap-y-6 sm:py-6 py-4 lg:flex lg:items-center" href="<?php echo esc_url( $row['url'] ); ?>">
+							<span class="w-7 flex-none sm:pt-1 max-sm:pl-2 sm:text-sm text-xs text-[#6e6e74] lg:pt-0 lg:font-bold" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+							<span class="flex min-w-0 flex-1 flex-col sm:gap-1.5 gap-1">
 								<span class="text-h4 font-medium text-gray-900 transition-colors group-hover:text-brand-700"><?php echo esc_html( $row['title'] ); ?></span>
 								<?php if ( $row['description'] ) : ?>
-									<span class="max-w-[560px] text-lg text-gray-500 lg:min-h-12 lg:text-base"><?php echo esc_html( $row['description'] ); ?></span>
+									<span class="max-w-[560px] text-lg text-gray-500 lg:min-h-12 lg:text-base max-sm:pr-4"><?php echo esc_html( $row['description'] ); ?></span>
 								<?php endif; ?>
 							</span>
 							<?php if ( $row['image'] ) : ?>
@@ -70,10 +70,10 @@ if ( ! empty( $all['link']['url'] ) ) {
 									<?php upskill_image( $row['image'], 'medium', array( 'alt' => '', 'sizes' => '150px' ) ); ?>
 								</span>
 							<?php endif; ?>
-							<span class="col-span-2 flex items-center justify-between gap-[30px] lg:flex-none lg:justify-start">
+							<span class="col-span-2 flex items-center justify-between gap-[34px] lg:flex-none lg:justify-start max-sm:pr-[10px]">
 								<?php upskill_session_chip( $row['count'], 'session-chip--lg' ); ?>
-								<span class="category-row__go icon-link ml-auto size-10 border-[1.5px] border-gray-900/20 text-gray-900 group-hover:border-brand-700 group-hover:bg-brand-700 group-hover:text-white lg:ml-0 lg:size-[60px]" aria-hidden="true">
-									<?php upskill_icon( 'arrow-up-right', 'size-4 lg:size-[21px]' ); ?>
+								<span class="category-row__go icon-link ml-auto size-10 border-[1.5px] max-sm:bg-white border-gray-900/20 text-gray-900 group-hover:border-brand-700 group-hover:bg-brand-700 group-hover:text-white lg:ml-0 lg:size-[60px]" aria-hidden="true">
+									<?php upskill_icon( 'arrow-up-right', 'size-3.5 lg:size-[21px]' ); ?>
 								</span>
 							</span>
 						</a>

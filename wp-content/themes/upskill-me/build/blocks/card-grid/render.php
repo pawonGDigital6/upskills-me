@@ -61,6 +61,8 @@ $card_args = array(
 	'number' => (bool) get_field( 'show_numbers' ),
 	'large'  => (bool) get_field( 'large_titles' ),
 	'roomy'  => (bool) get_field( 'roomy_cards' ),
+	'side'   => $side,
+	'framed' => (bool) get_field( 'framed' ),
 );
 
 $attributes = upskill_block_attributes( $block, 'block-card-grid section-y ' . ( isset( $surfaces[ $surface ] ) ? $surfaces[ $surface ] : $surfaces['white'] ) );
@@ -144,15 +146,16 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 
 	<div class="container">
 		<?php if ( $side ) : ?>
-			<div class="flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-[clamp(56px,6.1vw,88px)]">
-				<div class="flex flex-col gap-8 lg:min-w-0 lg:flex-1 lg:self-stretch lg:gap-10">
+			<?php $principle = 'principle' === $style; // Why (principle cards): 88px apart, cards 48px down. About: 56px, 40px down. ?>
+			<div class="flex flex-col gap-10 lg:flex-row lg:items-center <?php echo $principle ? 'lg:gap-[clamp(56px,6.1vw,88px)]' : 'lg:gap-14'; ?>">
+				<div class="flex flex-col lg:min-w-0 lg:flex-1 lg:self-stretch <?php echo $principle ? 'gap-8 lg:gap-10' : 'gap-10'; ?>">
 					<?php
 					upskill_section_header(
 						array(
 							'layout' => 'stack',
 							'button' => false,
 							'reveal' => true,
-							'class'  => get_field( 'large_intro' ) ? '' : 'section-header--base',
+							'class'  => get_field( 'large_intro' ) ? 'section-header--intro-xl' : 'section-header--base',
 						)
 					);
 					?>
@@ -181,7 +184,7 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 						</div>
 					<?php endif; ?>
 				</div>
-				<div class="lg:min-w-0 lg:flex-1 lg:self-stretch lg:pt-12">
+				<div class="lg:min-w-0 lg:flex-1 lg:self-stretch <?php echo $principle ? 'lg:pt-12' : 'lg:pt-10'; ?>">
 					<?php $render_cards( 'sm:grid-cols-2' ); ?>
 				</div>
 			</div>
@@ -192,10 +195,18 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 					'layout' => in_array( $layout, array( 'split', 'center', 'stack' ), true ) ? $layout : 'split',
 					'dark'   => $dark,
 					'reveal' => true,
-					'class'  => 'rows' === $style ? 'section-header--rows' : '',
+					// Stacked headers (Case Studies "The impact") draw a 20/30 intro on phones too.
+					'class'  => trim( ( 'rows' === $style ? 'section-header--rows' : ( 'stack' === $layout ? 'section-header--intro-xl' : '' ) ) . ( 'center' === $layout && get_field( 'left_on_phones' ) ? ' section-header--left-phones' : '' ) ),
 				)
 			);
-			$render_cards( 'mt-stack ' . $grid_columns[ $columns ] . ( 'texture' === $style ? ' lg:items-end' : '' ) );
+			if ( $card_args['framed'] ) {
+				// Industry "Key training needs" (Figma 49325:14836): the cards in a grey frame.
+				echo '<div class="mt-stack rounded-[32px] bg-gray-100 p-2 sm:p-4">';
+				$render_cards( $grid_columns[ $columns ] );
+				echo '</div>';
+			} else {
+				$render_cards( 'mt-stack ' . $grid_columns[ $columns ] . ( 'texture' === $style ? ' lg:items-end' : '' ) );
+			}
 			?>
 		<?php endif; ?>
 	</div>

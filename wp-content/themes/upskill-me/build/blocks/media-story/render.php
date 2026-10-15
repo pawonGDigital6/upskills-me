@@ -8,7 +8,10 @@
  * A photograph with a quote card hanging over its lower edge, beside the
  * section header, story paragraphs and a short checklist or a list of social
  * links. "Boxed" sets the section as a white card on the grey page: inset on
- * phones, full width with rounded corners from desktop.
+ * phones, full width with rounded corners from desktop. Not boxed, it carries
+ * on from the section above on phones (grey, no top padding: Figma draws the
+ * About hero and story as one section) and is a white, rounded section from
+ * desktop.
  *
  * @param array $block The block settings and attributes.
  *
@@ -26,27 +29,27 @@ $networks  = array(
 	'youtube'  => __( 'YouTube', 'upskill-me' ),
 );
 
-$attributes = upskill_block_attributes( $block, 'block-media-story ' . ( $boxed ? 'bg-gray-25 py-[46px] lg:mb-20 lg:rounded-[24px] lg:bg-white lg:py-20' : 'section-y bg-white' ) );
+$attributes = upskill_block_attributes( $block, 'block-media-story ' . ( $boxed ? 'bg-gray-25 py-[46px] lg:mb-20 lg:rounded-[24px] lg:bg-white lg:py-20' : 'bg-gray-25 pb-6 lg:rounded-[24px] lg:bg-white lg:section-y' ) );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
-		<div class="flex flex-col lg:flex-row lg:items-center lg:gap-14 <?php echo $boxed ? 'gap-6 rounded-[24px] bg-white p-4 lg:rounded-none lg:bg-transparent lg:p-0' : 'gap-10'; ?>">
+		<div class="flex flex-col lg:flex-row lg:gap-14 <?php echo $boxed ? 'lg:items-center gap-6 rounded-[24px] bg-white p-4 lg:rounded-none lg:bg-transparent lg:p-0' : 'gap-10 lg:items-start'; ?>">
 			<?php if ( $image ) : ?>
-				<?php // The quote card shares the photo's grid cell and hangs 36px below it (the wrapper's padding). ?>
-				<div class="grid grid-cols-1 grid-rows-1 lg:min-w-0 lg:flex-1 lg:self-stretch <?php echo ! empty( $quote['text'] ) ? 'pb-9' : ''; ?>">
+				<?php // Phones: the quote card sits under the photo, overlapping it by 48px. Desktop: it shares the photo's cell and hangs 36px below it (the wrapper's padding). ?>
+				<div class="grid grid-cols-1 lg:min-w-0 lg:flex-1 lg:grid-rows-1 lg:self-stretch <?php echo ! empty( $quote['text'] ) ? 'lg:pb-9' : ''; ?>">
 					<?php
 					upskill_image(
 						$image,
 						'full',
 						array(
-							'class' => 'col-start-1 row-start-1 size-full rounded-[24px] object-cover shadow-xs sm:aspect-[4/3] lg:aspect-auto ' . ( $boxed ? 'aspect-[326/421] lg:h-0 lg:min-h-full' : 'aspect-[358/360] lg:min-h-[560px]' ),
+							'class' => 'col-start-1 row-start-1 size-full rounded-[24px] object-cover shadow-xs sm:aspect-[4/3] lg:aspect-auto ' . ( $boxed ? 'aspect-[326/421] lg:h-0 lg:min-h-full' : 'aspect-[358/280] lg:min-h-[560px]' ),
 							// Boxed on phones: 326x421 draws the 3:2 photo about 630 wide.
 							'sizes' => $boxed ? '(min-width: 1025px) 46vw, (min-width: 640px) 92vw, 162vw' : '(min-width: 1025px) 46vw, 92vw',
 						)
 					);
 					?>
 					<?php if ( ! empty( $quote['text'] ) ) : ?>
-						<div class="reveal relative col-start-1 row-start-1 mx-3 -mb-9 self-end rounded-[22px] border border-line bg-white px-5 py-5 shadow-xs lg:mr-auto lg:ml-[55px] lg:max-w-[536px] lg:px-7 lg:py-[26px]">
+						<div class="reveal relative col-start-1 row-start-2 mx-3.5 -mt-12 rounded-[22px] border border-line bg-white p-[22px] shadow-xs lg:row-start-1 lg:mt-0 lg:mr-auto lg:-mb-9 lg:ml-[55px] lg:max-w-[536px] lg:self-end lg:px-7 lg:py-[26px]">
 							<span class="block h-6 text-[30px] leading-[30px] font-semibold text-brand-500" aria-hidden="true">&ldquo;</span>
 							<blockquote class="pt-1.5 text-base font-medium text-gray-950"><?php echo esc_html( $quote['text'] ); ?></blockquote>
 							<?php if ( ! empty( $quote['caption'] ) ) : ?>
@@ -70,11 +73,11 @@ $attributes = upskill_block_attributes( $block, 'block-media-story ' . ( $boxed 
 				?>
 
 				<?php if ( $checklist ) : ?>
-					<ul class="flex flex-col gap-3 pt-2.5">
+					<ul class="flex flex-col pt-2.5 lg:gap-[19px]">
 						<?php foreach ( $checklist as $item ) : ?>
 							<li class="flex items-start gap-3.5">
 								<span class="mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-brand-100 text-[#6b2fe3]" aria-hidden="true"><?php upskill_icon( 'check', 'size-3' ); ?></span>
-								<p class="text-base text-[#55555f]">
+								<p class="text-base text-[#0e0e14]">
 									<strong class="font-medium text-[#0e0e14]"><?php echo esc_html( $item['title'] ); ?></strong>
 									<?php if ( ! empty( $item['text'] ) ) : ?>
 										<?php echo esc_html( ' - ' . $item['text'] ); ?>

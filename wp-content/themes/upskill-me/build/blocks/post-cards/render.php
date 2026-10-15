@@ -167,7 +167,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 					</div>
 				<?php elseif ( $posts ) : ?>
 					<?php // Three 264px cards (824 with gaps) on desktop; a swipeable row on phones. ?>
-					<div class="-mx-gutter flex snap-x snap-mandatory gap-4 overflow-x-auto px-gutter pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:w-[824px] lg:flex-none">
+					<div class="-mx-gutter flex snap-x snap-mandatory scroll-px-gutter gap-4 overflow-x-auto px-gutter pb-1 [scrollbar-width:none] sm:mx-0 sm:grid sm:grid-cols-3 sm:overflow-visible sm:px-0 lg:w-[824px] lg:flex-none">
 						<?php foreach ( $posts as $index => $item ) : ?>
 							<div class="flex w-[264px] flex-none snap-start sm:w-auto *:flex-1">
 								<?php

@@ -65,7 +65,7 @@ $attributes = upskill_block_attributes( $block, 'block-contact-hero bg-gray-25 p
 				<?php endif; ?>
 
 				<?php if ( $note ) : ?>
-					<p class="flex items-center gap-2 pt-4 font-[Geist] text-[13px] leading-[1.62] tracking-[-0.007em] text-gray-100">
+					<p class="flex items-center gap-2 pt-4 font-secondary text-[13px] leading-[1.62] tracking-[-0.007em] text-gray-100">
 						<?php upskill_icon( 'check', 'size-3.5 flex-none' ); ?>
 						<?php echo esc_html( $note ); ?>
 					</p>
@@ -77,7 +77,7 @@ $attributes = upskill_block_attributes( $block, 'block-contact-hero bg-gray-25 p
 					<h2 class="text-[19.2px] leading-[1.3] font-medium tracking-[-0.016em] text-gray-900"><?php echo esc_html( get_field( 'form_title' ) ); ?></h2>
 				<?php endif; ?>
 				<?php if ( get_field( 'form_text' ) ) : ?>
-					<p class="pt-1.5 font-[Geist] text-[15px] leading-[1.62] tracking-[-0.007em] text-[#55555a]"><?php echo esc_html( get_field( 'form_text' ) ); ?></p>
+					<p class="pt-1.5 font-secondary text-[15px] leading-[1.62] tracking-[-0.007em] text-[#55555a]"><?php echo esc_html( get_field( 'form_text' ) ); ?></p>
 				<?php endif; ?>
 				<?php if ( $form && 'wpcf7_contact_form' === get_post_type( $form ) ) : ?>
 					<div class="pt-5">
@@ -85,7 +85,7 @@ $attributes = upskill_block_attributes( $block, 'block-contact-hero bg-gray-25 p
 					</div>
 				<?php endif; ?>
 				<?php if ( get_field( 'form_note' ) ) : ?>
-					<p class="flex items-center gap-2 pt-4 font-[Geist] text-xs leading-[1.62] tracking-[-0.008em] text-[#6b6b72]">
+					<p class="flex items-center gap-2 pt-4 font-secondary text-xs leading-[1.62] tracking-[-0.008em] text-[#6b6b72]">
 						<?php upskill_icon( 'check', 'size-[13px] flex-none text-brand-700' ); ?>
 						<?php echo esc_html( get_field( 'form_note' ) ); ?>
 					</p>
