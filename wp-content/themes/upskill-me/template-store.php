@@ -3,9 +3,11 @@
  * Template Name: Store screen
  *
  * WooCommerce's cart and checkout (classic shortcodes, which LearnDash Group
- * Registration's seat purchase relies on) inside the site frame: breadcrumb,
+ * Registration's seat purchase relies on), and Group Registration's groups
+ * dashboard, inside the site frame: breadcrumb,
  * a heading as drawn (Figma Cart 49325:15876, Post Checkout Flow 49325:20216),
- * then WooCommerce's own markup, refined by src/global/scss/plugins/woocommerce/.
+ * then the plugin's own markup, refined by src/global/scss/plugins/ (woocommerce/store,
+ * learndash/group-registration).
  *
  * @package upskill-me
  */
@@ -16,7 +18,11 @@ $upskill_received = function_exists( 'is_wc_endpoint_url' ) && is_wc_endpoint_ur
 $upskill_heading  = get_the_title();
 $upskill_intro    = '';
 
-if ( $upskill_received ) {
+if ( function_exists( 'ldgr_get_groups_dashboard_page' ) && (int) ldgr_get_groups_dashboard_page() === get_queried_object_id() ) {
+	// Figma "Enrol" 49325:17392.
+	$upskill_heading = __( 'Manage your team.', 'upskill-me' );
+	$upskill_intro   = __( 'Add your people to your training, see who is enrolled and follow their progress.', 'upskill-me' );
+} elseif ( $upskill_received ) {
 	$upskill_heading = __( 'Your training is ready.', 'upskill-me' );
 	$upskill_intro   = __( 'Thanks for choosing Upskillme. Your order details are below.', 'upskill-me' );
 } elseif ( function_exists( 'is_cart' ) && is_cart() ) {

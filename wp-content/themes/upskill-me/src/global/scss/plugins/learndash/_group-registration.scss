@@ -1,0 +1,78 @@
+// LearnDash Group Registration: the groups dashboard ([wdm_group_users] on
+// /groups-dashboard/) inside template-store.php.
+
+// The plugin's style.css styles every `.btn` on the page (meant for its CSV
+// upload button). Undo it for the site's buttons only: `revert-layer` returns
+// these properties to the design system's .btn. Specificity (0,1,1) beats the
+// plugin's (0,1,0) and stays below the header/footer button rules (0,2,0).
+html .btn:not(:where(.upload-btn-wrapper .btn)) {
+	padding: revert-layer;
+	border: revert-layer;
+	border-radius: revert-layer;
+	background-color: revert-layer;
+	color: revert-layer;
+	font-weight: revert-layer;
+	font-size: revert-layer;
+}
+
+.store-content {
+
+	// Group header: logo, name, seats left.
+	.ldgr-group-header,
+	#wdm_groups_tab {
+		font-family: var(--font-sans);
+	}
+
+	// Buttons as the site's pills: the plugin's accent colour (Group Registration →
+	// Settings, set to the brand purple) fills the primary ones; the rest are light.
+	.ldgr-btn {
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		padding: 10px 20px;
+		border: 1px solid var(--color-line);
+		border-radius: 999px;
+		background: var(--color-white);
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: var(--text-sm);
+		box-shadow: none;
+	}
+
+	.ldgr-btn.ldgr-bg-color {
+		border-color: transparent;
+		color: var(--color-white);
+	}
+
+	// Tabs.
+	.ldgr-tabs a,
+	.wdm-tabs a {
+		color: var(--color-gray-500);
+		font-weight: 500;
+	}
+
+	// Tables (enrolled users, reports).
+	table.dataTable,
+	table {
+		border-collapse: separate;
+		border-spacing: 0;
+		background: var(--color-white);
+		font-size: var(--text-sm);
+
+		th {
+			color: var(--color-gray-500);
+			font-weight: 500;
+		}
+	}
+
+	input[type="text"],
+	input[type="email"],
+	input[type="search"],
+	select {
+		min-height: 44px;
+		padding: 8px 14px;
+		border: 1px solid var(--color-line);
+		border-radius: 12px;
+		background: var(--color-white);
+	}
+}

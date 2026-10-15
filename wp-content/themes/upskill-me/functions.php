@@ -179,5 +179,6 @@ require get_template_directory() . '/inc/lms-accounts.php';
 require get_template_directory() . '/inc/lms-learner.php';
 require get_template_directory() . '/inc/lms-library.php';
 require get_template_directory() . '/inc/lms-commerce.php';
+require get_template_directory() . '/inc/lms-organisation.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/template-tags.php';
