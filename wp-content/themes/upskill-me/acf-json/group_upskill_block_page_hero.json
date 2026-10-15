@@ -53,7 +53,8 @@
                 "project": "Project",
                 "overview": "Overview",
                 "solution": "Solution",
-                "user-alt": "Person"
+                "user-alt": "Person",
+                "brand-mark": "Brand mark"
             },
             "default_value": "",
             "return_format": "value",
@@ -519,5 +520,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791351143
+    "modified": 1792028036
 }
