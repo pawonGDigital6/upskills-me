@@ -6,7 +6,8 @@
  * the course lists Industry, Category and Level (inc/taxonomies.php) and by
  * "Free training" (a course with a LearnDash Sample session). Filters are
  * plain GET parameters, so every result set has a shareable URL and works
- * without JavaScript:
+ * without JavaScript; with it, the page asks the REST route below for the
+ * same results and updates in place:
  *
  *   ?q=text&industry[]=slug&category[]=slug&level[]=slug&free=1&sort=newest|title&show=12
  *
@@ -40,25 +41,160 @@ if ( ! function_exists( 'upskill_library_request' ) ) {
 	/**
 	 * The current filters, sanitised.
 	 *
+	 * @param array|null $source Raw parameters (slashed, as in $_GET); defaults to $_GET.
 	 * @return array { q, industry[], category[], level[], free (bool), sort, show (int) }
 	 */
-	function upskill_library_request() {
+	function upskill_library_request( $source = null ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- public, read-only filters.
+		$source  = null === $source ? $_GET : $source;
 		$request = array(
-			'q'    => isset( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-			'free' => ! empty( $_GET['free'] ),
-			'sort' => isset( $_GET['sort'] ) && in_array( $_GET['sort'], array( 'newest', 'title' ), true ) ? sanitize_key( $_GET['sort'] ) : 'newest',
-			'show' => isset( $_GET['show'] ) ? min( 120, max( upskill_library_per_page(), absint( $_GET['show'] ) ) ) : upskill_library_per_page(),
+			'q'    => isset( $source['q'] ) && is_string( $source['q'] ) ? sanitize_text_field( wp_unslash( $source['q'] ) ) : '',
+			'free' => ! empty( $source['free'] ),
+			'sort' => isset( $source['sort'] ) && in_array( $source['sort'], array( 'newest', 'title' ), true ) ? sanitize_key( $source['sort'] ) : 'newest',
+			'show' => isset( $source['show'] ) ? min( 120, max( upskill_library_per_page(), absint( $source['show'] ) ) ) : upskill_library_per_page(),
 		);
 
 		foreach ( array_keys( upskill_library_facets() ) as $key ) {
-			$request[ $key ] = isset( $_GET[ $key ] ) ? array_values( array_filter( array_map( 'sanitize_title', (array) wp_unslash( $_GET[ $key ] ) ) ) ) : array();
+			$request[ $key ] = isset( $source[ $key ] ) ? array_values( array_filter( array_map( 'sanitize_title', (array) wp_unslash( $source[ $key ] ) ) ) ) : array();
 		}
 		// phpcs:enable
 
 		return $request;
 	}
 }
+
+if ( ! function_exists( 'upskill_library_page_url' ) ) {
+	/**
+	 * The library page's address (the page using template-library.php).
+	 *
+	 * @return string Empty when no page uses the template.
+	 */
+	function upskill_library_page_url() {
+		static $url = null;
+
+		if ( null === $url ) {
+			$pages = get_posts(
+				array(
+					'post_type'   => 'page',
+					'post_status' => 'publish',
+					'numberposts' => 1,
+					'fields'      => 'ids',
+					'meta_key'    => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'  => 'template-library.php', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				)
+			);
+			$url   = $pages ? (string) get_permalink( $pages[0] ) : '';
+		}
+
+		return $url;
+	}
+}
+
+if ( ! function_exists( 'upskill_library_url' ) ) {
+	/**
+	 * The library address for a request, with some values changed.
+	 *
+	 * @param array $request upskill_library_request().
+	 * @param array $changes Values to change (e.g. [ 'show' => 12 ]).
+	 * @return string
+	 */
+	function upskill_library_url( $request, $changes = array() ) {
+		$args = array_merge(
+			array(
+				'q'        => $request['q'],
+				'industry' => $request['industry'],
+				'category' => $request['category'],
+				'level'    => $request['level'],
+				'free'     => $request['free'] ? 1 : '',
+				'sort'     => 'newest' === $request['sort'] ? '' : $request['sort'],
+			),
+			$changes
+		);
+
+		return add_query_arg( array_map( 'rawurlencode_deep', array_filter( $args ) ), upskill_library_page_url() );
+	}
+}
+
+if ( ! function_exists( 'upskill_library_labels' ) ) {
+	/**
+	 * The words around the results that change with the filters.
+	 *
+	 * @param array $request upskill_library_request().
+	 * @param int   $total   Number of matching courses.
+	 * @return array { heading, total, show }
+	 */
+	function upskill_library_labels( $request, $total ) {
+		return array(
+			/* translators: %s: search words. */
+			'heading' => '' !== $request['q'] ? sprintf( __( 'Results for “%s”', 'upskill-me' ), $request['q'] ) : __( 'Featured training', 'upskill-me' ),
+			/* translators: %s: number of training sessions. */
+			'total'   => sprintf( _n( '%s training session', '%s training sessions', $total, 'upskill-me' ), number_format_i18n( $total ) ),
+			/* translators: %d: number of results. */
+			'show'    => sprintf( _n( 'Show %d result', 'Show %d results', $total, 'upskill-me' ), $total ),
+		);
+	}
+}
+
+if ( ! function_exists( 'upskill_library_rest' ) ) {
+	/**
+	 * GET /wp-json/upskill/v1/library: the same filters as the page, answered
+	 * with the result cards' HTML, the labels and the filter counts, so
+	 * js/components/library.js can update the page without reloading it.
+	 *
+	 * @return void
+	 */
+	function upskill_library_rest() {
+		register_rest_route(
+			'upskill/v1',
+			'/library',
+			array(
+				'methods'             => WP_REST_Server::READABLE,
+				'permission_callback' => '__return_true',
+				'callback'            => static function ( WP_REST_Request $rest ) {
+					$request = upskill_library_request( wp_slash( $rest->get_query_params() ) );
+					$results = upskill_library_results( $request );
+					$total   = (int) $results->found_posts;
+
+					ob_start();
+					get_template_part( 'template-parts/library/results', null, array( 'request' => $request, 'results' => $results, 'total' => $total ) );
+
+					return rest_ensure_response(
+						array(
+							'html'   => ob_get_clean(),
+							'total'  => $total,
+							'labels' => upskill_library_labels( $request, $total ),
+							'counts' => upskill_library_counts( $request ),
+							'active' => (bool) array_filter( array( $request['industry'], $request['category'], $request['level'], $request['free'] ) ),
+						)
+					);
+				},
+			)
+		);
+	}
+}
+add_action( 'rest_api_init', 'upskill_library_rest' );
+
+if ( ! function_exists( 'upskill_library_search_redirect' ) ) {
+	/**
+	 * Site searches (the header search, the Home hero search) go to the
+	 * training library, which searches the courses. Searches that name a post
+	 * type, and the admin, are left to WordPress.
+	 *
+	 * @return void
+	 */
+	function upskill_library_search_redirect() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only.
+		if ( ! is_search() || is_admin() || is_feed() || isset( $_GET['post_type'] ) || '' === upskill_library_page_url() ) {
+			return;
+		}
+
+		$words = trim( get_search_query( false ) );
+
+		wp_safe_redirect( ( '' !== $words ? add_query_arg( 'q', rawurlencode( $words ), upskill_library_page_url() ) : upskill_library_page_url() ) . '#results' );
+		exit;
+	}
+}
+add_action( 'template_redirect', 'upskill_library_search_redirect' );
 
 if ( ! function_exists( 'upskill_library_per_page' ) ) {
 	/**

@@ -8,9 +8,9 @@
  * Search hero with suggestions, then "Refine your results" (Industry,
  * Category, Level, Free training) beside the result cards, a sort menu and
  * "Load more training". Every filter is a GET parameter (inc/lms-library.php),
- * so results work without JavaScript; js/components/library.js submits on
- * change and opens the filter sheet on phones. The page's footer CTA band
- * follows as on every marketing page.
+ * so results work without JavaScript; js/components/library.js updates the
+ * results in place (REST) and opens the filter sheet on phones. The page's
+ * footer CTA band follows as on every marketing page.
  *
  * @package upskill-me
  */
@@ -21,26 +21,10 @@ $upskill_request = upskill_library_request();
 $upskill_results = upskill_library_results( $upskill_request );
 $upskill_counts  = upskill_library_counts( $upskill_request );
 $upskill_total   = (int) $upskill_results->found_posts;
+$upskill_labels  = upskill_library_labels( $upskill_request, $upskill_total );
 $upskill_base    = get_permalink();
 $upskill_active  = array_filter( array( $upskill_request['industry'], $upskill_request['category'], $upskill_request['level'], $upskill_request['free'] ) );
 $upskill_suggest = (array) apply_filters( 'upskill_library_suggestions', array( __( 'Emergency training', 'upskill-me' ), __( 'Training for managers', 'upskill-me' ), __( 'Workplace safety', 'upskill-me' ), __( 'Leadership responsibilities', 'upskill-me' ) ) );
-
-// The current filters as a query string (for links that change one thing).
-$upskill_query = static function ( $changes = array() ) use ( $upskill_request, $upskill_base ) {
-	$args = array_merge(
-		array(
-			'q'        => $upskill_request['q'],
-			'industry' => $upskill_request['industry'],
-			'category' => $upskill_request['category'],
-			'level'    => $upskill_request['level'],
-			'free'     => $upskill_request['free'] ? 1 : '',
-			'sort'     => 'newest' === $upskill_request['sort'] ? '' : $upskill_request['sort'],
-		),
-		$changes
-	);
-
-	return add_query_arg( array_filter( $args ), $upskill_base );
-};
 
 $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none rounded-sm border border-[#d8d2ea] bg-white transition-colors checked:border-brand-700 checked:bg-brand-700 disabled:cursor-default';
 ?>
@@ -54,7 +38,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 			<div class="flex w-full max-w-[666px] flex-col items-start gap-6 lg:items-center">
 				<p class="text-base text-gray-500"><?php esc_html_e( 'Search across the Upskillme training library by topic, responsibility, skill or area of work.', 'upskill-me' ); ?></p>
 
-				<form class="w-full max-w-[480px]" role="search" action="<?php echo esc_url( $upskill_base ); ?>#results" method="get">
+				<form class="w-full max-w-[480px]" role="search" action="<?php echo esc_url( $upskill_base ); ?>#results" method="get" data-library-search>
 					<label class="screen-reader-text" for="library-search"><?php esc_html_e( 'Search training', 'upskill-me' ); ?></label>
 					<span class="grid grid-cols-1 grid-rows-1 *:col-start-1 *:row-start-1">
 						<input class="h-12 w-full rounded-full border border-gray-900/20 bg-white py-3 pr-14 pl-11 font-secondary text-base text-gray-950 transition-[border-color,box-shadow] duration-200 placeholder:text-[#6b6b72] hover:border-gray-900/30 focus:border-brand-700 focus:shadow-[0_0_0_3px_rgb(109_66_175/14%)] focus:outline-none" type="search" name="q" id="library-search" value="<?php echo esc_attr( $upskill_request['q'] ); ?>" placeholder="<?php esc_attr_e( 'Search training, topics or skills', 'upskill-me' ); ?>">
@@ -71,7 +55,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 						<span class="text-sm text-[#8b8b97]"><?php esc_html_e( 'Try:', 'upskill-me' ); ?></span>
 						<ul class="flex flex-wrap gap-2 lg:flex-nowrap lg:gap-[9px]" role="list">
 							<?php foreach ( $upskill_suggest as $upskill_term ) : ?>
-								<li><a class="block rounded-full border border-line bg-white px-3.5 py-2 text-sm text-gray-500 transition-colors hover:border-brand-300 hover:text-brand-700" href="<?php echo esc_url( add_query_arg( 'q', rawurlencode( $upskill_term ), $upskill_base ) . '#results' ); ?>"><?php echo esc_html( $upskill_term ); ?></a></li>
+								<li><a class="block rounded-full border border-line bg-white px-3.5 py-2 text-sm text-gray-500 transition-colors hover:border-brand-300 hover:text-brand-700" href="<?php echo esc_url( add_query_arg( 'q', rawurlencode( $upskill_term ), $upskill_base ) . '#results' ); ?>" data-library-suggest="<?php echo esc_attr( $upskill_term ); ?>"><?php echo esc_html( $upskill_term ); ?></a></li>
 							<?php endforeach; ?>
 						</ul>
 					</div>
@@ -80,9 +64,9 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 		</div>
 	</section>
 
-	<form id="results" class="container scroll-mt-28 pb-12 lg:grid lg:pt-20 lg:grid-cols-[278px_minmax(0,1fr)] lg:items-start lg:gap-10 lg:pb-20" action="<?php echo esc_url( $upskill_base ); ?>#results" method="get" data-library>
+	<form id="results" class="container scroll-mt-28 pb-12 lg:grid lg:pt-20 lg:grid-cols-[278px_minmax(0,1fr)] lg:items-start lg:gap-10 lg:pb-20" action="<?php echo esc_url( $upskill_base ); ?>#results" method="get" data-library="<?php echo esc_url( rest_url( 'upskill/v1/library' ) ); ?>">
 		<?php if ( '' !== $upskill_request['q'] ) : ?>
-			<input type="hidden" name="q" value="<?php echo esc_attr( $upskill_request['q'] ); ?>">
+			<input type="hidden" name="q" value="<?php echo esc_attr( $upskill_request['q'] ); ?>" data-library-q>
 		<?php endif; ?>
 
 		<dialog id="library-filters" class="m-0 mt-auto max-h-[92svh] w-full max-w-none overflow-y-auto rounded-t-[20px] border-0 bg-white p-0 text-gray-950 backdrop:bg-gray-950/50 lg:static lg:mt-0 lg:block lg:max-h-none lg:overflow-visible lg:rounded-[22px] lg:border lg:border-line" aria-labelledby="library-filters-heading" data-library-filters>
@@ -90,14 +74,14 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 				<div class="flex items-center justify-between gap-3">
 					<h2 id="library-filters-heading" class="text-lg font-medium text-[#0e0e14]"><?php esc_html_e( 'Refine your results', 'upskill-me' ); ?></h2>
 					<div class="flex items-center gap-1">
-						<a class="rounded-lg px-2 py-1.5 text-sm font-medium text-brand-700 hover:bg-brand-50 max-lg:hidden" data-library-clear href="<?php echo esc_url( add_query_arg( array_filter( array( 'q' => $upskill_request['q'] ) ), $upskill_base ) . '#results' ); ?>"><?php esc_html_e( 'Clear all', 'upskill-me' ); ?></a>
+						<a class="rounded-lg px-2 py-1.5 text-sm font-medium text-brand-700 hover:bg-brand-50 max-lg:hidden" data-library-reset="filters" href="<?php echo esc_url( add_query_arg( array_filter( array( 'q' => $upskill_request['q'] ) ), $upskill_base ) . '#results' ); ?>"><?php esc_html_e( 'Clear all', 'upskill-me' ); ?></a>
 						<button class="grid size-10 place-items-center rounded-full text-gray-900 hover:bg-gray-50 lg:hidden" type="button" data-library-close>
 							<span class="screen-reader-text"><?php esc_html_e( 'Close filters', 'upskill-me' ); ?></span>
 							<?php upskill_icon( 'close', 'size-5' ); ?>
 						</button>
 					</div>
 				</div>
-				<a class="self-start pt-2 text-base font-medium text-brand-700 lg:hidden" href="<?php echo esc_url( add_query_arg( array_filter( array( 'q' => $upskill_request['q'] ) ), $upskill_base ) . '#results' ); ?>"><?php esc_html_e( 'Clear all', 'upskill-me' ); ?></a>
+				<a class="self-start pt-2 text-base font-medium text-brand-700 lg:hidden" data-library-reset="filters" href="<?php echo esc_url( add_query_arg( array_filter( array( 'q' => $upskill_request['q'] ) ), $upskill_base ) . '#results' ); ?>"><?php esc_html_e( 'Clear all', 'upskill-me' ); ?></a>
 
 				<?php
 				$upskill_groups = array();
@@ -125,7 +109,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 											<?php upskill_icon( 'check', 'pointer-events-none hidden size-3 place-self-center text-white peer-checked:block' ); ?>
 										</span>
 										<span class="flex-1 text-base text-gray-950"><?php esc_html_e( 'Free training', 'upskill-me' ); ?></span>
-										<span class="font-secondary text-xs text-[#8b8b97]"><?php echo esc_html( number_format_i18n( $upskill_n ) ); ?></span>
+										<span class="font-secondary text-xs text-[#8b8b97]" data-library-count><?php echo esc_html( number_format_i18n( $upskill_n ) ); ?></span>
 									</label>
 								</li>
 							<?php else : ?>
@@ -141,7 +125,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 												<?php upskill_icon( 'check', 'pointer-events-none hidden size-3 place-self-center text-white peer-checked:block' ); ?>
 											</span>
 											<span class="flex-1 text-base text-gray-950"><?php echo esc_html( $upskill_term->name ); ?></span>
-											<span class="font-secondary text-xs text-[#8b8b97]"><?php echo esc_html( number_format_i18n( $upskill_n ) ); ?></span>
+											<span class="font-secondary text-xs text-[#8b8b97]" data-library-count><?php echo esc_html( number_format_i18n( $upskill_n ) ); ?></span>
 										</label>
 									</li>
 								<?php endforeach; ?>
@@ -152,12 +136,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 
 				<div class="sticky bottom-0 -mx-4 mt-4 border-t border-line bg-white p-4 lg:static lg:mx-0 lg:border-0 lg:p-0 [.js_&]:lg:hidden">
 					<button class="btn btn--primary btn--md min-h-[50px] w-full justify-center" type="submit">
-						<span class="btn__label">
-							<?php
-							/* translators: %d: number of results. */
-							printf( esc_html( _n( 'Show %d result', 'Show %d results', $upskill_total, 'upskill-me' ) ), (int) $upskill_total );
-							?>
-						</span>
+						<span class="btn__label" data-library-label="show"><?php echo esc_html( $upskill_labels['show'] ); ?></span>
 						<span class="btn__nest" aria-hidden="true"><?php upskill_icon( 'arrow-up-right', 'btn__icon' ); ?></span>
 					</button>
 				</div>
@@ -167,22 +146,8 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 		<div class="flex min-w-0 flex-col">
 			<div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
 				<div>
-					<h2 class="text-[2.25rem] leading-[1.1] font-medium tracking-[-0.01em] text-[#0e0e14]">
-						<?php
-						if ( '' !== $upskill_request['q'] ) {
-							/* translators: %s: search words. */
-							printf( esc_html__( 'Results for “%s”', 'upskill-me' ), esc_html( $upskill_request['q'] ) );
-						} else {
-							esc_html_e( 'Featured training', 'upskill-me' );
-						}
-						?>
-					</h2>
-					<p class="pt-1.5 text-base text-gray-500" aria-live="polite">
-						<?php
-						/* translators: %s: number of training sessions. */
-						printf( esc_html( _n( '%s training session', '%s training sessions', $upskill_total, 'upskill-me' ) ), esc_html( number_format_i18n( $upskill_total ) ) );
-						?>
-					</p>
+					<h2 class="text-[2.25rem] leading-[1.1] font-medium tracking-[-0.01em] text-[#0e0e14]" data-library-label="heading"><?php echo esc_html( $upskill_labels['heading'] ); ?></h2>
+					<p class="pt-1.5 text-base text-gray-500" aria-live="polite" data-library-label="total"><?php echo esc_html( $upskill_labels['total'] ); ?></p>
 				</div>
 				<div class="flex items-center gap-2.5">
 					<label class="text-sm text-gray-500" for="library-sort"><?php esc_html_e( 'Sort by', 'upskill-me' ); ?></label>
@@ -196,9 +161,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 					<button class="relative grid size-[46px] flex-none place-items-center rounded-full border border-line bg-white text-gray-900 lg:hidden" type="button" aria-controls="library-filters" data-library-open>
 						<span class="screen-reader-text"><?php esc_html_e( 'Filters', 'upskill-me' ); ?></span>
 						<?php upskill_icon( 'sliders', 'size-5' ); ?>
-						<?php if ( $upskill_active ) : ?>
-							<span class="absolute top-2 right-2 size-2 rounded-full bg-brand-700" aria-hidden="true"></span>
-						<?php endif; ?>
+						<span class="absolute top-2 right-2 size-2 rounded-full bg-brand-700" aria-hidden="true" data-library-dot<?php echo $upskill_active ? '' : ' hidden'; ?>></span>
 					</button>
 				</div>
 			</div>
@@ -208,34 +171,14 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 				<p class="pt-2 text-base text-[#55555f]"><?php esc_html_e( 'Find practical on-the-job training across industries, categories and areas of professional development.', 'upskill-me' ); ?></p>
 			</div>
 
-			<?php if ( $upskill_results->have_posts() ) : ?>
-				<div class="mt-[22px] grid gap-4 sm:grid-cols-2 lp:grid-cols-3">
-					<?php
-					foreach ( $upskill_results->posts as $upskill_post ) {
-						get_template_part( 'template-parts/cards/training', null, array( 'card' => upskill_library_card( $upskill_post->ID ) ) );
-					}
-					?>
-				</div>
-				<?php if ( $upskill_total > $upskill_request['show'] ) : ?>
-					<div class="mt-6 flex justify-center">
-						<?php // Figma: white pill, 16px label, pale purple nest with a down arrow. ?>
-						<a class="btn btn--light min-h-12 border-line pl-5 text-base" href="<?php echo esc_url( $upskill_query( array( 'show' => $upskill_request['show'] + upskill_library_per_page() ) ) . '#results' ); ?>">
-							<span class="btn__label">
-								<?php
-								/* translators: %d: number of results not shown yet. */
-								printf( esc_html__( 'Load more training (%d)', 'upskill-me' ), (int) ( $upskill_total - $upskill_request['show'] ) );
-								?>
-							</span>
-							<span class="btn__nest size-7 bg-brand-50 text-brand-700" aria-hidden="true"><?php upskill_icon( 'arrow-down', 'size-3' ); ?></span>
-						</a>
-					</div>
-				<?php endif; ?>
-			<?php else : ?>
-				<div class="mt-[22px] flex flex-col items-start gap-4 rounded-lg border border-gray-100 bg-white p-6">
-					<p class="text-base text-gray-700"><?php esc_html_e( 'No training matches these filters yet. Try fewer filters or another search.', 'upskill-me' ); ?></p>
-					<a class="text-base font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( $upskill_base . '#results' ); ?>"><?php esc_html_e( 'Clear all filters', 'upskill-me' ); ?></a>
-				</div>
-			<?php endif; ?>
+			<?php // While an update loads the cards dim (aria-busy); a failed update shows the message below them. ?>
+			<div class="transition-opacity duration-200 aria-busy:opacity-50" data-library-results>
+				<?php get_template_part( 'template-parts/library/results', null, array( 'request' => $upskill_request, 'results' => $upskill_results, 'total' => $upskill_total ) ); ?>
+			</div>
+			<div class="mt-4 flex flex-col items-start gap-3 rounded-lg border border-gray-100 bg-white p-6" role="alert" hidden data-library-error>
+				<p class="text-base text-gray-700"><?php esc_html_e( 'We couldn’t update the results. Check your connection and try again.', 'upskill-me' ); ?></p>
+				<button class="text-base font-medium text-brand-700 underline-offset-4 hover:underline" type="button" data-library-retry><?php esc_html_e( 'Try again', 'upskill-me' ); ?></button>
+			</div>
 		</div>
 	</form>
 </main>
