@@ -10,6 +10,9 @@
  *   returns to the previous results;
  * - while loading the cards dim (aria-busy); a failed request shows a
  *   "Try again" message and keeps the current cards;
+ * - on industry, category and level pages the page's own term is ticked by
+ *   default (data-library-default): "Clear all" ticks it again, and unticking
+ *   it adds all=1 so the address (and a reload) keeps it off;
  * - on phones the filters sit in a bottom sheet (<dialog>) opened by the
  *   filter button; its counts and "Show N results" update as choices change,
  *   and the button closes the sheet onto the results.
@@ -52,6 +55,10 @@ export function Library( root = document ) {
 			}
 		}
 
+		if ( form.querySelector( 'input[data-library-default]:not(:checked)' ) ) {
+			query.set( 'all', '1' );
+		}
+
 		Object.entries( changes ).forEach( ( [ key, value ] ) => query.set( key, value ) );
 
 		return query;
@@ -64,7 +71,7 @@ export function Library( root = document ) {
 		}
 
 		form.querySelectorAll( 'input[type="checkbox"]' ).forEach( ( box ) => {
-			box.checked = query.getAll( box.name ).includes( box.value );
+			box.checked = query.getAll( box.name ).includes( box.value ) || ( box.hasAttribute( 'data-library-default' ) && ! query.has( 'all' ) );
 		} );
 
 		const sort = form.querySelector( 'select[name="sort"]' );
@@ -214,7 +221,7 @@ export function Library( root = document ) {
 			event.preventDefault();
 
 			form.querySelectorAll( 'input[type="checkbox"]' ).forEach( ( box ) => {
-				box.checked = false;
+				box.checked = box.hasAttribute( 'data-library-default' );
 			} );
 
 			if ( 'all' === reset.dataset.libraryReset && searchInput ) {
@@ -239,6 +246,7 @@ export function Library( root = document ) {
 		const query = new URLSearchParams( window.location.search );
 
 		restore( query );
-		update( query, { history: false } );
+		// From the form, so a page default ticked by restore() is part of the request.
+		update( params( query.has( 'show' ) ? { show: query.get( 'show' ) } : {} ), { history: false } );
 	} );
 }

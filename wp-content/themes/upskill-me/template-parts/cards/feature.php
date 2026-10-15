@@ -20,6 +20,7 @@
  *     @type bool   $number Show the 01/02 number.
  *     @type bool   $large  24px titles instead of 18px.
  *     @type bool   $roomy  30px padding instead of 16px.
+ *     @type bool   $framed In a framed grid: the number sits in a box.
  *     @type bool   $side   In the two-up "side" layout: Figma gives these cards
  *                          30px padding, 18px titles and a 24px gap under the
  *                          icon on phones (About 49374:47139).
@@ -39,6 +40,7 @@ $text   = isset( $card['text'] ) ? $card['text'] : '';
 $label  = isset( $card['label'] ) ? $card['label'] : '';
 $icon   = isset( $card['icon'] ) ? $card['icon'] : '';
 $link   = ! empty( $card['link']['url'] ) ? $card['link'] : null;
+$points = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) ( $card['points'] ?? '' ) ) ) );
 $stagger = 'style="--i:' . (int) min( $index, 5 ) . '"';
 
 // The textured surface of the dark and textured cards: a background layer, so
@@ -167,7 +169,9 @@ else :
 					<span class="grid size-11 place-items-center rounded-[13px] <?php echo esc_attr( $chip ); ?>" aria-hidden="true"><?php upskill_icon( $icon, 'size-[21px]' ); ?></span>
 				<?php endif; ?>
 				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-10' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-10' ) ) : '' ); ?>">
-					<?php if ( ! empty( $args['number'] ) ) : ?>
+					<?php if ( ! empty( $args['framed'] ) && ! empty( $args['number'] ) ) : ?>
+						<span class="order-first mb-6 grid size-8 place-items-center rounded-md border text-sm <?php echo $dark ? 'border-white/40 text-white' : 'border-gray-200 text-gray-500'; ?>" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
+					<?php elseif ( ! empty( $args['number'] ) ) : ?>
 						<?php // Purple when it heads a label (About "Why we exist"), grey when it heads the title; small and spaced in the side layout. ?>
 						<span class="<?php echo $label ? 'text-[13px] font-semibold tracking-[0.1em] text-[#6b2fe3]' : ( $side ? 'text-xs font-semibold tracking-[0.1em] text-[#8b8b97]' : 'text-sm text-gray-500' ); ?>" aria-hidden="true"><?php echo esc_html( $number ); ?></span>
 					<?php endif; ?>
@@ -177,6 +181,13 @@ else :
 					<?php $title_markup( ( $label ? 'pt-5 ' : ( ! empty( $args['number'] ) ? 'pt-2.5 ' : '' ) ) . $title_cls ); ?>
 					<?php if ( $text ) : ?>
 						<p class="<?php echo $side ? 'pt-2' : 'pt-2.5'; ?> text-base <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
+					<?php endif; ?>
+					<?php if ( $points ) : ?>
+						<ul class="flex list-disc flex-col gap-1 pt-3 pl-5 text-sm <?php echo $dark ? 'text-gray-100 marker:text-white' : 'text-gray-700 marker:text-gray-500'; ?>">
+							<?php foreach ( $points as $point ) : ?>
+								<li><?php echo esc_html( $point ); ?></li>
+							<?php endforeach; ?>
+						</ul>
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>

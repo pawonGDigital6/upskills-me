@@ -62,6 +62,7 @@ $card_args = array(
 	'large'  => (bool) get_field( 'large_titles' ),
 	'roomy'  => (bool) get_field( 'roomy_cards' ),
 	'side'   => $side,
+	'framed' => (bool) get_field( 'framed' ),
 );
 
 $attributes = upskill_block_attributes( $block, 'block-card-grid section-y ' . ( isset( $surfaces[ $surface ] ) ? $surfaces[ $surface ] : $surfaces['white'] ) );
@@ -198,7 +199,14 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 					'class'  => trim( ( 'rows' === $style ? 'section-header--rows' : ( 'stack' === $layout ? 'section-header--intro-xl' : '' ) ) . ( 'center' === $layout && get_field( 'left_on_phones' ) ? ' section-header--left-phones' : '' ) ),
 				)
 			);
-			$render_cards( 'mt-stack ' . $grid_columns[ $columns ] . ( 'texture' === $style ? ' lg:items-end' : '' ) );
+			if ( $card_args['framed'] ) {
+				// Industry "Key training needs" (Figma 49325:14836): the cards in a grey frame.
+				echo '<div class="mt-stack rounded-[32px] bg-gray-100 p-2 sm:p-4">';
+				$render_cards( $grid_columns[ $columns ] );
+				echo '</div>';
+			} else {
+				$render_cards( 'mt-stack ' . $grid_columns[ $columns ] . ( 'texture' === $style ? ' lg:items-end' : '' ) );
+			}
 			?>
 		<?php endif; ?>
 	</div>

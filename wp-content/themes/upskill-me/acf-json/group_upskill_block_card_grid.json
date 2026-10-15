@@ -138,6 +138,18 @@
             }
         },
         {
+            "key": "field_upskill_card_grid_framed",
+            "label": "Framed grid",
+            "name": "framed",
+            "type": "true_false",
+            "instructions": "Cards sit in a grey rounded frame, numbered in a box (industry \"Key training needs\").",
+            "ui": 1,
+            "default_value": 0,
+            "wrapper": {
+                "width": "22"
+            }
+        },
+        {
             "key": "field_upskill_card_grid_left_on_phones",
             "label": "Left-align the header on phones",
             "name": "left_on_phones",
@@ -381,6 +393,16 @@
                     "new_lines": ""
                 },
                 {
+                    "key": "field_upskill_card_grid_cards_points",
+                    "label": "Points",
+                    "name": "points",
+                    "type": "textarea",
+                    "instructions": "Optional bullet list, one point per line (stacked cards).",
+                    "rows": 4,
+                    "new_lines": "",
+                    "parent_repeater": "field_upskill_card_grid_cards"
+                },
+                {
                     "key": "field_upskill_card_grid_cards_link",
                     "label": "Link",
                     "name": "link",
@@ -409,5 +431,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792028869
+    "modified": 1792042883
 }

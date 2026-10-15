@@ -2,35 +2,33 @@
 /**
  * Training library: the filters and results ("Refine your results", sort,
  * cards, "Load more"). Used by template-library.php (/courses/) and by the
- * industry, category and level pages (template-parts/library/term-page.php),
- * which pass a fixed filter: that filter's list is hidden and kept as a hidden
- * field, so every other filter, "Clear all" and the in-place updates
- * (js/components/library.js) stay inside the term.
+ * industry, category and level pages (template-parts/library/term-page.php).
+ * Every page shows the same four lists (Industry, Category, Level, Availability).
+ * A term page passes its term as a default: ticked on arrival, and ticked again
+ * by "Clear all"; the visitor can untick it to look wider (the script then adds
+ * all=1 to the address so a reload keeps it off).
  *
  * @package upskill-me
  *
  * @var array $args {
  *     @type array  $request upskill_library_request().
  *     @type string $base    Address the form submits to.
- *     @type array  $fixed   Optional [ facet key => term slug ] kept on every request.
+ *     @type array  $defaults Optional [ facet key => term slug ] ticked by default.
  * }
  */
 
 $upskill_request = $args['request'];
 $upskill_base    = $args['base'];
-$upskill_fixed   = isset( $args['fixed'] ) ? (array) $args['fixed'] : array();
+$upskill_defaults = isset( $args['defaults'] ) ? (array) $args['defaults'] : array();
 $upskill_results = upskill_library_results( $upskill_request );
 $upskill_counts  = upskill_library_counts( $upskill_request );
 $upskill_total   = (int) $upskill_results->found_posts;
 $upskill_labels  = upskill_library_labels( $upskill_request, $upskill_total );
-$upskill_active  = array_filter( array( $upskill_request['free'] ) + array_diff_key( array( 'industry' => $upskill_request['industry'], 'category' => $upskill_request['category'], 'level' => $upskill_request['level'] ), $upskill_fixed ) );
+$upskill_active  = array_filter( array( $upskill_request['free'] ) + array( 'industry' => $upskill_request['industry'], 'category' => $upskill_request['category'], 'level' => $upskill_request['level'] ) );
 
 $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none rounded-sm border border-[#d8d2ea] bg-white transition-colors checked:border-brand-700 checked:bg-brand-700 disabled:cursor-default';
 ?>
 	<form id="results" class="container scroll-mt-28 pb-12 lg:grid lg:pt-20 lg:grid-cols-[278px_minmax(0,1fr)] lg:items-start lg:gap-10 lg:pb-20" action="<?php echo esc_url( $upskill_base ); ?>#results" method="get" data-library="<?php echo esc_url( rest_url( 'upskill/v1/library' ) ); ?>">
-		<?php foreach ( $upskill_fixed as $upskill_key => $upskill_slug ) : ?>
-			<input type="hidden" name="<?php echo esc_attr( $upskill_key ); ?>[]" value="<?php echo esc_attr( $upskill_slug ); ?>">
-		<?php endforeach; ?>
 		<?php if ( '' !== $upskill_request['q'] ) : ?>
 			<input type="hidden" name="q" value="<?php echo esc_attr( $upskill_request['q'] ); ?>" data-library-q>
 		<?php endif; ?>
@@ -51,7 +49,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 
 				<?php
 				$upskill_groups = array();
-				foreach ( array_diff_key( upskill_library_facets(), $upskill_fixed ) as $upskill_key => $upskill_facet ) {
+				foreach ( upskill_library_facets() as $upskill_key => $upskill_facet ) {
 					$upskill_terms = get_terms( array( 'taxonomy' => $upskill_facet[0], 'hide_empty' => false ) );
 					if ( $upskill_terms && ! is_wp_error( $upskill_terms ) ) {
 						$upskill_groups[ $upskill_key ] = array( $upskill_facet[1], $upskill_terms );
@@ -87,7 +85,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 									<li>
 										<label class="flex cursor-pointer items-center gap-2.5 py-[3px] <?php echo ! $upskill_n && ! $upskill_on ? 'opacity-45' : ''; ?>">
 											<span class="grid grid-cols-1 grid-rows-1 *:col-start-1 *:row-start-1">
-												<input class="<?php echo esc_attr( $upskill_checkbox ); ?>" type="checkbox" name="<?php echo esc_attr( $upskill_key ); ?>[]" value="<?php echo esc_attr( $upskill_term->slug ); ?>"<?php checked( $upskill_on ); ?><?php disabled( ! $upskill_n && ! $upskill_on ); ?>>
+												<input class="<?php echo esc_attr( $upskill_checkbox ); ?>" type="checkbox" name="<?php echo esc_attr( $upskill_key ); ?>[]" value="<?php echo esc_attr( $upskill_term->slug ); ?>"<?php echo isset( $upskill_defaults[ $upskill_key ] ) && $upskill_defaults[ $upskill_key ] === $upskill_term->slug ? ' data-library-default' : ''; ?><?php checked( $upskill_on ); ?><?php disabled( ! $upskill_n && ! $upskill_on ); ?>>
 												<?php upskill_icon( 'check', 'pointer-events-none hidden size-3 place-self-center text-white peer-checked:block' ); ?>
 											</span>
 											<span class="flex-1 text-base text-gray-950"><?php echo esc_html( $upskill_term->name ); ?></span>

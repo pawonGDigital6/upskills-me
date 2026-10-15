@@ -1,0 +1,77 @@
+{
+    "key": "group_upskill_taxonomy_page",
+    "title": "Training Term: Page",
+    "fields": [
+        {
+            "key": "field_upskill_taxonomy_page_hero_image",
+            "label": "Hero photo",
+            "name": "hero_image",
+            "type": "image",
+            "instructions": "The photo behind the page heading (Figma 1360x730). Without one, a category uses its card image and other pages a dark panel.",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all"
+        },
+        {
+            "key": "field_upskill_taxonomy_page_hero_heading",
+            "label": "Page heading",
+            "name": "hero_heading",
+            "type": "text",
+            "instructions": "Optional. Default: \"<Name> training.\" Wrap the highlighted words in <em>…</em>."
+        },
+        {
+            "key": "field_upskill_taxonomy_page_hero_intro",
+            "label": "Intro",
+            "name": "hero_intro",
+            "type": "textarea",
+            "instructions": "Optional. Default: the term description.",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_taxonomy_page_page_sections",
+            "label": "Page sections",
+            "name": "page_sections",
+            "type": "post_object",
+            "instructions": "Optional. The sections under the training list come from the synced pattern \"Industry page sections\", \"Category page sections\" or \"Level page sections\". Choose another synced pattern to give this page its own. In a pattern, {term} is replaced by the name and {term_lower} by the name in lower case.",
+            "post_type": [
+                "wp_block"
+            ],
+            "return_format": "id",
+            "allow_null": 1,
+            "multiple": 0,
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "industry"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "training_category"
+            }
+        ],
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "cohort"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "show_in_rest": 0,
+    "modified": 1792060000
+}
