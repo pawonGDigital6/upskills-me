@@ -175,6 +175,7 @@
 
 	.policy-body {
 		color: #3b3b42;
+		line-height: 1.5; // 16/24 (Privacy 49375:119288); the article body above is looser.
 
 		> * + * {
 			margin-top: 14px;
@@ -182,6 +183,10 @@
 
 		h2 {
 			margin-top: 40px;
+		}
+
+		.wp-block-list {
+			gap: 10px; // List items 34px apart on the phone frame (39px on desktop).
 		}
 	}
 
