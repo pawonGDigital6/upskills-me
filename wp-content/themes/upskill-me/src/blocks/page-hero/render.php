@@ -32,15 +32,16 @@ $note     = get_field( 'note' );
 $attributes = upskill_block_attributes( $block, 'block-page-hero overflow-hidden bg-gray-25 pt-7 pb-[46px] lg:pb-20 ' . ( 'split' === $layout ? 'lg:pt-[104px]' : 'lg:pt-14' ) );
 
 /*
- * Chip spots over the photo, from the Resources frame (a 680-wide photo):
- * left offset and top offset, both as a share of the photo's width so the
- * chips scale with it.
+ * Chip spots over the photo, from the Resources frame (a 640-wide photo, 49325:16381):
+ * side offset and top offset, both as a share of the photo's width so the
+ * chips scale with it. Right-hand chips are measured from the right edge, so a
+ * narrower photo (1025-1200) never clips them.
  */
 $chip_spots = array(
-	'upper-left'   => 'ml-[2.5%] mt-[25.9%]',
-	'top-right'    => 'ml-[72.2%] mt-[11.5%]',
-	'lower-left'   => 'ml-[20%] mt-[65.2%]',
-	'bottom-right' => 'ml-[69.3%] mt-[69.7%]',
+	'upper-left'   => 'justify-self-start ml-[2.7%] mt-[27.5%]',
+	'top-right'    => 'justify-self-end mr-[5.6%] mt-[12.2%]',
+	'lower-left'   => 'justify-self-start ml-[21.3%] mt-[69.4%]',
+	'bottom-right' => 'justify-self-end mr-[10.5%] mt-[74.1%]',
 );
 $chip_tones = array(
 	'purple' => 'bg-brand-100 text-[#6b2fe3]',
@@ -176,7 +177,7 @@ $chip_tones = array(
 							$tone = isset( $chip_tones[ $chip['tone'] ] ) ? $chip_tones[ $chip['tone'] ] : $chip_tones['purple'];
 							$tag  = ! empty( $chip['link']['url'] ) ? 'a' : 'span';
 							?>
-							<<?php echo esc_attr( $tag ); ?> class="reveal col-start-1 row-start-1 hidden items-center gap-2.5 self-start justify-self-start rounded-full bg-white py-2 pr-[18px] pl-2 text-sm leading-[1.55] font-semibold text-[#0e0e14] drop-shadow-[0_14px_16px_rgb(20_12_48/14%)] transition-transform duration-300 hover:-translate-y-0.5 lg:flex <?php echo esc_attr( $spot ); ?>"<?php echo 'a' === $tag ? upskill_link_attributes( $chip['link'] ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?> style="--i:<?php echo (int) $index + 1; ?>">
+							<<?php echo esc_attr( $tag ); ?> class="reveal col-start-1 row-start-1 hidden items-center gap-2.5 self-start rounded-full bg-white py-2 pr-[18px] pl-2 text-sm leading-[1.55] font-semibold text-[#0e0e14] drop-shadow-[0_14px_16px_rgb(20_12_48/14%)] transition-transform duration-300 hover:-translate-y-0.5 lg:flex <?php echo esc_attr( $spot ); ?>"<?php echo 'a' === $tag ? upskill_link_attributes( $chip['link'] ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?> style="--i:<?php echo (int) $index + 1; ?>">
 								<span class="grid size-[30px] place-items-center rounded-full <?php echo esc_attr( $tone ); ?>" aria-hidden="true">
 									<?php upskill_icon( $chip['icon'] ? $chip['icon'] : 'book', 'size-[15px]' ); ?>
 								</span>
