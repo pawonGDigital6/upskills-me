@@ -78,7 +78,7 @@ if ( 'texture' === $style ) :
 	);
 	$t     = isset( $tones[ $tone ] ) ? $tones[ $tone ] : $tones['light'];
 	?>
-	<li class="reveal feature-card feature-card--lift group relative isolate flex min-h-[340px] flex-col overflow-hidden rounded-card shadow-[0_1px_1px_rgb(10_13_18/5%)] lg:min-h-[366px] <?php echo esc_attr( $t[0] ); ?>" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
+	<li class="reveal feature-card feature-card--lift group relative isolate flex min-h-[366px] flex-col overflow-hidden rounded-card shadow-[0_1px_1px_rgb(10_13_18/5%)] <?php echo esc_attr( $t[0] ); ?>" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
 		<?php $texture( $t[1], 'opacity-20 transition-transform duration-700 ease-out group-hover:scale-105' ); ?>
 		<div class="flex flex-1 flex-col p-4">
 			<div class="flex items-center justify-between pt-10">
