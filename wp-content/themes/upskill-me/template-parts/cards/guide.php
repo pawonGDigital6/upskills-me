@@ -49,7 +49,8 @@ else :
 				'full',
 				array(
 					'class' => 'size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105',
-					'sizes' => '132px',
+					// object-cover in 132x104: a 2:1 guide render is drawn 208px wide.
+					'sizes' => '208px',
 				)
 			);
 			?>
