@@ -8,6 +8,7 @@ import { DeferredVideo } from './components/deferred-video';
 import { Article } from './components/article';
 import { PasswordToggle } from './components/password-toggle';
 import { Library } from './components/library';
+import { BuyBox } from './components/buy-box';
 
 domReady( () => {
 	Announcement();
@@ -19,4 +20,5 @@ domReady( () => {
 	Article();
 	PasswordToggle();
 	Library();
+	BuyBox();
 } );

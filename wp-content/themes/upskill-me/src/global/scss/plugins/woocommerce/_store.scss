@@ -1,0 +1,386 @@
+// WooCommerce cart, checkout and order confirmation (classic shortcodes) inside
+// template-store.php. Figma: Cart 49325:15876, Post Checkout Flow 49325:20216.
+// WooCommerce's own layout CSS still loads; this only restyles its markup to the
+// design tokens. Scoped to .store-content so no other WooCommerce screen changes.
+
+// .woocommerce in the selector lifts these above WooCommerce's own rules.
+.store-content .woocommerce {
+	color: var(--color-gray-950);
+	font-size: var(--text-base);
+
+	// Notices: added to cart, errors, info.
+	.woocommerce-message,
+	.woocommerce-info,
+	.woocommerce-error {
+		border-top-color: var(--color-line);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px;
+		margin: 0 0 24px;
+		padding: 14px 18px;
+		border: 1px solid var(--color-line);
+		border-radius: 16px;
+		background: var(--color-white);
+		color: var(--color-gray-700);
+		list-style: none;
+
+		&::before {
+			position: static;
+			color: var(--color-brand-700);
+		}
+
+		.button {
+			order: 2;
+			margin-left: auto;
+		}
+	}
+
+	.woocommerce-error {
+		border-color: #f3c7c7;
+		background: #fdf4f4;
+
+		&::before {
+			color: #b42318;
+		}
+	}
+
+	// Buttons: the site's pill button.
+	:is(a, button, input).button,
+	#place_order,
+	.checkout-button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 48px;
+		padding: 12px 22px;
+		border: 1px solid var(--color-line);
+		border-radius: 999px;
+		background: var(--color-white);
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: var(--text-sm);
+		line-height: 1.5;
+		transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+
+		&:hover {
+			border-color: var(--color-brand-300);
+			background: var(--color-brand-25);
+			color: var(--color-brand-700);
+		}
+	}
+
+	:is(a, button, input).checkout-button,
+	#place_order,
+	:is(a, button, input).button.alt {
+		width: 100%;
+		border-color: var(--color-brand-700);
+		background: var(--color-brand-700);
+		color: var(--color-white);
+		font-size: var(--text-base);
+
+		&:hover {
+			border-color: var(--color-brand-800);
+			background: var(--color-brand-800);
+			color: var(--color-white);
+		}
+	}
+
+	// Fields.
+	form .form-row :is(input.input-text, select, textarea),
+	.coupon input.input-text,
+	.select2-container .select2-selection--single {
+		width: 100%;
+		min-height: 48px;
+		padding: 11px 16px;
+		border: 1px solid var(--color-line);
+		border-radius: 12px;
+		background: var(--color-white);
+		color: var(--color-gray-950);
+		font-size: var(--text-base);
+
+		&:focus {
+			border-color: var(--color-brand-700);
+			outline: none;
+			box-shadow: 0 0 0 3px rgb(109 66 175 / 14%);
+		}
+	}
+
+	.select2-container .select2-selection--single .select2-selection__rendered {
+		padding: 0;
+		line-height: 24px;
+	}
+
+	.select2-container .select2-selection--single .select2-selection__arrow {
+		top: 11px;
+		right: 10px;
+	}
+
+	.form-row {
+		margin: 0 0 16px;
+		padding: 0;
+
+		label {
+			display: block;
+			margin-bottom: 6px;
+			color: var(--color-gray-700);
+			font-weight: 500;
+			font-size: var(--text-sm);
+		}
+	}
+
+	.required {
+		color: var(--color-brand-700);
+		text-decoration: none;
+	}
+
+	h3 {
+		margin: 0 0 16px;
+		font-weight: 500;
+		font-size: var(--text-xl);
+		line-height: 1.5;
+	}
+
+	// Tables (cart items, totals, order review, order details).
+	table.shop_table {
+		overflow: hidden;
+		width: 100%;
+		margin: 0;
+		border: 1px solid var(--color-line);
+		border-collapse: separate;
+		border-radius: 20px;
+		background: var(--color-white);
+
+		th,
+		td {
+			padding: 16px 20px;
+			border: 0;
+			border-top: 1px solid var(--color-line);
+			vertical-align: middle;
+		}
+
+		thead th,
+		tr:first-child > * {
+			border-top: 0;
+		}
+
+		thead th {
+			color: var(--color-gray-500);
+			font-weight: 500;
+			font-size: var(--text-sm);
+		}
+
+		.product-name a,
+		.product-name {
+			color: var(--color-gray-950);
+			font-weight: 500;
+		}
+
+		// Group Registration's "group name" line and other item meta.
+		.variation,
+		.wc-item-meta {
+			margin: 6px 0 0;
+			color: var(--color-gray-500);
+			font-size: var(--text-sm);
+
+			dt,
+			strong {
+				font-weight: 500;
+			}
+
+			p {
+				margin: 0;
+			}
+		}
+
+		.product-remove a.remove {
+			color: var(--color-gray-500) !important;
+
+			&:hover {
+				background: var(--color-brand-25);
+				color: var(--color-brand-700) !important;
+			}
+		}
+
+		.product-thumbnail img {
+			width: 72px;
+			border-radius: 10px;
+		}
+
+		.order-total td,
+		.order-total th {
+			font-weight: 500;
+			font-size: var(--text-lg);
+		}
+	}
+
+	.quantity .qty {
+		width: 80px;
+		min-height: 44px;
+		border: 1px solid var(--color-line);
+		border-radius: 999px;
+		text-align: center;
+	}
+
+	.coupon .input-text {
+		width: auto;
+		min-width: 160px;
+	}
+
+	// Cart: items left, totals right (Figma "Order summary").
+	.cart-collaterals .cart_totals {
+		width: 100%;
+
+		h2 {
+			margin: 0 0 16px;
+			font-weight: 500;
+			font-size: var(--text-xl);
+		}
+	}
+
+	.wc-proceed-to-checkout {
+		padding: 16px 0 0;
+	}
+
+	// Checkout: payment box.
+	#payment {
+		border: 1px solid var(--color-line);
+		border-radius: 20px;
+		background: var(--color-white);
+
+		ul.payment_methods {
+			padding: 20px;
+			border-bottom: 1px solid var(--color-line);
+		}
+
+		div.payment_box {
+			border-radius: 12px;
+			background: var(--color-brand-25);
+			color: var(--color-gray-700);
+
+			&::before {
+				border-bottom-color: var(--color-brand-25);
+			}
+		}
+
+		div.form-row {
+			padding: 20px;
+		}
+	}
+
+	.woocommerce-terms-and-conditions-wrapper {
+		color: var(--color-gray-500);
+		font-size: var(--text-sm);
+	}
+
+	// Order received.
+	.woocommerce-order {
+		.woocommerce-thankyou-order-received {
+			color: var(--color-gray-700);
+		}
+
+		ul.order_details {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+			gap: 16px;
+			margin: 24px 0 40px;
+			padding: 24px;
+			border: 1px solid var(--color-line);
+			border-radius: 20px;
+			background: var(--color-white);
+
+			li {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				color: var(--color-gray-500);
+				font-size: var(--text-sm);
+				text-transform: none;
+
+				strong {
+					display: block;
+					padding-top: 4px;
+					color: var(--color-gray-950);
+					font-size: var(--text-base);
+				}
+			}
+		}
+
+		.woocommerce-order-details,
+		.woocommerce-customer-details,
+		.woocommerce-bacs-bank-details {
+			margin-top: 40px;
+		}
+
+		.woocommerce-column__title,
+		.woocommerce-order-details__title,
+		.wc-bacs-bank-details-heading {
+			font-weight: 500;
+			font-size: var(--text-xl);
+		}
+
+		address {
+			padding: 20px;
+			border: 1px solid var(--color-line);
+			border-radius: 20px;
+			background: var(--color-white);
+			font-style: normal;
+		}
+	}
+}
+
+@media (width >= 1025px) {
+
+	.store-content {
+
+		// Cart: line items beside the order summary.
+		.woocommerce:has(.woocommerce-cart-form) {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 375px;
+			gap: 0 40px;
+			align-items: start;
+
+			> .woocommerce-notices-wrapper {
+				grid-column: 1 / -1;
+			}
+		}
+
+		.cart-collaterals {
+			position: sticky;
+			top: calc(var(--upskill-header-height, 96px) + 24px);
+		}
+
+		// Checkout: details left, order review right.
+		form.checkout {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 470px;
+			gap: 0 40px;
+			align-items: start;
+
+			#customer_details {
+				grid-row: 1 / span 3;
+
+				.col-1,
+				.col-2 {
+					float: none;
+					width: 100%;
+				}
+
+				.col-2 {
+					margin-top: 24px;
+				}
+			}
+
+			#order_review_heading,
+			#order_review {
+				grid-column: 2;
+			}
+		}
+	}
+}
+
+// Group Registration's own "Proceed to Group" link repeats the "Enrol Your
+// Team" button in "What happens next" (template-parts/commerce/next-steps.php).
+.store-content .ldgr-goto-dashboard-div {
+	display: none;
+}

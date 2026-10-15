@@ -1,0 +1,58 @@
+{
+    "key": "group_upskill_course_page",
+    "title": "Course: Page content",
+    "fields": [
+        {
+            "key": "field_upskill_course_page_outcomes",
+            "label": "This course is designed to help people",
+            "name": "outcomes",
+            "type": "textarea",
+            "instructions": "One outcome per line. Shown beside \"About this training\" on the course page.",
+            "rows": 6,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_course_page_learn_areas",
+            "label": "What you'll learn",
+            "name": "learn_areas",
+            "type": "repeater",
+            "instructions": "The practical areas the course covers (Figma shows six). Leave empty to hide the section.",
+            "layout": "table",
+            "button_label": "Add area",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_course_page_learn_areas_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "parent_repeater": "field_upskill_course_page_learn_areas"
+                },
+                {
+                    "key": "field_upskill_course_page_learn_areas_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "parent_repeater": "field_upskill_course_page_learn_areas"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "sfwd-courses"
+            }
+        ]
+    ],
+    "menu_order": 5,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "active": true,
+    "show_in_rest": 0,
+    "modified": 1792050000
+}
