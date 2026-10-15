@@ -39,6 +39,18 @@
 	line-height: 1.5;
 }
 
+/* A centred header that Figma left-aligns below desktop (Why "Training designed
+   for the real world", 49372:42236). */
+@media (width < 1025px) {
+
+	.block-card-grid .section-header--left-phones,
+	.block-card-grid .section-header--left-phones .section-header__title,
+	.block-card-grid .section-header--left-phones .section-header__aside {
+		align-items: flex-start;
+		text-align: left;
+	}
+}
+
 /* The rows header (case study "The solution"): 12px under the eyebrow and a
    559px intro at 66% white. */
 .block-card-grid .section-header--rows .section-header__title {

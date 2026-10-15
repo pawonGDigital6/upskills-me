@@ -143,10 +143,10 @@ else :
 		<?php if ( $dark && ! $principle ) : ?>
 			<?php $texture(); ?>
 		<?php endif; ?>
-		<div class="flex flex-1 flex-col <?php echo esc_attr( $principle ? 'p-6 lg:min-h-[236px] lg:p-4' : ( $roomy ? 'p-6 lg:p-[30px]' : ( $side ? 'min-h-[273px] p-[30px] lg:p-4' : 'min-h-[240px] p-4' ) ) ); ?>">
+		<div class="flex flex-1 flex-col <?php echo esc_attr( $principle ? 'p-7 lg:min-h-[236px] lg:p-4' : ( $roomy ? 'p-[30px]' : ( $side ? 'min-h-[273px] p-[30px] lg:p-4' : 'min-h-[240px] p-4' ) ) ); ?>">
 			<?php if ( $principle ) : ?>
 				<?php // Phones: label, icon, then text (Figma 49374:44476). Desktop: icon left, label right. ?>
-				<div class="flex flex-col items-start gap-3 lg:flex-row lg:justify-between lg:gap-4">
+				<div class="flex flex-col items-start gap-[18px] lg:flex-row lg:justify-between lg:gap-4">
 					<?php if ( $icon ) : ?>
 						<span class="order-2 grid size-11 lg:order-none lg:mt-[18px] place-items-center rounded-[13px] <?php echo esc_attr( $chip ); ?>" aria-hidden="true"><?php upskill_icon( $icon, 'size-[21px]' ); ?></span>
 					<?php endif; ?>
@@ -154,7 +154,7 @@ else :
 						<span class="order-1 text-sm font-medium text-[#8b8b97] uppercase lg:order-none"><?php echo esc_html( $label ); ?></span>
 					<?php endif; ?>
 				</div>
-				<div class="mt-auto flex flex-col gap-2 pt-4 lg:pt-6">
+				<div class="mt-auto flex flex-col gap-2 pt-3 lg:pt-6">
 					<?php $title_markup( $title_cls ); ?>
 					<?php if ( $text ) : ?>
 						<p class="text-base <?php echo $dark ? 'text-white/66' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
@@ -166,7 +166,7 @@ else :
 				<?php elseif ( $icon ) : ?>
 					<span class="grid size-11 place-items-center rounded-[13px] <?php echo esc_attr( $chip ); ?>" aria-hidden="true"><?php upskill_icon( $icon, 'size-[21px]' ); ?></span>
 				<?php endif; ?>
-				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-10' : 'pt-10' ) : '' ); ?>">
+				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-10' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-10' ) ) : '' ); ?>">
 					<?php if ( ! empty( $args['number'] ) ) : ?>
 						<?php // Purple when it heads a label (About "Why we exist"), grey when it heads the title; small and spaced in the side layout. ?>
 						<span class="<?php echo $label ? 'text-[13px] font-semibold tracking-[0.1em] text-[#6b2fe3]' : ( $side ? 'text-xs font-semibold tracking-[0.1em] text-[#8b8b97]' : 'text-sm text-gray-500' ); ?>" aria-hidden="true"><?php echo esc_html( $number ); ?></span>

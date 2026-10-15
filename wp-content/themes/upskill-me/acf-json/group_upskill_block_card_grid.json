@@ -138,6 +138,27 @@
             }
         },
         {
+            "key": "field_upskill_card_grid_left_on_phones",
+            "label": "Left-align the header on phones",
+            "name": "left_on_phones",
+            "type": "true_false",
+            "instructions": "For a centred header that Figma left-aligns on the phone frame.",
+            "ui": 1,
+            "default_value": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_card_grid_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "22"
+            }
+        },
+        {
             "key": "field_upskill_card_grid_large_intro",
             "label": "Large intro (20px)",
             "name": "large_intro",
@@ -388,5 +409,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791351143
+    "modified": 1792028869
 }

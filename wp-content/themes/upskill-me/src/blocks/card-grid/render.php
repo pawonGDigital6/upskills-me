@@ -194,7 +194,7 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 					'layout' => in_array( $layout, array( 'split', 'center', 'stack' ), true ) ? $layout : 'split',
 					'dark'   => $dark,
 					'reveal' => true,
-					'class'  => 'rows' === $style ? 'section-header--rows' : '',
+					'class'  => trim( ( 'rows' === $style ? 'section-header--rows' : '' ) . ( 'center' === $layout && get_field( 'left_on_phones' ) ? ' section-header--left-phones' : '' ) ),
 				)
 			);
 			$render_cards( 'mt-stack ' . $grid_columns[ $columns ] . ( 'texture' === $style ? ' lg:items-end' : '' ) );
