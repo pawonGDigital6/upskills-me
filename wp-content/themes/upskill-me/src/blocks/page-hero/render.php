@@ -187,15 +187,21 @@ $chip_tones = array(
 						<?php endforeach; ?>
 					</div>
 				<?php elseif ( $media ) : ?>
+					<?php
+					// Illustrations are 2x exports of the Figma group: show them at half their width (Blogs 556, Guides 385).
+					$art_meta  = wp_get_attachment_metadata( (int) $media );
+					$art_width = ! empty( $art_meta['width'] ) ? (int) round( $art_meta['width'] / 2 ) : 556;
+					?>
 					<div class="flex items-center justify-center lg:min-w-0 lg:flex-1 lg:min-h-[460px]">
 						<?php
 						upskill_image(
 							$media,
 							'full',
 							array(
-								'class'   => 'h-auto w-full max-w-[556px]',
+								'class'   => 'h-auto w-full',
+								'style'   => 'max-width:' . $art_width . 'px',
 								'loading' => 'eager',
-								'sizes'   => '(min-width: 600px) 556px, 92vw',
+								'sizes'   => '(min-width: ' . ( $art_width + 40 ) . 'px) ' . $art_width . 'px, 92vw',
 							)
 						);
 						?>
