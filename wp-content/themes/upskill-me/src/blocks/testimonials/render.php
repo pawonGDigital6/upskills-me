@@ -51,7 +51,7 @@ $attributes = upskill_block_attributes( $block, 'block-testimonials relative sec
 			$rating = (int) get_field( 'rating', $item );
 			$name   = get_field( 'name', $item );
 			?>
-			<li class="testimonials__slide relative flex w-[77%] flex-none snap-start flex-col rounded-[24px] bg-brand-50 p-4 sm:w-[66%] sm:p-6 lg:min-h-[450px] lg:w-[min(1120px,78vw)] lg:snap-center lg:p-10" aria-roledescription="slide" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: slide number, 2: total. */ __( '%1$d of %2$d', 'upskill-me' ), $index + 1, count( $items ) ) ); ?>" data-carousel-slide>
+			<li class="testimonials__slide relative flex w-[min(300px,82vw)] flex-none snap-start flex-col rounded-[24px] bg-brand-50 p-4 sm:w-[66%] sm:p-6 lg:min-h-[450px] lg:w-[min(1120px,78vw)] lg:snap-center lg:p-10" aria-roledescription="slide" aria-label="<?php echo esc_attr( sprintf( /* translators: 1: slide number, 2: total. */ __( '%1$d of %2$d', 'upskill-me' ), $index + 1, count( $items ) ) ); ?>" data-carousel-slide>
 				<div class="flex items-start justify-between gap-4">
 					<?php upskill_icon( 'quote', 'h-[46px] w-[49px] text-brand-500 lg:h-[66px] lg:w-[71px]' ); ?>
 					<?php if ( $rating > 0 ) : ?>
@@ -63,14 +63,14 @@ $attributes = upskill_block_attributes( $block, 'block-testimonials relative sec
 								?>
 							</span>
 							<?php for ( $star = 0; $star < min( $rating, 5 ); $star++ ) : ?>
-								<?php upskill_icon( 'star', 'size-[22px]' ); ?>
+								<?php upskill_icon( 'star', 'size-5 lg:size-[22px]' ); ?>
 							<?php endfor; ?>
 						</p>
 					<?php endif; ?>
 				</div>
-				<blockquote class="flex flex-col pt-[72px] lg:pt-[94px]">
+				<blockquote class="flex flex-col pt-[94px]">
 					<p class="text-h6 font-medium text-gray-950"><?php echo esc_html( get_the_title( $item ) ); ?></p>
-					<div class="pt-4 text-base text-gray-950"><?php echo wp_kses_post( wpautop( get_post_field( 'post_content', $item ) ) ); ?></div>
+					<div class="pt-4 pr-[21px] text-base text-gray-950 sm:pr-0"><?php echo wp_kses_post( wpautop( get_post_field( 'post_content', $item ) ) ); ?></div>
 				</blockquote>
 				<?php if ( $name ) : ?>
 					<p class="mt-auto pt-10 text-xl font-medium text-gray-950"><?php echo esc_html( $name ); ?></p>

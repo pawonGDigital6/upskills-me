@@ -77,7 +77,7 @@ if ( 'featured' === $variant ) :
 				$thumb,
 				'full',
 				array(
-					'class' => 'col-start-1 row-start-1 aspect-[358/240] size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] lg:absolute lg:inset-0 lg:aspect-auto',
+					'class' => 'col-start-1 row-start-1 aspect-[354/216] size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03] lg:absolute lg:inset-0 lg:aspect-auto',
 					// 671x380 desktop (the 3:2 photo draws 671 wide); full width below lg.
 					'sizes' => '(min-width: 1025px) 50vw, 92vw',
 				)
@@ -85,7 +85,8 @@ if ( 'featured' === $variant ) :
 			?>
 			<span class="relative col-start-1 row-start-1 m-5 self-start justify-self-start rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php 'guide' === $type ? esc_html_e( 'Featured guide', 'upskill-me' ) : esc_html_e( 'Featured', 'upskill-me' ); ?></span>
 		</div>
-		<div class="flex flex-col p-6 lg:p-9">
+		<?php // Phones (49374:104007 / 106465): 16px padding, 8px to the title, 20px to the copy, 42px to the links. ?>
+		<div class="flex flex-col p-4 lg:p-9">
 			<?php if ( 'case_study' !== $type ) : ?>
 				<?php $meta_row(); ?>
 			<?php else : ?>
@@ -96,11 +97,12 @@ if ( 'featured' === $variant ) :
 					?>
 				</p>
 			<?php endif; ?>
-			<<?php echo esc_attr( $tag ); ?> class="pt-4 text-h6 font-medium text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
-			<div class="flex flex-col gap-[25px] pt-3 text-base leading-[1.6] text-gray-500">
+			<<?php echo esc_attr( $tag ); ?> class="pt-2 text-h6 font-medium text-gray-950 lg:min-h-[calc(2.2em+16px)] lg:pt-4"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
+			<?php // Desktop: Figma keeps two title lines of room, then 19px to the copy (49325:16867, 49325:18137). ?>
+			<div class="flex flex-col gap-[25px] pt-5 text-base leading-[1.6] text-gray-500 lg:pt-[19px]">
 				<?php upskill_paragraphs( $excerpt ); ?>
 			</div>
-			<div class="relative z-[2] mt-auto flex flex-wrap items-center gap-x-[22px] gap-y-2 pt-[18px]">
+			<div class="relative z-[2] mt-auto flex flex-wrap items-center gap-x-[22px] gap-y-2 pt-[42px] lg:pt-[18px]">
 				<?php if ( $links ) : ?>
 					<?php foreach ( array_values( $links ) as $i => $link ) : ?>
 						<?php upskill_text_link( $link, 0 === $i ? 'text-brand-700' : 'text-[#55555f]' ); ?>
@@ -145,7 +147,8 @@ elseif ( 'compact' === $variant ) :
 elseif ( 'case' === $variant ) :
 	?>
 	<article class="reveal group relative flex flex-col overflow-hidden rounded-[24px] border border-gray-900/10 bg-white" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
-		<div class="aspect-[440/274] overflow-hidden">
+		<?php // 274px tall in both frames, so a squarer photo on phones (49374:106465). ?>
+		<div class="aspect-[356/274] overflow-hidden sm:aspect-[440/274]">
 			<?php
 			upskill_image(
 				$thumb,
