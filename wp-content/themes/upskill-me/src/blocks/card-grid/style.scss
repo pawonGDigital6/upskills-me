@@ -60,4 +60,6 @@
 .block-card-grid .section-header--rows .section-header__intro {
 	max-width: 559px;
 	color: rgb(255 255 255 / 66%);
+	font-size: var(--text-xl); /* 20/30 in both frames (49325:16718 / 49374:107273). */
+	line-height: 1.5;
 }
