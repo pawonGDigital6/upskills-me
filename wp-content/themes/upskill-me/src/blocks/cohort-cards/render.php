@@ -21,11 +21,11 @@ $terms      = upskill_selected_terms( get_field( 'cohorts' ), 'cohort' );
 		<?php upskill_section_header(); ?>
 
 		<?php if ( $terms ) : ?>
-			<ul class="mt-stack grid gap-4 md:grid-cols-3">
+			<ul class="mt-stack grid gap-4 lg:grid-cols-3 smlr:grid-cols-2">
 				<?php foreach ( $terms as $index => $term ) : ?>
 					<?php $tagline = get_field( 'tagline', $term ); ?>
-					<li class="reveal group flex flex-col overflow-hidden rounded-card border border-gray-900/10 bg-white lg:min-h-[746px]" style="--i:<?php echo (int) min( $index, 3 ); ?>">
-						<div class="aspect-[358/340] overflow-hidden bg-[#ededef] md:aspect-[443/534]">
+					<li class="reveal group flex flex-col overflow-hidden sm:rounded-card rounded-4xl border border-gray-900/10 bg-white" style="--i:<?php echo (int) min( $index, 3 ); ?>">
+						<div class="aspect-[358/340] overflow-hidden bg-[#ededef] md:aspect-[443/538]">
 							<?php
 							upskill_image(
 								get_field( 'card_image', $term ),
@@ -37,7 +37,7 @@ $terms      = upskill_selected_terms( get_field( 'cohorts' ), 'cohort' );
 							);
 							?>
 						</div>
-						<div class="flex flex-1 flex-col items-start gap-10 p-5">
+						<div class="flex flex-1 flex-col items-start justify-between gap-10 p-5 sm:pb-8">
 							<div class="flex flex-col items-start gap-3">
 								<span class="rounded-sm bg-brand-100 px-[9px] py-1 text-sm text-brand-700"><?php echo esc_html( $term->name ); ?></span>
 								<?php if ( $tagline ) : ?>
@@ -51,7 +51,7 @@ $terms      = upskill_selected_terms( get_field( 'cohorts' ), 'cohort' );
 									/* translators: %s: level name, e.g. Manager. */
 									'title' => sprintf( __( 'Explore %s', 'upskill-me' ), $term->name ),
 								),
-								array( 'class' => 'mt-auto min-h-[50px]' )
+								array( 'class' => 'min-h-[50px]' )
 							);
 							?>
 						</div>
