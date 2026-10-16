@@ -6,9 +6,18 @@
             "key": "field_upskill_section_header_eyebrow_icon",
             "label": "Eyebrow icon",
             "name": "eyebrow_icon",
+            "aria-label": "",
             "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "30",
+                "class": "",
+                "id": ""
+            },
             "choices": {
-                "": "None",
+                ": None": ": None",
                 "video-book": "Video book",
                 "free-video": "Free video",
                 "industry": "Industry",
@@ -32,43 +41,94 @@
                 "project": "Project",
                 "overview": "Overview",
                 "solution": "Solution",
-                "user-alt": "Person"
+                "user-alt": "Person",
+                "site-logo-sm": "Site Logo Small"
             },
-            "default_value": "",
+            "default_value": false,
             "return_format": "value",
-            "wrapper": {
-                "width": "30"
-            }
+            "multiple": 0,
+            "allow_null": 0,
+            "allow_in_bindings": 1,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_upskill_section_header_eyebrow",
             "label": "Eyebrow",
             "name": "eyebrow",
+            "aria-label": "",
             "type": "text",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
             "wrapper": {
-                "width": "70"
-            }
+                "width": "70",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_upskill_section_header_heading",
             "label": "Heading",
             "name": "heading",
+            "aria-label": "",
             "type": "text",
-            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.<\/em> Use <br> to force a line break.",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         },
         {
             "key": "field_upskill_section_header_intro",
             "label": "Intro",
             "name": "intro",
+            "aria-label": "",
             "type": "textarea",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "rows": 3,
-            "new_lines": ""
+            "new_lines": "",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": ""
         },
         {
             "key": "field_upskill_section_header_button",
             "label": "Button",
             "name": "button",
+            "aria-label": "",
             "type": "link",
+            "instructions": "",
+            "required": false,
+            "conditional_logic": false,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
             "return_format": "array"
         }
     ],
@@ -90,5 +150,8 @@
     "active": false,
     "description": "Cloned into blocks; never shown on its own.",
     "show_in_rest": 0,
-    "modified": 1791351143
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1792124841
 }
