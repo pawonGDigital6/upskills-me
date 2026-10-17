@@ -49,9 +49,9 @@ $attributes = upskill_block_attributes( $block, 'block-media-story ' . ( $boxed 
 					);
 					?>
 					<?php if ( ! empty( $quote['text'] ) ) : ?>
-						<div class="reveal relative col-start-1 row-start-2 mx-3.5 -mt-12 rounded-[22px] border border-line bg-white p-[22px] shadow-xs lg:row-start-1 lg:mt-0 lg:mr-auto lg:-mb-9 lg:ml-[55px] lg:max-w-[536px] lg:self-end lg:px-7 lg:py-[26px]">
+						<div class="reveal relative col-start-1 row-start-2 mx-3.5 -mt-12 rounded-[22px] border border-line bg-white p-[16px_26px_25px_22px] lg:pl-7 lg:pr-5 lg:pb-[26px] lg:pt-[20px] shadow-xs lg:row-start-1 lg:mt-0 lg:mr-auto lg:-mb-9 lg:ml-[55px] lg:max-w-[536px] lg:self-end">
 							<span class="block h-6 text-[30px] leading-[30px] font-semibold text-brand-500" aria-hidden="true">&ldquo;</span>
-							<blockquote class="pt-1.5 text-base font-medium text-gray-950"><?php echo esc_html( $quote['text'] ); ?></blockquote>
+							<blockquote class="pt-5 text-base font-medium text-gray-950"><?php echo esc_html( $quote['text'] ); ?></blockquote>
 							<?php if ( ! empty( $quote['caption'] ) ) : ?>
 								<p class="pt-3 text-sm text-gray-500"><?php echo esc_html( $quote['caption'] ); ?></p>
 							<?php endif; ?>
@@ -73,14 +73,14 @@ $attributes = upskill_block_attributes( $block, 'block-media-story ' . ( $boxed 
 				?>
 
 				<?php if ( $checklist ) : ?>
-					<ul class="flex flex-col pt-2.5 lg:gap-[19px]">
+					<ul class="flex flex-col pt-2.5 lg:gap-[19px] sm:gap-4">
 						<?php foreach ( $checklist as $item ) : ?>
 							<li class="flex items-start gap-3.5">
 								<span class="mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-brand-100 text-[#6b2fe3]" aria-hidden="true"><?php upskill_icon( 'check', 'size-3' ); ?></span>
 								<p class="text-base text-[#0e0e14]">
 									<strong class="font-medium text-[#0e0e14]"><?php echo esc_html( $item['title'] ); ?></strong>
 									<?php if ( ! empty( $item['text'] ) ) : ?>
-										<?php echo esc_html( ' - ' . $item['text'] ); ?>
+										<?php echo esc_html( '- ' . $item['text'] ); ?>
 									<?php endif; ?>
 								</p>
 							</li>
