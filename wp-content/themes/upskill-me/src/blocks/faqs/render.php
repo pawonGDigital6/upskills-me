@@ -61,9 +61,9 @@ $uid  = wp_unique_id( 'faq-' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
-		<div class="flex flex-col gap-8 lg:flex-row lg:gap-14">
+		<div class="flex flex-col sm:gap-8 gap-17 lg:flex-row lg:gap-14">
 			<?php // 514 of the 1360 content box. ?>
-			<div class="flex flex-col justify-between gap-8 lg:w-[37.8%] lg:flex-none">
+			<div class="flex flex-col justify-between sm:gap-8 gap-12 lg:w-[37.7%] lg:flex-none">
 				<?php
 				upskill_section_header(
 					array(
@@ -87,14 +87,14 @@ $uid  = wp_unique_id( 'faq-' );
 						?>
 						<div class="faq border-b border-gray-900/10">
 							<h3>
-								<button class="faq__question flex min-h-[77.5px] w-full items-center justify-between gap-6 py-5 text-left text-lg font-medium text-gray-950 lg:text-xl" type="button" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $panel_id ); ?>" data-disclosure>
+								<button class="faq__question flex sm:min-h-[77.5px] min-h-[66px] w-full items-center justify-between gap-6 sm:py-5 py-4.5 text-left sm:text-lg text-base font-medium text-gray-950 lg:text-xl" type="button" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $panel_id ); ?>" data-disclosure>
 									<?php the_title(); ?>
 									<span class="faq__toggle relative size-[34px] flex-none rounded-full border border-gray-900/20" aria-hidden="true"></span>
 								</button>
 							</h3>
 							<div class="collapse<?php echo $open ? ' is-open' : ''; ?>" id="<?php echo esc_attr( $panel_id ); ?>">
 								<div>
-									<div class="faq__answer max-w-[682px] pr-12 pb-6 text-base text-gray-500">
+									<div class="faq__answer max-w-[682px] sm:pb-6 pb-4 text-base text-gray-500">
 										<?php the_content(); ?>
 									</div>
 								</div>

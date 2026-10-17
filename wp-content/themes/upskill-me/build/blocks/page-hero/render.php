@@ -122,18 +122,18 @@ $chip_tones = array(
 			<?php endif; ?>
 
 		<?php else : ?>
-			<div class="flex flex-col gap-10 lg:flex-row lg:gap-20">
+			<div class="flex flex-col gap-6 lg:flex-row lg:gap-20">
 				<div class="flex flex-col justify-center lg:min-w-0 lg:flex-1">
 					<div class="flex flex-col items-start gap-3">
 						<?php upskill_eyebrow( get_field( 'eyebrow' ), (string) get_field( 'eyebrow_icon' ) ); ?>
 						<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold' ); ?>
 					</div>
 					<?php if ( get_field( 'intro' ) ) : ?>
-						<p class="reveal mt-6 text-lead text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
+						<p class="reveal mt-7 text-lead text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
 					<?php endif; ?>
 
 					<?php if ( get_field( 'primary_button' ) || get_field( 'secondary_button' ) ) : ?>
-						<div class="reveal flex flex-wrap gap-2 pt-8" style="--i:2">
+						<div class="reveal flex flex-wrap gap-2 sm:pt-14 pt-6" style="--i:2">
 							<?php
 							upskill_button( get_field( 'primary_button' ), array( 'class' => 'min-h-[50px]' ) );
 							upskill_button(
@@ -159,7 +159,7 @@ $chip_tones = array(
 
 				<?php if ( $media && $is_photo ) : ?>
 					<?php // Photo and chips share one grid cell; the chips are hidden on the 390 frame, as drawn. ?>
-					<div class="grid grid-cols-1 grid-rows-1 overflow-hidden rounded-[20px] lg:min-w-0 lg:flex-1">
+					<div class="grid grid-cols-1 grid-rows-1 overflow-hidden sm:rounded-xl rounded-2xl lg:min-w-0 lg:flex-1">
 						<?php
 						upskill_image(
 							$media,

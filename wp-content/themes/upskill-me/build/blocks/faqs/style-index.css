@@ -56,4 +56,8 @@
   color: var(--color-brand-700);
 }
 
+.block-faqs .section-header__intro {
+  font-size: var(--text-base);
+}
+
 /*# sourceMappingURL=style-index.css.map*/

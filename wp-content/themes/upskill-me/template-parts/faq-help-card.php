@@ -11,11 +11,11 @@
 $card = isset( $args['card'] ) ? $args['card'] : array();
 ?>
 <?php if ( ! empty( $card['title'] ) ) : ?>
-	<div class="flex flex-col items-start gap-6 rounded-card border border-gray-100 bg-gray-25 p-4 shadow-[0_1px_1px_rgb(10_13_18/5%)]">
-		<div class="flex flex-col gap-4 text-lg">
+	<div class="flex flex-col items-start sm:gap-6 gap-[11px] sm:rounded-card rounded-2xl border border-gray-100 sm:bg-gray-25 bg-[#FDFDFF] sm:p-4 p-[24px_26px_24px_24px] shadow-[0_1px_1px_rgb(10_13_18/5%)]">
+		<div class="flex flex-col sm:gap-4 gap-3 text-lg">
 			<p class="font-medium text-gray-950"><?php echo esc_html( $card['title'] ); ?></p>
 			<?php if ( ! empty( $card['text'] ) ) : ?>
-				<p class="text-gray-500"><?php echo esc_html( $card['text'] ); ?></p>
+				<p class="text-gray-500 max-sm:text-base"><?php echo esc_html( $card['text'] ); ?></p>
 			<?php endif; ?>
 		</div>
 		<?php
