@@ -137,7 +137,7 @@ else :
 	$side      = ! empty( $args['side'] ) && ! $principle;
 	// The dark highlight card of a roomy grid takes the 20px title Figma gives it ("Managed Compliance").
 	$title_cls = ( ! empty( $args['large'] ) ? ( $side ? 'text-lg lg:text-h6' : 'text-h6' ) : ( $dark && $roomy ? 'text-xl' : 'text-lg' ) ) . ' font-medium ' . ( $dark ? 'text-white' : 'text-gray-950' );
-	$chip      = $dark ? 'bg-white/7 text-white' : 'bg-brand-100 text-brand-700';
+	$chip      = $dark ? 'bg-white/7 text-white' : 'bg-[#F3F1FB] text-brand-700';
 	// The principle card's dark tone is a plain gradient in Figma (49325:15598); the others are textured.
 	$surface   = $dark ? ( $principle ? 'border-transparent bg-[linear-gradient(163deg,#17132b_8%,#0b0b10_92%)]' : 'border-transparent bg-gray-950' ) : 'border-line bg-white';
 	?>
@@ -168,7 +168,7 @@ else :
 				<?php elseif ( $icon ) : ?>
 					<span class="grid size-11 place-items-center rounded-[13px] <?php echo esc_attr( $chip ); ?>" aria-hidden="true"><?php upskill_icon( $icon, 'size-[21px]' ); ?></span>
 				<?php endif; ?>
-				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-10' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-10' ) ) : '' ); ?>">
+				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-10' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-11' ) ) : '' ); ?>">
 					<?php if ( ! empty( $args['framed'] ) && ! empty( $args['number'] ) ) : ?>
 						<span class="order-first mb-6 grid size-8 place-items-center rounded-md border text-sm <?php echo $dark ? 'border-white/40 text-white' : 'border-gray-200 text-gray-500'; ?>" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
 					<?php elseif ( ! empty( $args['number'] ) ) : ?>
@@ -176,9 +176,9 @@ else :
 						<span class="<?php echo $label ? 'text-[13px] font-semibold tracking-[0.1em] text-[#6b2fe3]' : ( $side ? 'text-xs font-semibold tracking-[0.1em] text-[#8b8b97]' : 'text-sm text-gray-500' ); ?>" aria-hidden="true"><?php echo esc_html( $number ); ?></span>
 					<?php endif; ?>
 					<?php if ( $label ) : ?>
-						<span class="pt-1 text-sm font-medium uppercase <?php echo $dark ? 'text-white' : 'text-gray-500'; ?>"><?php echo esc_html( $label ); ?></span>
+						<span class="pt-2 text-sm font-medium uppercase <?php echo $dark ? 'text-white' : 'text-gray-500'; ?>"><?php echo esc_html( $label ); ?></span>
 					<?php endif; ?>
-					<?php $title_markup( ( $label ? 'pt-5 ' : ( ! empty( $args['number'] ) ? 'pt-2.5 ' : '' ) ) . $title_cls ); ?>
+					<?php $title_markup( ( $label ? 'pt-4 ' : ( ! empty( $args['number'] ) ? 'pt-2.5 ' : '' ) ) . $title_cls ); ?>
 					<?php if ( $text ) : ?>
 						<p class="<?php echo $side ? 'pt-2' : 'pt-2.5'; ?> text-base <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
 					<?php endif; ?>

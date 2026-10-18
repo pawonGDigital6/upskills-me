@@ -1251,10 +1251,6 @@
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
   }
-  .rounded-r-2xl {
-    border-top-right-radius: var(--radius-2xl);
-    border-bottom-right-radius: var(--radius-2xl);
-  }
   .border {
     border-style: var(--tw-border-style);
     border-width: 1px;
@@ -1402,6 +1398,9 @@
   }
   .bg-\[\#202020\] {
     background-color: #202020;
+  }
+  .bg-\[\#F3F1FB\] {
+    background-color: #F3F1FB;
   }
   .bg-\[\#FDFDFF\] {
     background-color: #FDFDFF;
@@ -1663,23 +1662,8 @@
   .p-7 {
     padding: calc(var(--spacing) * 7);
   }
-  .p-\[06px\] {
-    padding: 06px;
-  }
-  .p-\[16px\] {
-    padding: 16px;
-  }
-  .p-\[16px_26px_25px_2\] {
-    padding: 16px 26px 25px 2;
-  }
   .p-\[16px_26px_25px_22px\] {
     padding: 16px 26px 25px 22px;
-  }
-  .p-\[16px_26px_\] {
-    padding: 16px 26px ;
-  }
-  .p-\[20px_22px\] {
-    padding: 20px 22px;
   }
   .p-\[22px\] {
     padding: 22px;
@@ -1831,14 +1815,14 @@
   .pt-10 {
     padding-top: calc(var(--spacing) * 10);
   }
+  .pt-11 {
+    padding-top: calc(var(--spacing) * 11);
+  }
   .pt-12 {
     padding-top: calc(var(--spacing) * 12);
   }
   .pt-12\.5 {
     padding-top: calc(var(--spacing) * 12.5);
-  }
-  .pt-14 {
-    padding-top: calc(var(--spacing) * 14);
   }
   .pt-\[14px\] {
     padding-top: 14px;
@@ -2942,9 +2926,6 @@
     .sm\:gap-12 {
       gap: calc(var(--spacing) * 12);
     }
-    .sm\:gap-\[19px\] {
-      gap: 19px;
-    }
     .sm\:gap-x-4 {
       column-gap: calc(var(--spacing) * 4);
     }
@@ -2953,9 +2934,6 @@
     }
     .sm\:overflow-visible {
       overflow: visible;
-    }
-    .sm\:rounded-\[20px\] {
-      border-radius: 20px;
     }
     .sm\:rounded-card {
       border-radius: var(--radius-card);
@@ -3662,9 +3640,6 @@
     .lg\:px-6 {
       padding-inline: calc(var(--spacing) * 6);
     }
-    .lg\:px-7 {
-      padding-inline: calc(var(--spacing) * 7);
-    }
     .lg\:px-8 {
       padding-inline: calc(var(--spacing) * 8);
     }
@@ -3700,9 +3675,6 @@
     }
     .lg\:py-\[22px\] {
       padding-block: 22px;
-    }
-    .lg\:py-\[26px\] {
-      padding-block: 26px;
     }
     .lg\:py-\[108px\] {
       padding-block: 108px;
