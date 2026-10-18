@@ -168,7 +168,7 @@ else :
 				<?php elseif ( $icon ) : ?>
 					<span class="grid size-11 place-items-center rounded-[13px] <?php echo esc_attr( $chip ); ?>" aria-hidden="true"><?php upskill_icon( $icon, 'size-[21px]' ); ?></span>
 				<?php endif; ?>
-				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-10' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-11' ) ) : '' ); ?>">
+				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-12.5' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-11' ) ) : '' ); ?>">
 					<?php if ( ! empty( $args['framed'] ) && ! empty( $args['number'] ) ) : ?>
 						<span class="order-first mb-6 grid size-8 place-items-center rounded-md border text-sm <?php echo $dark ? 'border-white/40 text-white' : 'border-gray-200 text-gray-500'; ?>" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
 					<?php elseif ( ! empty( $args['number'] ) ) : ?>
