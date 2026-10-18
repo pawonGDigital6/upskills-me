@@ -30,8 +30,8 @@ $image      = get_field( 'image' );
 		<?php upskill_section_header(); ?>
 
 		<?php if ( $tracks ) : ?>
-			<div class="relative isolate mt-6 flex flex-col overflow-hidden lg:mt-stack rounded-card max-sm:rounded-b-4xl border- border border-gray-100 bg-white shadow-[0_1px_1px_rgb(10_13_18/5%)] lg:flex-row lg:gap-6 lg:p-6">
-				<img class="absolute inset-0 -z-10 size-full object-cover opacity-60" src="<?php echo esc_url( upskill_theme_image( 'how-it-works-bg.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+			<div class="relative isolate mt-6 flex flex-col overflow-hidden lg:mt-stack lg:rounded-card rounded-4xl max-sm:rounded-b-4xl border- border border-gray-100 bg-white shadow-[0_1px_1px_rgb(10_13_18/5%)] lg:flex-row lg:gap-6 lg:p-6">
+				<img class="absolute inset-0 -z-10 size-full object-cover opacity-60" src="<?php echo esc_url( upskill_theme_image( 'how-it-works-bg-2.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 
 				<?php foreach ( $tracks as $track ) : ?>
 					<?php $dark = isset( $track['theme'] ) && 'dark' === $track['theme']; ?>
@@ -43,7 +43,7 @@ $image      = get_field( 'image' );
 						<?php endif; ?>
 
 						<?php // The step flight (view.js): steps cascade in, then walk default -> active -> complete once. Step 1 starts active, as Figma draws it. ?>
-						<ol class="sm:mt-9 mt-5" data-flight>
+						<ol class="hiw__lists sm:mt-9 mt-5" data-flight>
 							<?php foreach ( $track['steps'] as $number => $step ) : ?>
 								<?php $last = $number === count( $track['steps'] ) - 1; ?>
 								<li class="step flex gap-4 pl-2" data-step data-state="<?php echo 0 === $number ? 'active' : 'default'; ?>" style="--i:<?php echo (int) $number; ?>">
@@ -67,7 +67,7 @@ $image      = get_field( 'image' );
 						</ol>
 
 						<?php if ( ! empty( $track['primary_button']['url'] ) || ! empty( $track['secondary_button']['url'] ) ) : ?>
-							<div class="mt-auto flex flex-wrap gap-2 pt-8 max-smlr:gap-[6px]">
+							<div class="btn-wrap mt-auto flex flex-wrap gap-2 pt-8 max-smlr:gap-[6px]">
 								<?php
 								upskill_button( $track['primary_button'], array( 'class' => 'min-h-[50px]' ) );
 								upskill_button(

@@ -30,18 +30,27 @@ $ease: cubic-bezier(0.22, 0.72, 0, 1);
 
 // Dot.
 .step__dot {
-	transition: background-color 320ms $ease, border-color 320ms $ease, color 320ms $ease, transform 320ms $ease, box-shadow 320ms $ease;
+	transition:
+		background-color 320ms $ease,
+		border-color 320ms $ease,
+		color 320ms $ease,
+		transform 320ms $ease,
+		box-shadow 320ms $ease;
 }
 
 .step__num {
-	transition: opacity 220ms $ease, transform 220ms $ease;
+	transition:
+		opacity 220ms $ease,
+		transform 220ms $ease;
 }
 
 .step__check {
 	color: var(--color-white);
 	opacity: 0;
 	transform: scale(0.4);
-	transition: opacity 220ms $ease 60ms, transform 260ms $ease 60ms;
+	transition:
+		opacity 220ms $ease 60ms,
+		transform 260ms $ease 60ms;
 }
 
 .step[data-state="active"] .step__dot,
@@ -116,7 +125,6 @@ $ease: cubic-bezier(0.22, 0.72, 0, 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
-
 	[data-flight].is-in .step {
 		animation: none;
 	}
@@ -128,5 +136,18 @@ $ease: cubic-bezier(0.22, 0.72, 0, 1);
 	.step__body,
 	.step__title {
 		transition: none;
+	}
+}
+body:not(.home) .block-how-it-works .hiw__lists {
+	margin-top: calc(var(--spacing) * 5);
+}
+
+@media screen and (max-width: 767px) {
+	body:not(.home) .block-how-it-works .hiw__lists {
+		margin-top: 0;
+	}
+
+	body:not(.home) .block-how-it-works .btn-wrap {
+		padding-top: calc(var(--spacing) * 11);
 	}
 }

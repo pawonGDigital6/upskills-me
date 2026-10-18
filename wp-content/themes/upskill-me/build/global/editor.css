@@ -3532,6 +3532,9 @@
     .lg\:rounded-\[32px\] {
       border-radius: 32px;
     }
+    .lg\:rounded-card {
+      border-radius: var(--radius-card);
+    }
     .lg\:rounded-none {
       border-radius: 0;
     }

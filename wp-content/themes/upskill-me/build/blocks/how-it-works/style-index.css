@@ -124,5 +124,17 @@
     transition: none;
   }
 }
+body:not(.home) .block-how-it-works .hiw__lists {
+  margin-top: calc(var(--spacing) * 5);
+}
+
+@media screen and (max-width: 767px) {
+  body:not(.home) .block-how-it-works .hiw__lists {
+    margin-top: 0;
+  }
+  body:not(.home) .block-how-it-works .btn-wrap {
+    padding-top: calc(var(--spacing) * 11);
+  }
+}
 
 /*# sourceMappingURL=style-index.css.map*/
