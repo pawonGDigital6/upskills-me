@@ -123,7 +123,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
 		<?php if ( in_array( $layout, array( 'split', 'guides' ), true ) ) : ?>
-			<div class="flex flex-col gap-8 wd:flex-row wd:gap-11">
+			<div class="flex flex-col gap-12 wd:flex-row wd:gap-11">
 				<div class="lg:min-w-0 lg:flex-1">
 					<?php
 					upskill_section_header(
@@ -138,7 +138,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 				</div>
 
 				<?php if ( 'guides' === $layout && $posts ) : ?>
-					<div class="grid grid-cols-1 gap-4 md:grid-cols-[428fr_380fr] lg:w-[824px] lg:flex-none">
+					<div class="grid grid-cols-1 gap-4 md:grid-cols-[428fr_380fr] wd:w-[824px] lg:flex-none">
 						<?php
 						get_template_part(
 							'template-parts/cards/guide',

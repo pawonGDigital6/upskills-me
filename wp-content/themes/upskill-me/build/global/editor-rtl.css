@@ -778,6 +778,9 @@
   .min-h-\[25px\] {
     min-height: 25px;
   }
+  .min-h-\[30px\] {
+    min-height: 30px;
+  }
   .min-h-\[45px\] {
     min-height: 45px;
   }
@@ -804,6 +807,9 @@
   }
   .min-h-\[366px\] {
     min-height: 366px;
+  }
+  .min-h-\[398px\] {
+    min-height: 398px;
   }
   .min-h-\[404px\] {
     min-height: 404px;
@@ -1919,6 +1925,9 @@
   }
   .pb-12 {
     padding-bottom: calc(var(--spacing) * 12);
+  }
+  .pb-13\.5 {
+    padding-bottom: calc(var(--spacing) * 13.5);
   }
   .pb-14 {
     padding-bottom: calc(var(--spacing) * 14);
@@ -3815,6 +3824,9 @@
     .lg\:pb-12 {
       padding-bottom: calc(var(--spacing) * 12);
     }
+    .lg\:pb-13\.5 {
+      padding-bottom: calc(var(--spacing) * 13.5);
+    }
     .lg\:pb-16 {
       padding-bottom: calc(var(--spacing) * 16);
     }
@@ -4046,6 +4058,9 @@
     }
     .wd\:pt-1 {
       padding-top: var(--spacing);
+    }
+    .wd\:pr-2 {
+      padding-left: calc(var(--spacing) * 2);
     }
   }
   @media (width >= 1280px) {

@@ -27,10 +27,10 @@ $arrow    = upskill_get_icon( 'arrow-up-right', 'size-3 transition-transform dur
 
 if ( 'feature' === $args['variant'] ) :
 	?>
-	<article class="reveal group relative isolate flex min-h-[360px] flex-col overflow-hidden rounded-[18px] border border-line bg-gray-950 shadow-xs lg:min-h-[398px]" style="--i:<?php echo (int) $index; ?>">
+	<article class="reveal group relative isolate flex  flex-col overflow-hidden rounded-[18px] border border-line bg-gray-950 shadow-xs min-h-[398px]" style="--i:<?php echo (int) $index; ?>">
 		<img class="absolute inset-0 -z-10 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" src="<?php echo esc_url( upskill_theme_image( 'texture-dark.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
-		<div class="flex flex-1 flex-col items-start justify-end p-6 lg:pb-16">
-			<span class="rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php esc_html_e( 'Featured guide', 'upskill-me' ); ?></span>
+		<div class="flex flex-1 flex-col items-start justify-end p-6 pb-13.5">
+			<span class="rounded-sm bg-brand-500 px-3 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase min-h-[30px] flex items-center leading-none"><?php esc_html_e( 'Featured guide', 'upskill-me' ); ?></span>
 			<h3 class="pt-3.5 text-h6 font-medium text-white"><?php echo $link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></h3>
 			<?php if ( $excerpt ) : ?>
 				<p class="max-w-[420px] pt-2.5 text-sm leading-[1.6] text-gray-100"><?php echo esc_html( $excerpt ); ?></p>
@@ -50,7 +50,7 @@ else :
 				array(
 					'class' => 'size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105',
 					// object-cover in 132x104: a 2:1 guide render is drawn 208px wide.
-					'sizes' => '208px',
+					// 'sizes' => '308px',
 				)
 			);
 			?>
@@ -58,7 +58,7 @@ else :
 		<div class="flex min-w-0 flex-1 flex-col">
 			<h3 class="text-lg font-medium text-gray-950"><?php echo $link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></h3>
 			<?php if ( $excerpt ) : ?>
-				<p class="pt-1.5 text-sm leading-[1.6] text-[#55555f]"><?php echo esc_html( $excerpt ); ?></p>
+				<p class="pt-1.5 text-sm leading-[1.6] text-[#55555f] wd:pr-2"><?php echo esc_html( $excerpt ); ?></p>
 			<?php endif; ?>
 			<span class="inline-flex items-center gap-[7px] pt-2.5 text-base font-medium text-brand-700" aria-hidden="true"><?php echo esc_html( upskill_read_label( $post_obj ) ) . $arrow; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file. ?></span>
 		</div>

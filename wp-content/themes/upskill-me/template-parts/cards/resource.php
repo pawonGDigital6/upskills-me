@@ -131,7 +131,7 @@ elseif ('compact' === $variant):
 				'full',
 				array(
 					'class' => 'col-start-1 row-start-1 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]',
-					'sizes' => '(min-width: 1025px) 264px, (min-width: 768px) 45vw, 92vw',
+					'sizes' => '(min-width: 1025px) 364px, (min-width: 768px) 45vw, 92vw',
 				)
 			);
 			?>
