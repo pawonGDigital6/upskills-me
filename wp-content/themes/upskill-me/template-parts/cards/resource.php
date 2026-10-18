@@ -25,51 +25,54 @@
  */
 
 $post_obj = $args['post'];
-$variant  = $args['variant'];
-$index    = isset( $args['index'] ) ? (int) $args['index'] : 0;
-$tag      = isset( $args['tag'] ) ? $args['tag'] : 'h3';
-$url      = get_permalink( $post_obj );
-$title    = get_the_title( $post_obj );
-$excerpt  = has_excerpt( $post_obj ) ? get_the_excerpt( $post_obj ) : wp_trim_words( wp_strip_all_tags( get_post_field( 'post_content', $post_obj ) ), 22 );
-$type     = get_post_type( $post_obj );
-$thumb    = get_post_thumbnail_id( $post_obj );
-$read     = upskill_read_label( $post_obj );
-$stagger  = 'style="--i:' . (int) min( $index, 5 ) . '"';
-$category = 'post' === $type ? upskill_primary_category( $post_obj ) : null;
-$industry = 'case_study' === $type ? get_field( 'industry', $post_obj ) : null;
-$industry = $industry ? get_term( (int) $industry, 'industry' ) : null;
+$variant = $args['variant'];
+$index = isset($args['index']) ? (int) $args['index'] : 0;
+$tag = isset($args['tag']) ? $args['tag'] : 'h3';
+$url = get_permalink($post_obj);
+$title = get_the_title($post_obj);
+$excerpt = has_excerpt($post_obj) ? get_the_excerpt($post_obj) : wp_trim_words(wp_strip_all_tags(get_post_field('post_content', $post_obj)), 22);
+$type = get_post_type($post_obj);
+$thumb = get_post_thumbnail_id($post_obj);
+$read = upskill_read_label($post_obj);
+$stagger = 'style="--i:' . (int) min($index, 5) . '"';
+$category = 'post' === $type ? upskill_primary_category($post_obj) : null;
+$industry = 'case_study' === $type ? get_field('industry', $post_obj) : null;
+$industry = $industry ? get_term((int) $industry, 'industry') : null;
 
 $title_link = sprintf(
 	'<a class="after:absolute after:inset-0 after:z-[1] after:rounded-[inherit] focus-visible:outline-none" href="%1$s">%2$s</a>',
-	esc_url( $url ),
-	esc_html( $title )
+	esc_url($url),
+	esc_html($title)
 );
 
-$read_line = static function ( $classes ) use ( $read ) {
+$read_line = static function ($classes) use ($read) {
 	printf(
 		'<span class="inline-flex items-center gap-[7px] text-sm font-semibold %1$s" aria-hidden="true">%2$s%3$s</span>',
-		esc_attr( $classes ),
-		esc_html( $read ),
-		upskill_get_icon( 'arrow-up-right', 'size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' ) // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file.
+		esc_attr($classes),
+		esc_html($read),
+		upskill_get_icon('arrow-up-right', 'size-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5') // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- theme-owned SVG file.
 	);
 };
 
-$meta_row = static function () use ( $post_obj, $type ) {
+$meta_row = static function () use ($post_obj, $type) {
 	?>
 	<p class="flex flex-wrap items-center gap-2.5 text-sm">
-		<span class="rounded-sm bg-brand-25 px-2.5 py-1 font-medium text-brand-700"><?php echo esc_html( upskill_post_type_label( $post_obj ) ); ?></span>
-		<?php if ( 'post' === $type ) : ?>
+		<span
+			class="rounded-sm bg-brand-25 px-2.5 py-1 font-medium text-brand-700"><?php echo esc_html(upskill_post_type_label($post_obj)); ?></span>
+		<?php if ('post' === $type): ?>
 			<span class="size-1 rounded-full bg-gray-200" aria-hidden="true"></span>
-			<time class="text-gray-500" datetime="<?php echo esc_attr( get_the_date( 'c', $post_obj ) ); ?>"><?php echo esc_html( get_the_date( 'd F Y', $post_obj ) ); ?></time>
+			<time class="text-gray-500"
+				datetime="<?php echo esc_attr(get_the_date('c', $post_obj)); ?>"><?php echo esc_html(get_the_date('d F Y', $post_obj)); ?></time>
 		<?php endif; ?>
 	</p>
 	<?php
 };
 
-if ( 'featured' === $variant ) :
-	$links = isset( $args['links'] ) ? array_filter( (array) $args['links'], static fn( $link ) => ! empty( $link['url'] ) ) : array();
+if ('featured' === $variant):
+	$links = isset($args['links']) ? array_filter((array) $args['links'], static fn($link) => !empty($link['url'])) : array();
 	?>
-	<article class="reveal group relative grid overflow-hidden rounded-[20px] border border-line bg-white shadow-xs lg:min-h-[380px] lg:grid-cols-[671fr_688fr]">
+	<article
+		class="reveal group relative grid overflow-hidden rounded-[20px] border border-line bg-white shadow-xs lg:min-h-[380px] lg:grid-cols-[671fr_688fr]">
 		<?php // From lg the photo fills its column (lg:absolute) so the copy, not the photo's proportions, sets the card height. ?>
 		<div class="relative grid grid-cols-1 grid-rows-1 overflow-hidden">
 			<?php
@@ -83,40 +86,44 @@ if ( 'featured' === $variant ) :
 				)
 			);
 			?>
-			<span class="relative col-start-1 row-start-1 m-5 self-start justify-self-start rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php 'guide' === $type ? esc_html_e( 'Featured guide', 'upskill-me' ) : esc_html_e( 'Featured', 'upskill-me' ); ?></span>
+			<span
+				class="relative col-start-1 row-start-1 m-5 self-start justify-self-start rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php 'guide' === $type ? esc_html_e('Featured guide', 'upskill-me') : esc_html_e('Featured', 'upskill-me'); ?></span>
 		</div>
 		<?php // Phones (49374:104007 / 106465): 16px padding, 8px to the title, 20px to the copy, 42px to the links. ?>
 		<div class="flex flex-col p-4 lg:p-9">
-			<?php if ( 'case_study' !== $type ) : ?>
+			<?php if ('case_study' !== $type): ?>
 				<?php $meta_row(); ?>
-			<?php else : ?>
+			<?php else: ?>
 				<p class="self-start rounded-sm bg-brand-25 px-2.5 py-1 text-sm font-medium text-brand-700">
 					<?php
 					/* translators: %s: resource type, e.g. "case study". */
-					printf( esc_html__( 'Featured %s', 'upskill-me' ), esc_html( strtolower( upskill_post_type_label( $post_obj ) ) ) );
+					printf(esc_html__('Featured %s', 'upskill-me'), esc_html(strtolower(upskill_post_type_label($post_obj))));
 					?>
 				</p>
 			<?php endif; ?>
-			<<?php echo esc_attr( $tag ); ?> class="pt-2 text-h6 font-medium text-gray-950 lg:min-h-[calc(2.2em+16px)] lg:pt-4"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
+			<<?php echo esc_attr($tag); ?> class="pt-2 text-h6 font-medium text-gray-950 lg:min-h-[calc(2.2em+16px)]
+				lg:pt-4"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr($tag); ?>>
 			<?php // Desktop: Figma keeps two title lines of room, then 19px to the copy (49325:16867, 49325:18137). ?>
 			<div class="flex flex-col gap-[25px] pt-5 text-base leading-[1.6] text-gray-500 lg:pt-[19px]">
-				<?php upskill_paragraphs( $excerpt ); ?>
+				<?php upskill_paragraphs($excerpt); ?>
 			</div>
 			<div class="relative z-[2] mt-auto flex flex-wrap items-center gap-x-[22px] gap-y-2 pt-[42px] lg:pt-[18px]">
-				<?php if ( $links ) : ?>
-					<?php foreach ( array_values( $links ) as $i => $link ) : ?>
-						<?php upskill_text_link( $link, 0 === $i ? 'text-brand-700' : 'text-[#55555f]' ); ?>
+				<?php if ($links): ?>
+					<?php foreach (array_values($links) as $i => $link): ?>
+						<?php upskill_text_link($link, 0 === $i ? 'text-brand-700' : 'text-[#55555f]'); ?>
 					<?php endforeach; ?>
-				<?php else : ?>
-					<?php $read_line( 'text-brand-700' ); ?>
+				<?php else: ?>
+					<?php $read_line('text-brand-700'); ?>
 				<?php endif; ?>
 			</div>
 		</div>
 	</article>
 	<?php
-elseif ( 'compact' === $variant ) :
+elseif ('compact' === $variant):
 	?>
-	<article class="reveal group relative flex flex-col overflow-hidden rounded-[18px] border border-brand-200 bg-white shadow-xs" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
+	<article
+		class="reveal group relative flex flex-col overflow-hidden rounded-[18px] border border-brand-200 bg-white shadow-xs"
+		<?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
 		<div class="grid aspect-[264/147] grid-cols-1 grid-rows-1 overflow-hidden">
 			<?php
 			upskill_image(
@@ -129,24 +136,27 @@ elseif ( 'compact' === $variant ) :
 			);
 			?>
 			<p class="relative col-start-1 row-start-1 m-3 flex gap-[7px] self-start">
-				<span class="rounded-sm bg-signal px-[9px] py-1 text-2xs leading-[1.62] font-semibold tracking-[0.1em] text-gray-950 uppercase"><?php echo esc_html( upskill_post_type_label( $post_obj ) ); ?></span>
-				<?php if ( $category ) : ?>
-					<span class="rounded-sm bg-brand-25 px-2.5 py-[5px] text-2xs font-medium text-brand-700"><?php echo esc_html( $category->name ); ?></span>
+				<span
+					class="flex items-center rounded-sm bg-signal px-[9px] py-1 text-2xs leading-none font-semibold tracking-[0.1em] text-gray-950 uppercase"><?php echo esc_html(upskill_post_type_label($post_obj)); ?></span>
+				<?php if ($category): ?>
+					<span
+						class="rounded-sm bg-brand-25 px-2.5 py-[5px] text-2xs font-medium text-brand-700 leading-none flex items-center min-h-[24px]"><?php echo esc_html($category->name); ?></span>
 				<?php endif; ?>
 			</p>
 		</div>
-		<div class="flex flex-1 flex-col p-4 pb-[23px]">
-			<<?php echo esc_attr( $tag ); ?> class="text-lg font-medium text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
-			<?php if ( $excerpt ) : ?>
-				<p class="line-clamp-4 pt-2 text-base text-gray-700"><?php echo esc_html( $excerpt ); ?></p>
+		<div class="flex flex-1 flex-col p-4 pb-[23px] max-sm:pr-6">
+			<<?php echo esc_attr($tag); ?> class="text-lg font-medium
+				text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr($tag); ?>> <?php if ($excerpt): ?>
+				<p class="line-clamp-4 pt-2 text-base text-gray-700"><?php echo esc_html($excerpt); ?></p>
 			<?php endif; ?>
-			<?php $read_line( 'mt-auto pt-[14px] text-brand-700' ); ?>
+			<?php $read_line('mt-auto pt-[14px] text-brand-700'); ?>
 		</div>
 	</article>
 	<?php
-elseif ( 'case' === $variant ) :
+elseif ('case' === $variant):
 	?>
-	<article class="reveal group relative flex flex-col overflow-hidden rounded-[24px] border border-gray-900/10 bg-white" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
+	<article class="reveal group relative flex flex-col overflow-hidden rounded-[24px] border border-gray-900/10 bg-white"
+		<?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
 		<?php // 274px tall in both frames, so a squarer photo on phones (49374:106465). ?>
 		<div class="aspect-[356/274] overflow-hidden sm:aspect-[440/274]">
 			<?php
@@ -161,20 +171,21 @@ elseif ( 'case' === $variant ) :
 			?>
 		</div>
 		<div class="flex flex-1 flex-col items-start gap-3 p-6">
-			<?php if ( $industry instanceof WP_Term ) : ?>
-				<p class="text-sm text-gray-500"><?php echo esc_html( $industry->name ); ?></p>
+			<?php if ($industry instanceof WP_Term): ?>
+				<p class="text-sm text-gray-500"><?php echo esc_html($industry->name); ?></p>
 			<?php endif; ?>
-			<<?php echo esc_attr( $tag ); ?> class="text-xl font-medium text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
-			<?php if ( $excerpt ) : ?>
-				<p class="text-base text-gray-500"><?php echo esc_html( $excerpt ); ?></p>
+			<<?php echo esc_attr($tag); ?> class="text-xl font-medium
+				text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr($tag); ?>> <?php if ($excerpt): ?>
+				<p class="text-base text-gray-500"><?php echo esc_html($excerpt); ?></p>
 			<?php endif; ?>
-			<?php $read_line( 'mt-auto pt-4 text-brand-700' ); ?>
+			<?php $read_line('mt-auto pt-4 text-brand-700'); ?>
 		</div>
 	</article>
 	<?php
-else :
+else:
 	?>
-	<article class="reveal group relative flex flex-col overflow-hidden rounded-[20px] border border-brand-200 bg-white" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
+	<article class="reveal group relative flex flex-col overflow-hidden rounded-[20px] border border-brand-200 bg-white"
+		<?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
 		<div class="grid aspect-[358/216] grid-cols-1 grid-rows-1 overflow-hidden lg:aspect-[443/216]">
 			<?php
 			upskill_image(
@@ -187,23 +198,25 @@ else :
 				)
 			);
 			?>
-			<?php if ( 'guide' === $type && ! empty( $args['number'] ) ) : ?>
-				<span class="relative col-start-1 row-start-1 m-3 grid h-7 min-w-7 place-items-center self-start justify-self-start rounded-lg bg-white/92 px-2 text-sm text-gray-700"><?php echo esc_html( str_pad( (string) $args['number'], 2, '0', STR_PAD_LEFT ) ); ?></span>
+			<?php if ('guide' === $type && !empty($args['number'])): ?>
+				<span
+					class="relative col-start-1 row-start-1 m-3 grid h-7 min-w-7 place-items-center self-start justify-self-start rounded-lg bg-white/92 px-2 text-sm text-gray-700"><?php echo esc_html(str_pad((string) $args['number'], 2, '0', STR_PAD_LEFT)); ?></span>
 			<?php endif; ?>
 		</div>
 		<div class="flex flex-1 flex-col p-4 <?php echo 'guide' === $type ? 'gap-11' : 'gap-8 lg:gap-[60px]'; ?>">
 			<div class="flex flex-col">
-				<?php if ( 'guide' === $type ) : ?>
-					<p class="self-start rounded-sm bg-gray-50 px-2.5 py-1 text-sm text-gray-500"><?php echo esc_html( upskill_post_type_label( $post_obj ) ); ?></p>
-				<?php else : ?>
+				<?php if ('guide' === $type): ?>
+					<p class="self-start rounded-sm bg-gray-50 px-2.5 py-1 text-sm text-gray-500">
+						<?php echo esc_html(upskill_post_type_label($post_obj)); ?></p>
+				<?php else: ?>
 					<?php $meta_row(); ?>
 				<?php endif; ?>
-				<<?php echo esc_attr( $tag ); ?> class="py-2 text-h6 font-medium text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr( $tag ); ?>>
-				<?php if ( 'guide' === $type && $excerpt ) : ?>
-					<p class="pt-4 text-base leading-[1.6] text-gray-500"><?php echo esc_html( $excerpt ); ?></p>
+				<<?php echo esc_attr($tag); ?> class="py-2 text-h6 font-medium
+					text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr($tag); ?>> <?php if ('guide' === $type && $excerpt): ?>
+					<p class="pt-4 text-base leading-[1.6] text-gray-500"><?php echo esc_html($excerpt); ?></p>
 				<?php endif; ?>
 			</div>
-			<?php $read_line( 'mt-auto pt-[18px] text-brand-800' ); ?>
+			<?php $read_line('mt-auto pt-[18px] text-brand-800'); ?>
 		</div>
 	</article>
 	<?php
