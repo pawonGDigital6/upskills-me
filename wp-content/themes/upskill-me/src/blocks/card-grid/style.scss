@@ -11,14 +11,12 @@
 }
 
 @media (hover: hover) {
-
 	.block-card-grid .feature-card--lift:hover {
 		transform: translateY(-4px);
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-
 	.block-card-grid .feature-card--lift {
 		transition: none;
 	}
@@ -42,7 +40,6 @@
 /* A centred header that Figma left-aligns below desktop (Why "Training designed
    for the real world", 49372:42236). */
 @media (width < 1025px) {
-
 	.block-card-grid .section-header--left-phones,
 	.block-card-grid .section-header--left-phones .section-header__title,
 	.block-card-grid .section-header--left-phones .section-header__aside {
@@ -62,4 +59,17 @@
 	color: rgb(255 255 255 / 66%);
 	font-size: var(--text-xl); /* 20/30 in both frames (49325:16718 / 49374:107273). */
 	line-height: 1.5;
+}
+
+.block-card-grid.isolate .card-description {
+	@media (width > 1200px) {
+		max-width: 326px;
+	}
+}
+
+.block-card-grid.isolate .stack-lists {
+	margin-top: calc(var(--spacing) * 15);
+	@media (width < 1025px) {
+		margin-top: calc(var(--spacing) * 12);
+	}
 }

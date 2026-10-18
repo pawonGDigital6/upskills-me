@@ -115,7 +115,7 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 		return;
 	}
 	?>
-	<ul class="grid gap-4 <?php echo esc_attr( $classes ); ?>">
+	<ul class="stack-lists grid gap-4 <?php echo esc_attr( $classes ); ?>">
 		<?php
 		foreach ( $cards as $index => $card ) {
 			get_template_part(
@@ -139,7 +139,7 @@ $render_cards = static function ( $classes ) use ( $cards, $card_args, $style ) 
 	<?php if ( $dark ) : ?>
 		<img class="absolute inset-0 -z-10 size-full object-cover opacity-20" src="<?php echo esc_url( upskill_theme_image( 'texture-dark.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 	<?php elseif ( 'waves' === $surface ) : ?>
-		<img class="absolute inset-0 -z-10 size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'how-it-works-bg.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+		<img class="absolute inset-0 -z-10 size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'how-it-works-bg-2.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 	<?php elseif ( 'faint' === $surface ) : ?>
 		<img class="absolute inset-0 -z-10 size-full object-cover opacity-[0.08]" src="<?php echo esc_url( upskill_theme_image( 'impact-waves.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 	<?php endif; ?>

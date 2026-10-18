@@ -180,7 +180,7 @@ else :
 					<?php endif; ?>
 					<?php $title_markup( ( $label ? 'pt-4 ' : ( ! empty( $args['number'] ) ? 'pt-2.5 ' : '' ) ) . $title_cls ); ?>
 					<?php if ( $text ) : ?>
-						<p class="<?php echo $side ? 'pt-2' : 'pt-2.5'; ?> text-base <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
+						<p class="<?php echo $side ? 'pt-2' : 'pt-2.5'; ?> text-base card-description <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
 					<?php endif; ?>
 					<?php if ( $points ) : ?>
 						<ul class="flex list-disc flex-col gap-1 pt-3 pl-5 text-sm <?php echo $dark ? 'text-gray-100 marker:text-white' : 'text-gray-700 marker:text-gray-500'; ?>">

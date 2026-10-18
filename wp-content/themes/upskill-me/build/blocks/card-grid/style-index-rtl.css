@@ -58,3 +58,18 @@
   font-size: var(--text-xl); /* 20/30 in both frames (49325:16718 / 49374:107273). */
   line-height: 1.5;
 }
+
+@media (width > 1200px) {
+  .block-card-grid.isolate .card-description {
+    max-width: 326px;
+  }
+}
+
+.block-card-grid.isolate .stack-lists {
+  margin-top: calc(var(--spacing) * 15);
+}
+@media (width < 1025px) {
+  .block-card-grid.isolate .stack-lists {
+    margin-top: calc(var(--spacing) * 12);
+  }
+}
