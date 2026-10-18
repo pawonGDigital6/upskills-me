@@ -29,6 +29,19 @@
   color: var(--color-brand-700);
 }
 
+.block-post-cards .section-header {
+  margin-bottom: 45px;
+}
+@media (width > 1199px) {
+  .block-post-cards .section-header {
+    margin-bottom: 70px;
+  }
+}
+
+.block-post-cards .mt-stack {
+  margin-top: 0;
+}
+
 @media (width < 768px) {
   .block-post-cards .pagination__number:not(:first-child, :last-child):has(a:not(.dots)) {
     display: none;

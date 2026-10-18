@@ -192,7 +192,7 @@ $chip_tones = array(
 					$art_meta  = wp_get_attachment_metadata( (int) $media );
 					$art_width = ! empty( $art_meta['width'] ) ? (int) round( $art_meta['width'] / 2 ) : 556;
 					?>
-					<div class="flex items-center justify-center lg:min-w-0 lg:flex-1 lg:min-h-[460px]">
+					<div class="flex items-center justify-center lg:min-w-0 lg:flex-1 lg:min-h-[460px] max-sm:pt-10">
 						<?php
 						upskill_image(
 							$media,

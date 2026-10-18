@@ -14,7 +14,9 @@
 	border-radius: 8px;
 	color: #717680;
 	font-size: var(--text-sm);
-	transition: background-color 0.2s ease, color 0.2s ease;
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
 }
 
 .block-post-cards .pagination__number .current {
@@ -27,10 +29,19 @@
 	color: var(--color-brand-700);
 }
 
+.block-post-cards .section-header {
+	margin-bottom: 45px;
+	@media (width > 1199px) {
+		margin-bottom: 70px;
+	}
+}
+
+.block-post-cards .mt-stack {
+	margin-top: 0;
+}
 // Phones show "Previous 1 … 10 Next" (Figma 49374:104026): only the first,
 // last and current numbers stay, with an ellipsis between.
 @media (width < 768px) {
-
 	.block-post-cards .pagination__number:not(:first-child, :last-child):has(a:not(.dots)) {
 		display: none;
 	}

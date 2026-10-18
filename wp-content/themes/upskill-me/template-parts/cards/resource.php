@@ -144,7 +144,7 @@ elseif ('compact' === $variant):
 				<?php endif; ?>
 			</p>
 		</div>
-		<div class="flex flex-1 flex-col p-4 pb-[23px] max-sm:pr-6">
+		<div class="flex flex-1 flex-col p-4 pb-[23px] max-sm:pr-6 wd:pt-10">
 			<<?php echo esc_attr($tag); ?> class="text-lg font-medium
 				text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr($tag); ?>> <?php if ($excerpt): ?>
 				<p class="line-clamp-4 pt-2 text-base text-gray-700"><?php echo esc_html($excerpt); ?></p>
