@@ -65,13 +65,13 @@ $chip_tones = array(
 		<?php elseif ( $center ) : ?>
 			<?php // The badges share the copy's grid cell so they float beside it without leaving the flow. ?>
 			<div class="grid grid-cols-1 grid-rows-1">
-				<div class="col-start-1 row-start-1 flex flex-col items-start gap-6 lg:mx-auto lg:max-w-[792px] lg:items-center lg:text-center">
-					<div class="flex flex-col items-start gap-5 lg:items-center">
+				<div class="col-start-1 row-start-1 flex flex-col items-start sm:gap-6 gap-7 lg:mx-auto lg:max-w-[792px] lg:items-center lg:text-center">
+					<div class="flex flex-col items-start sm:gap-5 gap-3 lg:items-center">
 						<?php upskill_eyebrow( get_field( 'eyebrow' ), (string) get_field( 'eyebrow_icon' ) ); ?>
 						<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-medium text-gray-900 lg:font-semibold lg:tracking-[-0.01em]' ); ?>
 					</div>
 					<?php if ( get_field( 'intro' ) ) : ?>
-						<p class="reveal max-w-[666px] text-base text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
+						<p class="reveal max-w-[756px] text-base text-gray-500" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
 					<?php endif; ?>
 					<?php upskill_button( get_field( 'primary_button' ) ); ?>
 				</div>

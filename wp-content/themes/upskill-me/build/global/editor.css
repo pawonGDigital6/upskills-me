@@ -934,6 +934,9 @@
   .max-w-\[720px\] {
     max-width: 720px;
   }
+  .max-w-\[756px\] {
+    max-width: 756px;
+  }
   .max-w-\[769px\] {
     max-width: 769px;
   }
@@ -2964,6 +2967,9 @@
     }
     .sm\:gap-4 {
       gap: calc(var(--spacing) * 4);
+    }
+    .sm\:gap-5 {
+      gap: calc(var(--spacing) * 5);
     }
     .sm\:gap-6 {
       gap: calc(var(--spacing) * 6);
