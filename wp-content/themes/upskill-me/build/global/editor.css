@@ -1695,6 +1695,9 @@
   .p-7 {
     padding: calc(var(--spacing) * 7);
   }
+  .p-\[6px_11px_3px\] {
+    padding: 6px 11px 3px;
+  }
   .p-\[16px_26px_25px_22px\] {
     padding: 16px 26px 25px 22px;
   }
@@ -2828,6 +2831,12 @@
     }
     .max-sm\:object-left {
       object-position: left;
+    }
+    .max-sm\:px-2\.5 {
+      padding-inline: calc(var(--spacing) * 2.5);
+    }
+    .max-sm\:py-1 {
+      padding-block: var(--spacing);
     }
     .max-sm\:pt-10 {
       padding-top: calc(var(--spacing) * 10);

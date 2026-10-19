@@ -87,7 +87,7 @@ if ('featured' === $variant):
 			);
 			?>
 			<span
-				class="relative col-start-1 row-start-1 m-5 self-start justify-self-start rounded-sm bg-brand-500 px-2.5 py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase"><?php 'guide' === $type ? esc_html_e('Featured guide', 'upskill-me') : esc_html_e('Featured', 'upskill-me'); ?></span>
+				class="relative col-start-1 row-start-1 m-5 self-start items-center flex justify-self-start rounded-sm bg-brand-500 p-[6px_11px_3px] max-sm:px-2.5 max-sm:py-1 text-sm leading-[1.55] font-semibold tracking-[0.02em] text-white uppercase bg-red"><?php 'guide' === $type ? esc_html_e('Featured guide', 'upskill-me') : esc_html_e('Featured', 'upskill-me'); ?></span>
 		</div>
 		<?php // Phones (49374:104007 / 106465): 16px padding, 8px to the title, 20px to the copy, 42px to the links. ?>
 		<div class="flex flex-col p-4 lg:p-9">

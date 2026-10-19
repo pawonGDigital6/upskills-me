@@ -34,6 +34,7 @@
                 "story": "Story",
                 "box": "Box",
                 "target": "Target",
+                "target-white": "Target White",
                 "resources": "Resources",
                 "book-open-alt": "Open book (outline)",
                 "book-open-text": "Open book (text)",
@@ -153,5 +154,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792124841
+    "modified": 1792379313
 }
