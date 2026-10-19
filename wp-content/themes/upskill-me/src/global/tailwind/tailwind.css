@@ -21,7 +21,7 @@
 		scroll-padding-top: calc(var(--upskill-header-height) - 44px + 16px);
 	}
 
-	html:focus-within {
+	html {
 		scroll-behavior: smooth;
 	}
 

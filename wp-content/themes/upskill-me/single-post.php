@@ -23,23 +23,23 @@ while ( have_posts() ) :
 	<main id="primary" class="site-main">
 		<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<header class="bg-gray-25 pt-7 pb-[46px] lg:pt-[104px] lg:pb-20">
-				<div class="container flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-20">
-					<div class="flex flex-col lg:min-w-0 lg:flex-1">
+				<div class="container flex flex-col sm:gap-10 gap-6 lg:flex-row lg:items-center lg:gap-20">
+					<div class="flex flex-col lg:min-w-0 lg:flex-1 wd:pt-13">
 						<p class="reveal flex flex-wrap items-center gap-2.5 text-sm text-gray-500">
 							<span class="rounded-sm bg-brand-200 px-2.5 py-1 font-medium text-brand-700"><?php echo esc_html( upskill_post_type_label( get_post() ) ); ?></span>
 							<span class="size-1 rounded-full bg-[#cfcadb]" aria-hidden="true"></span>
-							<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'd F Y' ) ); ?></time>
+							<time class="mt-[3px]" datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'd F Y' ) ); ?></time>
 							<span class="size-1 rounded-full bg-[#cfcadb]" aria-hidden="true"></span>
-							<span>
+							<span class="mt-[3px]">
 								<?php
 								/* translators: %d: minutes. */
 								printf( esc_html( _n( '%d minute read', '%d minute read', upskill_reading_time( get_post() ), 'upskill-me' ) ), (int) upskill_reading_time( get_post() ) );
 								?>
 							</span>
 						</p>
-						<?php upskill_heading( $display_title ? $display_title : esc_html( get_the_title() ), 'h1', 'pt-[18px] text-h3 font-medium text-gray-950 lg:max-w-[600px]' ); ?>
+						<?php upskill_heading( $display_title ? $display_title : esc_html( get_the_title() ), 'h1', 'sm:pt-[18px] pt-[11px] text-h3 font-medium text-gray-950 lg:max-w-[600px]' ); ?>
 						<?php if ( has_excerpt() ) : ?>
-							<p class="reveal pt-4 text-base text-gray-500 lg:max-w-[600px]" style="--i:1"><?php echo esc_html( get_the_excerpt() ); ?></p>
+							<p class="reveal sm:pt-4 pt-7 text-base text-gray-500 lg:max-w-[600px]" style="--i:1"><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
 					</div>
 					<?php if ( has_post_thumbnail() ) : ?>
@@ -70,7 +70,7 @@ while ( have_posts() ) :
 									<ol class="flex flex-col gap-1.5 pt-3.5" data-article-contents>
 										<?php foreach ( $contents['items'] as $index => $item ) : ?>
 											<li>
-												<a class="article-contents__link block rounded-[10px] border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-950 transition-colors hover:bg-brand-25<?php echo 0 === $index ? ' is-active' : ''; ?>" href="#<?php echo esc_attr( $item['id'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
+												<a class="article-contents__link block border-l-2 border-transparent px-3 py-2 text-sm font-medium text-gray-950 transition-colors hover:bg-brand-25<?php echo 0 === $index ? ' is-active' : ''; ?>" href="#<?php echo esc_attr( $item['id'] ); ?>"><?php echo esc_html( $item['label'] ); ?></a>
 											</li>
 										<?php endforeach; ?>
 									</ol>
