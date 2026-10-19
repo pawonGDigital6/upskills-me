@@ -79,9 +79,9 @@ $uid = wp_unique_id( 'faq-' );
 			<div class="min-w-0 flex-1">
 				<?php if ( count( $groups ) > 1 ) : ?>
 					<?php // Phones only, as drawn: jump to a topic, or search every question. ?>
-					<div class="flex flex-col gap-4 pt-6 lg:hidden">
+					<div class="flex flex-col sm:gap-4 gap-6 sm:pt-6 lg:hidden">
 						<nav class="-mx-gutter overflow-x-auto px-gutter [scrollbar-width:none]" aria-label="<?php esc_attr_e( 'FAQ topics', 'upskill-me' ); ?>">
-							<ul class="flex gap-2">
+							<ul class="flex gap-2 w-max">
 								<?php foreach ( $groups as $group ) : ?>
 									<li class="flex-none">
 										<a class="block rounded-full border border-gray-900/10 px-4 py-2 text-sm whitespace-nowrap text-[#55555a] transition-colors hover:border-brand-700 hover:text-brand-700" href="#<?php echo esc_attr( $uid . '-' . $group['topic']->slug ); ?>"><?php echo esc_html( $group['topic']->name ); ?></a>
@@ -91,8 +91,8 @@ $uid = wp_unique_id( 'faq-' );
 						</nav>
 						<div class="relative">
 							<label class="screen-reader-text" for="<?php echo esc_attr( $uid . '-search' ); ?>"><?php esc_html_e( 'Search FAQs', 'upskill-me' ); ?></label>
-							<?php upskill_icon( 'search', 'pointer-events-none absolute top-1/2 left-4 size-[18px] -translate-y-1/2 text-[#6b6b72]' ); ?>
-							<input class="h-12 w-full rounded-full border border-gray-900/10 bg-white pr-12 pl-11 text-base text-gray-950 placeholder:text-[#6b6b72] focus:border-brand-700 focus:outline-none" id="<?php echo esc_attr( $uid . '-search' ); ?>" type="search" placeholder="<?php esc_attr_e( 'Search FAQs', 'upskill-me' ); ?>" autocomplete="off" data-faq-search>
+							<?php upskill_icon( 'search', 'absolute top-6 pointer-events-none absolute top-1/2 left-4 size-[18px] -translate-y-1/2 text-[#6b6b72]' ); ?>
+							<input class="h-12 w-full rounded-full border border-gray-900/10 bg-white pt-[2px] pr-4 pl-11 text-base text-gray-950 placeholder:text-[#6b6b72] focus:border-brand-700 focus:outline-none" id="<?php echo esc_attr( $uid . '-search' ); ?>" type="search" placeholder="<?php esc_attr_e( 'Search FAQs', 'upskill-me' ); ?>" autocomplete="off" data-faq-search>
 							<p class="pt-4 text-base text-gray-500" hidden data-faq-empty><?php esc_html_e( 'No questions match your search.', 'upskill-me' ); ?></p>
 						</div>
 					</div>
@@ -127,7 +127,7 @@ $uid = wp_unique_id( 'faq-' );
 											</h3>
 											<div class="collapse<?php echo $open ? ' is-open' : ''; ?>" id="<?php echo esc_attr( $panel_id ); ?>">
 												<div>
-													<div class="faq__answer max-w-[682px] pb-4 lg:pr-12 text-base text-gray-500">
+													<div class="faq__answer max-w-[682px] pb-4 text-base text-gray-500">
 														<?php echo apply_filters( 'the_content', get_post_field( 'post_content', $faq ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- core content filter. ?>
 													</div>
 												</div>

@@ -249,6 +249,9 @@
   .top-5 {
     top: calc(var(--spacing) * 5);
   }
+  .top-6 {
+    top: calc(var(--spacing) * 6);
+  }
   .right-0 {
     left: 0px;
   }
@@ -383,9 +386,6 @@
   }
   .-mt-12 {
     margin-top: calc(var(--spacing) * -12);
-  }
-  .mt-0 {
-    margin-top: 0px;
   }
   .mt-0\! {
     margin-top: 0px !important;
@@ -560,9 +560,6 @@
   }
   .table {
     display: table;
-  }
-  .aspect-\[1\/1\.06\] {
-    aspect-ratio: 1/1.06;
   }
   .aspect-\[16\/10\] {
     aspect-ratio: 16/10;
@@ -872,9 +869,6 @@
   .w-\[45\.5\%\] {
     width: 45.5%;
   }
-  .w-\[49px\] {
-    width: 49px;
-  }
   .w-\[91px\] {
     width: 91px;
   }
@@ -889,6 +883,9 @@
   }
   .w-full {
     width: 100%;
+  }
+  .w-max {
+    width: max-content;
   }
   .max-w-\[141px\] {
     max-width: 141px;
@@ -1130,9 +1127,6 @@
   }
   .gap-17 {
     gap: calc(var(--spacing) * 17);
-  }
-  .gap-435 {
-    gap: calc(var(--spacing) * 435);
   }
   .gap-\[2px\] {
     gap: 2px;
@@ -1864,6 +1858,9 @@
   .pt-12\.5 {
     padding-top: calc(var(--spacing) * 12.5);
   }
+  .pt-\[2px\] {
+    padding-top: 2px;
+  }
   .pt-\[11px\] {
     padding-top: 11px;
   }
@@ -1887,9 +1884,6 @@
   }
   .pt-\[46px\] {
     padding-top: 46px;
-  }
-  .pt-\[76px\] {
-    padding-top: 76px;
   }
   .pt-\[94px\] {
     padding-top: 94px;
@@ -2915,9 +2909,6 @@
     .sm\:grid {
       display: grid;
     }
-    .sm\:aspect-\[1\/1\.06\] {
-      aspect-ratio: 1/1.06;
-    }
     .sm\:aspect-\[3\/2\] {
       aspect-ratio: 3/2;
     }
@@ -3067,6 +3058,9 @@
     }
     .sm\:pt-4 {
       padding-top: calc(var(--spacing) * 4);
+    }
+    .sm\:pt-6 {
+      padding-top: calc(var(--spacing) * 6);
     }
     .sm\:pt-10 {
       padding-top: calc(var(--spacing) * 10);
@@ -3388,12 +3382,6 @@
     }
     .lg\:w-\[min\(1120px\,78vw\)\] {
       width: min(1120px, 78vw);
-    }
-    .lg\:w-\[min\(1120px\,86vw\)\] {
-      width: min(1120px, 86vw);
-    }
-    .lg\:w-\[min\(1220px\,78vw\)\] {
-      width: min(1220px, 78vw);
     }
     .lg\:w-auto {
       width: auto;
@@ -4115,12 +4103,6 @@
     }
     .wd\:pt-13 {
       padding-top: calc(var(--spacing) * 13);
-    }
-    .wd\:pt-19 {
-      padding-top: calc(var(--spacing) * 19);
-    }
-    .wd\:pt-\[76px\] {
-      padding-top: 76px;
     }
     .wd\:pr-2 {
       padding-left: calc(var(--spacing) * 2);
