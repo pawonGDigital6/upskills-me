@@ -62,7 +62,7 @@ if ( ! $related ) {
 	<div class="container">
 		<header class="section-header section-header--split">
 			<div class="section-header__title">
-				<?php upskill_eyebrow( __( 'Keep exploring', 'upskill-me' ), 'resources', 'reveal' ); ?>
+				<?php upskill_eyebrow( __( 'Keep exploring', 'upskill-me' ), 'search-list', 'reveal' ); ?>
 				<h2 class="heading section-header__heading text-h3" id="related-posts-title"><?php echo wp_kses( __( 'Keep building <em>your knowledge.</em>', 'upskill-me' ), upskill_inline_kses() ); ?></h2>
 			</div>
 			<div class="section-header__aside reveal" style="--i:1">
