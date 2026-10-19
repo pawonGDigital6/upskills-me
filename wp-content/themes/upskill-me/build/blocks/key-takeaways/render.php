@@ -27,7 +27,7 @@ $attributes = upskill_block_attributes( $block, 'block-key-takeaways my-10 round
 		<h2 class="pt-2.5 text-xl font-medium text-[#0e0e14]" data-toc-label="<?php echo esc_attr( get_field( 'label' ) ); ?>"><?php echo esc_html( get_field( 'title' ) ); ?></h2>
 	<?php endif; ?>
 	<?php if ( $items ) : ?>
-		<ul class="flex flex-col gap-3.5 pt-4">
+		<ul class="flex flex-col sm:gap-3.5 gap-4.5 pt-3 mt-0!">
 			<?php foreach ( $items as $item ) : ?>
 				<li class="flex items-start gap-3 text-base text-gray-950">
 					<span class="mt-1 grid size-[22px] flex-none place-items-center rounded-full bg-brand-700 text-white" aria-hidden="true"><?php upskill_icon( 'check', 'size-[11px]' ); ?></span>

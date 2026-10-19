@@ -2,5 +2,5 @@
 	'dependencies' => array(
 		'wp-dom-ready'
 	),
-	'version' => '0ebfc89e083c51ac6936'
+	'version' => 'a69c96dc31bfe49f6c0d'
 );

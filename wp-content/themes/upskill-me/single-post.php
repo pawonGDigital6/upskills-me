@@ -61,7 +61,7 @@ while ( have_posts() ) :
 			</header>
 
 			<div class="section-y bg-white">
-				<div class="container lg:px-[120px]">
+				<div class="container wd:px-[120px]">
 					<div class="flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-14">
 						<aside class="article-aside rounded-[20px] border border-line bg-white p-4 lg:sticky lg:top-[calc(var(--upskill-header-height)-20px)] lg:w-[236px] lg:flex-none lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0">
 							<?php if ( $contents['items'] ) : ?>
