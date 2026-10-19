@@ -43,7 +43,7 @@ while ( have_posts() ) :
 			</header>
 
 			<div class="bg-white pt-8 pb-14 lg:py-20">
-				<div class="container max-lg:px-5 lg:px-[120px]">
+				<div class="container max-lg:px-5 wd:px-[120px]">
 					<div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:gap-24">
 						<?php if ( $upskill_contents['items'] ) : ?>
 							<nav class="policy-nav border-b border-[#efeff2] pb-7 lg:sticky lg:top-[calc(var(--upskill-header-height)-20px)] lg:w-[236px] lg:flex-none lg:border-0 lg:pb-0" aria-labelledby="policy-contents-title">
@@ -51,7 +51,7 @@ while ( have_posts() ) :
 								<ol class="policy-nav__list flex flex-col gap-px pt-6 lg:pt-11" id="policy-contents" data-article-contents>
 									<?php foreach ( $upskill_contents['items'] as $upskill_index => $upskill_item ) : ?>
 										<li<?php echo $upskill_index >= $upskill_shown ? ' class="policy-nav__extra"' : ''; ?>>
-											<a class="article-contents__link block border-l-2 border-transparent px-[13px] py-[7px] text-sm text-[#6b6b72] transition-colors hover:bg-brand-25 hover:text-gray-950 lg:rounded-[10px] lg:px-3 lg:py-2 lg:font-medium lg:whitespace-nowrap lg:text-gray-500<?php echo 0 === $upskill_index ? ' is-active' : ''; ?>" href="#<?php echo esc_attr( $upskill_item['id'] ); ?>"><?php echo esc_html( $upskill_item['label'] ); ?></a>
+											<a class="article-contents__link block border-l-2 border-transparent px-[13px] py-[7px] text-sm text-[#6b6b72] transition-colors hover:bg-brand-25 hover:text-gray-950 lg:px-3 lg:py-2 lg:font-medium lg:whitespace-nowrap lg:text-gray-500<?php echo 0 === $upskill_index ? ' is-active' : ''; ?>" href="#<?php echo esc_attr( $upskill_item['id'] ); ?>"><?php echo esc_html( $upskill_item['label'] ); ?></a>
 										</li>
 									<?php endforeach; ?>
 								</ol>

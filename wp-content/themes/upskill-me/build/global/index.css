@@ -6299,6 +6299,9 @@
   margin-top: 16px;
 }
 .policy-body .wp-block-list {
+  color: inherit;
+}
+.policy-body .wp-block-list {
   gap: 15px;
 }
 .policy-body .has-small-font-size {
