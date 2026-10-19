@@ -59,3 +59,8 @@
 .block-faqs .section-header__intro {
   font-size: var(--text-base);
 }
+
+.block-faqs .faq-help-card .btn__nest svg {
+  width: 11px;
+  height: 11px;
+}
