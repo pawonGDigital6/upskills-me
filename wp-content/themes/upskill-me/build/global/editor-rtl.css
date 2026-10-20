@@ -381,6 +381,9 @@
   .mx-auto {
     margin-inline: auto;
   }
+  .-my-3 {
+    margin-block: calc(var(--spacing) * -3);
+  }
   .my-10 {
     margin-block: calc(var(--spacing) * 10);
   }
@@ -2633,6 +2636,9 @@
     }
     .group-hover\:opacity-100:is(:where(.group):hover *) {
       opacity: 100%;
+    }
+    .group-hover\/dot\:bg-brand-200:is(:where(.group\/dot):hover *) {
+      background-color: var(--color-brand-200);
     }
     .group-hover\/link\:translate-x-0\.5:is(:where(.group\/link):hover *) {
       --tw-translate-x: calc(var(--spacing) * 0.5);

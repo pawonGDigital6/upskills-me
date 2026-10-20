@@ -7,7 +7,9 @@
  *
  * A scroll-snap carousel of Testimonial records: the current card is centred
  * with its neighbours peeking in (left-aligned on phones). view.js wires the
- * arrows and the progress bars; without it the row still scrolls and snaps.
+ * arrows, the progress bars (each one a button to its card) and mouse
+ * dragging; touch swiping is the track's own scrolling. Without it the row
+ * still scrolls and snaps.
  *
  * @param array $block The block settings and attributes.
  *
@@ -82,11 +84,20 @@ $attributes = upskill_block_attributes( $block, 'block-testimonials relative sec
 	<?php if ( count( $items ) > 1 ) : ?>
 		<div class="container mt-7 lg:mt-14">
 			<div class="mx-auto flex max-w-[1184px] items-center justify-between gap-4">
-				<ol class="flex gap-2" aria-hidden="true">
+				<?php // Each bar is a button to its card; the 4px bar sits in a 28px-tall hit area. ?>
+				<div class="flex gap-2" role="group" aria-label="<?php esc_attr_e( 'Choose a testimonial', 'upskill-me' ); ?>">
 					<?php foreach ( $items as $index => $item ) : ?>
-						<li class="testimonials__bar h-1 w-[38px] bg-white<?php echo 0 === $index ? ' is-filled' : ''; ?>" data-carousel-bar></li>
+						<button class="testimonials__dot group/dot -my-3 cursor-pointer py-3" type="button" aria-controls="<?php echo esc_attr( $uid ); ?>"<?php echo 0 === $index ? ' aria-current="true"' : ''; ?> data-carousel-dot>
+							<span class="screen-reader-text">
+								<?php
+								/* translators: %d: testimonial number. */
+								printf( esc_html__( 'Show testimonial %d', 'upskill-me' ), (int) $index + 1 );
+								?>
+							</span>
+							<span class="testimonials__bar block h-1 w-[38px] bg-white group-hover/dot:bg-brand-200<?php echo 0 === $index ? ' is-filled' : ''; ?>" aria-hidden="true" data-carousel-bar></span>
+						</button>
 					<?php endforeach; ?>
-				</ol>
+				</div>
 				<div class="flex gap-2">
 					<?php foreach ( array( 'prev' => __( 'Previous testimonial', 'upskill-me' ), 'next' => __( 'Next testimonial', 'upskill-me' ) ) as $direction => $label ) : ?>
 						<button class="testimonials__nav grid size-[42px] place-items-center rounded-full bg-brand-700 text-white shadow-btn transition-colors hover:bg-brand-800 disabled:opacity-40" type="button" aria-controls="<?php echo esc_attr( $uid ); ?>" data-carousel-<?php echo esc_attr( $direction ); ?>>

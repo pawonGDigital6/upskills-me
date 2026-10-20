@@ -23,6 +23,22 @@
 	}
 }
 
+/* Mouse dragging (view.js): a grab cursor where there is a mouse, and no
+   snapping or smooth scrolling while the row follows the pointer. */
+@media (hover: hover) and (pointer: fine) {
+
+	.testimonials__track {
+		cursor: grab;
+	}
+}
+
+.testimonials__track.is-dragging {
+	cursor: grabbing;
+	scroll-behavior: auto;
+	scroll-snap-type: none;
+	user-select: none;
+}
+
 .testimonials__bar {
 	transition: background-color 0.3s ease;
 
