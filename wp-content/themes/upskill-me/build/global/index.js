@@ -120,24 +120,61 @@ function contentsMore() {
 }
 
 /**
- * Copy the article URL; the button's accessible name confirms it.
+ * Copy text with the Clipboard API, falling back to a selected textarea where
+ * the API is missing or refused (non-HTTPS sites, older browsers).
+ *
+ * @param {string} text Text to copy.
+ * @return {Promise<void>} Resolves once copied; rejects if it could not be.
+ */
+function copyText(text) {
+  const fallback = () => {
+    const field = document.createElement('textarea');
+    field.value = text;
+    field.setAttribute('readonly', '');
+    field.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.append(field);
+    field.select();
+    let copied = false;
+    try {
+      copied = document.execCommand('copy');
+    } catch (error) {
+      copied = false;
+    }
+    field.remove();
+    return copied ? Promise.resolve() : Promise.reject(new Error('copy'));
+  };
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text).catch(fallback);
+  }
+  return fallback();
+}
+
+/**
+ * Copy the article URL. The button swaps its icon for a tick and a tooltip
+ * live region says "Link copied!" (or that it failed) for a few seconds.
  */
 function copyLink() {
   document.querySelectorAll('[data-copy-link]').forEach(button => {
-    const label = button.querySelector('.screen-reader-text');
-    const original = label ? label.textContent : '';
-    button.addEventListener('click', () => {
-      if (!navigator.clipboard) {
-        return;
+    const status = button.parentElement.querySelector('[data-copy-status]');
+    let timer = 0;
+    const show = (message, copied) => {
+      window.clearTimeout(timer);
+      button.toggleAttribute('data-copied', copied);
+      if (status) {
+        status.textContent = message;
+        status.toggleAttribute('data-visible', true);
       }
-      navigator.clipboard.writeText(button.dataset.copyLink).then(() => {
-        if (label) {
-          label.textContent = button.dataset.copiedLabel;
-          window.setTimeout(() => label.textContent = original, 2000);
+      timer = window.setTimeout(() => {
+        button.removeAttribute('data-copied');
+        if (status) {
+          status.removeAttribute('data-visible');
+          // Emptied after the fade, so the same message is announced again next time.
+          window.setTimeout(() => !status.hasAttribute('data-visible') && (status.textContent = ''), 200);
         }
-        button.classList.add('is-copied');
-        window.setTimeout(() => button.classList.remove('is-copied'), 2000);
-      });
+      }, copied ? 2500 : 5000);
+    };
+    button.addEventListener('click', () => {
+      copyText(button.dataset.copyLink || window.location.href).then(() => show(button.dataset.copiedLabel, true), () => show(button.dataset.copyFailedLabel, false));
     });
   });
 }

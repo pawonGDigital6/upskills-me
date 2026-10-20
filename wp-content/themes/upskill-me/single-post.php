@@ -89,11 +89,14 @@ while ( have_posts() ) :
 										<?php upskill_icon( 'mail', 'size-3.5' ); ?>
 									</a>
 								</li>
-								<li>
-									<button class="icon-link size-10 border border-line bg-white text-gray-800 hover:border-brand-700 hover:text-brand-700" type="button" data-copy-link="<?php echo esc_url( $permalink ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied', 'upskill-me' ); ?>">
+								<li class="relative">
+									<button class="group icon-link size-10 border border-line bg-white text-gray-800 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700" type="button" data-copy-link="<?php echo esc_url( $permalink ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>">
 										<span class="screen-reader-text"><?php esc_html_e( 'Copy link', 'upskill-me' ); ?></span>
-										<?php upskill_icon( 'link', 'size-3.5' ); ?>
+										<?php upskill_icon( 'link', 'size-3.5 group-data-copied:hidden' ); ?>
+										<?php upskill_icon( 'check', 'hidden size-3.5 group-data-copied:block' ); ?>
 									</button>
+									<?php // The confirmation: a live region shown as a tooltip above the button while it has text (article.js). ?>
+									<span class="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[220px] rounded-md bg-gray-950 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-xs transition-opacity duration-200 data-visible:opacity-100" role="status" data-copy-status></span>
 								</li>
 							</ul>
 						</aside>
