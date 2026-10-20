@@ -1,6 +1,6 @@
 <?php
 /**
- * Resource Cards block.
+ * Resource Library block.
  *
  * Figma: Blogs 49325:16914 (listing), Blog Detail 49325:16710 (grid),
  * Resources 49325:16442 / 16528 (split) and 16462 (guides), Case Studies
@@ -85,7 +85,7 @@ $variant = 'case_study' === $post_type ? 'case' : 'card';
 
 $links = array_filter( array( get_field( 'featured_link_one' ), get_field( 'featured_link_two' ) ) );
 
-$attributes = upskill_block_attributes( $block, 'block-post-cards section-y ' . ( isset( $surfaces[ $surface ] ) ? $surfaces[ $surface ] : $surfaces['white'] ) );
+$attributes = upskill_block_attributes( $block, 'block-resource-library section-y ' . ( isset( $surfaces[ $surface ] ) ? $surfaces[ $surface ] : $surfaces['white'] ) );
 
 $header_args = array(
 	'layout' => 'split',
@@ -131,7 +131,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 							'layout'         => 'stack',
 							'button_variant' => 'light',
 							'reveal'         => true,
-							'class'          => 'section-header--base block-post-cards__side',
+							'class'          => 'section-header--base block-resource-library__side',
 						)
 					);
 					?>

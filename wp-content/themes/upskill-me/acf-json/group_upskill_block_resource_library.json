@@ -1,9 +1,9 @@
 {
-    "key": "group_upskill_block_post_cards",
-    "title": "Block: Resource Cards",
+    "key": "group_upskill_block_resource_library",
+    "title": "Block: Resource Library",
     "fields": [
         {
-            "key": "field_upskill_post_cards_tab_content",
+            "key": "field_upskill_resource_library_tab_content",
             "label": "Content",
             "name": "",
             "type": "tab",
@@ -11,7 +11,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_upskill_post_cards_section_header",
+            "key": "field_upskill_resource_library_section_header",
             "label": "Section Header",
             "name": "section_header",
             "type": "clone",
@@ -24,7 +24,7 @@
             "prefix_name": 0
         },
         {
-            "key": "field_upskill_post_cards_acc_posts",
+            "key": "field_upskill_resource_library_acc_posts",
             "label": "Posts",
             "name": "",
             "type": "accordion",
@@ -33,7 +33,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_upskill_post_cards_post_type",
+            "key": "field_upskill_resource_library_post_type",
             "label": "Show",
             "name": "post_type",
             "type": "button_group",
@@ -49,7 +49,7 @@
             }
         },
         {
-            "key": "field_upskill_post_cards_layout",
+            "key": "field_upskill_resource_library_layout",
             "label": "Layout",
             "name": "layout",
             "type": "select",
@@ -67,7 +67,7 @@
             }
         },
         {
-            "key": "field_upskill_post_cards_selection",
+            "key": "field_upskill_resource_library_selection",
             "label": "Choose",
             "name": "selection",
             "type": "button_group",
@@ -83,7 +83,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_upskill_post_cards_layout",
+                        "field": "field_upskill_resource_library_layout",
                         "operator": "!=",
                         "value": "listing"
                     }
@@ -91,7 +91,7 @@
             ]
         },
         {
-            "key": "field_upskill_post_cards_count",
+            "key": "field_upskill_resource_library_count",
             "label": "Number of posts",
             "name": "count",
             "type": "number",
@@ -105,7 +105,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_upskill_post_cards_selection",
+                        "field": "field_upskill_resource_library_selection",
                         "operator": "!=",
                         "value": "selected"
                     }
@@ -113,7 +113,7 @@
             ]
         },
         {
-            "key": "field_upskill_post_cards_posts",
+            "key": "field_upskill_resource_library_posts",
             "label": "Posts",
             "name": "posts",
             "type": "relationship",
@@ -133,12 +133,12 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_upskill_post_cards_selection",
+                        "field": "field_upskill_resource_library_selection",
                         "operator": "==",
                         "value": "selected"
                     },
                     {
-                        "field": "field_upskill_post_cards_layout",
+                        "field": "field_upskill_resource_library_layout",
                         "operator": "!=",
                         "value": "listing"
                     }
@@ -146,7 +146,7 @@
             ]
         },
         {
-            "key": "field_upskill_post_cards_featured_post",
+            "key": "field_upskill_resource_library_featured_post",
             "label": "Featured post",
             "name": "featured_post",
             "type": "post_object",
@@ -162,7 +162,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_upskill_post_cards_layout",
+                        "field": "field_upskill_resource_library_layout",
                         "operator": "==",
                         "value": "listing"
                     }
@@ -170,7 +170,7 @@
             ]
         },
         {
-            "key": "field_upskill_post_cards_featured_link_one",
+            "key": "field_upskill_resource_library_featured_link_one",
             "label": "Featured card link",
             "name": "featured_link_one",
             "type": "link",
@@ -182,7 +182,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_upskill_post_cards_layout",
+                        "field": "field_upskill_resource_library_layout",
                         "operator": "==",
                         "value": "featured"
                     }
@@ -190,7 +190,7 @@
             ]
         },
         {
-            "key": "field_upskill_post_cards_featured_link_two",
+            "key": "field_upskill_resource_library_featured_link_two",
             "label": "Second link",
             "name": "featured_link_two",
             "type": "link",
@@ -201,7 +201,7 @@
             "conditional_logic": [
                 [
                     {
-                        "field": "field_upskill_post_cards_layout",
+                        "field": "field_upskill_resource_library_layout",
                         "operator": "==",
                         "value": "featured"
                     }
@@ -209,7 +209,7 @@
             ]
         },
         {
-            "key": "field_upskill_post_cards_acc_appearance",
+            "key": "field_upskill_resource_library_acc_appearance",
             "label": "Appearance",
             "name": "",
             "type": "accordion",
@@ -218,7 +218,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_upskill_post_cards_surface",
+            "key": "field_upskill_resource_library_surface",
             "label": "Background",
             "name": "surface",
             "type": "select",
@@ -235,7 +235,7 @@
             }
         },
         {
-            "key": "field_upskill_post_cards_lead_intro",
+            "key": "field_upskill_resource_library_lead_intro",
             "label": "Large intro (20px)",
             "name": "lead_intro",
             "type": "true_false",
@@ -251,7 +251,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf-block/post-cards"
+                "value": "acf-block/resource-library"
             }
         ]
     ],

@@ -58,7 +58,7 @@ if ( ! $related ) {
 	return;
 }
 
-// Case studies use their own card (as on the Case Studies page and in Resource Cards); blogs the blog card.
+// Case studies use their own card (as on the Case Studies page and in the Resource Library block); blogs the blog card.
 $variant = 'case_study' === $post_type ? 'case' : 'card';
 ?>
 <section class="section-y bg-white" aria-labelledby="related-posts-title">

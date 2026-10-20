@@ -2,24 +2,24 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/blocks/post-cards/index.js"
-/*!****************************************!*\
-  !*** ./src/blocks/post-cards/index.js ***!
-  \****************************************/
+/***/ "./src/blocks/resource-library/index.js"
+/*!**********************************************!*\
+  !*** ./src/blocks/resource-library/index.js ***!
+  \**********************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/post-cards/editor.scss");
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/post-cards/style.scss");
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editor.scss */ "./src/blocks/resource-library/editor.scss");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/blocks/resource-library/style.scss");
 
 
 
 /***/ },
 
-/***/ "./src/blocks/post-cards/editor.scss"
-/*!*******************************************!*\
-  !*** ./src/blocks/post-cards/editor.scss ***!
-  \*******************************************/
+/***/ "./src/blocks/resource-library/editor.scss"
+/*!*************************************************!*\
+  !*** ./src/blocks/resource-library/editor.scss ***!
+  \*************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -28,10 +28,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ },
 
-/***/ "./src/blocks/post-cards/style.scss"
-/*!******************************************!*\
-  !*** ./src/blocks/post-cards/style.scss ***!
-  \******************************************/
+/***/ "./src/blocks/resource-library/style.scss"
+/*!************************************************!*\
+  !*** ./src/blocks/resource-library/style.scss ***!
+  \************************************************/
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -122,8 +122,8 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		const installedChunks = {
-/******/ 			"post-cards/index": 0,
-/******/ 			"post-cards/style-index": 0
+/******/ 			"resource-library/index": 0,
+/******/ 			"resource-library/style-index": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -173,7 +173,7 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	let __webpack_exports__ = __webpack_require__.O(undefined, ["post-cards/style-index"], () => (__webpack_require__("./src/blocks/post-cards/index.js")))
+/******/ 	let __webpack_exports__ = __webpack_require__.O(undefined, ["resource-library/style-index"], () => (__webpack_require__("./src/blocks/resource-library/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

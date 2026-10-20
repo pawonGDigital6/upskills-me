@@ -1,12 +1,12 @@
 /**
- * Resource Cards block.
+ * Resource Library block.
  *
  * Cards and layout are utilities (render.php, template-parts/cards/); this
  * styles the numbered page links paginate_links() prints, which carry no
  * utility classes of their own (Figma 49325:16953).
  */
 
-.block-post-cards .pagination__number > * {
+.block-resource-library .pagination__number > * {
 	display: grid;
 	place-items: center;
 	width: 40px;
@@ -19,30 +19,30 @@
 		color 0.2s ease;
 }
 
-.block-post-cards .pagination__number .current {
+.block-resource-library .pagination__number .current {
 	background-color: #fafafa;
 	color: var(--color-brand-700);
 }
 
-.block-post-cards .pagination__number a:hover {
+.block-resource-library .pagination__number a:hover {
 	background-color: var(--color-brand-25);
 	color: var(--color-brand-700);
 }
 
-.block-post-cards .section-header {
+.block-resource-library .section-header {
 	margin-bottom: 45px;
 	@media (width > 1199px) {
 		margin-bottom: 70px;
 	}
 }
 
-.block-post-cards .mt-stack {
+.block-resource-library .mt-stack {
 	margin-top: 0;
 }
 // Phones show "Previous 1 … 10 Next" (Figma 49374:104026): only the first,
 // last and current numbers stay, with an ellipsis between.
 @media (width < 768px) {
-	.block-post-cards .pagination__number:not(:first-child, :last-child):has(a:not(.dots)) {
+	.block-resource-library .pagination__number:not(:first-child, :last-child):has(a:not(.dots)) {
 		display: none;
 	}
 }

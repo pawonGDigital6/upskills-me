@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "acf-block/post-cards",
+  "name": "acf-block/resource-library",
   "version": "1.0.0",
-  "title": "Resource Cards",
+  "title": "Resource Library",
   "category": "acf-blocks",
   "icon": "grid-view",
   "description": "Blogs, case studies or guides as a grid, a side-by-side row, a featured card or a paginated listing.",
