@@ -162,8 +162,10 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   announcement bar, header + mega panels, mobile drawer, search dialog, CTA band, footer.
 - **Why UpSkill Me, About, Resources, Blogs, Blog detail, Case Studies** — built (non-LMS sections).
   New reusable blocks: `page-hero` (split with photo + chips or illustration; centred with badges
-  and the ladder), `card-grid` (stacked / principle / link / textured cards, glass on dark; split,
-  centred, stacked or side-column header; template-parts/cards/feature.php), `video-feature`,
+  and the ladder), `card-grid` (stacked / principle cards, glass on dark, dark-on-hover; split,
+  centred, stacked or side-column header; template-parts/cards/feature.php). Since 2026-10-20
+  textured cards, link cards, rows and outcomes are their own blocks: `textured-cards`,
+  `resource-links`, `icon-rows`, `outcome-columns`. `video-feature`,
   `media-story`, `post-cards` ("Resource Cards": grid, split row, guides, featured, paginated
   listing; template-parts/cards/resource.php + guide.php), `testimonials` (scroll-snap carousel),
   `key-takeaways` (article content). `how-it-works` gained an optional image (single track + photo);
