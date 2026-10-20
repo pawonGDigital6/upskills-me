@@ -105,7 +105,7 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 - **Resources**: blogs are core posts (category = topic chip; ACF "Display title" gives the article
   hero its highlighted phrase). `case_study` (/case-study/slug/, ACF industry) and `guide`
   (/guide/slug/) are public CPTs; `testimonial` (not public, ACF name + rating) feeds the carousel.
-  Listings are pages under Resources (Blogs, Case Studies, Guides) using the Resource Cards block.
+  Listings are pages under Resources (Blogs, Case Studies, Guides) using the Resource Library block.
 - Back-office spec vocabularies (jurisdiction, org type, compliance/performance) are deferred to the
   LearnDash phase.
 
@@ -158,15 +158,16 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 ## 5. Progress
 
 - **Home** (`49325:14379` / `49343:29333`) — built. Blocks: `hero`, `free-sessions`,
-  `industry-cards`, `category-list`, `how-it-works`, `feature-media`, `cohort-cards`, `faqs`. Global:
+  `industry-showcase`, `category-list`, `how-it-works`, `feature-media`, `cohort-cards`, `faqs`. Global:
   announcement bar, header + mega panels, mobile drawer, search dialog, CTA band, footer.
 - **Why UpSkill Me, About, Resources, Blogs, Blog detail, Case Studies** — built (non-LMS sections).
   New reusable blocks: `page-hero` (split with photo + chips or illustration; centred with badges
-  and the ladder), `card-grid` (stacked / principle cards, glass on dark, dark-on-hover; split,
-  centred, stacked or side-column header; template-parts/cards/feature.php). Since 2026-10-20
-  textured cards, link cards, rows and outcomes are their own blocks: `textured-cards`,
-  `resource-links`, `icon-rows`, `outcome-columns`. `video-feature`,
-  `media-story`, `post-cards` ("Resource Cards": grid, split row, guides, featured, paginated
+  and the ladder), one purpose-built block per card section (2026-10-20; card-grid retired):
+  `feature-grid`, `principles`, `mission-pillars`, `expertise-highlights`, `impact-highlights`,
+  `training-needs`, `textured-cards`, `resource-links`, `icon-rows`, `outcome-columns`. White cards
+  that turn dark on hover share the `feature-card` classes (`scss/components/_feature-card.scss`).
+  Every element carries a BEM class (`<block>__<element>`), styling stays in utilities. `video-feature`,
+  `media-story`, `resource-library` (grid, split row, guides, featured, paginated
   listing; template-parts/cards/resource.php + guide.php), `testimonials` (scroll-snap carousel),
   `key-takeaways` (article content). `how-it-works` gained an optional image (single track + photo);
   Home output is unchanged. `single-post.php` is the Blog detail (contents list with scroll-spy,
@@ -174,8 +175,7 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 - **FAQs, Guides, Case Study detail, Contact, 404, Privacy, Terms, Returns** — built 2026-10-07,
   awaiting review. New blocks: `statement` (centred two-tone statement + details row), `contact-hero`
   (photo card + Contact Form 7 form card), `location-map` (Google embed). Options added: FAQs "Grouped
-  by topic" (grouped.php, phone chips + search in view.js), page-hero "Text only", card-grid styles
-  `rows` / `outcome` and the "Faint waves" surface, media-story social links + "boxed". Templates:
+  by topic" (grouped.php, phone chips + search in view.js), page-hero "Text only", media-story social links + "boxed". Templates:
   `single-case_study.php` (hero image field, related case studies via template-parts/related-posts),
   `template-policy.php` (native editor content, "Policy navigation" from its headings, texturize off so
   hyphens stay hyphens), `404.php` (no CTA band). CF7: inc/contact-form-7.php (no plugin CSS/autop,
