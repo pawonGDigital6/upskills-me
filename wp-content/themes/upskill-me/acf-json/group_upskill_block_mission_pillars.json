@@ -1,0 +1,77 @@
+{
+    "key": "group_upskill_block_mission_pillars",
+    "title": "Block: Mission Pillars",
+    "fields": [
+        {
+            "key": "field_upskill_mission_pillars_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_mission_pillars_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_mission_pillars_pillars",
+            "label": "Pillars",
+            "name": "pillars",
+            "type": "repeater",
+            "instructions": "Three pillars, numbered automatically.",
+            "layout": "block",
+            "min": 0,
+            "max": 3,
+            "button_label": "Add pillar",
+            "collapsed": "field_upskill_mission_pillars_pillars_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_mission_pillars_pillars_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "required": 1,
+                    "parent_repeater": "field_upskill_mission_pillars_pillars"
+                },
+                {
+                    "key": "field_upskill_mission_pillars_pillars_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": "",
+                    "parent_repeater": "field_upskill_mission_pillars_pillars"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/mission-pillars"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1792503148
+}

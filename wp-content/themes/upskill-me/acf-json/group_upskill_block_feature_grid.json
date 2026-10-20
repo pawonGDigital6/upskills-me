@@ -1,0 +1,159 @@
+{
+    "key": "group_upskill_block_feature_grid",
+    "title": "Block: Feature Grid",
+    "fields": [
+        {
+            "key": "field_upskill_feature_grid_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_feature_grid_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_feature_grid_columns",
+            "label": "Columns",
+            "name": "columns",
+            "type": "button_group",
+            "instructions": "Three columns use roomy cards; four use compact cards.",
+            "choices": {
+                "3": "3",
+                "4": "4"
+            },
+            "default_value": "3",
+            "return_format": "value",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_feature_grid_show_numbers",
+            "label": "Number the cards",
+            "name": "show_numbers",
+            "type": "true_false",
+            "ui": 1,
+            "default_value": 0,
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_feature_grid_cards",
+            "label": "Cards",
+            "name": "cards",
+            "type": "repeater",
+            "layout": "block",
+            "min": 0,
+            "max": 8,
+            "button_label": "Add card",
+            "collapsed": "field_upskill_feature_grid_cards_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_feature_grid_cards_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
+                    },
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "30"
+                    },
+                    "parent_repeater": "field_upskill_feature_grid_cards"
+                },
+                {
+                    "key": "field_upskill_feature_grid_cards_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "instructions": "Optional, e.g. Essential.",
+                    "wrapper": {
+                        "width": "70"
+                    },
+                    "parent_repeater": "field_upskill_feature_grid_cards"
+                },
+                {
+                    "key": "field_upskill_feature_grid_cards_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "required": 1,
+                    "parent_repeater": "field_upskill_feature_grid_cards"
+                },
+                {
+                    "key": "field_upskill_feature_grid_cards_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": "",
+                    "parent_repeater": "field_upskill_feature_grid_cards"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/feature-grid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1792503148
+}

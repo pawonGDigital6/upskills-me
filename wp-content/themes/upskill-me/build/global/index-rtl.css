@@ -3439,6 +3439,9 @@
     .lg\:mt-14 {
       margin-top: calc(var(--spacing) * 14);
     }
+    .lg\:mt-15 {
+      margin-top: calc(var(--spacing) * 15);
+    }
     .lg\:mt-16 {
       margin-top: calc(var(--spacing) * 16);
     }
@@ -4335,6 +4338,11 @@
     }
     .wd\:pr-2 {
       padding-left: calc(var(--spacing) * 2);
+    }
+  }
+  @media (width >= 1201px) {
+    .min-\[1201px\]\:max-w-\[326px\] {
+      max-width: 326px;
     }
   }
   @media (width >= 1280px) {
@@ -6425,6 +6433,20 @@
   .article-body .wp-block-quote {
     font-size: var(--text-base);
     line-height: 1.55;
+  }
+}
+.feature-card,
+.feature-card__surface,
+.feature-card :is(h3, p, span, li) {
+  transition-duration: 0.45s;
+  transition-property: color, background-color, border-color, opacity;
+  transition-timing-function: ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card,
+  .feature-card * {
+    transition: none;
   }
 }
 .upskill-form .upskill-form__fields {

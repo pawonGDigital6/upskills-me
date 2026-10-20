@@ -1,0 +1,1 @@
+{"version":3,"file":"mission-pillars/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/mission-pillars/editor.scss"],"sourcesContent":["/**\n * Mission Pillars block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-mission-pillars a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

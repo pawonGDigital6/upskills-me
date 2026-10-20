@@ -1,0 +1,19 @@
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/expertise-highlights/style.scss ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/**
+ * Expertise Highlights block.
+ *
+ * Layout and colour are utilities in render.php; the card's hover timing is
+ * shared (src/global/scss/components/_feature-card.scss). This sets the
+ * header's large intro, which the shared section header helper draws: 20/30
+ * grey at every width, 20px apart (About 49325:14758 / 49374:47139).
+ */
+.block-expertise-highlights .section-header--intro-xl .section-header__aside {
+  gap: 20px;
+}
+
+.block-expertise-highlights .section-header--intro-xl .section-header__intro {
+  font-size: var(--text-xl);
+  line-height: 1.5;
+}

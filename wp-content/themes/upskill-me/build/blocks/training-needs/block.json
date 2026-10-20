@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/training-needs",
+  "version": "1.0.0",
+  "title": "Training Needs",
+  "category": "acf-blocks",
+  "icon": "welcome-learn-more",
+  "description": "Split section header over a framed grid of numbered training needs with bullet points.",
+  "keywords": [
+    "training",
+    "needs",
+    "industry"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": true
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}

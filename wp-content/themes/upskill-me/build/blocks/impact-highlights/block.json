@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/impact-highlights",
+  "version": "1.0.0",
+  "title": "Impact Highlights",
+  "category": "acf-blocks",
+  "icon": "chart-line",
+  "description": "Dark section with a stacked header over translucent highlight cards.",
+  "keywords": [
+    "impact",
+    "results",
+    "highlights"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": true
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}

@@ -3288,6 +3288,9 @@
     .lg\:mt-14 {
       margin-top: calc(var(--spacing) * 14);
     }
+    .lg\:mt-15 {
+      margin-top: calc(var(--spacing) * 15);
+    }
     .lg\:mt-16 {
       margin-top: calc(var(--spacing) * 16);
     }
@@ -4184,6 +4187,11 @@
     }
     .wd\:pr-2 {
       padding-right: calc(var(--spacing) * 2);
+    }
+  }
+  @media (width >= 1201px) {
+    .min-\[1201px\]\:max-w-\[326px\] {
+      max-width: 326px;
     }
   }
   @media (width >= 1280px) {

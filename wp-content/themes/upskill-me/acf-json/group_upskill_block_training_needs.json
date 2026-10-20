@@ -1,0 +1,87 @@
+{
+    "key": "group_upskill_block_training_needs",
+    "title": "Block: Training Needs",
+    "fields": [
+        {
+            "key": "field_upskill_training_needs_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_training_needs_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_training_needs_needs",
+            "label": "Training needs",
+            "name": "needs",
+            "type": "repeater",
+            "instructions": "Numbered automatically. In a page pattern, {term} and {term_lower} become the industry name.",
+            "layout": "block",
+            "min": 0,
+            "max": 6,
+            "button_label": "Add need",
+            "collapsed": "field_upskill_training_needs_needs_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_training_needs_needs_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "required": 1,
+                    "parent_repeater": "field_upskill_training_needs_needs"
+                },
+                {
+                    "key": "field_upskill_training_needs_needs_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": "",
+                    "parent_repeater": "field_upskill_training_needs_needs"
+                },
+                {
+                    "key": "field_upskill_training_needs_needs_points",
+                    "label": "Points",
+                    "name": "points",
+                    "type": "textarea",
+                    "rows": 4,
+                    "new_lines": "",
+                    "instructions": "Optional bullet list, one point per line.",
+                    "parent_repeater": "field_upskill_training_needs_needs"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/training-needs"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1792503148
+}

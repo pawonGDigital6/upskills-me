@@ -1,0 +1,1 @@
+{"version":3,"file":"training-needs/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/training-needs/editor.scss"],"sourcesContent":["/**\n * Training Needs block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-training-needs a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}
