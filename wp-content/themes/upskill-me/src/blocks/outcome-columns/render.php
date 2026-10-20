@@ -24,7 +24,7 @@ $columns = array_values(
 $attributes = upskill_block_attributes( $block, 'block-outcome-columns section-y relative isolate bg-white' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
-	<img class="absolute inset-0 -z-10 size-full object-cover opacity-[0.08]" src="<?php echo esc_url( upskill_theme_image( 'impact-waves.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+	<img class="outcome-columns__background absolute inset-0 -z-10 size-full object-cover opacity-[0.08]" src="<?php echo esc_url( upskill_theme_image( 'impact-waves.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 
 	<div class="container">
 		<?php
@@ -37,17 +37,17 @@ $attributes = upskill_block_attributes( $block, 'block-outcome-columns section-y
 		?>
 
 		<?php if ( $columns ) : ?>
-			<ul class="mt-6 grid gap-4 lg:grid-cols-3 lg:gap-0 lg:overflow-hidden lg:rounded-[24px] lg:border lg:border-[#111827]/14">
+			<ul class="outcome-columns__list mt-6 grid gap-4 lg:grid-cols-3 lg:gap-0 lg:overflow-hidden lg:rounded-[24px] lg:border lg:border-[#111827]/14">
 				<?php foreach ( $columns as $index => $column ) : ?>
-					<li class="reveal flex flex-col border border-[#111827]/14 px-6 py-12 lg:border-0 lg:px-8 lg:first:pl-6 lg:not-last:border-r lg:not-last:border-[#111827]/14" style="--i:<?php echo (int) min( $index, 5 ); ?>">
-						<p class="flex items-center gap-2.5 text-sm font-medium text-[#111827] uppercase">
-							<?php upskill_icon( $column['icon'] ? $column['icon'] : 'check', 'size-4 flex-none text-gray-800' ); ?>
+					<li class="outcome-columns__item reveal flex flex-col border border-[#111827]/14 px-6 py-12 lg:border-0 lg:px-8 lg:first:pl-6 lg:not-last:border-r lg:not-last:border-[#111827]/14" style="--i:<?php echo (int) min( $index, 5 ); ?>">
+						<p class="outcome-columns__label flex items-center gap-2.5 text-sm font-medium text-[#111827] uppercase">
+							<?php upskill_icon( $column['icon'] ? $column['icon'] : 'check', 'outcome-columns__icon size-4 flex-none text-gray-800' ); ?>
 							<?php echo esc_html( $column['label'] ? $column['label'] : __( 'Outcome', 'upskill-me' ) ); ?>
 						</p>
-						<span class="mt-5 h-0.5 w-10 rounded-[1px] bg-[#111827]" aria-hidden="true"></span>
-						<h3 class="pt-5 text-[36px] leading-[1.1] font-medium tracking-[-0.01em] text-[#111827]"><?php echo esc_html( $column['title'] ); ?></h3>
+						<span class="outcome-columns__rule mt-5 h-0.5 w-10 rounded-[1px] bg-[#111827]" aria-hidden="true"></span>
+						<h3 class="outcome-columns__title pt-5 text-[36px] leading-[1.1] font-medium tracking-[-0.01em] text-[#111827]"><?php echo esc_html( $column['title'] ); ?></h3>
 						<?php if ( ! empty( $column['text'] ) ) : ?>
-							<p class="max-w-[340px] pt-5 text-base leading-[1.6] tracking-[-0.006em] text-gray-500"><?php echo esc_html( $column['text'] ); ?></p>
+							<p class="outcome-columns__text max-w-[340px] pt-5 text-base leading-[1.6] tracking-[-0.006em] text-gray-500"><?php echo esc_html( $column['text'] ); ?></p>
 						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>

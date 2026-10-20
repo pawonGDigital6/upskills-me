@@ -101,7 +101,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 		return;
 	}
 	?>
-	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 <?php echo 'case' === $variant ? 'lg:gap-5' : ''; ?>">
+	<div class="resource-library__grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3 <?php echo 'case' === $variant ? 'lg:gap-5' : ''; ?>">
 		<?php
 		foreach ( array_values( $items ) as $index => $item ) {
 			get_template_part(
@@ -123,22 +123,22 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
 		<?php if ( in_array( $layout, array( 'split', 'guides' ), true ) ) : ?>
-			<div class="flex flex-col gap-12 wd:flex-row wd:gap-11">
-				<div class="lg:min-w-0 lg:flex-1">
+			<div class="resource-library__layout flex flex-col gap-12 wd:flex-row wd:gap-11">
+				<div class="resource-library__aside lg:min-w-0 lg:flex-1">
 					<?php
 					upskill_section_header(
 						array(
 							'layout'         => 'stack',
 							'button_variant' => 'light',
 							'reveal'         => true,
-							'class'          => 'section-header--base block-resource-library__side',
+							'class'          => 'section-header--base resource-library__header',
 						)
 					);
 					?>
 				</div>
 
 				<?php if ( 'guides' === $layout && $posts ) : ?>
-					<div class="grid grid-cols-1 gap-4 md:grid-cols-[428fr_380fr] wd:w-[824px] lg:flex-none">
+					<div class="resource-library__guides grid grid-cols-1 gap-4 md:grid-cols-[428fr_380fr] wd:w-[824px] lg:flex-none">
 						<?php
 						get_template_part(
 							'template-parts/cards/guide',
@@ -149,7 +149,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 							)
 						);
 						?>
-						<div class="flex flex-col gap-4">
+						<div class="resource-library__rows flex flex-col gap-4">
 							<?php
 							foreach ( array_slice( $posts, 1 ) as $index => $item ) {
 								get_template_part(
@@ -167,9 +167,9 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 					</div>
 				<?php elseif ( $posts ) : ?>
 					<?php // Three 264px cards (824 with gaps) on desktop; a swipeable row on phones. ?>
-					<div class="-mx-gutter flex snap-x snap-mandatory scroll-px-gutter gap-4 overflow-x-auto px-gutter pb-1 [scrollbar-width:none] sm:mx-0 sm:grid md:grid-cols-3 sm:grid-cols-2 sm:overflow-visible sm:px-0 wd:w-[824px] lg:flex-none">
+					<div class="resource-library__row -mx-gutter flex snap-x snap-mandatory scroll-px-gutter gap-4 overflow-x-auto px-gutter pb-1 [scrollbar-width:none] sm:mx-0 sm:grid md:grid-cols-3 sm:grid-cols-2 sm:overflow-visible sm:px-0 wd:w-[824px] lg:flex-none">
 						<?php foreach ( $posts as $index => $item ) : ?>
-							<div class="flex w-[264px] flex-none snap-start sm:w-auto *:flex-1">
+							<div class="resource-library__slide flex w-[264px] flex-none snap-start sm:w-auto *:flex-1">
 								<?php
 								get_template_part(
 									'template-parts/cards/resource',
@@ -191,7 +191,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 			<?php upskill_section_header( $header_args ); ?>
 
 			<?php if ( $featured instanceof WP_Post && ( 'featured' === $layout || 1 === max( 1, (int) get_query_var( 'paged' ) ) ) ) : ?>
-				<div class="<?php echo 'listing' === $layout ? ( 'guide' === $post_type ? 'mt-12 lg:mt-[70px]' : 'mt-stack lg:mt-[70px]' ) : 'mt-stack'; ?>">
+				<div class="resource-library__featured <?php echo 'listing' === $layout ? ( 'guide' === $post_type ? 'mt-12 lg:mt-[70px]' : 'mt-stack lg:mt-[70px]' ) : 'mt-stack'; ?>">
 					<?php
 					get_template_part(
 						'template-parts/cards/resource',
@@ -209,7 +209,7 @@ $grid = static function ( $items ) use ( $variant, $number_offset ) {
 
 			<?php if ( $posts ) : ?>
 				<?php // Guides leave 38px under the featured guide (Guides 49325:18297); blogs 16. ?>
-				<div class="<?php echo 'listing' === $layout && $featured ? ( 'guide' === $post_type ? 'mt-4 lg:mt-[38px]' : 'mt-4' ) : 'mt-stack'; ?>">
+				<div class="resource-library__posts <?php echo 'listing' === $layout && $featured ? ( 'guide' === $post_type ? 'mt-4 lg:mt-[38px]' : 'mt-4' ) : 'mt-stack'; ?>">
 					<?php $grid( $posts ); ?>
 				</div>
 			<?php endif; ?>
