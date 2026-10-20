@@ -57,6 +57,9 @@ if ( count( $related ) < 3 ) {
 if ( ! $related ) {
 	return;
 }
+
+// Case studies use their own card (as on the Case Studies page and in Resource Cards); blogs the blog card.
+$variant = 'case_study' === $post_type ? 'case' : 'card';
 ?>
 <section class="section-y bg-white" aria-labelledby="related-posts-title">
 	<div class="container">
@@ -78,7 +81,7 @@ if ( ! $related ) {
 			</div>
 		</header>
 
-		<div class="mt-stack grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+		<div class="mt-stack grid gap-4 sm:grid-cols-2 lg:grid-cols-3<?php echo 'case' === $variant ? ' lg:gap-5' : ''; ?>">
 			<?php
 			foreach ( $related as $index => $item ) {
 				get_template_part(
@@ -86,7 +89,7 @@ if ( ! $related ) {
 					null,
 					array(
 						'post'    => $item,
-						'variant' => 'card',
+						'variant' => $variant,
 						'index'   => $index,
 					)
 				);
