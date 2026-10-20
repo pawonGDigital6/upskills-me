@@ -87,6 +87,7 @@ $upskill_legal = upskill_menu_tree('footer-legal');
 				$upskill_copyright = upskill_option('copyright');
 				echo esc_html($upskill_copyright ? str_replace('{year}', wp_date('Y'), $upskill_copyright) : '© ' . wp_date('Y') . ' ' . get_bloginfo('name'));
 				?>
+				Website by <a class="transition duration-75 hover:text-white" href="https://digitalsix.com.au/" target="_blank">DigitalSix</a>
 			</p>
 			<?php if ($upskill_legal): ?>
 				<nav aria-label="<?php esc_attr_e('Legal', 'upskill-me'); ?>">
