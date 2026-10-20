@@ -1903,9 +1903,6 @@
   .pr-11 {
     padding-left: calc(var(--spacing) * 11);
   }
-  .pr-12 {
-    padding-left: calc(var(--spacing) * 12);
-  }
   .pr-14 {
     padding-left: calc(var(--spacing) * 14);
   }
@@ -2418,6 +2415,9 @@
   .underline-offset-4 {
     text-underline-offset: 4px;
   }
+  .opacity-0 {
+    opacity: 0%;
+  }
   .opacity-20 {
     opacity: 20%;
   }
@@ -2595,14 +2595,44 @@
     .group-hover\:border-brand-700:is(:where(.group):hover *) {
       border-color: var(--color-brand-700);
     }
+    .group-hover\:border-white\/40:is(:where(.group):hover *) {
+      border-color: color-mix(in srgb, #ffffff 40%, transparent);
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .group-hover\:border-white\/40:is(:where(.group):hover *) {
+        border-color: color-mix(in oklab, var(--color-white) 40%, transparent);
+      }
+    }
     .group-hover\:bg-brand-700:is(:where(.group):hover *) {
       background-color: var(--color-brand-700);
+    }
+    .group-hover\:bg-white\/7:is(:where(.group):hover *) {
+      background-color: color-mix(in srgb, #ffffff 7%, transparent);
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .group-hover\:bg-white\/7:is(:where(.group):hover *) {
+        background-color: color-mix(in oklab, var(--color-white) 7%, transparent);
+      }
     }
     .group-hover\:text-brand-700:is(:where(.group):hover *) {
       color: var(--color-brand-700);
     }
+    .group-hover\:text-gray-100:is(:where(.group):hover *) {
+      color: var(--color-gray-100);
+    }
     .group-hover\:text-white:is(:where(.group):hover *) {
       color: var(--color-white);
+    }
+    .group-hover\:text-white\/66:is(:where(.group):hover *) {
+      color: color-mix(in srgb, #ffffff 66%, transparent);
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .group-hover\:text-white\/66:is(:where(.group):hover *) {
+        color: color-mix(in oklab, var(--color-white) 66%, transparent);
+      }
+    }
+    .group-hover\:opacity-100:is(:where(.group):hover *) {
+      opacity: 100%;
     }
     .group-hover\/link\:translate-x-0\.5:is(:where(.group\/link):hover *) {
       --tw-translate-x: calc(var(--spacing) * 0.5);
@@ -2642,6 +2672,20 @@
   }
   .marker\:text-white::-webkit-details-marker {
     color: var(--color-white);
+  }
+  @media (hover: hover) {
+    .group-hover\:marker\:text-white:is(:where(.group):hover *) ::marker {
+      color: var(--color-white);
+    }
+    .group-hover\:marker\:text-white:is(:where(.group):hover *)::marker {
+      color: var(--color-white);
+    }
+    .group-hover\:marker\:text-white:is(:where(.group):hover *) ::-webkit-details-marker {
+      color: var(--color-white);
+    }
+    .group-hover\:marker\:text-white:is(:where(.group):hover *)::-webkit-details-marker {
+      color: var(--color-white);
+    }
   }
   .placeholder\:text-\[\#6b6b72\]::placeholder {
     color: #6b6b72;
@@ -2730,6 +2774,9 @@
       .hover\:border-gray-900\/30:hover {
         border-color: color-mix(in oklab, var(--color-gray-900) 30%, transparent);
       }
+    }
+    .hover\:border-transparent:hover {
+      border-color: transparent;
     }
     .hover\:bg-brand-25:hover {
       background-color: var(--color-brand-25);
@@ -3597,9 +3644,6 @@
     .lg\:rounded-2xl {
       border-radius: var(--radius-2xl);
     }
-    .lg\:rounded-\[10px\] {
-      border-radius: 10px;
-    }
     .lg\:rounded-\[20px\] {
       border-radius: 20px;
     }
@@ -3729,9 +3773,6 @@
     .lg\:px-\[13px\] {
       padding-inline: 13px;
     }
-    .lg\:px-\[120px\] {
-      padding-inline: 120px;
-    }
     .lg\:py-0 {
       padding-block: 0px;
     }
@@ -3845,9 +3886,6 @@
     }
     .lg\:pr-7 {
       padding-left: calc(var(--spacing) * 7);
-    }
-    .lg\:pr-12 {
-      padding-left: calc(var(--spacing) * 12);
     }
     .lg\:pr-\[7px\] {
       padding-left: 7px;

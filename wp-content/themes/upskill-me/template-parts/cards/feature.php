@@ -8,11 +8,12 @@
  * - principle: icon top left, label top right, title and text at the foot. Why 49325:15528.
  * - glass:     translucent card for dark sections. Case Studies 49325:18246.
  *
- * A card's tone ("dark") turns a light-surface card into the black textured one
- * Figma uses as the last card of a row.
+ * Figma draws one card of a row in black (textured; the principle card as a
+ * plain gradient). Rather than fixing it to one card, every light card takes
+ * that look on hover, so the row stays even on touch screens.
  *
  * @param array $args {
- *     @type array  $card   icon, label, title, text, link, tone.
+ *     @type array  $card   icon, label, title, text, points, link.
  *     @type int    $index  Position in the grid (0-based).
  *     @type string $style  stacked|principle|glass.
  *     @type bool   $number Show the 01/02 number.
@@ -30,8 +31,6 @@
 $card   = $args['card'];
 $index  = (int) $args['index'];
 $style  = $args['style'];
-$tone   = ! empty( $card['tone'] ) ? $card['tone'] : 'light';
-$dark   = 'light' !== $tone;
 $number = str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT );
 $title  = isset( $card['title'] ) ? $card['title'] : '';
 $text   = isset( $card['text'] ) ? $card['text'] : '';
@@ -40,16 +39,6 @@ $icon   = isset( $card['icon'] ) ? $card['icon'] : '';
 $link   = ! empty( $card['link']['url'] ) ? $card['link'] : null;
 $points = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) ( $card['points'] ?? '' ) ) ) );
 $stagger = 'style="--i:' . (int) min( $index, 5 ) . '"';
-
-// The textured surface of the dark cards: a background layer, so
-// the texture's own proportions never set the card's height.
-$texture = static function ( $file = 'texture-dark.webp', $classes = '' ) {
-	printf(
-		'<img class="pointer-events-none absolute inset-0 -z-10 size-full object-cover %1$s" src="%2$s" alt="" loading="lazy" decoding="async">',
-		esc_attr( $classes ),
-		esc_url( upskill_theme_image( $file ) )
-	);
-};
 
 /*
  * The title, as the card's link when it has one: a stretched pseudo-element
@@ -89,16 +78,17 @@ else :
 	$principle = 'principle' === $style;
 	$roomy     = ! empty( $args['roomy'] );
 	$side      = ! empty( $args['side'] ) && ! $principle;
-	// The dark highlight card of a roomy grid takes the 20px title Figma gives it ("Managed Compliance").
-	$title_cls = ( ! empty( $args['large'] ) ? ( $side ? 'text-lg lg:text-h6' : 'text-h6' ) : ( $dark && $roomy ? 'text-xl' : 'text-lg' ) ) . ' font-medium ' . ( $dark ? 'text-white' : 'text-gray-950' );
-	$chip      = $dark ? 'bg-white/7 text-white' : 'bg-[#F3F1FB] text-brand-700';
-	// The principle card's dark tone is a plain gradient in Figma (49325:15598); the others are textured.
-	$surface   = $dark ? ( $principle ? 'border-transparent bg-[linear-gradient(163deg,#17132b_8%,#0b0b10_92%)]' : 'border-transparent bg-gray-950' ) : 'border-line bg-white';
+	// Light at rest; the group-hover colours are the dark card's (see the file header).
+	$title_cls = ( ! empty( $args['large'] ) ? ( $side ? 'text-lg lg:text-h6' : 'text-h6' ) : 'text-lg' ) . ' font-medium text-gray-950 group-hover:text-white';
+	$chip      = 'bg-[#F3F1FB] text-brand-700 group-hover:bg-white/7 group-hover:text-white';
 	?>
-	<li class="reveal feature-card relative isolate flex flex-col overflow-hidden rounded-[22px] border shadow-xs <?php echo esc_attr( $surface . ( $link ? ' feature-card--lift group' : '' ) ); ?>" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
-		<?php if ( $dark && ! $principle ) : ?>
-			<?php $texture(); ?>
-		<?php endif; ?>
+	<li class="reveal feature-card feature-card--hover group relative isolate flex flex-col overflow-hidden rounded-[22px] border border-line bg-white shadow-xs hover:border-transparent<?php echo $link ? ' feature-card--lift' : ''; ?>" <?php echo $stagger; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built above. ?>>
+		<?php // The dark surface fades in behind the content: Figma's gradient for the principle card (49325:15598), black and textured for the others. ?>
+		<span class="feature-card__dark pointer-events-none absolute inset-0 -z-10 opacity-0 group-hover:opacity-100 <?php echo $principle ? 'bg-[linear-gradient(163deg,#17132b_8%,#0b0b10_92%)]' : 'bg-gray-950'; ?>" aria-hidden="true">
+			<?php if ( ! $principle ) : ?>
+				<img class="size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'texture-dark.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+			<?php endif; ?>
+		</span>
 		<div class="flex flex-1 flex-col <?php echo esc_attr( $principle ? 'p-7 lg:min-h-[236px] lg:p-4' : ( $roomy ? 'p-[30px]' : ( $side ? 'min-h-[273px] p-[30px] lg:p-4' : 'min-h-[240px] p-4' ) ) ); ?>">
 			<?php if ( $principle ) : ?>
 				<?php // Phones: label, icon, then text (Figma 49374:44476). Desktop: icon left, label right. ?>
@@ -113,7 +103,7 @@ else :
 				<div class="mt-auto flex flex-col gap-2 pt-3 lg:pt-6">
 					<?php $title_markup( $title_cls ); ?>
 					<?php if ( $text ) : ?>
-						<p class="text-base <?php echo $dark ? 'text-white/66' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
+						<p class="text-base text-gray-500 group-hover:text-white/66"><?php echo esc_html( $text ); ?></p>
 					<?php endif; ?>
 				</div>
 			<?php else : ?>
@@ -122,22 +112,22 @@ else :
 				<?php elseif ( $icon ) : ?>
 					<span class="grid size-11 place-items-center rounded-[13px] <?php echo esc_attr( $chip ); ?>" aria-hidden="true"><?php upskill_icon( $icon, 'size-[21px]' ); ?></span>
 				<?php endif; ?>
-				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-12.5' : ( $roomy && ! $dark ? 'pt-5 lg:pt-10' : 'pt-11' ) ) : '' ); ?>">
+				<div class="flex flex-col <?php echo 'bar' === $icon ? 'pt-[22px]' : ( $icon ? ( $side ? 'pt-6 lg:pt-12.5' : ( $roomy ? 'pt-5 lg:pt-10' : 'pt-11' ) ) : '' ); ?>">
 					<?php if ( ! empty( $args['framed'] ) && ! empty( $args['number'] ) ) : ?>
-						<span class="order-first mb-6 grid size-8 place-items-center rounded-md border text-sm <?php echo $dark ? 'border-white/40 text-white' : 'border-gray-200 text-gray-500'; ?>" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
+						<span class="order-first mb-6 grid size-8 place-items-center rounded-md border border-gray-200 text-sm text-gray-500 group-hover:border-white/40 group-hover:text-white" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
 					<?php elseif ( ! empty( $args['number'] ) ) : ?>
 						<?php // Purple when it heads a label (About "Why we exist"), grey when it heads the title; small and spaced in the side layout. ?>
 						<span class="<?php echo $label ? 'text-[13px] font-semibold tracking-[0.1em] text-[#6b2fe3]' : ( $side ? 'text-xs font-semibold tracking-[0.1em] text-[#8b8b97]' : 'text-sm text-gray-500' ); ?>" aria-hidden="true"><?php echo esc_html( $number ); ?></span>
 					<?php endif; ?>
 					<?php if ( $label ) : ?>
-						<span class="pt-2 text-sm font-medium uppercase <?php echo $dark ? 'text-white' : 'text-gray-500'; ?>"><?php echo esc_html( $label ); ?></span>
+						<span class="pt-2 text-sm font-medium text-gray-500 uppercase group-hover:text-white"><?php echo esc_html( $label ); ?></span>
 					<?php endif; ?>
 					<?php $title_markup( ( $label ? 'pt-4 ' : ( ! empty( $args['number'] ) ? 'pt-2.5 ' : '' ) ) . $title_cls ); ?>
 					<?php if ( $text ) : ?>
-						<p class="<?php echo $side ? 'pt-2' : 'pt-2.5'; ?> text-base card-description <?php echo $dark ? 'text-gray-100' : 'text-gray-500'; ?>"><?php echo esc_html( $text ); ?></p>
+						<p class="<?php echo $side ? 'pt-2' : 'pt-2.5'; ?> text-base card-description text-gray-500 group-hover:text-gray-100"><?php echo esc_html( $text ); ?></p>
 					<?php endif; ?>
 					<?php if ( $points ) : ?>
-						<ul class="flex list-disc flex-col gap-1 pt-3 pl-5 text-sm <?php echo $dark ? 'text-gray-100 marker:text-white' : 'text-gray-700 marker:text-gray-500'; ?>">
+						<ul class="flex list-disc flex-col gap-1 pt-3 pl-5 text-sm text-gray-700 marker:text-gray-500 group-hover:text-gray-100 group-hover:marker:text-white">
 							<?php foreach ( $points as $point ) : ?>
 								<li><?php echo esc_html( $point ); ?></li>
 							<?php endforeach; ?>

@@ -2,12 +2,22 @@
  * Card Grid block.
  *
  * Layout and colour are utilities in render.php and
- * template-parts/cards/feature.php; this only adds the hover lift (with its
- * reduced-motion guard).
+ * template-parts/cards/feature.php; this adds the timing of the hover lift and
+ * of the dark hover surface (with their reduced-motion guard).
  */
 
+/* Light card to dark card on hover: the surface layer fades in and the text
+   colours follow at the same pace. */
+.block-card-grid .feature-card--hover,
+.block-card-grid .feature-card--hover .feature-card__dark,
+.block-card-grid .feature-card--hover :is(h3, p, span, li, a) {
+	transition-duration: 0.45s;
+	transition-property: color, background-color, border-color, opacity;
+	transition-timing-function: ease;
+}
+
 .block-card-grid .feature-card--lift {
-	transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1);
+	transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1), border-color 0.45s ease;
 }
 
 @media (hover: hover) {
@@ -17,7 +27,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.block-card-grid .feature-card--lift {
+	.block-card-grid .feature-card--lift,
+	.block-card-grid .feature-card--hover,
+	.block-card-grid .feature-card--hover * {
 		transition: none;
 	}
 

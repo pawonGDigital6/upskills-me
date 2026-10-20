@@ -332,24 +332,9 @@
                     "name": "label",
                     "type": "text",
                     "wrapper": {
-                        "width": "35"
+                        "width": "70"
                     },
                     "instructions": "e.g. Essential, Principle 01."
-                },
-                {
-                    "key": "field_upskill_card_grid_cards_tone",
-                    "label": "Tone",
-                    "name": "tone",
-                    "type": "select",
-                    "choices": {
-                        "light": "Light",
-                        "dark": "Dark"
-                    },
-                    "default_value": "light",
-                    "return_format": "value",
-                    "wrapper": {
-                        "width": "35"
-                    }
                 },
                 {
                     "key": "field_upskill_card_grid_cards_title",
@@ -404,5 +389,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792494012
+    "modified": 1792493653
 }
