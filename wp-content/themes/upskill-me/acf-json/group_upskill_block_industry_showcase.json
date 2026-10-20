@@ -1,9 +1,9 @@
 {
-    "key": "group_upskill_block_industry_cards",
-    "title": "Block: Industry Cards",
+    "key": "group_upskill_block_industry_showcase",
+    "title": "Block: Industry Showcase",
     "fields": [
         {
-            "key": "field_upskill_industry_cards_tab_content",
+            "key": "field_upskill_industry_showcase_tab_content",
             "label": "Content",
             "name": "",
             "type": "tab",
@@ -11,7 +11,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_upskill_industry_cards_section_header",
+            "key": "field_upskill_industry_showcase_section_header",
             "label": "Section Header",
             "name": "section_header",
             "type": "clone",
@@ -24,7 +24,7 @@
             "prefix_name": 0
         },
         {
-            "key": "field_upskill_industry_cards_acc_industries",
+            "key": "field_upskill_industry_showcase_acc_industries",
             "label": "Industries",
             "name": "",
             "type": "accordion",
@@ -33,7 +33,7 @@
             "endpoint": 0
         },
         {
-            "key": "field_upskill_industry_cards_industries",
+            "key": "field_upskill_industry_showcase_industries",
             "label": "Industries",
             "name": "industries",
             "type": "taxonomy",
@@ -53,7 +53,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf-block/industry-cards"
+                "value": "acf-block/industry-showcase"
             }
         ]
     ],

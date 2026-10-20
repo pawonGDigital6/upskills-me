@@ -1,6 +1,6 @@
 <?php
 /**
- * Industry Cards block.
+ * Industry Showcase block.
  *
  * Figma: Homepage section 49325:14430 (1440) / Frame 99 49196:7749 (390).
  *
@@ -13,7 +13,7 @@
  * @package upskill-me
  */
 
-$attributes = upskill_block_attributes( $block, 'block-industry-cards section-y bg-white' );
+$attributes = upskill_block_attributes( $block, 'block-industry-showcase section-y bg-white' );
 $terms      = upskill_selected_terms( get_field( 'industries' ), 'industry' );
 
 /*

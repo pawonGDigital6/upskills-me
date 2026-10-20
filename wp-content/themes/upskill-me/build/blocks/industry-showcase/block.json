@@ -1,9 +1,9 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
   "apiVersion": 2,
-  "name": "acf-block/industry-cards",
+  "name": "acf-block/industry-showcase",
   "version": "1.0.0",
-  "title": "Industry Cards",
+  "title": "Industry Showcase",
   "category": "acf-blocks",
   "icon": "grid-view",
   "description": "Cards for selected industries, styled per industry.",
