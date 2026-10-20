@@ -59,7 +59,6 @@
                 "tint": "Lilac",
                 "pale": "Pale lilac",
                 "waves": "Light waves",
-                "faint": "Faint waves",
                 "dark": "Dark"
             },
             "default_value": "white",
@@ -92,11 +91,7 @@
             "instructions": "Dark backgrounds always use the translucent card.",
             "choices": {
                 "stacked": "Icon or accent bar, then text",
-                "principle": "Label top right, text at the foot",
-                "link": "Link card with arrow",
-                "texture": "Tall textured card",
-                "rows": "Rows: icon, title and text on one line (dark backgrounds)",
-                "outcome": "Outcome columns in one outlined box"
+                "principle": "Label top right, text at the foot"
             },
             "default_value": "stacked",
             "return_format": "value",
@@ -145,27 +140,6 @@
             "instructions": "Cards sit in a grey rounded frame, numbered in a box (industry \"Key training needs\").",
             "ui": 1,
             "default_value": 0,
-            "wrapper": {
-                "width": "22"
-            }
-        },
-        {
-            "key": "field_upskill_card_grid_left_on_phones",
-            "label": "Left-align the header on phones",
-            "name": "left_on_phones",
-            "type": "true_false",
-            "instructions": "For a centred header that Figma left-aligns on the phone frame.",
-            "ui": 1,
-            "default_value": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_upskill_card_grid_layout",
-                        "operator": "==",
-                        "value": "center"
-                    }
-                ]
-            ],
             "wrapper": {
                 "width": "22"
             }
@@ -360,7 +334,7 @@
                     "wrapper": {
                         "width": "35"
                     },
-                    "instructions": "e.g. Essential, Principle 01, Blog."
+                    "instructions": "e.g. Essential, Principle 01."
                 },
                 {
                     "key": "field_upskill_card_grid_cards_tone",
@@ -369,8 +343,7 @@
                     "type": "select",
                     "choices": {
                         "light": "Light",
-                        "dark": "Dark",
-                        "brand": "Purple (textured cards)"
+                        "dark": "Dark"
                     },
                     "default_value": "light",
                     "return_format": "value",
@@ -431,5 +404,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792042883
+    "modified": 1792494012
 }

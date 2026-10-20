@@ -1,0 +1,18 @@
+/**
+ * Icon Rows block.
+ *
+ * Layout and colour are utilities in render.php; this sets the header Figma
+ * gives the rows (case study "The solution"): 12px under the eyebrow and a
+ * 559px intro, 20/30 at 66% white in both frames (49325:16718 / 49374:107273).
+ */
+
+.block-icon-rows .section-header--rows .section-header__title {
+	gap: 12px;
+}
+
+.block-icon-rows .section-header--rows .section-header__intro {
+	max-width: 559px;
+	color: rgb(255 255 255 / 66%);
+	font-size: var(--text-xl);
+	line-height: 1.5;
+}

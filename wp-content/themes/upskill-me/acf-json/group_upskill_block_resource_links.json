@@ -1,0 +1,91 @@
+{
+    "key": "group_upskill_block_resource_links",
+    "title": "Block: Resource Links",
+    "fields": [
+        {
+            "key": "field_upskill_resource_links_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_resource_links_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_resource_links_cards",
+            "label": "Links",
+            "name": "cards",
+            "type": "repeater",
+            "instructions": "Up to four links, numbered automatically. The whole card is the link.",
+            "layout": "block",
+            "min": 0,
+            "max": 4,
+            "button_label": "Add link",
+            "collapsed": "field_upskill_resource_links_cards_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_resource_links_cards_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "instructions": "Small chip, e.g. Blog, Guide.",
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "parent_repeater": "field_upskill_resource_links_cards"
+                },
+                {
+                    "key": "field_upskill_resource_links_cards_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "required": 1,
+                    "wrapper": {
+                        "width": "60"
+                    },
+                    "parent_repeater": "field_upskill_resource_links_cards"
+                },
+                {
+                    "key": "field_upskill_resource_links_cards_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array",
+                    "required": 1,
+                    "parent_repeater": "field_upskill_resource_links_cards"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/resource-links"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1792493422
+}

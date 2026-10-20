@@ -1,0 +1,1 @@
+{"version":3,"file":"icon-rows/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/icon-rows/editor.scss"],"sourcesContent":["/**\n * Icon Rows block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-icon-rows a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

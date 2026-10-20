@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/outcome-columns",
+	"version": "1.0.0",
+	"title": "Outcome Columns",
+	"category": "acf-blocks",
+	"icon": "columns",
+	"description": "Section header over the outlined columns of one box: label, large title and text in each.",
+	"keywords": [
+		"outcomes",
+		"impact",
+		"columns"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": true
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}
