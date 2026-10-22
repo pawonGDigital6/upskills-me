@@ -1939,6 +1939,9 @@
   .pb-4 {
     padding-bottom: calc(var(--spacing) * 4);
   }
+  .pb-5 {
+    padding-bottom: calc(var(--spacing) * 5);
+  }
   .pb-6 {
     padding-bottom: calc(var(--spacing) * 6);
   }
@@ -3939,6 +3942,9 @@
     }
     .lg\:pr-\[34px\] {
       padding-right: 34px;
+    }
+    .lg\:pr-\[37px\] {
+      padding-right: 37px;
     }
     .lg\:pb-0 {
       padding-bottom: 0px;

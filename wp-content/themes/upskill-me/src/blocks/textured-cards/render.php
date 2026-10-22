@@ -50,7 +50,7 @@ $attributes = upskill_block_attributes( $block, 'block-textured-cards section-y 
 					$t    = isset( $tones[ $card['tone'] ] ) ? $tones[ $card['tone'] ] : $tones['light'];
 					$link = ! empty( $card['link']['url'] ) ? $card['link'] : null;
 					?>
-					<li class="textured-cards__item reveal textured-card group relative isolate flex min-h-[366px] flex-col overflow-hidden rounded-card shadow-[0_1px_1px_rgb(10_13_18/5%)] <?php echo esc_attr( $t[0] ); ?>" style="--i:<?php echo (int) min( $index, 5 ); ?>">
+					<li class="textured-cards__item reveal textured-card group relative isolate flex min-h-[366px] flex-col overflow-hidden sm:rounded-card rounded-4xl shadow-[0_1px_1px_rgb(10_13_18/5%)] <?php echo esc_attr( $t[0] ); ?>" style="--i:<?php echo (int) min( $index, 5 ); ?>">
 						<?php // The texture is a background layer, so its own proportions never set the card's height. ?>
 						<img class="textured-cards__texture pointer-events-none absolute inset-0 -z-10 size-full object-cover opacity-20 transition-transform duration-700 ease-out group-hover:scale-105" src="<?php echo esc_url( upskill_theme_image( $t[1] ) ); ?>" alt="" loading="lazy" decoding="async">
 						<div class="textured-cards__body flex flex-1 flex-col p-4">
@@ -58,8 +58,8 @@ $attributes = upskill_block_attributes( $block, 'block-textured-cards section-y 
 								<span class="textured-cards__icon grid size-10 place-items-center rounded-full <?php echo esc_attr( $t[2] ); ?>" aria-hidden="true"><?php upskill_icon( $card['icon'], 'size-6' ); ?></span>
 								<span class="textured-cards__number text-sm font-medium uppercase" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 							</div>
-							<div class="textured-cards__content mt-auto flex flex-col gap-1 pt-10">
-								<h3 class="textured-cards__title text-h6 font-medium lg:pr-[34px] lg:text-h5">
+							<div class="textured-cards__content mt-auto flex flex-col gap-1 pt-10 pb-5">
+								<h3 class="textured-cards__title text-h6 font-medium lg:pr-[37px] lg:text-h5">
 									<?php if ( $link ) : ?>
 										<?php // A stretched pseudo-element makes the whole card the link target. ?>
 										<a class="textured-cards__link after:absolute after:inset-0 after:z-10 after:rounded-[inherit] focus-visible:outline-none"<?php echo upskill_link_attributes( $link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>><?php echo esc_html( $card['title'] ); ?></a>
