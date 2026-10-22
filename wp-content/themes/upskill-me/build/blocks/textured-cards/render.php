@@ -44,7 +44,7 @@ $attributes = upskill_block_attributes( $block, 'block-textured-cards section-y 
 		?>
 
 		<?php if ( $cards ) : ?>
-			<ul class="textured-cards__list mt-stack grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:items-end">
+			<ul class="textured-cards__list mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:items-end">
 				<?php foreach ( $cards as $index => $card ) : ?>
 					<?php
 					$t    = isset( $tones[ $card['tone'] ] ) ? $tones[ $card['tone'] ] : $tones['light'];

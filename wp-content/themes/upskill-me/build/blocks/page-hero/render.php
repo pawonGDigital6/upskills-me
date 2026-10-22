@@ -94,16 +94,16 @@ $chip_tones = array(
 
 			<?php if ( $steps ) : ?>
 				<?php // 1200 of the 1360 box: the ladder sits 44px inside the 1288 frame Figma draws; Figma leaves 62px under the button (its 138px intro box + 48px gap). ?>
-				<div class="reveal mt-6 rounded-[24px] border border-line bg-white px-4 py-6 shadow-xs lg:mx-auto lg:mt-[62px] lg:flex lg:max-w-[1200px] lg:px-8 lg:py-7">
-					<div class="flex flex-col gap-2.5 lg:w-[210px] lg:flex-none lg:border-r lg:border-line lg:pr-7">
+				<div class="page-hero__steps reveal mt-6 rounded-[24px] border border-line bg-white px-4 py-6 shadow-xs lg:mx-auto lg:mt-[62px] mc:flex lg:max-w-[1200px] lg:px-8 lg:pt-7 lg:pb-4">
+					<div class="flex flex-col gap-2.5 mc:w-[210px] lg:flex-none mc:border-r mc:border-line lg:pr-7 max-mc:mb-8 max-sm:mb-4 max-mc:text-center max-sm:text-left">
 						<?php if ( ! empty( $ladder['label'] ) ) : ?>
 							<p class="text-sm font-medium text-brand-700 uppercase"><?php echo esc_html( $ladder['label'] ); ?></p>
 						<?php endif; ?>
 						<?php if ( ! empty( $ladder['title'] ) ) : ?>
-							<p class="text-lg font-medium text-gray-950 lg:max-w-[181px]"><?php echo esc_html( $ladder['title'] ); ?></p>
+							<p class="text-lg font-medium text-gray-950 mc:max-w-[181px]"><?php echo esc_html( $ladder['title'] ); ?></p>
 						<?php endif; ?>
 					</div>
-					<ol class="mt-6 flex flex-col gap-6 pl-6 lg:mt-0 lg:grid lg:flex-1 lg:auto-cols-fr lg:grid-flow-col lg:gap-0 lg:pl-0">
+					<ol class="mt-0 mc:flex-1 pl-6 grid lg:auto-cols-fr lg:grid-flow-col sm:gap-6 lg:gap-0 gap-5 lg:pl-0 max-mc:grid-cols-2 max-sm:grid-cols-1">
 						<?php foreach ( array_values( $steps ) as $number => $step ) : ?>
 							<?php $last = count( $steps ) - 1 === $number; ?>
 							<li class="relative flex flex-col lg:px-6 lg:py-0.5">
@@ -113,7 +113,7 @@ $chip_tones = array(
 								<span class="text-sm font-medium <?php echo $last ? 'text-[#6b2fe3]' : 'text-gray-500'; ?>"><?php echo esc_html( str_pad( (string) ( $number + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 								<span class="pt-2 text-lg font-medium lg:whitespace-nowrap <?php echo $last ? 'text-[#6b2fe3]' : 'text-gray-950'; ?>"><?php echo esc_html( $step['title'] ); ?></span>
 								<?php if ( ! empty( $step['text'] ) ) : ?>
-									<span class="pt-1 text-base text-gray-500"><?php echo esc_html( $step['text'] ); ?></span>
+									<span class="pt-[2px] text-base text-gray-500"><?php echo esc_html( $step['text'] ); ?></span>
 								<?php endif; ?>
 							</li>
 						<?php endforeach; ?>

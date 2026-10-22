@@ -451,9 +451,6 @@
   .order-2 {
     order: 2;
   }
-  .order-first {
-    order: -9999;
-  }
   .col-2 {
     grid-column: 2;
   }
@@ -546,6 +543,9 @@
   }
   .-mt-12 {
     margin-top: calc(var(--spacing) * -12);
+  }
+  .mt-0 {
+    margin-top: 0px;
   }
   .mt-0\! {
     margin-top: 0px !important;
@@ -1572,12 +1572,6 @@
       border-color: color-mix(in oklab, var(--color-white) 28%, transparent);
     }
   }
-  .border-white\/40 {
-    border-color: color-mix(in srgb, #ffffff 40%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      border-color: color-mix(in oklab, var(--color-white) 40%, transparent);
-    }
-  }
   .bg-\[\#0e0e10\] {
     background-color: #0e0e10;
   }
@@ -2545,12 +2539,6 @@
       color: color-mix(in oklab, var(--color-white) 65%, transparent);
     }
   }
-  .text-white\/66 {
-    color: color-mix(in srgb, #ffffff 66%, transparent);
-    @supports (color: color-mix(in lab, red, red)) {
-      color: color-mix(in oklab, var(--color-white) 66%, transparent);
-    }
-  }
   .text-white\/75 {
     color: color-mix(in srgb, #ffffff 75%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2836,18 +2824,6 @@
   .marker\:text-gray-500::-webkit-details-marker {
     color: var(--color-gray-500);
   }
-  .marker\:text-white ::marker {
-    color: var(--color-white);
-  }
-  .marker\:text-white::marker {
-    color: var(--color-white);
-  }
-  .marker\:text-white ::-webkit-details-marker {
-    color: var(--color-white);
-  }
-  .marker\:text-white::-webkit-details-marker {
-    color: var(--color-white);
-  }
   @media (hover: hover) {
     .group-hover\:marker\:text-white:is(:where(.group):hover *) ::marker {
       color: var(--color-white);
@@ -3036,6 +3012,23 @@
   .data-visible\:opacity-100[data-visible] {
     opacity: 100%;
   }
+  @media (width < 1280px) {
+    .max-mc\:mb-4 {
+      margin-bottom: calc(var(--spacing) * 4);
+    }
+    .max-mc\:mb-8 {
+      margin-bottom: calc(var(--spacing) * 8);
+    }
+    .max-mc\:grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .max-mc\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .max-mc\:text-center {
+      text-align: center;
+    }
+  }
   @media (width < 1025px) {
     .max-lg\:hidden {
       display: none;
@@ -3055,8 +3048,14 @@
     }
   }
   @media (width < 768px) {
+    .max-sm\:mb-4 {
+      margin-bottom: calc(var(--spacing) * 4);
+    }
     .max-sm\:hidden {
       display: none;
+    }
+    .max-sm\:grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
     }
     .max-sm\:rounded-b-4xl {
       border-bottom-left-radius: var(--radius-4xl);
@@ -3091,6 +3090,9 @@
     }
     .max-sm\:pl-2 {
       padding-right: calc(var(--spacing) * 2);
+    }
+    .max-sm\:text-left {
+      text-align: right;
     }
     .max-sm\:text-base {
       font-size: var(--text-base);
@@ -3468,6 +3470,9 @@
     }
     .lg\:-mb-9 {
       margin-bottom: calc(var(--spacing) * -9);
+    }
+    .lg\:mb-4 {
+      margin-bottom: calc(var(--spacing) * 4);
     }
     .lg\:mb-20 {
       margin-bottom: calc(var(--spacing) * 20);
@@ -4011,6 +4016,9 @@
     .lg\:pt-6 {
       padding-top: calc(var(--spacing) * 6);
     }
+    .lg\:pt-7 {
+      padding-top: calc(var(--spacing) * 7);
+    }
     .lg\:pt-8 {
       padding-top: calc(var(--spacing) * 8);
     }
@@ -4349,14 +4357,36 @@
     .mc\:ml-auto {
       margin-right: auto;
     }
+    .mc\:flex {
+      display: flex;
+    }
+    .mc\:w-\[210px\] {
+      width: 210px;
+    }
     .mc\:w-\[382px\] {
       width: 382px;
     }
     .mc\:w-auto {
       width: auto;
     }
+    .mc\:max-w-\[181px\] {
+      max-width: 181px;
+    }
+    .mc\:flex-1 {
+      flex: 1;
+    }
     .mc\:flex-none {
       flex: none;
+    }
+    .mc\:auto-cols-fr {
+      grid-auto-columns: minmax(0, 1fr);
+    }
+    .mc\:border-r {
+      border-left-style: var(--tw-border-style);
+      border-left-width: 1px;
+    }
+    .mc\:border-line {
+      border-color: var(--color-line);
     }
   }
   @media (width >= 1400px) {
