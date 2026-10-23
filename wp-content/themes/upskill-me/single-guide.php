@@ -78,7 +78,7 @@ while ( have_posts() ) :
 				<?php // No headings to list: the text sits centred at the article width. ?>
 				<div class="section-y bg-white">
 					<div class="container">
-						<div class="entry-content article-body mx-auto lg:max-w-[680px]">
+						<div class="entry-content article-body">
 							<?php echo $upskill_contents['html']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- the_content output. ?>
 						</div>
 					</div>
