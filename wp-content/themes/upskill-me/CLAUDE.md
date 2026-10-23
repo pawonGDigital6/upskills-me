@@ -186,3 +186,8 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   full width (Key Takeaways stays with the text); used by `single-case_study.php` and `single-guide.php`.
   `single-guide.php` has no Figma: Blog Detail hero (chip, title, excerpt, featured image) + article
   body, "In this article" when the guide has h2s; `.type-guide .article-body` adds h3/h4 and numbered lists.
+- **Industry Resources (2026-10-23):** block `industry-resources` (Figma 49325:16856, also Industry Hub and
+  Categories), placed through the synced pattern "Industry Training Resources" (#1018) on case study 383.
+  Sessions = chosen courses, else `upskill_library_industry_courses()` for the case study's Industry /
+  the industry page, topped up with the newest; cards are `cards/training.php` with `compact`. Synced
+  patterns (`core/block`) count as full-width sections in `upskill_contain_editor_text()`.

@@ -1,0 +1,162 @@
+{
+    "key": "group_upskill_block_industry_resources",
+    "title": "Block: Industry Resources",
+    "fields": [
+        {
+            "key": "field_upskill_industry_resources_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_industry_resources_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_industry_resources_acc_featured",
+            "label": "Featured card",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_industry_resources_featured_image",
+            "label": "Image",
+            "name": "featured_image",
+            "type": "image",
+            "return_format": "id",
+            "library": "all",
+            "preview_size": "medium",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_industry_resources_featured_title",
+            "label": "Title",
+            "name": "featured_title",
+            "type": "textarea",
+            "instructions": "Wrap the words shown in grey in &lt;em&gt;…&lt;/em&gt;. The card is hidden without a title.",
+            "rows": 2,
+            "new_lines": "",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_industry_resources_featured_link",
+            "label": "Link",
+            "name": "featured_link",
+            "type": "link",
+            "instructions": "Link text defaults to \"Read More\".",
+            "return_format": "array"
+        },
+        {
+            "key": "field_upskill_industry_resources_acc_sessions",
+            "label": "Training sessions",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_industry_resources_sessions",
+            "label": "Sessions",
+            "name": "sessions",
+            "type": "relationship",
+            "instructions": "Optional: up to three. Leave empty to show the newest training for the page's industry (a case study's Industry, or the industry page), topped up with the newest training.",
+            "post_type": [
+                "sfwd-courses"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 3,
+            "elements": []
+        },
+        {
+            "key": "field_upskill_industry_resources_acc_panel",
+            "label": "Panel",
+            "name": "",
+            "type": "accordion",
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_industry_resources_panel_heading",
+            "label": "Heading",
+            "name": "panel_heading",
+            "type": "text"
+        },
+        {
+            "key": "field_upskill_industry_resources_panel_text",
+            "label": "Text",
+            "name": "panel_text",
+            "type": "textarea",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_industry_resources_panel_button",
+            "label": "Button",
+            "name": "panel_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_industry_resources_panel_image",
+            "label": "Cut-out photo",
+            "name": "panel_image",
+            "type": "image",
+            "instructions": "Transparent PNG/WebP, about 434 x 620. Desktop only.",
+            "return_format": "id",
+            "library": "all",
+            "preview_size": "medium",
+            "wrapper": {
+                "width": "50"
+            }
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/industry-resources"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1792767000
+}

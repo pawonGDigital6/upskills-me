@@ -381,6 +381,61 @@ if ( ! function_exists( 'upskill_library_next' ) ) {
 	}
 }
 
+if ( ! function_exists( 'upskill_library_industry_courses' ) ) {
+	/**
+	 * Courses for an industry, newest first, topped up with the newest of the
+	 * rest so a section always has its full row (Industry Resources block).
+	 *
+	 * @param int $industry Industry term ID (0 for none).
+	 * @param int $count    How many.
+	 * @return int[]
+	 */
+	function upskill_library_industry_courses( $industry, $count = 3 ) {
+		$args = array(
+			'post_type'           => 'sfwd-courses',
+			'post_status'         => 'publish',
+			'posts_per_page'      => $count,
+			'fields'              => 'ids',
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		);
+		$ids  = array();
+
+		if ( $industry ) {
+			$ids = get_posts(
+				array_merge(
+					$args,
+					array(
+						'tax_query' => array( // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
+							array(
+								'taxonomy' => 'industry',
+								'terms'    => (int) $industry,
+							),
+						),
+					)
+				)
+			);
+		}
+
+		if ( count( $ids ) < $count ) {
+			$ids = array_merge(
+				$ids,
+				get_posts(
+					array_merge(
+						$args,
+						array(
+							'posts_per_page' => $count - count( $ids ),
+							'post__not_in'   => $ids, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- a handful of IDs.
+						)
+					)
+				)
+			);
+		}
+
+		return array_map( 'intval', $ids );
+	}
+}
+
 if ( ! function_exists( 'upskill_library_card' ) ) {
 	/**
 	 * What a library card shows for a course.

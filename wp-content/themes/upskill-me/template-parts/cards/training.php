@@ -11,10 +11,27 @@
  *
  * @package upskill-me
  *
- * @var array $args { @type array $card upskill_library_card() row. }
+ * Compact (Industry Resources, Figma 49325:16856): the picture, title and
+ * "View Session" only; Figma hides the tags, category and summary there.
+ *
+ * @var array $args {
+ *     @type array $card    upskill_library_card() row.
+ *     @type bool  $compact Picture, title and link only.
+ * }
  */
 
-$upskill_card  = $args['card'];
+$upskill_card    = $args['card'];
+$upskill_compact = ! empty( $args['compact'] );
+if ( $upskill_compact ) {
+	$upskill_card = array_merge(
+		$upskill_card,
+		array(
+			'code'     => '',
+			'category' => '',
+			'summary'  => '',
+		)
+	);
+}
 $upskill_title = wp_unique_id( 'training-card-' );
 ?>
 <article class="flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-card" aria-labelledby="<?php echo esc_attr( $upskill_title ); ?>">
@@ -39,7 +56,7 @@ $upskill_title = wp_unique_id( 'training-card-' );
 			<?php endif; ?>
 
 			<div class="pointer-events-none relative z-10 flex items-start gap-[7px] self-start justify-self-start p-2">
-				<?php if ( $upskill_card['free'] ) : ?>
+				<?php if ( $upskill_card['free'] && ! $upskill_compact ) : ?>
 					<span class="tag tag--free h-6"><?php esc_html_e( 'Free', 'upskill-me' ); ?></span>
 				<?php endif; ?>
 				<?php if ( $upskill_card['code'] ) : ?>

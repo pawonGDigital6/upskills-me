@@ -76,6 +76,7 @@ if ( ! function_exists( 'upskill_contain_editor_text' ) ) {
 	 * the block parser passes through untouched. ACF blocks are full-width
 	 * sections with their own container and are left as they are, except Key
 	 * Takeaways, which is drawn inside an article body and stays with the text.
+	 * Synced patterns (core/block) hold such sections too and are left alone.
 	 *
 	 * @param string $content Raw post content.
 	 * @param string $open    Markup that opens the text container.
@@ -94,7 +95,9 @@ if ( ! function_exists( 'upskill_contain_editor_text' ) ) {
 		foreach ( parse_blocks( $content ) as $block ) {
 			$name = (string) $block['blockName'];
 
-			if ( 0 !== strpos( $name, 'acf-block/' ) || in_array( $name, $inline, true ) ) {
+			$section = 'core/block' === $name || ( 0 === strpos( $name, 'acf-block/' ) && ! in_array( $name, $inline, true ) );
+
+			if ( ! $section ) {
 				$text .= serialize_block( $block );
 				continue;
 			}
