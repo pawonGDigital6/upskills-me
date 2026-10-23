@@ -30,8 +30,8 @@ $attributes = upskill_block_attributes( $block, 'block-principles section-y bg-b
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
 		<?php // Columns 88px apart at 1440, the cards 48px down. ?>
-		<div class="principles__layout flex flex-col gap-10 lg:flex-row lg:items-center lg:gap-[clamp(56px,6.1vw,88px)]">
-			<div class="principles__aside flex flex-col gap-8 lg:min-w-0 lg:flex-1 lg:gap-10 lg:self-stretch">
+		<div class="principles__layout flex flex-col lg:gap-10 gap-4 lg:flex-row lg:items-center">
+			<div class="principles__aside flex flex-col gap-12 lg:min-w-0 lg:flex-1 lg:gap-10 lg:self-stretch">
 				<?php
 				upskill_section_header(
 					array(
@@ -62,14 +62,14 @@ $attributes = upskill_block_attributes( $block, 'block-principles section-y bg-b
 						<?php foreach ( $principles as $index => $principle ) : ?>
 							<li class="principles__item feature-card reveal group relative isolate flex flex-col overflow-hidden rounded-[22px] border border-line bg-white shadow-xs hover:border-transparent" style="--i:<?php echo (int) min( $index, 5 ); ?>">
 								<span class="feature-card__surface pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(163deg,#17132b_8%,#0b0b10_92%)] opacity-0 group-hover:opacity-100" aria-hidden="true"></span>
-								<div class="feature-card__body flex flex-1 flex-col p-7 lg:min-h-[236px] lg:p-4">
+								<div class="feature-card__body flex flex-1 flex-col p-7 lg:min-h-[236px] lg:p-4 lg:pt-8">
 									<?php // Phones: label, icon, then text (Figma 49374:44476). Desktop: icon left, label right. ?>
 									<div class="feature-card__head flex flex-col items-start gap-[18px] lg:flex-row lg:justify-between lg:gap-4">
 										<?php if ( ! empty( $principle['icon'] ) ) : ?>
-											<span class="feature-card__icon order-2 grid size-11 place-items-center rounded-[13px] bg-[#F3F1FB] text-brand-700 group-hover:bg-white/7 group-hover:text-white lg:order-none lg:mt-[18px]" aria-hidden="true"><?php upskill_icon( $principle['icon'], 'size-[21px]' ); ?></span>
+											<span class="feature-card__icon order-2 grid size-11 place-items-center rounded-[13px] bg-[#F3F1FB] text-brand-700 group-hover:bg-white/7 group-hover:text-white lg:order-none" aria-hidden="true"><?php upskill_icon( $principle['icon'], 'size-[21px]' ); ?></span>
 										<?php endif; ?>
 										<?php if ( ! empty( $principle['label'] ) ) : ?>
-											<span class="feature-card__label order-1 text-sm font-medium text-[#8b8b97] uppercase lg:order-none"><?php echo esc_html( $principle['label'] ); ?></span>
+											<span class="feature-card__label order-1 text-sm font-medium text-[#8b8b97] uppercase lg:order-none mt-1"><?php echo esc_html( $principle['label'] ); ?></span>
 										<?php endif; ?>
 									</div>
 									<div class="feature-card__content mt-auto flex flex-col gap-2 pt-3 lg:pt-6">
