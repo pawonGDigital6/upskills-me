@@ -14,3 +14,7 @@
 .block-video-feature__header .section-header__intro {
   color: rgba(255, 255, 255, 0.66);
 }
+
+.block-video-feature .section-header .eyebrow svg path {
+  color: var(--color-white);
+}

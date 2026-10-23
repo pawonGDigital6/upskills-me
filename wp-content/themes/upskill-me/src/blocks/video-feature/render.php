@@ -57,7 +57,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 						);
 						?>
 						<?php if ( ! empty( $video['url'] ) ) : ?>
-							<button class="video-card__play col-start-1 row-start-1 grid size-[76px] place-items-center self-center justify-self-center rounded-full border border-white/24 bg-white/14 text-white transition-transform duration-300 hover:scale-105" type="button" data-video-play data-src="<?php echo esc_url( $video['url'] ); ?>">
+							<button class="video-card__play relative col-start-1 row-start-1 grid size-[76px] place-items-center self-center justify-self-center rounded-full border border-white/24 bg-white/14 text-white transition-transform duration-300 hover:scale-105" type="button" data-video-play data-src="<?php echo esc_url( $video['url'] ); ?>">
 								<span class="screen-reader-text">
 									<?php
 									/* translators: %s: video title. */
@@ -67,12 +67,12 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 								<?php upskill_icon( 'play', 'size-6' ); ?>
 							</button>
 						<?php endif; ?>
-						<div class="video-card__caption pointer-events-none col-start-1 row-start-1 hidden flex-col items-start self-end bg-[linear-gradient(180deg,rgb(11_11_16/0%),rgb(11_11_16/86%)_70%)] p-6 sm:flex">
+						<div class="video-card__caption relative z-1 pointer-events-none col-start-1 row-start-1 hidden flex-col items-start self-end bg-[linear-gradient(180deg,rgb(11_11_16/0%),rgb(11_11_16/86%)_70%)] p-6 sm:flex">
 							<?php if ( get_field( 'video_tag' ) ) : ?>
 								<span class="rounded-sm bg-white/12 px-2.5 py-1 text-2xs font-medium text-white/80"><?php echo esc_html( get_field( 'video_tag' ) ); ?></span>
 							<?php endif; ?>
 							<?php if ( $title ) : ?>
-								<p class="pt-3 text-h6 font-medium text-white"><?php echo esc_html( $title ); ?></p>
+								<p class="pt-4 text-h6 font-medium text-white tracking-[-0.24px]"><?php echo esc_html( $title ); ?></p>
 							<?php endif; ?>
 							<?php if ( get_field( 'video_meta' ) ) : ?>
 								<p class="pt-1.5 text-sm text-white/55"><?php echo esc_html( get_field( 'video_meta' ) ); ?></p>
@@ -83,7 +83,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 					<?php if ( $facts ) : ?>
 						<ul class="grid grid-cols-2 gap-3.5 sm:grid-cols-3">
 							<?php foreach ( $facts as $index => $fact ) : ?>
-								<li class="reveal rounded-2xl border border-white/10 bg-white/4 p-4 last:odd:col-span-2 sm:last:odd:col-span-1" style="--i:<?php echo (int) $index; ?>">
+								<li class="reveal rounded-lg border border-white/10 bg-white/4 p-4 pb-2 last:odd:col-span-2 sm:last:odd:col-span-1" style="--i:<?php echo (int) $index; ?>">
 									<p class="text-base font-medium text-white"><?php echo esc_html( $fact['title'] ); ?></p>
 									<?php if ( ! empty( $fact['text'] ) ) : ?>
 										<p class="pt-1 text-base text-gray-100"><?php echo esc_html( $fact['text'] ); ?></p>
@@ -98,13 +98,13 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 			<?php if ( $features ) : ?>
 				<ul class="grid gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:self-start">
 					<?php foreach ( $features as $index => $feature ) : ?>
-						<li class="reveal flex flex-col rounded-[18px] border border-white/10 bg-white/4 p-[22px] lg:min-h-[203px]" style="--i:<?php echo (int) $index; ?>">
+						<li class="reveal flex flex-col rounded-[18px] border border-white/10 bg-white/4 p-[22px] min-h-[203px]" style="--i:<?php echo (int) $index; ?>">
 							<?php if ( ! empty( $feature['icon'] ) ) : ?>
-								<span class="grid size-[38px] place-items-center rounded-[11px] bg-white/7 text-brand-300" aria-hidden="true"><?php upskill_icon( $feature['icon'], 'size-[19px]' ); ?></span>
+								<span class="block-video-feature__grid-icon grid size-[38px] place-items-center rounded-[11px] bg-white/7 text-brand-400" aria-hidden="true"><?php upskill_icon( $feature['icon'], 'size-[19px]' ); ?></span>
 							<?php endif; ?>
 							<h3 class="pt-4 text-lg font-medium text-white"><?php echo esc_html( $feature['title'] ); ?></h3>
 							<?php if ( ! empty( $feature['text'] ) ) : ?>
-								<p class="pt-2 text-base text-gray-100"><?php echo esc_html( $feature['text'] ); ?></p>
+								<p class="pt-2 text-base text-gray-100 max-smlr:max-w-[268px]"><?php echo esc_html( $feature['text'] ); ?></p>
 							<?php endif; ?>
 						</li>
 					<?php endforeach; ?>
