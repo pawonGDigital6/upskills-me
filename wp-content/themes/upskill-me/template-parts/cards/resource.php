@@ -176,7 +176,7 @@ elseif ('case' === $variant):
 			<?php endif; ?>
 			<<?php echo esc_attr($tag); ?> class="resource-card__title text-xl font-medium
 				text-gray-950"><?php echo $title_link; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></<?php echo esc_attr($tag); ?>> <?php if ($excerpt): ?>
-				<p class="resource-card__excerpt text-base text-gray-500"><?php echo esc_html($excerpt); ?></p>
+				<p class="resource-card__excerpt text-base text-gray-500 line-clamp-3"><?php echo esc_html($excerpt); ?></p>
 			<?php endif; ?>
 			<?php $read_line('mt-auto pt-4 text-brand-700'); ?>
 		</div>

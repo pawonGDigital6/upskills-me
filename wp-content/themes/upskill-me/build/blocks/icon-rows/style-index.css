@@ -19,4 +19,8 @@
   line-height: 1.5;
 }
 
+.block-icon-rows .section-header .eyebrow__icon {
+  color: var(--color-white);
+}
+
 /*# sourceMappingURL=style-index.css.map*/

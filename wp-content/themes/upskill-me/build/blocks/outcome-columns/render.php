@@ -47,7 +47,7 @@ $attributes = upskill_block_attributes( $block, 'block-outcome-columns section-y
 						<span class="outcome-columns__rule mt-5 h-0.5 w-10 rounded-[1px] bg-[#111827]" aria-hidden="true"></span>
 						<h3 class="outcome-columns__title pt-5 text-[36px] leading-[1.1] font-medium tracking-[-0.01em] text-[#111827]"><?php echo esc_html( $column['title'] ); ?></h3>
 						<?php if ( ! empty( $column['text'] ) ) : ?>
-							<p class="outcome-columns__text max-w-[340px] pt-5 text-base leading-[1.6] tracking-[-0.006em] text-gray-500"><?php echo esc_html( $column['text'] ); ?></p>
+							<p class="outcome-columns__text max-w-[340px] pt-[30px] text-base leading-[1.6] tracking-[-0.006em] text-gray-500"><?php echo esc_html( $column['text'] ); ?></p>
 						<?php endif; ?>
 					</li>
 				<?php endforeach; ?>

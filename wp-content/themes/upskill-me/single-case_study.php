@@ -61,7 +61,7 @@ while (have_posts()):
 			// into the editor between them keeps the article reading width.
 			$upskill_content = upskill_contain_editor_text(
 				get_the_content(),
-				'<div class="section-y bg-white"><div class="container"><div class="entry-content article-body mx-auto lg:max-w-[680px]">',
+				'<div class="section-y bg-white"><div class="container"><div class="entry-content article-body">',
 				'</div></div></div>'
 			);
 			?>
