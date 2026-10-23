@@ -17,13 +17,13 @@ $image = get_field( 'image' );
 $form  = (int) get_field( 'form' );
 $note  = get_field( 'note' );
 
-$attributes = upskill_block_attributes( $block, 'block-contact-hero bg-gray-25 pt-[30px] pb-[46px] lg:pt-14 lg:pb-0' );
+$attributes = upskill_block_attributes( $block, 'block-contact-hero bg-gray-25 pt-[30px] pb-[24px] lg:pt-14 lg:pb-0' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
 		<?php // From desktop the photo is the background of the whole card (the copy's layers position against it). ?>
-		<div class="relative isolate grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,559px)] lg:gap-20 lg:overflow-hidden lg:rounded-[24px] lg:p-10">
-			<div class="relative isolate flex flex-col justify-center overflow-hidden rounded-[24px] px-4 py-[120px] sm:px-10 sm:py-20 lg:static lg:overflow-visible lg:rounded-none lg:p-6">
+		<div class="relative isolate grid grid-cols-1 justify-between gap-6 wd:grid-cols-[minmax(0,1fr)_minmax(0,559px)] lg:gap-5 lg:overflow-hidden lg:rounded-[24px] lg:p-10">
+			<div class="relative isolate flex flex-col justify-center overflow-hidden rounded-[24px] px-4 py-[128px] sm:px-10 sm:py-20 lg:p-6 lg:static lg:overflow-visible lg:rounded-none ">
 				<?php if ( $image ) : ?>
 					<?php
 					upskill_image(
@@ -42,14 +42,14 @@ $attributes = upskill_block_attributes( $block, 'block-contact-hero bg-gray-25 p
 
 				<div class="flex flex-col items-start gap-3">
 					<?php upskill_eyebrow( get_field( 'eyebrow' ), (string) get_field( 'eyebrow_icon' ) ); ?>
-					<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-semibold text-white' ); ?>
+					<?php upskill_heading( get_field( 'heading' ), 'h1', 'text-h1 font-semibold text-white tracking-[-0.8px]' ); ?>
 				</div>
 				<?php if ( get_field( 'intro' ) ) : ?>
-					<p class="reveal mt-6 text-xl text-gray-100" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
+					<p class="reveal mt-[30px] text-xl text-gray-100" style="--i:1"><?php echo esc_html( get_field( 'intro' ) ); ?></p>
 				<?php endif; ?>
 
 				<?php if ( get_field( 'primary_button' ) || get_field( 'secondary_button' ) ) : ?>
-					<div class="reveal flex flex-col items-start gap-2 pt-8 sm:flex-row sm:flex-wrap" style="--i:2">
+					<div class="reveal flex flex-col items-start gap-2 sm:pt-13.5 pt-8 sm:flex-row sm:flex-wrap" style="--i:2">
 						<?php
 						upskill_button( get_field( 'primary_button' ), array( 'class' => 'min-h-[50px]' ) );
 						upskill_button(

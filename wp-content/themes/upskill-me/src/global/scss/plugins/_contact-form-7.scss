@@ -36,11 +36,11 @@
 	}
 
 	// "What training do you need?" is drawn a size down.
-	.upskill-form__field--message label {
-		font-size: 13px;
-		line-height: 1.62;
-		letter-spacing: -0.008em;
-	}
+	// .upskill-form__field--message label {
+	// 	font-size: 13px;
+	// 	line-height: 1.62;
+	// 	letter-spacing: -0.008em;
+	// }
 
 	.wpcf7-form-control-wrap {
 		display: block;
@@ -141,7 +141,7 @@
 		flex-wrap: wrap;
 		align-items: center;
 		gap: 12px;
-		padding-top: 16px;
+		padding-top: 32px;
 	}
 
 	.wpcf7-not-valid-tip {
