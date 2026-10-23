@@ -65,6 +65,56 @@ if ( ! function_exists( 'upskill_article_contents' ) ) {
 	}
 }
 
+if ( ! function_exists( 'upskill_contain_editor_text' ) ) {
+	/**
+	 * Wrap the editor's own text in the reading container, leaving the theme's
+	 * ACF blocks free to run full width.
+	 *
+	 * Works on the raw post content, before `the_content`, so the filters run
+	 * once: each run of consecutive core blocks (paragraphs, headings, lists,
+	 * images…) is wrapped in $open/$close as plain HTML between blocks, which
+	 * the block parser passes through untouched. ACF blocks are full-width
+	 * sections with their own container and are left as they are, except Key
+	 * Takeaways, which is drawn inside an article body and stays with the text.
+	 *
+	 * @param string $content Raw post content.
+	 * @param string $open    Markup that opens the text container.
+	 * @param string $close   Markup that closes it.
+	 * @return string Post content, ready for `the_content`.
+	 */
+	function upskill_contain_editor_text( $content, $open, $close ) {
+		if ( ! has_blocks( $content ) ) {
+			return '' === trim( $content ) ? '' : $open . $content . $close;
+		}
+
+		$inline = array( 'acf-block/key-takeaways' );
+		$output = '';
+		$text   = '';
+
+		foreach ( parse_blocks( $content ) as $block ) {
+			$name = (string) $block['blockName'];
+
+			if ( 0 !== strpos( $name, 'acf-block/' ) || in_array( $name, $inline, true ) ) {
+				$text .= serialize_block( $block );
+				continue;
+			}
+
+			if ( '' !== trim( $text ) ) {
+				$output .= $open . $text . $close;
+			}
+
+			$text    = '';
+			$output .= serialize_block( $block );
+		}
+
+		if ( '' !== trim( $text ) ) {
+			$output .= $open . $text . $close;
+		}
+
+		return $output;
+	}
+}
+
 if ( ! function_exists( 'upskill_listing_page_url' ) ) {
 	/**
 	 * The page that lists a post type (Blogs, Case Studies, Guides).

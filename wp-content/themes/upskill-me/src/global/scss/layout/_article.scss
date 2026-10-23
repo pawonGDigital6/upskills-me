@@ -218,3 +218,57 @@
 		line-height: 1.55;
 	}
 }
+
+// Guides (no Figma detail; the blog body as above): sub-headings and numbered
+// lists, which the blog articles don't use.
+.type-guide .article-body {
+	h3,
+	h4 {
+		margin-top: 32px;
+		color: var(--color-gray-950);
+		font-weight: 500;
+		line-height: 1.5;
+		scroll-margin-top: calc(var(--upskill-header-height) - 20px);
+
+		+ * {
+			margin-top: 8px;
+		}
+	}
+
+	h3 {
+		font-size: var(--text-lg);
+	}
+
+	h4 {
+		font-size: var(--text-base);
+	}
+
+	ol:not([class]),
+	ol.wp-block-list {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-top: 16px;
+		color: #2b2b34;
+		counter-reset: guide-list;
+
+		li {
+			position: relative;
+			padding-left: 26px;
+			counter-increment: guide-list;
+
+			&::before {
+				content: counter(guide-list) ".";
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: auto;
+				height: auto;
+				border-radius: 0;
+				background: none;
+				color: var(--color-brand-700);
+				font-weight: 500;
+			}
+		}
+	}
+}

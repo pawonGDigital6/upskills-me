@@ -6,7 +6,8 @@
  * The hero (type chip, title, summary, photo), then the case study's own
  * blocks (Statement for the overview and challenge, Card Grid rows for the
  * solution and outcome columns for the impact, Testimonials), then related
- * case studies.
+ * case studies. Editor text between the blocks keeps the reading width
+ * (upskill_contain_editor_text()).
  *
  * Held for LearnDash: "Industry Training Resources" (49325:16856), the
  * sessions for the case study's industry.
@@ -55,9 +56,17 @@ while (have_posts()):
 					<?php endif; ?>
 				</div>
 			</header>
-			<?php // The blocks are full-width sections of their own. ?>
-			<div class="container mt-8">
-				<?php the_content(); ?>
+			<?php
+			// The theme's blocks are full-width sections of their own; text typed
+			// into the editor between them keeps the article reading width.
+			$upskill_content = upskill_contain_editor_text(
+				get_the_content(),
+				'<div class="section-y bg-white"><div class="container"><div class="entry-content article-body mx-auto lg:max-w-[680px]">',
+				'</div></div></div>'
+			);
+			?>
+			<div class="mt-8">
+				<?php echo apply_filters('the_content', $upskill_content); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- core filter. ?>
 			</div>
 			</article>
 		<?php get_template_part('template-parts/related-posts'); ?>

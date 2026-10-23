@@ -181,3 +181,8 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   hyphens stay hyphens), `404.php` (no CTA band). CF7: inc/contact-form-7.php (no plugin CSS/autop,
   `<i data-icon>` placeholders) + scss/plugins/_contact-form-7.scss. Held: case study "Industry Training
   Resources" (LearnDash sessions). Nine FAQ answers are placeholders awaiting approved copy.
+- **Case study / guide content (2026-10-23):** `upskill_contain_editor_text()` (inc/article.php) wraps
+  each run of editor text in the reading container (680 centred, `.article-body`) and leaves ACF blocks
+  full width (Key Takeaways stays with the text); used by `single-case_study.php` and `single-guide.php`.
+  `single-guide.php` has no Figma: Blog Detail hero (chip, title, excerpt, featured image) + article
+  body, "In this article" when the guide has h2s; `.type-guide .article-body` adds h3/h4 and numbered lists.
