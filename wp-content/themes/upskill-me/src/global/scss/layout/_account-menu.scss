@@ -1,0 +1,85 @@
+@use "../abstracts/mixins" as mix;
+
+/**
+ * Header account menu (Figma 49398:107717): a 404px card under the user icon,
+ * the mega panel's rows inside. Opens on hover (mouse) or click/tap
+ * (navigation.js toggles `hidden` + `.is-open`). On phones it spans the bar
+ * between the gutters.
+ */
+.account-menu {
+	position: relative;
+
+	// Phones: the bar (position: relative) is the containing block, so the
+	// card can use the full width.
+	@include mix.breakpoint("sml") {
+		position: static;
+	}
+}
+
+.account-menu__trigger[aria-expanded="true"] {
+	background-color: rgb(26 26 26 / 7.5%);
+}
+
+.account-menu__panel {
+	position: absolute;
+	top: calc(100% + 6px);
+	right: 0;
+	z-index: 2;
+	width: 404px;
+	padding: 16px 24px 24px;
+	border: 1px solid var(--color-gray-100);
+	border-radius: 8px;
+	background-color: var(--color-white);
+	box-shadow: var(--shadow-float);
+	opacity: 0;
+	transform: translateY(-6px);
+	transition:
+		opacity 0.22s ease,
+		transform 0.22s var(--ease-out);
+
+	&.is-open {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	// Bridges the gap so the pointer can travel from the icon to the card.
+	&::before {
+		content: "";
+		position: absolute;
+		right: 0;
+		bottom: 100%;
+		left: 0;
+		height: 8px;
+	}
+
+	@include mix.breakpoint("sml") {
+		top: 100%;
+		right: var(--spacing-gutter);
+		left: var(--spacing-gutter);
+		width: auto;
+	}
+}
+
+.account-menu__list {
+	margin-top: 0;
+	padding-bottom: 8px;
+}
+
+.account-menu__row {
+	display: block;
+}
+
+.account-menu__logout {
+	display: inline-block;
+	margin-top: 16px;
+	margin-left: 1rem;
+	color: var(--color-gray-500);
+	font-weight: 500;
+	font-size: var(--text-sm);
+	line-height: 1.5;
+	transition: color 0.2s ease;
+
+	&:hover {
+		color: var(--color-brand-700);
+	}
+}

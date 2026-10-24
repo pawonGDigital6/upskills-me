@@ -299,6 +299,10 @@ if (!function_exists('upskill_render_mobile_nav')) {
 				upskill_option('organisation_signin'),
 			)
 		);
+		// Signed in: the user's dashboard and Log out replace the sign-in buttons.
+		if (is_user_logged_in() && function_exists('upskill_account_link')) {
+			$actions = array(upskill_account_link(), array('title' => __('Log out', 'upskill-me'), 'url' => wp_logout_url(), 'target' => ''));
+		}
 		?>
 		<div class="drawer" id="site-drawer" hidden data-drawer>
 			<nav class="drawer__body" aria-label="<?php esc_attr_e('Mobile', 'upskill-me'); ?>">

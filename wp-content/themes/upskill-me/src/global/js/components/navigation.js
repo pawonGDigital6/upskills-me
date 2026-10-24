@@ -252,6 +252,80 @@ function drawer( header ) {
 	} );
 }
 
+/**
+ * The account menu under the user icon: hover intent with a mouse, click or
+ * tap everywhere. Opening it closes the mobile drawer, and opening the drawer
+ * closes it.
+ *
+ * @param {HTMLElement} header Site header.
+ */
+function accountMenu( header ) {
+	const menu = header.querySelector( '[data-account-menu]' );
+
+	if ( ! menu ) {
+		return;
+	}
+
+	const trigger = menu.querySelector( '[data-account-trigger]' );
+	const panel = menu.querySelector( '[data-account-panel]' );
+	const drawerToggle = header.querySelector( '[data-drawer-toggle]' );
+	let hoverTimer = 0;
+
+	const isOpen = () => 'true' === trigger.getAttribute( 'aria-expanded' );
+
+	const setOpen = ( open, restoreFocus = false ) => {
+		if ( open === isOpen() ) {
+			return;
+		}
+
+		if ( open && drawerToggle && 'true' === drawerToggle.getAttribute( 'aria-expanded' ) ) {
+			drawerToggle.click();
+		}
+
+		trigger.setAttribute( 'aria-expanded', String( open ) );
+		setPanel( panel, open );
+
+		if ( restoreFocus ) {
+			trigger.focus();
+		}
+	};
+
+	trigger.addEventListener( 'click', () => setOpen( ! isOpen() ) );
+
+	menu.addEventListener( 'mouseenter', () => {
+		if ( HOVER.matches ) {
+			window.clearTimeout( hoverTimer );
+			hoverTimer = window.setTimeout( () => setOpen( true ), 80 );
+		}
+	} );
+
+	menu.addEventListener( 'mouseleave', () => {
+		if ( HOVER.matches ) {
+			window.clearTimeout( hoverTimer );
+			hoverTimer = window.setTimeout( () => setOpen( false ), 160 );
+		}
+	} );
+
+	menu.addEventListener( 'focusout', ( event ) => {
+		if ( event.relatedTarget && ! menu.contains( event.relatedTarget ) ) {
+			setOpen( false );
+		}
+	} );
+
+	document.addEventListener( 'keydown', ( event ) => {
+		if ( 'Escape' === event.key && isOpen() ) {
+			setOpen( false, menu.contains( document.activeElement ) );
+		}
+	} );
+
+	// Any click outside, including the drawer toggle, closes it.
+	document.addEventListener( 'click', ( event ) => {
+		if ( ! menu.contains( event.target ) ) {
+			setOpen( false );
+		}
+	} );
+}
+
 export function Navigation() {
 	const header = document.querySelector( '[data-site-header]' );
 
@@ -261,6 +335,7 @@ export function Navigation() {
 
 	stickyState( header );
 	drawer( header );
+	accountMenu( header );
 
 	const nav = header.querySelector( '[data-mega-nav]' );
 

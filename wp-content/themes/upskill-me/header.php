@@ -65,7 +65,9 @@ $upskill_account      = function_exists( 'upskill_account_link' ) ? upskill_acco
 				<span class="screen-reader-text"><?php esc_html_e( 'Search training', 'upskill-me' ); ?></span>
 				<?php upskill_icon( 'search' ); ?>
 			</button>
-			<?php if ( ! empty( $upskill_account['url'] ) ) : ?>
+			<?php if ( function_exists( 'upskill_account_menu_items' ) ) : ?>
+				<?php get_template_part( 'template-parts/account/header-menu' ); ?>
+			<?php elseif ( ! empty( $upskill_account['url'] ) ) : ?>
 				<a class="site-header__icon"<?php echo upskill_link_attributes( $upskill_account ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 					<span class="screen-reader-text"><?php echo esc_html( $upskill_account['title'] ? $upskill_account['title'] : __( 'Your account', 'upskill-me' ) ); ?></span>
 					<?php upskill_icon( 'user' ); ?>

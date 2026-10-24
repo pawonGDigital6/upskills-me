@@ -107,9 +107,9 @@ if ( ! function_exists( 'upskill_account_link' ) ) {
 		if ( user_can( $user, 'manage_options' ) ) {
 			$title = __( 'Dashboard', 'upskill-me' );
 		} elseif ( in_array( 'group_leader', (array) $user->roles, true ) ) {
-			$title = __( 'Organisation dashboard', 'upskill-me' );
+			$title = __( 'Organisation Dashboard', 'upskill-me' );
 		} else {
-			$title = __( 'My learning', 'upskill-me' );
+			$title = __( 'My Learning', 'upskill-me' );
 		}
 
 		return array(
@@ -117,6 +117,68 @@ if ( ! function_exists( 'upskill_account_link' ) ) {
 			'url'    => upskill_login_destination( $user ),
 			'target' => '',
 		);
+	}
+}
+
+if ( ! function_exists( 'upskill_account_menu_items' ) ) {
+	/**
+	 * Rows of the header account menu (Figma 49398:107717) for the signed-in
+	 * user, or [] when signed out. Every row points at a LearnDash or Group
+	 * Registration screen:
+	 *   - organisation admin (Group Leader): organisation dashboard, its
+	 *     training/seats and team sections, Group Registration's enrolment;
+	 *   - team member: My learning, its course list, LearnDash's Profile
+	 *     (progress and certificates);
+	 *   - site admin: wp-admin plus both dashboards.
+	 *
+	 * @return array[] { title, text, url }
+	 */
+	function upskill_account_menu_items() {
+		$user = wp_get_current_user();
+
+		if ( ! $user->exists() ) {
+			return array();
+		}
+
+		$org     = function_exists( 'upskill_org_dashboard_page_id' ) && upskill_org_dashboard_page_id() ? (string) get_permalink( upskill_org_dashboard_page_id() ) : '';
+		$learner = function_exists( 'upskill_learner_dashboard_url' ) ? upskill_learner_dashboard_url() : '';
+		$items   = array();
+
+		if ( user_can( $user, 'manage_options' ) ) {
+			$items = array(
+				array( __( 'Dashboard', 'upskill-me' ), __( 'Manage the site and its training', 'upskill-me' ), admin_url() ),
+				array( __( 'Organisation', 'upskill-me' ), __( 'The organisation admin view', 'upskill-me' ), $org ),
+				array( __( 'My Learning', 'upskill-me' ), __( 'The team member view', 'upskill-me' ), $learner ),
+			);
+		} elseif ( in_array( 'group_leader', (array) $user->roles, true ) ) {
+			$items = array(
+				array( __( 'Dashboard', 'upskill-me' ), __( 'Your training at a glance', 'upskill-me' ), $org ),
+				array( __( 'Training & Seats', 'upskill-me' ), __( 'Courses and seats you have bought', 'upskill-me' ), $org ? $org . '#org-training' : '' ),
+				array( __( 'Team Results', 'upskill-me' ), __( 'Track your team’s progress', 'upskill-me' ), $org ? $org . '#org-team' : '' ),
+				array( __( 'Manage Team', 'upskill-me' ), __( 'Enrol and manage team members', 'upskill-me' ), function_exists( 'upskill_groups_dashboard_url' ) ? upskill_groups_dashboard_url() : '' ),
+			);
+		} else {
+			$profile = function_exists( 'upskill_learndash_profile_url' ) ? upskill_learndash_profile_url() : '';
+			$items   = array(
+				array( __( 'Dashboard', 'upskill-me' ), __( 'Your training at a glance', 'upskill-me' ), $learner ),
+				array( __( 'My Courses', 'upskill-me' ), __( 'Continue your learning journey', 'upskill-me' ), $learner ? $learner . '#current-courses' : '' ),
+				array( __( 'Results', 'upskill-me' ), __( 'Track your learning progress', 'upskill-me' ), $profile ? $profile : ( $learner ? $learner . '#completed-courses' : '' ) ),
+			);
+		}
+
+		$rows = array();
+
+		foreach ( $items as $item ) {
+			if ( $item[2] ) {
+				$rows[] = array(
+					'title' => $item[0],
+					'text'  => $item[1],
+					'url'   => $item[2],
+				);
+			}
+		}
+
+		return $rows;
 	}
 }
 
