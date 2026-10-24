@@ -189,6 +189,14 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   full width (Key Takeaways stays with the text); used by `single-case_study.php` and `single-guide.php`.
   `single-guide.php` has no Figma: Blog Detail hero (chip, title, excerpt, featured image) + article
   body, "In this article" when the guide has h2s; `.type-guide .article-body` adds h3/h4 and numbered lists.
+- **Industry Hub + Categories (2026-10-24):** pages /industries/ (27) and /categories/ (28), Figma
+  49325:14553 / 49325:14595. Built from existing blocks: `page-hero` centred gained **Photo cards**
+  (3; the second is wide, first on phones) and compact badges (badge **Count**/**Photo** → tag + photo
+  tile, from 1200); Home's `industry-showcase` / `category-list` content copied (Home is on hold, so not
+  turned into synced patterns); new thin block `training-library` (section header over
+  template-parts/library/browser.php, one per page); pattern #1018; `media-story` gained **List style:
+  Points** (Categories "Training for what matters": white rounded panel at every width, lead-over-text
+  points, 16px intro via `section-header--base`); Why page's `testimonials`.
 - **Industry Resources (2026-10-23):** block `industry-resources` (Figma 49325:16856, also Industry Hub and
   Categories), placed through the synced pattern "Industry Training Resources" (#1018) on case study 383.
   Sessions = chosen courses, else `upskill_library_industry_courses()` for the case study's Industry /

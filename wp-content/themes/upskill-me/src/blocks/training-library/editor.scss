@@ -1,0 +1,7 @@
+/**
+ * Training Library block — block editor only styles.
+ */
+
+.editor-styles-wrapper .block-training-library :is(a, button, input, label) {
+	pointer-events: none;
+}

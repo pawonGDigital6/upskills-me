@@ -33,6 +33,20 @@
             "endpoint": 0
         },
         {
+            "key": "field_upskill_media_story_list_style",
+            "label": "List style",
+            "name": "list_style",
+            "type": "button_group",
+            "instructions": "Ticks: \"Lead - rest of the line\" beside a tick (About). Points: the lead on its own line, the text under it, no tick (Categories 49325:14601); the section is then a white panel on phones too.",
+            "choices": {
+                "ticks": "Ticks",
+                "points": "Points"
+            },
+            "default_value": "ticks",
+            "return_format": "value",
+            "layout": "horizontal"
+        },
+        {
             "key": "field_upskill_media_story_checklist",
             "label": "Checklist",
             "name": "checklist",
@@ -173,5 +187,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791351143
+    "modified": 1792860219
 }

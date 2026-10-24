@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/training-library",
+	"version": "1.0.0",
+	"title": "Training Library",
+	"category": "acf-blocks",
+	"icon": "filter",
+	"description": "Section header over the training library: search filters and course results (LearnDash).",
+	"keywords": [
+		"training",
+		"library",
+		"courses",
+		"filters"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": false
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

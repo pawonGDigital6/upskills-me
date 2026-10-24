@@ -327,7 +327,7 @@
             "label": "Floating badges",
             "name": "badges",
             "type": "repeater",
-            "instructions": "Small cards either side of the heading (desktop).",
+            "instructions": "Small cards either side of the heading (desktop). With a Count or a Photo the badge is the compact tag (count, title, icon) with the photo tile under it (Industry Hub, Categories).",
             "layout": "table",
             "min": 0,
             "max": 2,
@@ -409,6 +409,23 @@
                     },
                     "default_value": "left",
                     "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_badges_count",
+                    "label": "Count",
+                    "name": "count",
+                    "type": "text",
+                    "instructions": "Optional, e.g. 3+. Bold before the title."
+                },
+                {
+                    "key": "field_upskill_page_hero_badges_photo",
+                    "label": "Photo",
+                    "name": "photo",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp"
                 }
             ],
             "conditional_logic": [
@@ -500,6 +517,77 @@
                     }
                 ]
             ]
+        },
+        {
+            "key": "field_upskill_page_hero_acc_cards",
+            "label": "Photo cards",
+            "name": "",
+            "type": "accordion",
+            "open": 0,
+            "multi_expand": 1,
+            "endpoint": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_cards",
+            "label": "Photo cards",
+            "name": "cards",
+            "type": "repeater",
+            "instructions": "Up to three photos under the heading, each with a caption (Industry Hub, Categories). The second card is the wide one; on phones it comes first.",
+            "layout": "block",
+            "min": 0,
+            "max": 3,
+            "button_label": "Add card",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_layout",
+                        "operator": "==",
+                        "value": "center"
+                    }
+                ]
+            ],
+            "sub_fields": [
+                {
+                    "key": "field_upskill_page_hero_cards_image",
+                    "label": "Image",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp",
+                    "wrapper": {
+                        "width": "34"
+                    }
+                },
+                {
+                    "key": "field_upskill_page_hero_cards_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "33"
+                    }
+                },
+                {
+                    "key": "field_upskill_page_hero_cards_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "33"
+                    }
+                }
+            ]
         }
     ],
     "location": [
@@ -520,5 +608,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792028036
+    "modified": 1792860104
 }
