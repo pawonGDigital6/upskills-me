@@ -13,7 +13,6 @@
 
 $upskill_announcement = upskill_option( 'announcement', array() );
 $upskill_cta          = upskill_option( 'header_cta' );
-$upskill_account      = function_exists( 'upskill_account_link' ) ? upskill_account_link() : upskill_option( 'account_link' );
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
@@ -65,14 +64,7 @@ $upskill_account      = function_exists( 'upskill_account_link' ) ? upskill_acco
 				<span class="screen-reader-text"><?php esc_html_e( 'Search training', 'upskill-me' ); ?></span>
 				<?php upskill_icon( 'search' ); ?>
 			</button>
-			<?php if ( function_exists( 'upskill_account_menu_items' ) ) : ?>
-				<?php get_template_part( 'template-parts/account/header-menu' ); ?>
-			<?php elseif ( ! empty( $upskill_account['url'] ) ) : ?>
-				<a class="site-header__icon"<?php echo upskill_link_attributes( $upskill_account ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
-					<span class="screen-reader-text"><?php echo esc_html( $upskill_account['title'] ? $upskill_account['title'] : __( 'Your account', 'upskill-me' ) ); ?></span>
-					<?php upskill_icon( 'user' ); ?>
-				</a>
-			<?php endif; ?>
+			<?php get_template_part( 'template-parts/account/header-menu' ); ?>
 			<?php upskill_button( $upskill_cta, array( 'size' => 'sm', 'class' => 'site-header__cta' ) ); ?>
 			<button class="site-header__icon site-header__burger" type="button" aria-expanded="false" aria-controls="site-drawer" data-drawer-toggle>
 				<span class="screen-reader-text" data-drawer-label data-open-label="<?php esc_attr_e( 'Open menu', 'upskill-me' ); ?>" data-close-label="<?php esc_attr_e( 'Close menu', 'upskill-me' ); ?>"><?php esc_html_e( 'Open menu', 'upskill-me' ); ?></span>

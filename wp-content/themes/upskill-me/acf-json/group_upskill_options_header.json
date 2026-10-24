@@ -70,14 +70,6 @@
             "instructions": "Also the main button in the mobile menu."
         },
         {
-            "key": "field_upskill_header_account_link",
-            "label": "Account link",
-            "name": "account_link",
-            "type": "link",
-            "return_format": "array",
-            "instructions": "The person icon. The link title is its accessible name."
-        },
-        {
             "key": "field_upskill_header_learner_signin",
             "label": "Learner sign in",
             "name": "learner_signin",
@@ -153,5 +145,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791258008
+    "modified": 1792857442
 }

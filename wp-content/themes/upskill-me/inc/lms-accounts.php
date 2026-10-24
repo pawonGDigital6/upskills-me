@@ -83,8 +83,8 @@ if ( ! function_exists( 'upskill_login_destination' ) ) {
 
 if ( ! function_exists( 'upskill_account_link' ) ) {
 	/**
-	 * The header's "Your account" icon link. Signed out: Site Settings →
-	 * Header → Account link, else the "Log in" page. Signed in: the user's
+	 * The user's account link (drawer button; the header icon when no menu
+	 * rows exist). Signed out: the "Log in" page. Signed in: the user's
 	 * landing page from upskill_login_destination() (Group Registration's
 	 * redirect setting), so organisation admins open the organisation
 	 * dashboard and team members My learning.
@@ -95,9 +95,7 @@ if ( ! function_exists( 'upskill_account_link' ) ) {
 		$user = wp_get_current_user();
 
 		if ( ! $user->exists() ) {
-			$link = upskill_option( 'account_link' );
-
-			return ! empty( $link['url'] ) ? $link : array(
+			return array(
 				'title'  => __( 'Log in', 'upskill-me' ),
 				'url'    => wp_login_url(),
 				'target' => '',
