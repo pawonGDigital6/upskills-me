@@ -16,4 +16,5 @@
 @use "learndash/account";
 
 @use "woocommerce/store";
+@use "woocommerce/account" as wc-account;
 @use "learndash/group-registration";

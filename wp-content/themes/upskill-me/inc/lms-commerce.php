@@ -236,3 +236,56 @@ if ( ! function_exists( 'upskill_thankyou_next_steps' ) ) {
 	}
 }
 add_action( 'woocommerce_thankyou', 'upskill_thankyou_next_steps', 20 );
+
+if ( ! function_exists( 'upskill_account_page_redirect' ) ) {
+	/**
+	 * WooCommerce My Account is the billing area (orders, invoices, addresses,
+	 * account details), not a dashboard. Its Dashboard tab sends the user to
+	 * their LMS dashboard (organisation admin → /organisation/, team member →
+	 * /my-learning/); visitors go to the "Log in" page instead of a second
+	 * login form. Every endpoint (orders, view-order, edit-address,
+	 * edit-account, lost-password, customer-logout) keeps working, so links in
+	 * WooCommerce's emails still open.
+	 *
+	 * @return void
+	 */
+	function upskill_account_page_redirect() {
+		if ( ! function_exists( 'is_account_page' ) || ! is_account_page() || is_wc_endpoint_url() ) {
+			return;
+		}
+
+		$url = is_user_logged_in() && function_exists( 'upskill_account_link' ) ? upskill_account_link()['url'] : wp_login_url();
+
+		if ( $url ) {
+			wp_safe_redirect( $url );
+			exit;
+		}
+	}
+}
+add_action( 'template_redirect', 'upskill_account_page_redirect' );
+
+/**
+ * My Account → Addresses: billing only. Training is virtual, so a shipping
+ * address is never used.
+ */
+add_filter(
+	'woocommerce_my_account_get_addresses',
+	static function ( $addresses ) {
+		unset( $addresses['shipping'] );
+
+		return $addresses;
+	}
+);
+
+/**
+ * My Account tabs: drop Dashboard (it redirects, above) and Downloads
+ * (courses are videos in LearnDash, never WooCommerce downloads).
+ */
+add_filter(
+	'woocommerce_account_menu_items',
+	static function ( $items ) {
+		unset( $items['dashboard'], $items['downloads'] );
+
+		return $items;
+	}
+);

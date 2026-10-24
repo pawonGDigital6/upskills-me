@@ -125,7 +125,8 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 	 *   - signed out: the drawer's two sign-in links (Site Settings → Header →
 	 *     Learner / Organisation sign in) and the training library;
 	 *   - organisation admin (Group Leader): organisation dashboard, its
-	 *     training/seats and team sections, Group Registration's enrolment;
+	 *     training/seats and team sections, Group Registration's enrolment,
+	 *     WooCommerce's orders (My Account is the billing area);
 	 *   - team member: My learning, its course list, LearnDash's Profile
 	 *     (progress and certificates);
 	 *   - site admin: wp-admin plus both dashboards.
@@ -163,6 +164,7 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 				array( __( 'Training & Seats', 'upskill-me' ), __( 'Courses and seats you have bought', 'upskill-me' ), $org ? $org . '#org-training' : '' ),
 				array( __( 'Team Results', 'upskill-me' ), __( 'Track your team’s progress', 'upskill-me' ), $org ? $org . '#org-team' : '' ),
 				array( __( 'Manage Team', 'upskill-me' ), __( 'Enrol and manage team members', 'upskill-me' ), function_exists( 'upskill_groups_dashboard_url' ) ? upskill_groups_dashboard_url() : '' ),
+				array( __( 'Orders & Billing', 'upskill-me' ), __( 'Invoices and billing details', 'upskill-me' ), function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'orders' ) : '' ),
 			);
 		} else {
 			$profile = function_exists( 'upskill_learndash_profile_url' ) ? upskill_learndash_profile_url() : '';

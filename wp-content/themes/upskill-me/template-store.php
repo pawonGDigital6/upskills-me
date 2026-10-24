@@ -28,6 +28,10 @@ if ( function_exists( 'ldgr_get_groups_dashboard_page' ) && (int) ldgr_get_group
 } elseif ( function_exists( 'is_cart' ) && is_cart() ) {
 	$upskill_heading = __( 'Review your order.', 'upskill-me' );
 	$upskill_intro   = __( 'Check your training and seats. You assign seats to your people after checkout - no learner details needed now.', 'upskill-me' );
+} elseif ( function_exists( 'is_account_page' ) && is_account_page() ) {
+	// My Account is the billing area; the dashboards are /organisation/ and /my-learning/.
+	$upskill_heading = __( 'Orders & billing.', 'upskill-me' );
+	$upskill_intro   = __( 'Your orders, invoices and billing details. Your training is on your dashboard.', 'upskill-me' );
 } elseif ( function_exists( 'is_checkout' ) && is_checkout() ) {
 	$upskill_heading = __( 'Complete your order.', 'upskill-me' );
 	$upskill_intro   = __( 'Your organisation account is created with your order, so you can assign seats straight away.', 'upskill-me' );

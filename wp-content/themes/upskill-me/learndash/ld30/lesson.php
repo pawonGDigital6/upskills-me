@@ -207,10 +207,13 @@ $upskill_session_label = static function ( $index, $session ) use ( $upskill_ses
 						<?php endif; ?>
 
 						<?php
-						if ( function_exists( 'wc_get_page_permalink' ) ) {
+						// LearnDash's Profile lists every course and certificate (as on My learning).
+						$upskill_all_url = is_user_logged_in() && function_exists( 'upskill_learndash_profile_url' ) ? upskill_learndash_profile_url() : '';
+
+						if ( $upskill_all_url ) {
 							upskill_button(
 								array(
-									'url'   => wc_get_page_permalink( 'myaccount' ),
+									'url'   => $upskill_all_url,
 									'title' => __( 'View All Completed Courses', 'upskill-me' ),
 								),
 								array(
