@@ -122,9 +122,10 @@ if ( ! function_exists( 'upskill_account_link' ) ) {
 
 if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 	/**
-	 * Rows of the header account menu (Figma 49398:107717) for the signed-in
-	 * user, or [] when signed out. Every row points at a LearnDash or Group
-	 * Registration screen:
+	 * Rows of the header account menu (Figma 49398:107717). Every row points
+	 * at a LearnDash or Group Registration screen:
+	 *   - signed out: the drawer's two sign-in links (Site Settings → Header →
+	 *     Learner / Organisation sign in) and the training library;
 	 *   - organisation admin (Group Leader): organisation dashboard, its
 	 *     training/seats and team sections, Group Registration's enrolment;
 	 *   - team member: My learning, its course list, LearnDash's Profile
@@ -137,7 +138,15 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 		$user = wp_get_current_user();
 
 		if ( ! $user->exists() ) {
-			return array();
+			$learner_signin = upskill_option( 'learner_signin' );
+			$org_signin     = upskill_option( 'organisation_signin' );
+			$items          = array(
+				array( ! empty( $learner_signin['title'] ) ? $learner_signin['title'] : __( 'Learner Sign in', 'upskill-me' ), __( 'Continue your training', 'upskill-me' ), ! empty( $learner_signin['url'] ) ? $learner_signin['url'] : wp_login_url() ),
+				array( ! empty( $org_signin['title'] ) ? $org_signin['title'] : __( 'Organisation Sign in', 'upskill-me' ), __( 'Manage your team’s training and seats', 'upskill-me' ), ! empty( $org_signin['url'] ) ? $org_signin['url'] : wp_login_url() ),
+				array( __( 'Find Training', 'upskill-me' ), __( 'Training packages for your team', 'upskill-me' ), function_exists( 'upskill_library_page_url' ) ? upskill_library_page_url() : '' ),
+			);
+
+			return upskill_account_menu_rows( $items );
 		}
 
 		$org     = function_exists( 'upskill_org_dashboard_page_id' ) && upskill_org_dashboard_page_id() ? (string) get_permalink( upskill_org_dashboard_page_id() ) : '';
@@ -166,6 +175,18 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 			);
 		}
 
+		return upskill_account_menu_rows( $items );
+	}
+}
+
+if ( ! function_exists( 'upskill_account_menu_rows' ) ) {
+	/**
+	 * [ title, text, url ] lists to menu rows, dropping rows without a URL.
+	 *
+	 * @param array[] $items Rows as [ title, text, url ].
+	 * @return array[] { title, text, url }
+	 */
+	function upskill_account_menu_rows( $items ) {
 		$rows = array();
 
 		foreach ( $items as $item ) {

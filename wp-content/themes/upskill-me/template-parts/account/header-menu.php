@@ -1,9 +1,11 @@
 <?php
 /**
- * Header account icon. Signed out it links to Log in; signed in it opens the
- * account menu (Figma 49398:107717): on hover with a mouse, on click or tap
- * everywhere (src/global/js/components/navigation.js). The rows reuse the
- * mega panel's row styles.
+ * Header account icon and menu (Figma 49398:107717), signed in or out: on
+ * hover with a mouse, on click or tap everywhere
+ * (src/global/js/components/navigation.js). Rows come from
+ * upskill_account_menu_items(); signed-in menus end with Log out. The rows
+ * reuse the mega panel's row styles. With no rows at all (no pages set up)
+ * the icon falls back to a plain link.
  *
  * @package upskill-me
  */
@@ -11,11 +13,11 @@
 $upskill_link  = upskill_account_link();
 $upskill_items = upskill_account_menu_items();
 
-if ( empty( $upskill_link['url'] ) ) {
-	return;
-}
-
-if ( ! $upskill_items ) : ?>
+if ( ! $upskill_items ) :
+	if ( empty( $upskill_link['url'] ) ) {
+		return;
+	}
+	?>
 	<a class="site-header__icon"<?php echo upskill_link_attributes( $upskill_link ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 		<span class="screen-reader-text"><?php echo esc_html( $upskill_link['title'] ? $upskill_link['title'] : __( 'Your account', 'upskill-me' ) ); ?></span>
 		<?php upskill_icon( 'user' ); ?>
@@ -30,7 +32,9 @@ endif;
 		<?php upskill_icon( 'user' ); ?>
 	</button>
 	<div class="account-menu__panel" id="account-menu" hidden data-account-panel>
-		<p class="screen-reader-text"><?php echo esc_html( sprintf( /* translators: %s: user's display name. */ __( 'Signed in as %s', 'upskill-me' ), wp_get_current_user()->display_name ) ); ?></p>
+		<?php if ( is_user_logged_in() ) : ?>
+			<p class="screen-reader-text"><?php echo esc_html( sprintf( /* translators: %s: user's display name. */ __( 'Signed in as %s', 'upskill-me' ), wp_get_current_user()->display_name ) ); ?></p>
+		<?php endif; ?>
 		<ul class="mega__list account-menu__list">
 			<?php foreach ( $upskill_items as $upskill_item ) : ?>
 				<li>
@@ -44,6 +48,8 @@ endif;
 				</li>
 			<?php endforeach; ?>
 		</ul>
-		<a class="account-menu__logout" href="<?php echo esc_url( wp_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'upskill-me' ); ?></a>
+		<?php if ( is_user_logged_in() ) : ?>
+			<a class="account-menu__logout" href="<?php echo esc_url( wp_logout_url() ); ?>"><?php esc_html_e( 'Log out', 'upskill-me' ); ?></a>
+		<?php endif; ?>
 	</div>
 </div>

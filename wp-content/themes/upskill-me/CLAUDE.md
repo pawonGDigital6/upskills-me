@@ -117,8 +117,8 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   on the Home page without a target until then.
 - **Account entry points** are held: the header account icon, the drawer sign-in buttons and the
   footer Account column render only when their option or menu location is set, and stay empty
-  until LearnDash provides the screens. Since 24 Oct the header account icon always shows: a link
-  to Log in when signed out; signed in it opens the account menu (Figma 49398:107717,
+  until LearnDash provides the screens. Since 24 Oct the header account icon always opens the
+  account menu, signed in or out (signed out: Learner / Organisation sign in + Find Training) (Figma 49398:107717,
   `template-parts/account/header-menu.php`, rows per role from `upskill_account_menu_items()`,
   hover/click/tap in navigation.js `accountMenu()`). The drawer shows dashboard + Log out when signed in.
 - **Session counts** ("76 sessions") render only above zero, i.e. once courses exist.
