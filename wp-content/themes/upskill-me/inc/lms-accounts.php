@@ -81,6 +81,45 @@ if ( ! function_exists( 'upskill_login_destination' ) ) {
 	}
 }
 
+if ( ! function_exists( 'upskill_account_link' ) ) {
+	/**
+	 * The header's "Your account" icon link. Signed out: Site Settings →
+	 * Header → Account link, else the "Log in" page. Signed in: the user's
+	 * landing page from upskill_login_destination() (Group Registration's
+	 * redirect setting), so organisation admins open the organisation
+	 * dashboard and team members My learning.
+	 *
+	 * @return array{title: string, url: string, target: string}
+	 */
+	function upskill_account_link() {
+		$user = wp_get_current_user();
+
+		if ( ! $user->exists() ) {
+			$link = upskill_option( 'account_link' );
+
+			return ! empty( $link['url'] ) ? $link : array(
+				'title'  => __( 'Log in', 'upskill-me' ),
+				'url'    => wp_login_url(),
+				'target' => '',
+			);
+		}
+
+		if ( user_can( $user, 'manage_options' ) ) {
+			$title = __( 'Dashboard', 'upskill-me' );
+		} elseif ( in_array( 'group_leader', (array) $user->roles, true ) ) {
+			$title = __( 'Organisation dashboard', 'upskill-me' );
+		} else {
+			$title = __( 'My learning', 'upskill-me' );
+		}
+
+		return array(
+			'title'  => $title,
+			'url'    => upskill_login_destination( $user ),
+			'target' => '',
+		);
+	}
+}
+
 if ( ! function_exists( 'upskill_is_login_url' ) ) {
 	/**
 	 * Does the URL point at the login page (with any query string)?

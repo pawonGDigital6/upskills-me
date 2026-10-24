@@ -13,7 +13,7 @@
 
 $upskill_announcement = upskill_option( 'announcement', array() );
 $upskill_cta          = upskill_option( 'header_cta' );
-$upskill_account      = upskill_option( 'account_link' );
+$upskill_account      = function_exists( 'upskill_account_link' ) ? upskill_account_link() : upskill_option( 'account_link' );
 ?>
 <!doctype html>
 <html <?php language_attributes(); ?>>
