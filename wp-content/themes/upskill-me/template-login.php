@@ -51,6 +51,15 @@ else :
 			<a class="ml-1 font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( wp_registration_url() ); ?>"><?php esc_html_e( 'Sign up', 'upskill-me' ); ?></a>
 		</p>
 		<?php
+	else :
+		// Sign-up closed: organisations get an account when they buy, team members when their organisation adds them.
+		?>
+		<p class="text-center text-base text-gray-500">
+			<?php esc_html_e( 'New to Upskillme?', 'upskill-me' ); ?>
+			<a class="ml-1 font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( function_exists( 'upskill_library_page_url' ) && upskill_library_page_url() ? upskill_library_page_url() : home_url( '/' ) ); ?>"><?php esc_html_e( 'Find training for your team', 'upskill-me' ); ?></a>
+		</p>
+		<p class="text-center text-sm text-gray-500"><?php esc_html_e( 'Team members: your organisation sets up your account and emails your login details.', 'upskill-me' ); ?></p>
+		<?php
 	endif;
 endif;
 
