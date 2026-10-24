@@ -32,9 +32,9 @@ $attributes = upskill_block_attributes(
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
-		<div class="mx-auto flex max-w-[800px] flex-col items-center text-center<?php echo 'white' === $surface ? ' px-6 sm:px-0' : ''; ?>">
+		<div class="mx-auto flex max-w-[854px] flex-col items-center text-center<?php echo 'white' === $surface ? ' px-6 sm:px-0' : ''; ?>">
 			<?php upskill_eyebrow( get_field( 'eyebrow' ), get_field( 'eyebrow_icon' ), 'reveal' ); ?>
-			<p class="reveal pt-[18px] font-['Geist'] text-xl leading-[1.55] tracking-[-0.005em] text-gray-500 lg:pt-[26px]" style="--i:1">
+			<p class="reveal pt-[18px] font-secondary text-xl leading-[1.55] tracking-[-0.096px] text-gray-500 lg:pt-[26px]" style="--i:1">
 				<?php if ( $lead ) : ?>
 					<span class="text-gray-950"><?php echo esc_html( $lead ); ?></span>
 				<?php endif; ?>
@@ -53,9 +53,9 @@ $attributes = upskill_block_attributes(
 
 		<?php if ( $details ) : ?>
 			<?php // Two up then one on phones (Need wraps); three across from tablet. ?>
-			<dl class="reveal mx-auto mt-8 grid max-w-[720px] grid-cols-2 gap-x-5 gap-y-7 border-t border-gray-900/10 pt-8 text-left sm:grid-cols-3" style="--i:2">
+			<dl class="reveal mx-auto sm:mt-8 mt-12 grid max-w-[720px] grid-cols-2 gap-x-5 gap-y-7 border-t border-gray-900/10 pt-8 text-left sm:grid-cols-3" style="--i:2">
 				<?php foreach ( array_values( $details ) as $index => $row ) : ?>
-					<div class="flex flex-col gap-1.5<?php echo 2 === $index ? ' col-span-2 sm:col-span-1' : ''; ?>">
+					<div class="flex flex-col gap-1.5">
 						<dt class="text-sm font-medium text-[#6b6b72] uppercase"><?php echo esc_html( $row['term'] ); ?></dt>
 						<dd class="text-base text-gray-950"><?php echo esc_html( $row['description'] ); ?></dd>
 					</div>

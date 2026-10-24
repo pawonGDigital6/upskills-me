@@ -43,8 +43,8 @@ $attributes = upskill_block_attributes( $block, 'block-icon-rows section-y is-da
 			<?php // 44 | title | text across ruled rows at desktop (rules overlap by 1px); outlined cards on phones. ?>
 			<ul class="icon-rows__list mt-10 flex flex-col gap-4 lg:gap-0">
 				<?php foreach ( $rows as $index => $row ) : ?>
-					<li class="icon-rows__item reveal flex flex-col gap-6 rounded-[24px] border border-gray-800 p-4 lg:-mt-px lg:grid lg:grid-cols-[44px_minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-6 lg:rounded-none lg:border-x-0 lg:border-white/12 lg:px-0 lg:py-2" style="--i:<?php echo (int) min( $index, 5 ); ?>">
-						<div class="icon-rows__head flex flex-col gap-3 lg:contents">
+					<li class="icon-rows__item reveal flex flex-col sm:gap-6 gap-7 rounded-[24px] border border-gray-800 p-4 lg:-mt-px lg:grid lg:grid-cols-[44px_minmax(0,1fr)_minmax(0,1fr)] lg:items-start lg:gap-6 lg:rounded-none lg:border-x-0 lg:border-white/12 lg:px-0 lg:py-2" style="--i:<?php echo (int) min( $index, 5 ); ?>">
+						<div class="icon-rows__head flex flex-col sm:gap-3 gap-5 lg:contents">
 							<span class="icon-rows__icon grid size-10 flex-none place-items-center rounded-full bg-white/8 text-signal" aria-hidden="true"><?php upskill_icon( $row['icon'] ? $row['icon'] : 'check', 'size-[18px]' ); ?></span>
 							<h3 class="icon-rows__title text-xl leading-[1.62] font-bold tracking-[-0.014em] text-white lg:pt-1.5"><?php echo esc_html( $row['title'] ); ?></h3>
 						</div>

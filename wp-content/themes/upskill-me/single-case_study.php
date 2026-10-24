@@ -24,7 +24,7 @@ while (have_posts()):
 	$upskill_photo = get_field('hero_image') ? (int) get_field('hero_image') : (int) get_post_thumbnail_id();
 	?>
 	<main id="primary" class="site-main">
-		<article id="post-<?php the_ID(); ?>" <?php post_class('pt-6 pb-6 lg:pt-[104px] lg:pb-20'); ?>>
+		<article id="post-<?php the_ID(); ?>" <?php post_class('pt-6 lg:pt-[104px]'); ?>>
 			<header class="bg-gray-25">
 				<div class="container flex flex-col gap-6 lg:flex-row lg:items-center lg:gap-20">
 					<div class="flex flex-col lg:min-w-0 lg:flex-1">
@@ -65,7 +65,7 @@ while (have_posts()):
 				'</div></div></div>'
 			);
 			?>
-			<div class="mt-8">
+			<div class="case-study__content sm:mt-20 mt-7">
 				<?php echo apply_filters('the_content', $upskill_content); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- core filter. ?>
 			</div>
 			</article>
