@@ -50,6 +50,8 @@ function enhance(card) {
   const sync = () => {
     const playing = !video.paused && !video.ended;
     card.classList.toggle('is-playing', playing);
+    // Once started, the cover gives way to the video for good.
+    card.classList.toggle('is-started', playing || card.classList.contains('is-started'));
     playLabel.textContent = playing ? playLabel.dataset.labelPause : playLabel.dataset.labelPlay;
   };
   const tick = () => {
@@ -66,6 +68,11 @@ function enhance(card) {
   video.addEventListener('ended', sync);
   video.addEventListener('timeupdate', tick);
   video.addEventListener('loadedmetadata', tick);
+
+  // The metadata may already be in before this runs.
+  if (video.readyState >= 1) {
+    tick();
+  }
   mute.addEventListener('click', () => {
     video.muted = !video.muted;
     mute.setAttribute('aria-pressed', String(video.muted));

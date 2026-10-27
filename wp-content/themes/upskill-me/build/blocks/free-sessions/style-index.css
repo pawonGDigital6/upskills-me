@@ -76,4 +76,19 @@
   cursor: pointer;
 }
 
+.video-card [data-video-poster] {
+  transition: opacity 0.3s ease, scale 0.7s ease-out;
+}
+
+.video-card.is-started [data-video-poster] {
+  opacity: 0;
+}
+
+@media (max-width: 1024.98px) {
+  .video-card:not(.is-started):not(:focus-within) .video-card__bar {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
 /*# sourceMappingURL=style-index.css.map*/

@@ -34,7 +34,7 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
   (`.reveal` + `.is-in`, `--i` staggers by 90ms) so hover transitions cannot cancel it. The one exception: buttons carrying the play triangle (`.btn--play`)
   do not nudge their icon. Change interactions only when explicitly asked.
 - **Hold plugin-dependent work.** Anything that needs LearnDash/WooCommerce is not developed or
-  customised until the plugin is installed. Free Sessions is held off the Home page as built.
+  customised until the plugin is installed.
 - **Image standard (every module).** Export from the Figma original (never the designer HTML or a
   screenshot), crop to the design's frame/ratio as Figma frames it, and size to 2x the largest
   display width (enough for 3x on the 390 frame). WebP, quality ~84, effort 6, smart subsampling,
@@ -111,10 +111,10 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 
 ## 4. Pending LearnDash / client
 
-- **Free Sessions** (block + player) is held: built, but not placed on the Home page and not to be
-  developed further until LearnDash, when the sessions become LearnDash **sample lessons**.
-  The `#free-sessions` links (announcement bar, menu promo, CTA band, How It Works, footer) land
-  on the Home page without a target until then.
+- **Free Sessions** (26 Oct): the block lists LearnDash **Sample** sessions (`inc/lms-free-sessions.php`:
+  chosen ones first, topped up automatically; cover = session featured image, else the course's).
+  On Home after the hero (anchor `free-sessions`, the target of the `#free-sessions` links) and in
+  patterns #944–946.
 - **Account entry points** are held: the header account icon, the drawer sign-in buttons and the
   footer Account column render only when their option or menu location is set, and stay empty
   until LearnDash provides the screens. Since 24 Oct the header account icon always opens the

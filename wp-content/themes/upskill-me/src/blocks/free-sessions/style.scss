@@ -78,3 +78,22 @@
 .video-card video {
 	cursor: pointer;
 }
+
+// The session's cover (its featured image, with srcset) lies over the video until it
+// starts. It zooms slightly on card hover, as the designer's session cards do.
+.video-card [data-video-poster] {
+	transition: opacity 0.3s ease, scale 0.7s ease-out;
+}
+
+.video-card.is-started [data-video-poster] {
+	opacity: 0;
+}
+
+// Figma's phone cards show only the cover: the transport appears once the
+// session starts, or while a keyboard user is inside it. Tapping the cover plays.
+@media (max-width: 1024.98px) {
+	.video-card:not(.is-started):not(:focus-within) .video-card__bar {
+		opacity: 0;
+		pointer-events: none;
+	}
+}
