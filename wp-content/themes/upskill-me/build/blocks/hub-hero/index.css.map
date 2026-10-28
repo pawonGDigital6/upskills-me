@@ -1,0 +1,1 @@
+{"version":3,"file":"hub-hero/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/hub-hero/editor.scss"],"sourcesContent":["/**\n * Hub Hero block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-hub-hero a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

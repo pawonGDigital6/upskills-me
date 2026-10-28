@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/resources-hero",
+	"version": "1.0.0",
+	"title": "Resources Hero",
+	"category": "acf-blocks",
+	"icon": "cover-image",
+	"description": "Resources hero: heading, intro, buttons and a note beside a photo carrying link chips.",
+	"keywords": [
+		"hero",
+		"resources",
+		"chips",
+		"photo"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": false
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

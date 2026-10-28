@@ -197,114 +197,6 @@
             ]
         },
         {
-            "key": "field_upskill_page_hero_chips",
-            "label": "Photo chips",
-            "name": "chips",
-            "type": "repeater",
-            "instructions": "Up to four labels floating over the photo (desktop).",
-            "layout": "table",
-            "min": 0,
-            "max": 4,
-            "button_label": "Add chip",
-            "sub_fields": [
-                {
-                    "key": "field_upskill_page_hero_chips_label",
-                    "label": "Label",
-                    "name": "label",
-                    "type": "text"
-                },
-                {
-                    "key": "field_upskill_page_hero_chips_icon",
-                    "label": "Icon",
-                    "name": "icon",
-                    "type": "select",
-                    "choices": {
-                        "": "None",
-                        "shield": "Shield",
-                        "training": "Training",
-                        "work-alert": "Work alert",
-                        "mortarboard": "Graduation cap",
-                        "real-world": "Real world",
-                        "badge-check": "Badge check",
-                        "text-lines": "Text lines",
-                        "list-settings": "List settings",
-                        "info": "Info",
-                        "refresh": "Refresh",
-                        "globe": "Globe",
-                        "clock": "Clock",
-                        "phone": "Phone",
-                        "sliders": "Sliders",
-                        "chart": "Chart",
-                        "legal-document": "Legal document",
-                        "monitor": "Monitor",
-                        "workplace": "Workplace",
-                        "arrow-to-line": "Arrow to line",
-                        "book-columns": "Book",
-                        "check": "Check",
-                        "trending": "Trending",
-                        "star-outline": "Star",
-                        "pencil": "Pencil",
-                        "book": "Book (open)",
-                        "users": "People",
-                        "help": "Help",
-                        "industry": "Industry",
-                        "future": "Future",
-                        "hexagon": "Hexagon",
-                        "time": "Clock (outline)"
-                    },
-                    "return_format": "value"
-                },
-                {
-                    "key": "field_upskill_page_hero_chips_tone",
-                    "label": "Tone",
-                    "name": "tone",
-                    "type": "select",
-                    "choices": {
-                        "purple": "Purple",
-                        "blue": "Blue",
-                        "green": "Green"
-                    },
-                    "default_value": "purple",
-                    "return_format": "value"
-                },
-                {
-                    "key": "field_upskill_page_hero_chips_position",
-                    "label": "Position",
-                    "name": "position",
-                    "type": "select",
-                    "choices": {
-                        "upper-left": "Upper left",
-                        "top-right": "Top right",
-                        "lower-left": "Lower left",
-                        "bottom-right": "Bottom right"
-                    },
-                    "default_value": "upper-left",
-                    "return_format": "value"
-                },
-                {
-                    "key": "field_upskill_page_hero_chips_link",
-                    "label": "Link",
-                    "name": "link",
-                    "type": "link",
-                    "return_format": "array"
-                }
-            ],
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_upskill_page_hero_layout",
-                        "operator": "==",
-                        "value": "split"
-                    },
-                    {
-                        "field": "field_upskill_page_hero_media_style",
-                        "operator": "==",
-                        "value": "photo"
-                    }
-                ]
-            ]
-        },
-        {
             "key": "field_upskill_page_hero_acc_badges",
             "label": "Badges",
             "name": "",
@@ -327,7 +219,7 @@
             "label": "Floating badges",
             "name": "badges",
             "type": "repeater",
-            "instructions": "Small cards either side of the heading (desktop). With a Count or a Photo the badge is the compact tag (count, title, icon) with the photo tile under it (Industry Hub, Categories).",
+            "instructions": "Small cards either side of the heading (desktop).",
             "layout": "table",
             "min": 0,
             "max": 2,
@@ -382,7 +274,8 @@
                         "industry": "Industry",
                         "future": "Future",
                         "hexagon": "Hexagon",
-                        "time": "Clock (outline)"
+                        "time": "Clock (outline)",
+                        "play-video": "Play Video"
                     },
                     "return_format": "value"
                 },
@@ -409,23 +302,6 @@
                     },
                     "default_value": "left",
                     "return_format": "value"
-                },
-                {
-                    "key": "field_upskill_page_hero_badges_count",
-                    "label": "Count",
-                    "name": "count",
-                    "type": "text",
-                    "instructions": "Optional, e.g. 3+. Bold before the title."
-                },
-                {
-                    "key": "field_upskill_page_hero_badges_photo",
-                    "label": "Photo",
-                    "name": "photo",
-                    "type": "image",
-                    "return_format": "id",
-                    "preview_size": "thumbnail",
-                    "library": "all",
-                    "mime_types": "jpg, jpeg, png, webp"
                 }
             ],
             "conditional_logic": [
@@ -517,77 +393,6 @@
                     }
                 ]
             ]
-        },
-        {
-            "key": "field_upskill_page_hero_acc_cards",
-            "label": "Photo cards",
-            "name": "",
-            "type": "accordion",
-            "open": 0,
-            "multi_expand": 1,
-            "endpoint": 0,
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_upskill_page_hero_layout",
-                        "operator": "==",
-                        "value": "center"
-                    }
-                ]
-            ]
-        },
-        {
-            "key": "field_upskill_page_hero_cards",
-            "label": "Photo cards",
-            "name": "cards",
-            "type": "repeater",
-            "instructions": "Up to three photos under the heading, each with a caption (Industry Hub, Categories). The second card is the wide one; on phones it comes first.",
-            "layout": "block",
-            "min": 0,
-            "max": 3,
-            "button_label": "Add card",
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_upskill_page_hero_layout",
-                        "operator": "==",
-                        "value": "center"
-                    }
-                ]
-            ],
-            "sub_fields": [
-                {
-                    "key": "field_upskill_page_hero_cards_image",
-                    "label": "Image",
-                    "name": "image",
-                    "type": "image",
-                    "return_format": "id",
-                    "preview_size": "medium",
-                    "library": "all",
-                    "mime_types": "jpg, jpeg, png, webp",
-                    "wrapper": {
-                        "width": "34"
-                    }
-                },
-                {
-                    "key": "field_upskill_page_hero_cards_title",
-                    "label": "Title",
-                    "name": "title",
-                    "type": "text",
-                    "wrapper": {
-                        "width": "33"
-                    }
-                },
-                {
-                    "key": "field_upskill_page_hero_cards_text",
-                    "label": "Text",
-                    "name": "text",
-                    "type": "text",
-                    "wrapper": {
-                        "width": "33"
-                    }
-                }
-            ]
         }
     ],
     "location": [
@@ -608,5 +413,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792860104
+    "modified": 1793172788
 }

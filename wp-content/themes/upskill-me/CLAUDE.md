@@ -25,8 +25,10 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
   measurements — use Tailwind's native scale or an arbitrary value with the Figma source in a comment.
 - **Headings** take their highlighted phrase as `<em>` (`Get a <em>head start.</em>`); force line
   breaks with `<br>`. `upskill_heading()` allows only br/em/strong/span.
-- **Reuse modules.** Same structure, different content → reuse the block. Medium differences → add an
-  ACF option. Same module + same content on several pages → a synced pattern.
+- **Reuse modules.** Same structure, different content → reuse the block. Small differences (a
+  colour, an optional element) → an ACF option. A section whose layout differs gets its own
+  purpose-built block, never a layout option (the user's rule; heroes included: page-hero /
+  hub-hero / resources-hero). Same module + same content on several pages → a synced pattern.
   LearnDash/plugin-dependent modules wait until the plugin is installed and assessed.
 - **Interactions.** Keep the established hover, focus and animation behaviour (button arrow nudge
   and press, card lifts, image zooms, scroll reveals, mega-panel slide, the designer's category
@@ -92,6 +94,9 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   tab per block plus the shared **Block Options** tab (`group_677e01009aea0`). Section headers are a
   seamless clone of `group_upskill_component_section_header` (eyebrow_icon, eyebrow, heading, intro,
   button) rendered by `upskill_section_header()`.
+- ACF field groups also have database copies. When ACF lists "Sync available" for a group, sync it
+  before editing that group in the admin: editing the stale copy drops the newer fields from the
+  block form, and re-saving a page then loses their content (Industries hero, 28 Oct).
 - Global content: Site Settings → Header / Footer (`upskill_option()`). Menus: `primary` (mega panels
   from item Description + "Panel image"), five footer columns (column title = menu name), `footer-legal`.
 
@@ -164,8 +169,9 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   `industry-showcase`, `category-list`, `how-it-works`, `feature-media`, `cohort-cards`, `faqs`. Global:
   announcement bar, header + mega panels, mobile drawer, search dialog, CTA band, footer.
 - **Why UpSkill Me, About, Resources, Blogs, Blog detail, Case Studies** — built (non-LMS sections).
-  New reusable blocks: `page-hero` (split with photo + chips or illustration; centred with badges
-  and the ladder), one purpose-built block per card section (2026-10-20; card-grid retired):
+  New reusable blocks: `page-hero` (split with a photo or illustration — About, Blogs, Guides;
+  centred with badges and the ladder — Why, Case Studies; text only — FAQs), `resources-hero`
+  (Resources: photo with link chips), one purpose-built block per card section (2026-10-20; card-grid retired):
   `feature-grid`, `principles`, `mission-pillars`, `expertise-highlights`, `impact-highlights`,
   `training-needs`, `textured-cards`, `resource-links`, `icon-rows`, `outcome-columns`. White cards
   that turn dark on hover share the `feature-card` classes (`scss/components/_feature-card.scss`).
@@ -190,9 +196,9 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   `single-guide.php` has no Figma: Blog Detail hero (chip, title, excerpt, featured image) + article
   body, "In this article" when the guide has h2s; `.type-guide .article-body` adds h3/h4 and numbered lists.
 - **Industry Hub + Categories (2026-10-24):** pages /industries/ (27) and /categories/ (28), Figma
-  49325:14553 / 49325:14595. Built from existing blocks: `page-hero` centred gained **Photo cards**
-  (3; the second is wide, first on phones) and compact badges (badge **Count**/**Photo** → tag + photo
-  tile, from 1200); Home's `industry-showcase` / `category-list` content copied (Home is on hold, so not
+  49325:14553 / 49325:14595. Hero: block `hub-hero` (since 28 Oct; it was a page-hero option):
+  two **Tags** (count, title, icon, photo tile; first left, second right, from 1200) and three
+  **Photo cards** (the second is wide, first on phones). Home's `industry-showcase` / `category-list` content copied (Home is on hold, so not
   turned into synced patterns); new thin block `training-library` (section header over
   template-parts/library/browser.php, one per page); pattern #1018; `media-story` gained **List style:
   Points** (Categories "Training for what matters": white rounded panel at every width, lead-over-text

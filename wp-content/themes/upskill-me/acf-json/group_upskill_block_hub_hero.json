@@ -1,0 +1,242 @@
+{
+    "key": "group_upskill_block_hub_hero",
+    "title": "Block: Hub Hero",
+    "fields": [
+        {
+            "key": "field_upskill_hub_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_hub_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person",
+                "brand-mark": "Brand mark"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_hub_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_hub_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_hub_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_hub_hero_button",
+            "label": "Button",
+            "name": "button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_hub_hero_tags",
+            "label": "Tags",
+            "name": "tags",
+            "type": "repeater",
+            "instructions": "Two small tags beside the heading, each with a photo tile (shown from 1200px wide). The first sits on the left, the second on the right.",
+            "layout": "table",
+            "min": 0,
+            "max": 2,
+            "button_label": "Add tag",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_hub_hero_tags_count",
+                    "label": "Count",
+                    "name": "count",
+                    "type": "text",
+                    "instructions": "Bold, e.g. 3+",
+                    "wrapper": {
+                        "width": "15"
+                    }
+                },
+                {
+                    "key": "field_upskill_hub_hero_tags_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "35"
+                    }
+                },
+                {
+                    "key": "field_upskill_hub_hero_tags_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "Default",
+                        "play-video": "Play Video",
+                        "free-video": "Free video",
+                        "book-open": "Open book",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
+                    },
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "20"
+                    }
+                },
+                {
+                    "key": "field_upskill_hub_hero_tags_photo",
+                    "label": "Photo",
+                    "name": "photo",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "thumbnail",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp",
+                    "wrapper": {
+                        "width": "30"
+                    }
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_hub_hero_cards",
+            "label": "Photo cards",
+            "name": "cards",
+            "type": "repeater",
+            "instructions": "Three photos under the heading, each with a caption. The second card is the wide one; on phones it comes first.",
+            "layout": "block",
+            "min": 0,
+            "max": 3,
+            "button_label": "Add card",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_hub_hero_cards_image",
+                    "label": "Image",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "mime_types": "jpg, jpeg, png, webp",
+                    "wrapper": {
+                        "width": "34"
+                    }
+                },
+                {
+                    "key": "field_upskill_hub_hero_cards_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "33"
+                    }
+                },
+                {
+                    "key": "field_upskill_hub_hero_cards_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "33"
+                    }
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/hub-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793172788
+}

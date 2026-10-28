@@ -1,0 +1,232 @@
+{
+    "key": "group_upskill_block_resources_hero",
+    "title": "Block: Resources Hero",
+    "fields": [
+        {
+            "key": "field_upskill_resources_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_resources_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person",
+                "brand-mark": "Brand mark"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_resources_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_resources_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_resources_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_resources_hero_primary_button",
+            "label": "Primary button",
+            "name": "primary_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_resources_hero_secondary_button",
+            "label": "Secondary button (play)",
+            "name": "secondary_button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_resources_hero_note",
+            "label": "Note",
+            "name": "note",
+            "type": "text",
+            "instructions": "The ticked line under the buttons.",
+            "placeholder": "More than compliance. Built for the job."
+        },
+        {
+            "key": "field_upskill_resources_hero_photo",
+            "label": "Photo",
+            "name": "photo",
+            "type": "image",
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "jpg, jpeg, png, webp",
+            "wrapper": {
+                "width": "60"
+            },
+            "instructions": "Cropped to fill the right half."
+        },
+        {
+            "key": "field_upskill_resources_hero_chips",
+            "label": "Photo chips",
+            "name": "chips",
+            "type": "repeater",
+            "instructions": "Up to four link chips over the photo (desktop).",
+            "layout": "table",
+            "min": 0,
+            "max": 4,
+            "button_label": "Add chip",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_resources_hero_chips_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_resources_hero_chips_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
+                    },
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_resources_hero_chips_tone",
+                    "label": "Tone",
+                    "name": "tone",
+                    "type": "select",
+                    "choices": {
+                        "purple": "Purple",
+                        "blue": "Blue",
+                        "green": "Green"
+                    },
+                    "default_value": "purple",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_resources_hero_chips_position",
+                    "label": "Position",
+                    "name": "position",
+                    "type": "select",
+                    "choices": {
+                        "upper-left": "Upper left",
+                        "top-right": "Top right",
+                        "lower-left": "Lower left",
+                        "bottom-right": "Bottom right"
+                    },
+                    "default_value": "upper-left",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_resources_hero_chips_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/resources-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793172788
+}
