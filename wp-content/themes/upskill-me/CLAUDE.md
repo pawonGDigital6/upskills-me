@@ -236,4 +236,14 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   accessible / ongoing exported from Figma) and `related-industries` (49325:15019, replaces the last
   industry-showcase: split header, two wide cards; automatic = the other industries not coming soon,
   numbered by term ID; theme texture `texture-soft.webp`). Textured Cards (Why page) and Industry
-  Showcase (Home) are unchanged; category/level patterns still use textured-cards.
+  Showcase (Home) are unchanged.
+- **Industry and category pages (2026-10-29):** one template (`term-page.php`), content per term.
+  Hero = term fields (photo, heading, intro). Page sections = the term's own synced pattern
+  (`page_sections`), named "Industry page sections: <term>" / "Category page sections: <term>";
+  #944 / #945 stay the fallback (#944 = Manufacturing's). Each pattern holds only what Figma varies
+  per term (Training Reasons, plus Training Needs for industries) and embeds the shared, identical
+  sections as nested synced patterns: "Industry pages: free sessions, industries, categories",
+  "Industry pages: why Upskillme, testimonials, FAQs, keep exploring" and "Category pages: free
+  sessions, testimonials, FAQs, keep exploring". Edit a shared section once there. Categories use
+  Training Reasons (Figma 49329:27122); levels (#946) still use textured-cards. "Future +" is a
+  training category (`/training-category/future/`, footer "Future categories").
