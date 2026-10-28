@@ -78,24 +78,27 @@ if ( ! $upskill_pattern ) {
 }
 ?>
 <main id="primary" class="site-main bg-gray-25">
-	<section class="container pt-6 pb-12 lg:pt-16 lg:pb-20" aria-labelledby="term-heading">
-		<?php // Photo and copy share one grid cell; the gradient keeps the white text readable. ?>
+	<?php // Figma 49325:14838 / 49354:95610: 30px over and 46px under the photo on phones; on desktop the library follows straight on. ?>
+	<section class="term-page-hero container pt-[30px] pb-[46px] lg:pt-16 lg:pb-0" aria-labelledby="term-heading">
+		<?php // Photo and copy share one grid cell; Figma's black 0–80% top-to-bottom gradient keeps the white text readable. ?>
 		<div class="grid grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] bg-gray-950 *:col-start-1 *:row-start-1">
 			<?php if ( $upskill_photo ) : ?>
-				<?php upskill_image( $upskill_photo, 'full', array( 'class' => 'size-full object-cover', 'alt' => '', 'loading' => 'eager', 'sizes' => '(min-width: 1440px) 1360px, calc(100vw - 32px)' ) ); ?>
+				<?php // Phones crop the photo as Figma does, from 78% across. Drawn by height there (730 × the photo's ratio). ?>
+				<?php upskill_image( $upskill_photo, 'full', array( 'class' => 'size-full object-cover max-lg:object-[78%_50%]', 'alt' => '', 'loading' => 'eager', 'sizes' => '(min-width: 1440px) 1360px, (min-width: 1025px) calc(100vw - 80px), 1360px' ) ); ?>
 			<?php endif; ?>
-			<div class="bg-[linear-gradient(90deg,rgb(13_13_13/82%)_0%,rgb(13_13_13/55%)_45%,rgb(13_13_13/0%)_80%)] max-lg:bg-[linear-gradient(180deg,rgb(13_13_13/35%)_0%,rgb(13_13_13/85%)_100%)]" aria-hidden="true"></div>
-			<div class="relative flex min-h-[560px] flex-col justify-end gap-6 p-5 text-white sm:p-8 lg:min-h-[730px] lg:max-w-[784px] lg:justify-center lg:p-16">
+			<div class="bg-[linear-gradient(180deg,rgb(0_0_0/0%)_-15%,rgb(0_0_0/80%)_100%)]" aria-hidden="true"></div>
+			<div class="relative flex min-h-[730px] flex-col justify-center gap-6 px-4 py-17.5 text-white sm:px-8 sm:py-8 lg:px-16 lg:py-13 lg:max-w-[784px]">
 				<div class="flex flex-col items-start gap-3">
-					<p class="eyebrow"><?php upskill_icon( 'brand-mark', 'eyebrow__icon' ); ?><span><?php echo esc_html( $upskill_name ); ?></span></p>
-					<h1 id="term-heading" class="heading text-h1 font-medium text-white lg:font-semibold lg:tracking-[-0.01em] [&_em]:text-white">
+					<p class="eyebrow"><?php upskill_icon( 'free-video', 'eyebrow__icon' ); ?><span><?php echo esc_html( $upskill_name ); ?></span></p>
+					<h1 id="term-heading" class="heading text-h1 font-medium text-white max-xs:text-[2.25rem] lg:font-semibold lg:tracking-[-0.01em] [&_em]:text-white">
 						<?php echo wp_kses( $upskill_title, upskill_inline_kses() ); ?>
 					</h1>
 				</div>
 				<?php if ( $upskill_intro ) : ?>
-					<p class="text-lead text-white/85"><?php echo esc_html( $upskill_intro ); ?></p>
+					<p class="text-xl text-gray-100 pt-[6px]"><?php echo esc_html( $upskill_intro ); ?></p>
 				<?php endif; ?>
-				<div class="flex flex-wrap gap-2">
+				<?php // Figma: the buttons sit 32 (phones, stacked 16 apart) / 56 (desktop) under the intro. ?>
+				<div class="mt-2 flex flex-col items-start gap-4 sm:flex-row sm:flex-wrap sm:gap-2 lg:mt-8">
 					<?php upskill_button( array( 'url' => $upskill_base . '#results', 'title' => __( 'Find Training Packages', 'upskill-me' ) ), array( 'class' => 'min-h-[50px]' ) ); ?>
 					<?php if ( $upskill_any ) : ?>
 						<?php upskill_button( array( 'url' => add_query_arg( 'free', 1, $upskill_free ? $upskill_base : upskill_library_page_url() ) . '#results', 'title' => __( 'Watch Free Training', 'upskill-me' ) ), array( 'variant' => 'light', 'icon' => 'play', 'class' => 'min-h-[50px]' ) ); ?>
@@ -103,8 +106,8 @@ if ( ! $upskill_pattern ) {
 				</div>
 				<?php if ( $upskill_any ) : ?>
 					<?php // As drawn: the free sessions on offer across Upskillme (Watch Free Training opens this page's own when it has some). ?>
-					<p class="flex items-center gap-2 font-secondary text-[13px] leading-[1.62] tracking-[-0.007em] text-white/75">
-						<?php upskill_icon( 'check', 'size-3.5 flex-none' ); ?>
+					<p class="-mt-2 flex items-center gap-2 font-secondary text-[13px] leading-[1.62] tracking-[-0.007em] text-gray-100">
+						<?php upskill_icon( 'check', 'size-3.5 flex-none text-[#6744a8]' ); ?>
 						<?php
 						/* translators: %d: number of free sessions. */
 						echo esc_html( sprintf( _n( '%d complete session, free to watch', '%d complete sessions, free to watch', $upskill_any, 'upskill-me' ), $upskill_any ) );

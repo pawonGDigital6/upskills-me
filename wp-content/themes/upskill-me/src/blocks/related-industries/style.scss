@@ -1,0 +1,27 @@
+/**
+ * Related Industries block.
+ *
+ * Layout and colour are utilities in render.php; this lifts the card on hover
+ * (as Industry Showcase does), with the reduced-motion guard.
+ */
+
+.block-related-industries .related-industries__item {
+	transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1);
+}
+
+@media (hover: hover) {
+	.block-related-industries .related-industries__item:hover {
+		transform: translateY(-4px);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.block-related-industries .related-industries__item,
+	.block-related-industries .related-industries__texture {
+		transition: none;
+	}
+
+	.block-related-industries .related-industries__item:hover {
+		transform: none;
+	}
+}

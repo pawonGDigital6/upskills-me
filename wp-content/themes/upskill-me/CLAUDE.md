@@ -226,3 +226,14 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   session player keeps LearnDash's own controls (Video Progression drives it).
   Training card videos carry `.video-card__scrim`: a dark fade under the bar always, plus a brand-800
   tint (`--tint`) when there is no poster, cleared once the video starts.
+- **Manufacturing page refinement (2026-10-29):** term-page hero (`term-page.php`, Figma 49325:14838 /
+  49354:95610): black 0–80% top-to-bottom gradient, 730 tall at every width, phones crop the photo
+  at 78%, 20/30 intro, buttons 32 / 56 under it (stacked on phones), no gap under it on desktop.
+  `training-needs` cards per 49325:15015 (20px corners, 44px number box, 16/24 #414651 copy, purple
+  texture on hover). Two new purpose-built blocks in the Industry page sections pattern (#944,
+  backup of the old content kept outside the repo): `training-reasons` (49325:14854, replaces
+  textured-cards there; "01 - Label", optional photo card = the wide 620 column; icons drill /
+  accessible / ongoing exported from Figma) and `related-industries` (49325:15019, replaces the last
+  industry-showcase: split header, two wide cards; automatic = the other industries not coming soon,
+  numbered by term ID; theme texture `texture-soft.webp`). Textured Cards (Why page) and Industry
+  Showcase (Home) are unchanged; category/level patterns still use textured-cards.

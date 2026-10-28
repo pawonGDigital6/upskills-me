@@ -11,6 +11,32 @@
 	transition-timing-function: ease;
 }
 
+.feature-card__body {
+	position: relative;
+
+	.feature-card__content {
+		z-index: 2;
+		position: relative;
+	}
+
+	&:after {
+		content: "";
+		position: absolute;
+		left: 0;
+		top: 0;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.6);
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.32s, visibility 0.32s;
+	}
+}
+
+.feature-card .feature-card__body:hover:after {
+	opacity: 1;
+	visibility: visible;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.feature-card,
 	.feature-card * {

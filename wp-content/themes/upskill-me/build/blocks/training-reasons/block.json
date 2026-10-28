@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/training-reasons",
+  "version": "1.0.0",
+  "title": "Training Reasons",
+  "category": "acf-blocks",
+  "icon": "grid-view",
+  "description": "Centred section header over three textured cards, each with an icon, a numbered label, a title and text; a card with a photo is the wide one.",
+  "keywords": [
+    "cards",
+    "reasons",
+    "why"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": true
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}

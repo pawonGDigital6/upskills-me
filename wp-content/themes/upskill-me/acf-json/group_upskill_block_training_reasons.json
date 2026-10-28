@@ -1,0 +1,174 @@
+{
+    "key": "group_upskill_block_training_reasons",
+    "title": "Block: Training Reasons",
+    "fields": [
+        {
+            "key": "field_upskill_training_reasons_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_training_reasons_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_training_reasons_cards",
+            "label": "Cards",
+            "name": "cards",
+            "type": "repeater",
+            "instructions": "Three cards, numbered automatically (\"01 - Label\"). A card with a photo is the wide one on desktop.",
+            "layout": "block",
+            "min": 0,
+            "max": 3,
+            "button_label": "Add card",
+            "collapsed": "field_upskill_training_reasons_cards_title",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_training_reasons_cards_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "drill": "Drill",
+                        "accessible": "Accessible",
+                        "ongoing": "Ongoing (hands)",
+                        "tools": "Tools",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
+                    },
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "33"
+                    },
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                },
+                {
+                    "key": "field_upskill_training_reasons_cards_tone",
+                    "label": "Tone",
+                    "name": "tone",
+                    "type": "select",
+                    "choices": {
+                        "light": "Light",
+                        "brand": "Purple"
+                    },
+                    "default_value": "light",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "33"
+                    },
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                },
+                {
+                    "key": "field_upskill_training_reasons_cards_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "instructions": "Shown after the number, e.g. Practical.",
+                    "wrapper": {
+                        "width": "33"
+                    },
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                },
+                {
+                    "key": "field_upskill_training_reasons_cards_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "required": 1,
+                    "instructions": "Use <br> for a line break.",
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                },
+                {
+                    "key": "field_upskill_training_reasons_cards_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "textarea",
+                    "rows": 2,
+                    "new_lines": "",
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                },
+                {
+                    "key": "field_upskill_training_reasons_cards_image",
+                    "label": "Photo",
+                    "name": "image",
+                    "type": "image",
+                    "return_format": "id",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "instructions": "Optional. Shown at 20% under the card (use with the Purple tone); makes the card the wide one.",
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                },
+                {
+                    "key": "field_upskill_training_reasons_cards_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array",
+                    "instructions": "Optional. Makes the whole card a link.",
+                    "parent_repeater": "field_upskill_training_reasons_cards"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/training-reasons"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793216001
+}
