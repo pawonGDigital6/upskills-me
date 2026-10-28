@@ -55,7 +55,7 @@ foreach ( $cards as $card ) {
 
 		<?php if ( $cards ) : ?>
 			<?php // Figma: the cards touch on phones, sit 16 apart from tablets; desktop columns follow the cards (a photo card is 620 wide, the rest 354). ?>
-			<ul class="training-reasons__list mt-6 grid sm:grid-cols-2 sm:gap-4 lg:mt-[62px] lg:grid-cols-(--columns)" style="--columns:<?php echo esc_attr( implode( ' ', $columns ) ); ?>">
+			<ul class="training-reasons__list mt-6 grid sm:grid-cols-2 sm:gap-4 gap-6 lg:mt-[62px] lg:grid-cols-(--columns)" style="--columns:<?php echo esc_attr( implode( ' ', $columns ) ); ?>">
 				<?php foreach ( $cards as $index => $card ) : ?>
 					<?php
 					$t     = isset( $tones[ $card['tone'] ] ) ? $tones[ $card['tone'] ] : $tones['light'];

@@ -118,7 +118,7 @@ if ( ! $upskill_pattern ) {
 		</div>
 	</section>
 
-	<section class="bg-brand-25 pt-12 lg:pt-20" aria-labelledby="term-library-heading">
+	<section class="bg-brand-50 pt-12 lg:pt-20 course-filter-module" aria-labelledby="term-library-heading">
 		<div class="container">
 			<div class="section-header section-header--split">
 				<div class="section-header__title">
