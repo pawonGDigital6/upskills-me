@@ -44,22 +44,22 @@ $attributes = upskill_block_attributes( $block, 'block-training-needs section-y 
 						<?php $points = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) ( $need['points'] ?? '' ) ) ) ); ?>
 						<?php // Figma 49325:15015 / 49354:95613: 20px corners, 16 (phones) / 24 padding; the first card draws the hover look, purple texture with white text. ?>
 						<li class="training-needs__item feature-card reveal group relative isolate flex flex-col overflow-hidden rounded-[20px] border border-gray-100 bg-white shadow-xs hover:border-transparent" style="--i:<?php echo (int) min( $index, 5 ); ?>">
-							<span class="feature-card__surface pointer-events-none absolute inset-0 -z-10 bg-[#2f1a51] opacity-0 group-hover:opacity-100" aria-hidden="true">
-								<img class="feature-card__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'card-bg-grph-portr.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+							<span class="training-needs__surface pointer-events-none absolute inset-0 -z-10 bg-[#2f1a51] opacity-0 group-hover:opacity-100" aria-hidden="true">
+								<img class="training-needs__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'card-bg-grph-portr.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 							</span>
-							<div class="feature-card__body flex flex-1 flex-col p-4 lg:p-6">
-								<div class="feature-card__content flex flex-col">
+							<div class="training-needs__body flex flex-1 flex-col p-4 lg:p-6">
+								<div class="training-needs__content flex flex-col">
 									<?php // A 44px box, the title 93px below its top. ?>
-									<span class="feature-card__number mb-[49px] grid size-11 place-items-center rounded-[2px] border border-gray-950/10 text-lg font-medium text-gray-500 group-hover:border-brand-100 group-hover:text-white" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
-									<h3 class="feature-card__title text-lg leading-[1.5] font-medium text-gray-950 group-hover:text-white"><?php echo esc_html( $need['title'] ); ?></h3>
+									<span class="training-needs__number mb-[49px] grid size-11 place-items-center rounded-[2px] border border-gray-950/10 text-lg font-medium text-gray-500 group-hover:border-brand-100 group-hover:text-white" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
+									<h3 class="training-needs__title text-lg leading-[1.5] font-medium text-gray-950 group-hover:text-white"><?php echo esc_html( $need['title'] ); ?></h3>
 									<?php if ( ! empty( $need['text'] ) ) : ?>
 										<?php // Figma #414651 (Untitled UI gray-600; no theme token). ?>
-										<p class="feature-card__text pt-4 text-base text-[#414651] group-hover:text-white"><?php echo esc_html( $need['text'] ); ?></p>
+										<p class="training-needs__text pt-4 text-base text-[#414651] group-hover:text-white"><?php echo esc_html( $need['text'] ); ?></p>
 									<?php endif; ?>
 									<?php if ( $points ) : ?>
-										<ul class="feature-card__points flex list-disc flex-col pt-2 pl-5 text-base text-[#414651] marker:text-[#414651] group-hover:text-white group-hover:marker:text-white">
+										<ul class="training-needs__points flex list-disc flex-col pt-2 pl-5 text-base text-[#414651] marker:text-[#414651] group-hover:text-white group-hover:marker:text-white">
 											<?php foreach ( $points as $point ) : ?>
-												<li class="feature-card__point"><?php echo esc_html( $point ); ?></li>
+												<li class="training-needs__point"><?php echo esc_html( $point ); ?></li>
 											<?php endforeach; ?>
 										</ul>
 									<?php endif; ?>

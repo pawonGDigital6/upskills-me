@@ -178,7 +178,7 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   right/green, and the ladder), `hub-hero` (Industries, Categories). One purpose-built block per card section (2026-10-20; card-grid retired):
   `feature-grid`, `principles`, `mission-pillars`, `expertise-highlights`, `impact-highlights`,
   `training-needs`, `textured-cards`, `resource-links`, `icon-rows`, `outcome-columns`. White cards
-  that turn dark on hover share the `feature-card` classes (`scss/components/_feature-card.scss`).
+  that turn dark on hover share only the root `feature-card` class (hover timing, `scss/components/_feature-card.scss`); elements use the block's own BEM.
   Every element carries a BEM class (`<block>__<element>`), styling stays in utilities. `video-feature`,
   `media-story`, `resource-library` (grid, split row, guides, featured, paginated
   listing; template-parts/cards/resource.php + guide.php), `testimonials` (scroll-snap carousel),

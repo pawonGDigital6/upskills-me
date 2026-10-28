@@ -6877,7 +6877,6 @@
 }
 
 .feature-card,
-.feature-card__surface,
 .feature-card :is(h3, p, span, li) {
   transition-duration: 0.45s;
   transition-property: color, background-color, border-color, opacity;

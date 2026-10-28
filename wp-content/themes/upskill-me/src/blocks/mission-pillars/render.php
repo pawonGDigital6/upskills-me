@@ -42,16 +42,16 @@ $attributes = upskill_block_attributes( $block, 'block-mission-pillars section-y
 			<ul class="mission-pillars__list mt-12 grid gap-4 sm:grid-cols-2 lg:mt-15 lg:grid-cols-3">
 				<?php foreach ( $pillars as $index => $pillar ) : ?>
 					<li class="mission-pillars__item feature-card reveal group relative isolate flex flex-col overflow-hidden rounded-[22px] border border-line bg-white shadow-xs hover:border-transparent" style="--i:<?php echo (int) min( $index, 5 ); ?>">
-						<span class="feature-card__surface pointer-events-none absolute inset-0 -z-10 bg-gray-950 opacity-0 group-hover:opacity-100" aria-hidden="true">
-							<img class="feature-card__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'texture-dark.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+						<span class="mission-pillars__surface pointer-events-none absolute inset-0 -z-10 bg-gray-950 opacity-0 group-hover:opacity-100" aria-hidden="true">
+							<img class="mission-pillars__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'texture-dark.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 						</span>
-						<div class="feature-card__body flex flex-1 flex-col p-[30px]">
-							<span class="feature-card__accent h-[3px] w-[34px] rounded-full bg-[#6b2fe3]" aria-hidden="true"></span>
-							<div class="feature-card__content flex flex-col pt-[22px]">
-								<span class="feature-card__number text-sm text-gray-500" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-								<h3 class="feature-card__title pt-2.5 text-h6 font-medium text-gray-950 group-hover:text-white"><?php echo esc_html( $pillar['title'] ); ?></h3>
+						<div class="mission-pillars__body flex flex-1 flex-col p-[30px]">
+							<span class="mission-pillars__accent h-[3px] w-[34px] rounded-full bg-[#6b2fe3]" aria-hidden="true"></span>
+							<div class="mission-pillars__content flex flex-col pt-[22px]">
+								<span class="mission-pillars__number text-sm text-gray-500" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+								<h3 class="mission-pillars__title pt-2.5 text-h6 font-medium text-gray-950 group-hover:text-white"><?php echo esc_html( $pillar['title'] ); ?></h3>
 								<?php if ( ! empty( $pillar['text'] ) ) : ?>
-									<p class="feature-card__text pt-2.5 text-base text-gray-500 group-hover:text-gray-100 min-[1201px]:max-w-[326px]"><?php echo esc_html( $pillar['text'] ); ?></p>
+									<p class="mission-pillars__text pt-2.5 text-base text-gray-500 group-hover:text-gray-100 min-[1201px]:max-w-[326px]"><?php echo esc_html( $pillar['text'] ); ?></p>
 								<?php endif; ?>
 							</div>
 						</div>

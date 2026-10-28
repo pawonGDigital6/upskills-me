@@ -7,3 +7,6 @@
  * Layout and colour are utilities in render.php; the card's hover timing is
  * shared (src/global/scss/components/_feature-card.scss).
  */
+.training-needs__item:hover .training-needs__texture {
+  opacity: 0.55;
+}
