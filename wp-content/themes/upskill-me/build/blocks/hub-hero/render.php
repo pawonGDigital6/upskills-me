@@ -41,7 +41,7 @@ $attributes = upskill_block_attributes( $block, 'block-hub-hero overflow-hidden 
 				$icon  = ! empty( $tag['icon'] ) ? $tag['icon'] : ( $right ? 'check' : 'play' );
 				?>
 				<div class="hub-hero__tag reveal col-start-1 row-start-1 hidden flex-col items-start gap-3 self-start wd:flex <?php echo $right ? 'mt-[142px] justify-self-end' : 'mt-[159px] justify-self-start'; ?>" style="--i:<?php echo $right ? 2 : 1; ?>">
-					<p class="hub-hero__tag-label flex items-center gap-[7px] rounded-lg border border-line bg-white py-2 pr-3.5 pl-2.5 text-xs leading-[1.62] tracking-[-0.1px] shadow-[0_4px_14px_-6px_rgb(47_26_81/10%),0_1px_2px_0_rgb(26_26_26/4%)]">
+					<p class="hub-hero__tag-label flex items-center gap-[7px] rounded-[8px] border border-line bg-white py-2 pr-3.5 pl-2.5 text-xs leading-[1.62] tracking-[-0.1px] shadow-[0_4px_14px_-6px_rgb(47_26_81/10%),0_1px_2px_0_rgb(26_26_26/4%)]">
 						<?php if ( ! $right ) : ?>
 							<?php upskill_icon( $icon, 'size-[15px] flex-none text-[#6744a8]' ); ?>
 						<?php endif; ?>
@@ -54,7 +54,7 @@ $attributes = upskill_block_attributes( $block, 'block-hub-hero overflow-hidden 
 						<?php endif; ?>
 					</p>
 					<?php if ( ! empty( $tag['photo'] ) ) : ?>
-						<?php upskill_image( $tag['photo'], 'full', array( 'class' => 'hub-hero__tag-photo size-[54px] rounded-2xl border-[3px] border-white object-cover shadow-[0_14px_34px_-10px_rgb(47_26_81/14%),0_2px_4px_0_rgb(26_26_26/3%)] ' . ( $right ? '' : 'ml-24' ), 'alt' => '', 'loading' => 'eager', 'sizes' => '48px' ) ); ?>
+						<?php upskill_image( $tag['photo'], 'full', array( 'class' => 'hub-hero__tag-photo size-[54px] rounded-[16px] border-[3px] border-white object-cover shadow-[0_14px_34px_-10px_rgb(47_26_81/14%),0_2px_4px_0_rgb(26_26_26/3%)] ' . ( $right ? '' : 'ml-24' ), 'alt' => '', 'loading' => 'eager', 'sizes' => '48px' ) ); ?>
 					<?php endif; ?>
 				</div>
 			<?php endforeach; ?>
@@ -84,7 +84,7 @@ $attributes = upskill_block_attributes( $block, 'block-hub-hero overflow-hidden 
 						<div class="bg-[linear-gradient(180deg,rgb(0_0_0/0%)_50%,rgb(0_0_0/80%)_100%)]" aria-hidden="true"></div>
 						<?php if ( ! empty( $card['title'] ) || ! empty( $card['text'] ) ) : ?>
 							<div class="flex flex-col justify-end">
-								<p class="hub-hero__caption flex flex-col gap-2 border-t border-white/15 bg-white/10 px-3 py-4 text-white backdrop-blur-md sm:gap-1 sm:pr-0 sm:pl-6">
+								<p class="hub-hero__caption flex flex-col gap-2 border-t border-white/15 bg-white/10 px-3 sm:py-4 py-3 text-white sm:backdrop-blur-md backdrop-blur-[4px] sm:gap-1 sm:pr-0 sm:pl-6">
 									<?php if ( ! empty( $card['title'] ) ) : ?>
 										<span class="hub-hero__card-title text-[clamp(1.5rem,1.2214rem+1.1429vw,2.25rem)] leading-[1.1] font-medium tracking-[-0.01em]"><?php echo esc_html( $card['title'] ); ?></span>
 									<?php endif; ?>
