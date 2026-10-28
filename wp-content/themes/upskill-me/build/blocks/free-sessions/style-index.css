@@ -1,91 +1,15 @@
 /*!************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[4].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[4].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[4].use[3]!./src/blocks/free-sessions/style.scss ***!
   \************************************************************************************************************************************************************************************************************************************************************/
-@charset "UTF-8";
 /**
- * Free Sessions block — the video transport bar.
+ * Free Sessions block.
  *
- * Figma: "Play bar" in 49325:14394. A row of 32px icon buttons and a seek
- * slider in white over the card's bottom gradient.
+ * The video transport bar is shared with the training library cards:
+ * template-parts/video/controls.php, src/global/scss/components/_video-card.scss
+ * and src/global/js/components/video-player.js.
  */
-.video-card__btn {
-  display: grid;
-  flex: none;
-  place-items: center;
-  padding: 8px;
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: none;
-  color: inherit;
-  transition: background-color 0.2s ease;
-}
-.video-card__btn:hover {
-  background-color: rgba(255, 255, 255, 0.12);
-}
-.video-card__btn[aria-pressed=true] {
-  opacity: 0.6;
-}
-
-.video-card__icon {
-  width: 16px;
-  height: 16px;
-}
-
-.video-card__icon--pause,
-.video-card.is-playing .video-card__icon--play {
-  display: none;
-}
-
-.video-card.is-playing .video-card__icon--pause {
-  display: block;
-}
-
-.video-card__progress {
-  flex: 1;
-  min-width: 0;
-  height: 8px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, var(--color-white) var(--progress, 0%), rgba(255, 255, 255, 0.3) var(--progress, 0%));
-  appearance: none;
-  cursor: pointer;
-}
-.video-card__progress::-webkit-slider-thumb {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  background: var(--color-white);
-  appearance: none;
-}
-.video-card__progress::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--color-white);
-}
-
-.video-card [data-video-overlay] {
-  transition: opacity 0.4s ease;
-}
-
-.video-card.is-playing [data-video-overlay] {
-  opacity: 0.45;
-}
-
-.video-card video {
-  cursor: pointer;
-}
-
-.video-card [data-video-poster] {
-  transition: opacity 0.3s ease, scale 0.7s ease-out;
-}
-
-.video-card.is-started [data-video-poster] {
-  opacity: 0;
-}
-
 @media (max-width: 1024.98px) {
-  .video-card:not(.is-started):not(:focus-within) .video-card__bar {
+  .free-sessions__video:not(.is-started):not(:focus-within) .video-card__bar {
     opacity: 0;
     pointer-events: none;
   }

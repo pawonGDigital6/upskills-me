@@ -362,14 +362,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Library: () => (/* binding */ Library)
 /* harmony export */ });
+/* harmony import */ var _video_player__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./video-player */ "./src/global/js/components/video-player.js");
 /**
  * Training library (template-library.php).
  *
  * The filters are a plain GET form that works without JavaScript. Here the
  * results update in place from the library REST route (inc/lms-library.php,
  * address in the form's data-library):
- * - a ticked filter, "Sort by", the search, a suggestion, "Clear all" and
- *   "Load more training" fetch the new cards, labels and filter counts;
+ * - a ticked filter, "Sort by", the search, a suggestion and "Clear all"
+ *   fetch the new cards, labels and filter counts, always from page one;
+ * - a page link (Previous, a number, Next) fetches that page (pg), scrolls back
+ *   to the top of the results and focuses its first card;
+ * - free sessions in the new cards get the video transport (VideoPlayer);
  * - the address bar follows (history), so results stay shareable and Back
  *   returns to the previous results;
  * - while loading the cards dim (aria-busy); a failed request shows a
@@ -381,6 +385,7 @@ __webpack_require__.r(__webpack_exports__);
  *   filter button; its counts and "Show N results" update as choices change,
  *   and the button closes the sheet onto the results.
  */
+
 function Library(root = document) {
   const form = root.querySelector('[data-library]');
   if (!form) {
@@ -402,7 +407,7 @@ function Library(root = document) {
     const data = new FormData(form);
     const query = new URLSearchParams();
     data.delete('q');
-    data.delete('show');
+    data.delete('pg');
     const words = (searchInput?.value ?? '').trim();
     if (words) {
       query.set('q', words);
@@ -434,6 +439,7 @@ function Library(root = document) {
   };
   const render = data => {
     results.innerHTML = data.html;
+    (0,_video_player__WEBPACK_IMPORTED_MODULE_0__.VideoPlayer)(results);
     Object.entries(data.labels).forEach(([key, text]) => {
       form.querySelectorAll(`[data-library-label="${key}"]`).forEach(el => {
         el.textContent = text;
@@ -462,18 +468,18 @@ function Library(root = document) {
    * Fetch and show the results for a set of parameters.
    *
    * @param {URLSearchParams} query   Parameters.
-   * @param {Object}          options history: 'push' | 'replace' | false; focusFrom: card index to focus after.
+   * @param {Object}          options history: 'push' | 'replace' | false; turn: a new page, so scroll to its top and focus its first card.
    */
   const update = async (query, {
     history = 'push',
-    focusFrom = -1
+    turn = false
   } = {}) => {
     controller?.abort();
     const request = new AbortController();
     controller = request;
     retry = () => update(query, {
       history,
-      focusFrom
+      turn
     });
     results.setAttribute('aria-busy', 'true');
     error.hidden = true;
@@ -497,8 +503,11 @@ function Library(root = document) {
           library: true
         }, '', address);
       }
-      if (focusFrom >= 0) {
-        results.querySelectorAll('article')[focusFrom]?.querySelector('a[href]')?.focus();
+      if (turn) {
+        showResults();
+        results.querySelector('article a[href]')?.focus({
+          preventScroll: true
+        });
       }
     } catch (failure) {
       if ('AbortError' !== failure.name) {
@@ -558,10 +567,10 @@ function Library(root = document) {
     });
   });
 
-  // Links inside the form: "Clear all", "Clear all filters", "Load more training".
+  // Links inside the form: "Clear all", "Clear all filters", the page links.
   form.addEventListener('click', event => {
     const reset = event.target.closest('[data-library-reset]');
-    const more = event.target.closest('[data-library-more]');
+    const page = event.target.closest('[data-library-page]');
     if (reset) {
       event.preventDefault();
       form.querySelectorAll('input[type="checkbox"]').forEach(box => {
@@ -571,13 +580,13 @@ function Library(root = document) {
         searchInput.value = '';
       }
       update(params());
-    } else if (more) {
+    } else if (page) {
       event.preventDefault();
-      update(params({
-        show: more.dataset.libraryMore
+      // Page one has no pg, so its address matches the unpaged results.
+      update(params('1' === page.dataset.libraryPage ? {} : {
+        pg: page.dataset.libraryPage
       }), {
-        history: 'replace',
-        focusFrom: results.querySelectorAll('article').length
+        turn: true
       });
     }
   });
@@ -590,8 +599,8 @@ function Library(root = document) {
     const query = new URLSearchParams(window.location.search);
     restore(query);
     // From the form, so a page default ticked by restore() is part of the request.
-    update(params(query.has('show') ? {
-      show: query.get('show')
+    update(params(query.has('pg') ? {
+      pg: query.get('pg')
     } : {}), {
       history: false
     });
@@ -1070,6 +1079,113 @@ function Search() {
 
 /***/ },
 
+/***/ "./src/global/js/components/video-player.js"
+/*!**************************************************!*\
+  !*** ./src/global/js/components/video-player.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   VideoPlayer: () => (/* binding */ VideoPlayer)
+/* harmony export */ });
+/**
+ * Video card transport (Free Sessions cards, training library cards).
+ *
+ * Each card ships a native <video controls>, so it plays with no script. This
+ * swaps those controls for the Figma transport bar
+ * (template-parts/video/controls.php): play/pause, mute, a seek slider with
+ * elapsed and remaining time, and full screen. Starting one card pauses any
+ * other that is playing.
+ *
+ * Only cards holding a bar are enhanced (Video Feature's cards have none), and
+ * each card once, so the library can call this again on the cards it loads.
+ */
+
+/**
+ * Format seconds as mm:ss.
+ *
+ * @param {number} seconds Seconds.
+ * @return {string} Formatted time.
+ */
+function clock(seconds) {
+  const safe = Number.isFinite(seconds) ? Math.max(0, Math.floor(seconds)) : 0;
+  return `${String(Math.floor(safe / 60)).padStart(2, '0')}:${String(safe % 60).padStart(2, '0')}`;
+}
+function enhance(card) {
+  const video = card.querySelector('[data-video]');
+  const bar = card.querySelector('[data-video-bar]');
+  if (!video || !bar || card.hasAttribute('data-video-ready')) {
+    return;
+  }
+  const play = bar.querySelector('[data-video-play]');
+  const playLabel = play.querySelector('.screen-reader-text');
+  const mute = bar.querySelector('[data-video-mute]');
+  const progress = bar.querySelector('[data-video-progress]');
+  const current = bar.querySelector('[data-video-current]');
+  const remaining = bar.querySelector('[data-video-remaining]');
+  const fullscreen = bar.querySelector('[data-video-fullscreen]');
+  card.setAttribute('data-video-ready', '');
+  video.removeAttribute('controls');
+  bar.hidden = false;
+  const toggle = () => {
+    if (video.paused) {
+      document.querySelectorAll('[data-video-ready] [data-video]').forEach(other => other !== video && other.pause());
+      video.play()?.catch(() => {});
+    } else {
+      video.pause();
+    }
+  };
+  const sync = () => {
+    const playing = !video.paused && !video.ended;
+    card.classList.toggle('is-playing', playing);
+    // Once started, the cover gives way to the video for good.
+    card.classList.toggle('is-started', playing || card.classList.contains('is-started'));
+    playLabel.textContent = playing ? playLabel.dataset.labelPause : playLabel.dataset.labelPlay;
+  };
+  const tick = () => {
+    const duration = video.duration;
+    current.textContent = clock(video.currentTime);
+    remaining.textContent = Number.isFinite(duration) ? `-${clock(duration - video.currentTime)}` : '';
+    progress.value = Number.isFinite(duration) && duration > 0 ? video.currentTime / duration * 100 : 0;
+    progress.style.setProperty('--progress', `${progress.value}%`);
+  };
+  play.addEventListener('click', toggle);
+  video.addEventListener('click', toggle);
+  video.addEventListener('play', sync);
+  video.addEventListener('pause', sync);
+  video.addEventListener('ended', sync);
+  video.addEventListener('timeupdate', tick);
+  video.addEventListener('loadedmetadata', tick);
+
+  // The metadata may already be in before this runs.
+  if (video.readyState >= 1) {
+    tick();
+  }
+  mute.addEventListener('click', () => {
+    video.muted = !video.muted;
+    mute.setAttribute('aria-pressed', String(video.muted));
+  });
+  progress.addEventListener('input', () => {
+    if (Number.isFinite(video.duration)) {
+      video.currentTime = progress.value / 100 * video.duration;
+    }
+  });
+  fullscreen.addEventListener('click', () => {
+    if (card.requestFullscreen) {
+      card.requestFullscreen().catch(() => {});
+    } else if (video.webkitEnterFullscreen) {
+      // iOS Safari only allows the video element itself to go full screen.
+      video.webkitEnterFullscreen();
+    }
+  });
+}
+function VideoPlayer(root = document) {
+  root.querySelectorAll('[data-video-card]').forEach(enhance);
+}
+
+/***/ },
+
 /***/ "./src/global/js/main.js"
 /*!*******************************!*\
   !*** ./src/global/js/main.js ***!
@@ -1085,10 +1201,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_disclosure__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/disclosure */ "./src/global/js/components/disclosure.js");
 /* harmony import */ var _components_reveal__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/reveal */ "./src/global/js/components/reveal.js");
 /* harmony import */ var _components_deferred_video__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/deferred-video */ "./src/global/js/components/deferred-video.js");
-/* harmony import */ var _components_article__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/article */ "./src/global/js/components/article.js");
-/* harmony import */ var _components_password_toggle__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/password-toggle */ "./src/global/js/components/password-toggle.js");
-/* harmony import */ var _components_library__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/library */ "./src/global/js/components/library.js");
-/* harmony import */ var _components_buy_box__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/buy-box */ "./src/global/js/components/buy-box.js");
+/* harmony import */ var _components_video_player__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/video-player */ "./src/global/js/components/video-player.js");
+/* harmony import */ var _components_article__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/article */ "./src/global/js/components/article.js");
+/* harmony import */ var _components_password_toggle__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/password-toggle */ "./src/global/js/components/password-toggle.js");
+/* harmony import */ var _components_library__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/library */ "./src/global/js/components/library.js");
+/* harmony import */ var _components_buy_box__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/buy-box */ "./src/global/js/components/buy-box.js");
+
 
 
 
@@ -1107,10 +1225,11 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(() => {
   (0,_components_disclosure__WEBPACK_IMPORTED_MODULE_4__.Disclosure)();
   (0,_components_reveal__WEBPACK_IMPORTED_MODULE_5__.Reveal)();
   (0,_components_deferred_video__WEBPACK_IMPORTED_MODULE_6__.DeferredVideo)();
-  (0,_components_article__WEBPACK_IMPORTED_MODULE_7__.Article)();
-  (0,_components_password_toggle__WEBPACK_IMPORTED_MODULE_8__.PasswordToggle)();
-  (0,_components_library__WEBPACK_IMPORTED_MODULE_9__.Library)();
-  (0,_components_buy_box__WEBPACK_IMPORTED_MODULE_10__.BuyBox)();
+  (0,_components_video_player__WEBPACK_IMPORTED_MODULE_7__.VideoPlayer)();
+  (0,_components_article__WEBPACK_IMPORTED_MODULE_8__.Article)();
+  (0,_components_password_toggle__WEBPACK_IMPORTED_MODULE_9__.PasswordToggle)();
+  (0,_components_library__WEBPACK_IMPORTED_MODULE_10__.Library)();
+  (0,_components_buy_box__WEBPACK_IMPORTED_MODULE_11__.BuyBox)();
 });
 
 /***/ },

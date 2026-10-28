@@ -33,19 +33,23 @@ if ($upskill_compact) {
 	);
 }
 $upskill_title = wp_unique_id('training-card-');
+// A free session plays here, with the shared transport bar (template-parts/video/controls.php).
+$upskill_player = $upskill_card['free'] && $upskill_card['video'];
 ?>
 <article class="flex flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-card"
 	aria-labelledby="<?php echo esc_attr($upskill_title); ?>">
 	<div class="bg-[#ededef] p-2">
 		<div
-			class="grid aspect-[323/174] grid-cols-1 grid-rows-1 overflow-hidden rounded-[8px] bg-gray-950 *:col-start-1 *:row-start-1">
-			<?php if ($upskill_card['image'] && !($upskill_card['free'] && $upskill_card['video'])): ?>
+			class="grid aspect-[323/174] grid-cols-1 grid-rows-1 overflow-hidden rounded-[8px] bg-gray-950 *:col-start-1 *:row-start-1<?php echo $upskill_player ? ' video-card' : ''; ?>"<?php echo $upskill_player ? ' data-video-card' : ''; ?>>
+			<?php if ($upskill_card['image'] && !$upskill_player): ?>
 				<?php upskill_image($upskill_card['image'], 'large', array('class' => 'size-full object-cover', 'alt' => '', 'sizes' => '(min-width: 1025px) 323px, (min-width: 768px) 50vw, calc(100vw - 48px)')); ?>
 			<?php elseif ($upskill_card['video']): ?>
 				<?php if ($upskill_card['free']): ?>
-					<video class="size-full object-cover" preload="metadata" playsinline controls<?php echo $upskill_card['image'] ? ' poster="' . esc_url((string) wp_get_attachment_image_url($upskill_card['image'], 'large')) . '"' : ''; ?> aria-label="<?php echo esc_attr($upskill_card['title']); ?>">
+					<video class="size-full object-cover" preload="metadata" playsinline controls data-video<?php echo $upskill_card['image'] ? ' poster="' . esc_url((string) wp_get_attachment_image_url($upskill_card['image'], 'large')) . '"' : ''; ?> aria-label="<?php echo esc_attr($upskill_card['title']); ?>">
 						<source src="<?php echo esc_url($upskill_card['video']); ?>" type="video/mp4">
 					</video>
+					<?php // A dark fade under the controls; without a poster also a brand tint until it plays (_video-card.scss). ?>
+					<div class="video-card__scrim pointer-events-none<?php echo $upskill_card['image'] ? '' : ' video-card__scrim--tint'; ?>" aria-hidden="true"></div>
 				<?php else: ?>
 					<?php // First frame as the picture; the session itself stays behind the course. ?>
 					<video class="pointer-events-none size-full object-cover" preload="metadata" muted playsinline tabindex="-1"
@@ -67,6 +71,10 @@ $upskill_title = wp_unique_id('training-card-');
 					<span class="tag tag--code h-6"><?php echo esc_html($upskill_card['code']); ?></span>
 				<?php endif; ?>
 			</div>
+			<?php if ($upskill_player): ?>
+				<?php // Figma: 8px in from the sides, on the bottom edge. ?>
+				<?php get_template_part('template-parts/video/controls', null, array('class' => 'z-10 px-2')); ?>
+			<?php endif; ?>
 		</div>
 	</div>
 	<div class="flex flex-1 flex-col p-4 justify-between">

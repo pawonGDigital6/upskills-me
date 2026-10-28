@@ -1196,6 +1196,10 @@
     --tw-translate-y: calc(calc(1 / 2 * 100%) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
+  .-scale-x-100 {
+    --tw-scale-x: calc(100% * -1);
+    scale: var(--tw-scale-x) var(--tw-scale-y);
+  }
   .rotate-45 {
     rotate: 45deg;
   }
@@ -1204,6 +1208,9 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  .cursor-default {
+    cursor: default;
   }
   .cursor-pointer {
     cursor: pointer;
@@ -1685,6 +1692,9 @@
   .bg-\[\#f0fbd4\] {
     background-color: #f0fbd4;
   }
+  .bg-\[\#fafafa\] {
+    background-color: #fafafa;
+  }
   .bg-\[\#fef3f2\] {
     background-color: #fef3f2;
   }
@@ -2037,9 +2047,6 @@
   }
   .py-\[10px_8px\] {
     padding-block: 10px 8px;
-  }
-  .py-\[12px_8px\] {
-    padding-block: 12px 8px;
   }
   .py-\[19px\] {
     padding-block: 19px;
@@ -2575,6 +2582,12 @@
   }
   .text-\[\#111827\] {
     color: #111827;
+  }
+  .text-\[\#717680\] {
+    color: #717680;
+  }
+  .text-\[\#a4a7ae\] {
+    color: #a4a7ae;
   }
   .text-\[\#b42318\] {
     color: #b42318;
@@ -3178,9 +3191,6 @@
     }
   }
   @media (width < 768px) {
-    .max-sm\:mt-6 {
-      margin-top: calc(var(--spacing) * 6);
-    }
     .max-sm\:mb-4 {
       margin-bottom: calc(var(--spacing) * 4);
     }
@@ -3296,6 +3306,9 @@
     }
     .sm\:grid {
       display: grid;
+    }
+    .sm\:hidden {
+      display: none;
     }
     .sm\:aspect-\[3\/2\] {
       aspect-ratio: 3/2;
@@ -5068,6 +5081,21 @@
   inherits: false;
   initial-value: 0;
 }
+@property --tw-scale-x {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-y {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
+@property --tw-scale-z {
+  syntax: "*";
+  inherits: false;
+  initial-value: 1;
+}
 @property --tw-rotate-x {
   syntax: "*";
   inherits: false;
@@ -5319,21 +5347,6 @@
   syntax: "*";
   inherits: false;
 }
-@property --tw-scale-x {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-y {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
-@property --tw-scale-z {
-  syntax: "*";
-  inherits: false;
-  initial-value: 1;
-}
 @property --tw-content {
   syntax: "*";
   initial-value: "";
@@ -5371,6 +5384,9 @@
       --tw-translate-x: 0;
       --tw-translate-y: 0;
       --tw-translate-z: 0;
+      --tw-scale-x: 1;
+      --tw-scale-y: 1;
+      --tw-scale-z: 1;
       --tw-rotate-x: initial;
       --tw-rotate-y: initial;
       --tw-rotate-z: initial;
@@ -5429,9 +5445,6 @@
       --tw-backdrop-sepia: initial;
       --tw-duration: initial;
       --tw-ease: initial;
-      --tw-scale-x: 1;
-      --tw-scale-y: 1;
-      --tw-scale-z: 1;
       --tw-content: "";
     }
   }
@@ -6792,6 +6805,102 @@
     transition: none;
   }
 }
+/**
+ * Video card transport bar (template-parts/video/controls.php, enhanced by
+ * js/components/video-player.js): Free Sessions and training library cards.
+ *
+ * Figma: "Play bar" in 49325:14394, training card 49325:14592. A row of 32px
+ * icon buttons and a seek slider in white over the bottom of the video.
+ */
+.video-card__btn {
+  display: grid;
+  flex: none;
+  place-items: center;
+  padding: 8px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: none;
+  color: inherit;
+  transition: background-color 0.2s ease;
+}
+.video-card__btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.video-card__btn[aria-pressed=true] {
+  opacity: 0.6;
+}
+
+.video-card__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.video-card__icon--pause,
+.video-card.is-playing .video-card__icon--play {
+  display: none;
+}
+
+.video-card.is-playing .video-card__icon--pause {
+  display: block;
+}
+
+.video-card__progress {
+  flex: 1;
+  min-width: 0;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(-90deg, var(--color-white) var(--progress, 0%), rgba(255, 255, 255, 0.3) var(--progress, 0%));
+  appearance: none;
+  cursor: pointer;
+}
+.video-card__progress::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--color-white);
+  appearance: none;
+}
+.video-card__progress::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-white);
+}
+
+.video-card [data-video-overlay] {
+  transition: opacity 0.4s ease;
+}
+
+.video-card.is-playing [data-video-overlay] {
+  opacity: 0.45;
+}
+
+.video-card video {
+  cursor: pointer;
+}
+
+.video-card [data-video-poster] {
+  transition: opacity 0.3s ease, scale 0.7s ease-out;
+}
+
+.video-card.is-started [data-video-poster] {
+  opacity: 0;
+}
+
+.video-card__scrim {
+  background-image: linear-gradient(0deg, rgba(14, 14, 16, 0.55), rgba(14, 14, 16, 0) 45%);
+  transition: background-color 0.3s ease;
+}
+
+.video-card__scrim--tint {
+  background-color: color-mix(in srgb, var(--color-brand-800) 70%, transparent);
+}
+
+.video-card.is-started .video-card__scrim--tint {
+  background-color: transparent;
+}
+
 .upskill-form .upskill-form__fields {
   display: grid;
   gap: 16px;

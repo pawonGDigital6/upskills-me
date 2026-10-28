@@ -65,27 +65,8 @@ $sessions   = function_exists( 'upskill_free_session_ids' ) ? array_map( 'upskil
 								<div class="free-sessions__overlay pointer-events-none relative hidden bg-linear-to-t from-[rgb(14_14_16/82%)] via-[rgb(14_14_16/34%)] via-38% to-transparent to-72% lg:block" aria-hidden="true" data-video-overlay></div>
 
 								<?php if ( $session['video'] ) : ?>
-									<?php // Custom transport, revealed by view.js; the native controls remain the no-JS fallback. Phones show it once the session starts. ?>
-									<div class="video-card__bar free-sessions__bar relative flex items-center gap-0.5 self-end px-2 pb-2 text-white <?php echo $featured ? 'lg:pr-6' : 'lg:px-0 lg:pb-0'; ?>" hidden data-video-bar>
-										<button class="video-card__btn" type="button" data-video-play>
-											<span class="screen-reader-text" data-label-play="<?php esc_attr_e( 'Play', 'upskill-me' ); ?>" data-label-pause="<?php esc_attr_e( 'Pause', 'upskill-me' ); ?>"><?php esc_html_e( 'Play', 'upskill-me' ); ?></span>
-											<?php upskill_icon( 'play', 'video-card__icon video-card__icon--play' ); ?>
-											<?php upskill_icon( 'pause', 'video-card__icon video-card__icon--pause' ); ?>
-										</button>
-										<button class="video-card__btn" type="button" aria-pressed="false" data-video-mute>
-											<span class="screen-reader-text"><?php esc_html_e( 'Mute', 'upskill-me' ); ?></span>
-											<?php upskill_icon( 'volume', 'video-card__icon' ); ?>
-										</button>
-										<div class="flex min-w-0 flex-1 items-center gap-2 px-1">
-											<span class="w-9 flex-none text-xs leading-[18px]" data-video-current>00:00</span>
-											<input class="video-card__progress" type="range" min="0" max="100" step="0.1" value="0" aria-label="<?php esc_attr_e( 'Seek', 'upskill-me' ); ?>" data-video-progress>
-											<span class="w-[42px] flex-none text-xs leading-[18px]" data-video-remaining></span>
-										</div>
-										<button class="video-card__btn" type="button" data-video-fullscreen>
-											<span class="screen-reader-text"><?php esc_html_e( 'Full screen', 'upskill-me' ); ?></span>
-											<?php upskill_icon( 'maximize', 'video-card__icon' ); ?>
-										</button>
-									</div>
+									<?php // Custom transport (shared with the library cards); the native controls remain the no-JS fallback. Phones show it once the session starts. ?>
+									<?php get_template_part( 'template-parts/video/controls', null, array( 'class' => 'free-sessions__bar px-2 pb-2 ' . ( $featured ? 'lg:pr-6' : 'lg:px-0 lg:pb-0' ) ) ); ?>
 								<?php endif; ?>
 							</div>
 

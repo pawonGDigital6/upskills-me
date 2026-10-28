@@ -4,8 +4,11 @@
  * The filters are a plain GET form that works without JavaScript. Here the
  * results update in place from the library REST route (inc/lms-library.php,
  * address in the form's data-library):
- * - a ticked filter, "Sort by", the search, a suggestion, "Clear all" and
- *   "Load more training" fetch the new cards, labels and filter counts;
+ * - a ticked filter, "Sort by", the search, a suggestion and "Clear all"
+ *   fetch the new cards, labels and filter counts, always from page one;
+ * - a page link (Previous, a number, Next) fetches that page (pg), scrolls back
+ *   to the top of the results and focuses its first card;
+ * - free sessions in the new cards get the video transport (VideoPlayer);
  * - the address bar follows (history), so results stay shareable and Back
  *   returns to the previous results;
  * - while loading the cards dim (aria-busy); a failed request shows a
@@ -17,6 +20,8 @@
  *   filter button; its counts and "Show N results" update as choices change,
  *   and the button closes the sheet onto the results.
  */
+import { VideoPlayer } from './video-player';
+
 export function Library( root = document ) {
 	const form = root.querySelector( '[data-library]' );
 
@@ -41,7 +46,7 @@ export function Library( root = document ) {
 		const query = new URLSearchParams();
 
 		data.delete( 'q' );
-		data.delete( 'show' );
+		data.delete( 'pg' );
 
 		const words = ( searchInput?.value ?? '' ).trim();
 
@@ -83,6 +88,7 @@ export function Library( root = document ) {
 
 	const render = ( data ) => {
 		results.innerHTML = data.html;
+		VideoPlayer( results );
 
 		Object.entries( data.labels ).forEach( ( [ key, text ] ) => {
 			form.querySelectorAll( `[data-library-label="${ key }"]` ).forEach( ( el ) => {
@@ -115,13 +121,13 @@ export function Library( root = document ) {
 	 * Fetch and show the results for a set of parameters.
 	 *
 	 * @param {URLSearchParams} query   Parameters.
-	 * @param {Object}          options history: 'push' | 'replace' | false; focusFrom: card index to focus after.
+	 * @param {Object}          options history: 'push' | 'replace' | false; turn: a new page, so scroll to its top and focus its first card.
 	 */
-	const update = async ( query, { history = 'push', focusFrom = -1 } = {} ) => {
+	const update = async ( query, { history = 'push', turn = false } = {} ) => {
 		controller?.abort();
 		const request = new AbortController();
 		controller = request;
-		retry = () => update( query, { history, focusFrom } );
+		retry = () => update( query, { history, turn } );
 
 		results.setAttribute( 'aria-busy', 'true' );
 		error.hidden = true;
@@ -147,8 +153,9 @@ export function Library( root = document ) {
 				window.history[ 'push' === history ? 'pushState' : 'replaceState' ]( { library: true }, '', address );
 			}
 
-			if ( focusFrom >= 0 ) {
-				results.querySelectorAll( 'article' )[ focusFrom ]?.querySelector( 'a[href]' )?.focus();
+			if ( turn ) {
+				showResults();
+				results.querySelector( 'article a[href]' )?.focus( { preventScroll: true } );
 			}
 		} catch ( failure ) {
 			if ( 'AbortError' !== failure.name ) {
@@ -212,10 +219,10 @@ export function Library( root = document ) {
 		} );
 	} );
 
-	// Links inside the form: "Clear all", "Clear all filters", "Load more training".
+	// Links inside the form: "Clear all", "Clear all filters", the page links.
 	form.addEventListener( 'click', ( event ) => {
 		const reset = event.target.closest( '[data-library-reset]' );
-		const more = event.target.closest( '[data-library-more]' );
+		const page = event.target.closest( '[data-library-page]' );
 
 		if ( reset ) {
 			event.preventDefault();
@@ -229,9 +236,10 @@ export function Library( root = document ) {
 			}
 
 			update( params() );
-		} else if ( more ) {
+		} else if ( page ) {
 			event.preventDefault();
-			update( params( { show: more.dataset.libraryMore } ), { history: 'replace', focusFrom: results.querySelectorAll( 'article' ).length } );
+			// Page one has no pg, so its address matches the unpaged results.
+			update( params( '1' === page.dataset.libraryPage ? {} : { pg: page.dataset.libraryPage } ), { turn: true } );
 		}
 	} );
 
@@ -247,6 +255,6 @@ export function Library( root = document ) {
 
 		restore( query );
 		// From the form, so a page default ticked by restore() is part of the request.
-		update( params( query.has( 'show' ) ? { show: query.get( 'show' ) } : {} ), { history: false } );
+		update( params( query.has( 'pg' ) ? { pg: query.get( 'pg' ) } : {} ), { history: false } );
 	} );
 }

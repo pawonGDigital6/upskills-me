@@ -7,7 +7,7 @@
  *
  * Search hero with suggestions, then "Refine your results" (Industry,
  * Category, Level, Free training) beside the result cards, a sort menu and
- * "Load more training". Every filter is a GET parameter (inc/lms-library.php),
+ * numbered pages. Every filter is a GET parameter (inc/lms-library.php),
  * so results work without JavaScript; js/components/library.js updates the
  * results in place (REST) and opens the filter sheet on phones. The page's
  * footer CTA band follows as on every marketing page.

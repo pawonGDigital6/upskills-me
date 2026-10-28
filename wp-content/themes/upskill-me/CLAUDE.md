@@ -82,7 +82,7 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
 src/blocks/<name>/        block.json, render.php, index.js, style.scss, editor.scss, view.js (optional)
 src/global/tailwind/      design-system.css (tokens + components), tailwind.css, tailwind-editor.css
 src/global/scss/          layout/ (chrome, block options), plugins/ (third-party markup)
-src/global/js/components/ announcement, navigation (sticky, mega, drawer), search, disclosure, reveal, deferred-video
+src/global/js/components/ announcement, navigation (sticky, mega, drawer), search, disclosure, reveal, deferred-video, video-player, library
 inc/                      fonts, template-helpers, taxonomies, post-types, options, nav-menu, acf-register-blocks, contact-form-7, learndash, woocommerce
 acf-json/                 version-controlled field groups
 images/, images/icons/    theme imagery and currentColor SVG icons
@@ -212,3 +212,17 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   Sessions = chosen courses, else `upskill_library_industry_courses()` for the case study's Industry /
   the industry page, topped up with the newest; cards are `cards/training.php` with `compact`. Synced
   patterns (`core/block`) count as full-width sections in `upskill_contain_editor_text()`.
+- **Training library pagination + video transport (2026-10-28):** "Load more" replaced by numbered
+  pages (Figma 49325:14592 / 49347:88528), `template-parts/library/pagination.php`: `pg` parameter
+  (page one has none; any filter, sort or search change drops it), six per page
+  (`upskill_library_per_page()`), a page past the end shows the last page, relative `?…#results` links
+  so it stays on /courses/, term pages (`all=1` kept) and the Training Library block; library.js loads
+  them in place (history, scroll to the results top, focus the first card). Phones list first, current
+  and last. The video card transport bar is shared: `template-parts/video/controls.php` +
+  `scss/components/_video-card.scss` + `js/components/video-player.js` (Free Sessions and every free
+  training card, incl. Industry Resources and Course Completed; one plays at a time; re-run on AJAX
+  results). Free Sessions lost its own view.js; its phone-only "bar after start" rule stays in its
+  style.scss. Video Feature's script/style are scoped to `.block-video-feature`. The LearnDash
+  session player keeps LearnDash's own controls (Video Progression drives it).
+  Training card videos carry `.video-card__scrim`: a dark fade under the bar always, plus a brand-800
+  tint (`--tint`) when there is no poster, cleared once the video starts.

@@ -5,6 +5,7 @@ import { Search } from './components/search';
 import { Disclosure } from './components/disclosure';
 import { Reveal } from './components/reveal';
 import { DeferredVideo } from './components/deferred-video';
+import { VideoPlayer } from './components/video-player';
 import { Article } from './components/article';
 import { PasswordToggle } from './components/password-toggle';
 import { Library } from './components/library';
@@ -17,6 +18,7 @@ domReady( () => {
 	Disclosure();
 	Reveal();
 	DeferredVideo();
+	VideoPlayer();
 	Article();
 	PasswordToggle();
 	Library();

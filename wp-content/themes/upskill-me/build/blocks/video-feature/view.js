@@ -10,7 +10,7 @@
  * people who choose to watch.
  */
 
-document.querySelectorAll('[data-video-card]').forEach(card => {
+document.querySelectorAll('.block-video-feature [data-video-card]').forEach(card => {
   const button = card.querySelector('[data-video-play]');
   if (!button) {
     return;

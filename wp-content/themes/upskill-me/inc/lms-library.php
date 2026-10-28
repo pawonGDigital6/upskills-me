@@ -9,7 +9,7 @@
  * without JavaScript; with it, the page asks the REST route below for the
  * same results and updates in place:
  *
- *   ?q=text&industry[]=slug&category[]=slug&level[]=slug&free=1&sort=newest|title&show=12
+ *   ?q=text&industry[]=slug&category[]=slug&level[]=slug&free=1&sort=newest|title&pg=2
  *
  * Within a list the choices are alternatives (OR); across lists they narrow
  * (AND). Each card describes the course through its first session (code,
@@ -42,7 +42,7 @@ if ( ! function_exists( 'upskill_library_request' ) ) {
 	 * The current filters, sanitised.
 	 *
 	 * @param array|null $source Raw parameters (slashed, as in $_GET); defaults to $_GET.
-	 * @return array { q, industry[], category[], level[], free (bool), sort, show (int) }
+	 * @return array { q, industry[], category[], level[], free (bool), sort, page (int), all (bool) }
 	 */
 	function upskill_library_request( $source = null ) {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended -- public, read-only filters.
@@ -51,7 +51,9 @@ if ( ! function_exists( 'upskill_library_request' ) ) {
 			'q'    => isset( $source['q'] ) && is_string( $source['q'] ) ? sanitize_text_field( wp_unslash( $source['q'] ) ) : '',
 			'free' => ! empty( $source['free'] ),
 			'sort' => isset( $source['sort'] ) && in_array( $source['sort'], array( 'newest', 'title' ), true ) ? sanitize_key( $source['sort'] ) : 'newest',
-			'show' => isset( $source['show'] ) ? min( 120, max( upskill_library_per_page(), absint( $source['show'] ) ) ) : upskill_library_per_page(),
+			'page' => isset( $source['pg'] ) ? max( 1, absint( $source['pg'] ) ) : 1,
+			// A term page's own term was unticked (template-parts/library/term-page.php); page links keep it off.
+			'all'  => ! empty( $source['all'] ),
 		);
 
 		foreach ( array_keys( upskill_library_facets() ) as $key ) {
@@ -95,7 +97,7 @@ if ( ! function_exists( 'upskill_library_url' ) ) {
 	 * The library address for a request, with some values changed.
 	 *
 	 * @param array $request upskill_library_request().
-	 * @param array $changes Values to change (e.g. [ 'show' => 12 ]).
+	 * @param array $changes Values to change (e.g. [ 'sort' => 'title' ]).
 	 * @return string
 	 */
 	function upskill_library_url( $request, $changes = array() ) {
@@ -198,7 +200,7 @@ add_action( 'template_redirect', 'upskill_library_search_redirect' );
 
 if ( ! function_exists( 'upskill_library_per_page' ) ) {
 	/**
-	 * Cards shown before "Load more training" (Figma shows two rows of three).
+	 * Cards per results page (Figma shows two rows of three).
 	 *
 	 * @return int
 	 */
@@ -311,13 +313,24 @@ if ( ! function_exists( 'upskill_library_query_args' ) ) {
 
 if ( ! function_exists( 'upskill_library_results' ) ) {
 	/**
-	 * The courses for a request, up to the number shown.
+	 * One page of courses for a request. A page past the end (an old link, or
+	 * fewer results since) shows the last page instead.
 	 *
 	 * @param array $request upskill_library_request().
 	 * @return WP_Query
 	 */
 	function upskill_library_results( $request ) {
-		return new WP_Query( array_merge( upskill_library_query_args( $request ), array( 'posts_per_page' => $request['show'] ) ) );
+		$args    = array_merge( upskill_library_query_args( $request ), array( 'posts_per_page' => upskill_library_per_page(), 'paged' => $request['page'] ) );
+		$results = new WP_Query( $args );
+
+		// WordPress counts nothing for an empty page, so ask page one for the count.
+		if ( ! $results->have_posts() && $request['page'] > 1 ) {
+			$results       = new WP_Query( array_merge( $args, array( 'paged' => 1 ) ) );
+			$args['paged'] = (int) $results->max_num_pages;
+			$results       = $args['paged'] > 1 ? new WP_Query( $args ) : $results;
+		}
+
+		return $results;
 	}
 }
 

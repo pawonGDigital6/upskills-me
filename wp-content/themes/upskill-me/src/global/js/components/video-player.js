@@ -1,13 +1,15 @@
 /**
- * Free Sessions — the video card transport.
+ * Video card transport (Free Sessions cards, training library cards).
  *
  * Each card ships a native <video controls>, so it plays with no script. This
- * swaps those controls for the Figma transport bar: play/pause, mute, a seek
- * slider with elapsed and remaining time, and full screen. Starting one card
- * pauses any other that is playing.
+ * swaps those controls for the Figma transport bar
+ * (template-parts/video/controls.php): play/pause, mute, a seek slider with
+ * elapsed and remaining time, and full screen. Starting one card pauses any
+ * other that is playing.
+ *
+ * Only cards holding a bar are enhanced (Video Feature's cards have none), and
+ * each card once, so the library can call this again on the cards it loads.
  */
-
-const cards = [];
 
 /**
  * Format seconds as mm:ss.
@@ -25,7 +27,7 @@ function enhance( card ) {
 	const video = card.querySelector( '[data-video]' );
 	const bar = card.querySelector( '[data-video-bar]' );
 
-	if ( ! video || ! bar ) {
+	if ( ! video || ! bar || card.hasAttribute( 'data-video-ready' ) ) {
 		return;
 	}
 
@@ -37,13 +39,13 @@ function enhance( card ) {
 	const remaining = bar.querySelector( '[data-video-remaining]' );
 	const fullscreen = bar.querySelector( '[data-video-fullscreen]' );
 
+	card.setAttribute( 'data-video-ready', '' );
 	video.removeAttribute( 'controls' );
 	bar.hidden = false;
-	cards.push( video );
 
 	const toggle = () => {
 		if ( video.paused ) {
-			cards.forEach( ( other ) => other !== video && other.pause() );
+			document.querySelectorAll( '[data-video-ready] [data-video]' ).forEach( ( other ) => other !== video && other.pause() );
 			video.play()?.catch( () => {} );
 		} else {
 			video.pause();
@@ -102,4 +104,6 @@ function enhance( card ) {
 	} );
 }
 
-document.querySelectorAll( '.block-free-sessions [data-video-card]' ).forEach( enhance );
+export function VideoPlayer( root = document ) {
+	root.querySelectorAll( '[data-video-card]' ).forEach( enhance );
+}

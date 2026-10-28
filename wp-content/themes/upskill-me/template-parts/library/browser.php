@@ -1,7 +1,7 @@
 <?php
 /**
  * Training library: the filters and results ("Refine your results", sort,
- * cards, "Load more"). Used by template-library.php (/courses/) and by the
+ * cards, pagination). Used by template-library.php (/courses/) and by the
  * industry, category and level pages (template-parts/library/term-page.php).
  * Every page shows the same four lists (Industry, Category, Level, Availability).
  * A term page passes its term as a default: ticked on arrival, and ticked again

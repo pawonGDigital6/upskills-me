@@ -5,7 +5,7 @@
  * once the player has taken over the card.
  */
 
-.video-card.is-playing > :not(video) {
+.block-video-feature .video-card.is-playing > :not(video) {
 	display: none;
 }
 
