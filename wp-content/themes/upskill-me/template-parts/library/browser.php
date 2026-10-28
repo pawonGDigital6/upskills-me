@@ -59,7 +59,7 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 				?>
 				<?php foreach ( $upskill_groups as $upskill_key => $upskill_group ) : ?>
 					<details class="group/facet mt-4 border-line pt-4 not-first-of-type:border-t lg:mt-4" open>
-						<summary class="flex cursor-pointer list-none items-center justify-between gap-3 pb-3 text-sm font-medium text-gray-500 uppercase [&::-webkit-details-marker]:hidden">
+						<summary class="flex cursor-pointer list-none items-center justify-between gap-3 pb-2 text-sm font-medium text-gray-500 uppercase [&::-webkit-details-marker]:hidden">
 							<?php echo esc_html( $upskill_group[0] ); ?>
 							<?php upskill_icon( 'chevron-down', 'size-3 transition-transform group-open/facet:rotate-180' ); ?>
 						</summary>
@@ -107,16 +107,16 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 			</div>
 		</dialog>
 
-		<div class="flex min-w-0 flex-col">
+		<div class="flex min-w-0 flex-col max-lg:mt-6">
 			<div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
 				<div>
-					<h2 class="text-[2.25rem] leading-[1.1] font-medium tracking-[-0.01em] text-[#0e0e14]" data-library-label="heading"><?php echo esc_html( $upskill_labels['heading'] ); ?></h2>
+					<h2 class="text-xl leading-[1.5] font-medium text-[#0e0e14]"><?php esc_html_e('Explore training across Upskillme.', 'upskill-me'); ?></h2>
 					<p class="pt-1.5 text-base text-gray-500" aria-live="polite" data-library-label="total"><?php echo esc_html( $upskill_labels['total'] ); ?></p>
 				</div>
 				<div class="flex items-center gap-2.5">
 					<label class="text-sm text-gray-500" for="library-sort"><?php esc_html_e( 'Sort by', 'upskill-me' ); ?></label>
 					<span class="grid flex-1 grid-cols-1 grid-rows-1 *:col-start-1 *:row-start-1 lg:w-[203px] lg:flex-none">
-						<select class="h-[46px] w-full cursor-pointer appearance-none rounded-full border border-line bg-white py-2 pr-11 pl-4 text-sm font-medium text-[#55555f] focus:border-brand-700 focus:outline-none" id="library-sort" name="sort" data-library-submit>
+						<select class="h-[46px] w-full cursor-pointer appearance-none rounded-full border border-line bg-white py-[10px_8px] pr-11 pl-4 text-sm font-medium text-[#55555f] focus:border-brand-700 focus:outline-none" id="library-sort" name="sort" data-library-submit>
 							<option value="newest"<?php selected( $upskill_request['sort'], 'newest' ); ?>><?php esc_html_e( 'Newest', 'upskill-me' ); ?></option>
 							<option value="title"<?php selected( $upskill_request['sort'], 'title' ); ?>><?php esc_html_e( 'A to Z', 'upskill-me' ); ?></option>
 						</select>
@@ -124,13 +124,13 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 					</span>
 					<button class="relative grid size-[46px] flex-none place-items-center rounded-full border border-line bg-white text-gray-900 lg:hidden" type="button" aria-controls="library-filters" data-library-open>
 						<span class="screen-reader-text"><?php esc_html_e( 'Filters', 'upskill-me' ); ?></span>
-						<?php upskill_icon( 'sliders', 'size-5' ); ?>
+						<?php upskill_icon( 'filter-vertical', 'size-5' ); ?>
 						<span class="absolute top-2 right-2 size-2 rounded-full bg-brand-700" aria-hidden="true" data-library-dot<?php echo $upskill_active ? '' : ' hidden'; ?>></span>
 					</button>
 				</div>
 			</div>
 
-			<div class="max-w-[620px] pt-6 lg:pt-[26px]">
+			<div class="max-w-[620px] pt-6 lg:pt-[26px] hidden">
 				<h3 class="text-xl leading-[1.5] font-medium text-[#0e0e14]"><?php esc_html_e( 'Explore training across Upskillme.', 'upskill-me' ); ?></h3>
 				<p class="pt-2 text-base text-[#55555f]"><?php esc_html_e( 'Find practical on-the-job training across industries, categories and areas of professional development.', 'upskill-me' ); ?></p>
 			</div>
