@@ -45,11 +45,12 @@ $upskill_player = $upskill_card['free'] && $upskill_card['video'];
 				<?php upskill_image($upskill_card['image'], 'large', array('class' => 'size-full object-cover', 'alt' => '', 'sizes' => '(min-width: 1025px) 323px, (min-width: 768px) 50vw, calc(100vw - 48px)')); ?>
 			<?php elseif ($upskill_card['video']): ?>
 				<?php if ($upskill_card['free']): ?>
-					<video class="size-full object-cover" preload="metadata" playsinline controls data-video<?php echo $upskill_card['image'] ? ' poster="' . esc_url((string) wp_get_attachment_image_url($upskill_card['image'], 'large')) . '"' : ''; ?> aria-label="<?php echo esc_attr($upskill_card['title']); ?>">
+					<?php // The course image as the poster, else the theme's card artwork (Figma 49325:14592). ?>
+					<video class="size-full object-cover" preload="metadata" playsinline controls data-video poster="<?php echo esc_url($upskill_card['image'] ? (string) wp_get_attachment_image_url($upskill_card['image'], 'large') : upskill_theme_image('course-poster-placeholder.webp')); ?>" aria-label="<?php echo esc_attr($upskill_card['title']); ?>">
 						<source src="<?php echo esc_url($upskill_card['video']); ?>" type="video/mp4">
 					</video>
-					<?php // A dark fade under the controls; without a poster also a brand tint until it plays (_video-card.scss). ?>
-					<div class="video-card__scrim pointer-events-none<?php echo $upskill_card['image'] ? '' : ' video-card__scrim--tint'; ?>" aria-hidden="true"></div>
+					<?php // A dark fade under the controls so they read over light frames (_video-card.scss). ?>
+					<div class="video-card__scrim pointer-events-none" aria-hidden="true"></div>
 				<?php else: ?>
 					<?php // First frame as the picture; the session itself stays behind the course. ?>
 					<video class="pointer-events-none size-full object-cover" preload="metadata" muted playsinline tabindex="-1"

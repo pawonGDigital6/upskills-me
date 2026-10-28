@@ -224,5 +224,5 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   results). Free Sessions lost its own view.js; its phone-only "bar after start" rule stays in its
   style.scss. Video Feature's script/style are scoped to `.block-video-feature`. The LearnDash
   session player keeps LearnDash's own controls (Video Progression drives it).
-  Training card videos carry `.video-card__scrim`: a dark fade under the bar always, plus a brand-800
-  tint (`--tint`) when there is no poster, cleared once the video starts.
+  Training card videos: poster = course image, else `images/course-poster-placeholder.webp`;
+  `.video-card__scrim` is a dark fade under the bar so the controls read over light frames.
