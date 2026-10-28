@@ -45,7 +45,7 @@ $attributes = upskill_block_attributes( $block, 'block-training-needs section-y 
 						<?php // Figma 49325:15015 / 49354:95613: 20px corners, 16 (phones) / 24 padding; the first card draws the hover look, purple texture with white text. ?>
 						<li class="training-needs__item feature-card reveal group relative isolate flex flex-col overflow-hidden rounded-[20px] border border-gray-100 bg-white shadow-xs hover:border-transparent" style="--i:<?php echo (int) min( $index, 5 ); ?>">
 							<span class="feature-card__surface pointer-events-none absolute inset-0 -z-10 bg-[#2f1a51] opacity-0 group-hover:opacity-100" aria-hidden="true">
-								<img class="feature-card__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'texture-brand.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
+								<img class="feature-card__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'card-bg-grph-portr.webp' ) ); ?>" alt="" loading="lazy" decoding="async">
 							</span>
 							<div class="feature-card__body flex flex-1 flex-col p-4 lg:p-6">
 								<div class="feature-card__content flex flex-col">

@@ -31,7 +31,7 @@ $cards = array_values(
 // Surface, texture, icon disc, title, text — Figma light #e6e6e6 + #ccc stroke, purple #2f1a51; textures at 20%.
 $tones = array(
 	'light' => array( 'border border-gray-200 bg-gray-100 text-gray-950', 'texture-outline.webp', 'bg-gray-25 text-gray-950', 'text-[#1a1a1a]' ),
-	'brand' => array( 'bg-[#2f1a51] text-white', 'texture-brand.webp', 'bg-brand-900 text-white', 'text-brand-50' ),
+	'brand' => array( 'bg-[#2f1a51] text-white', 'card-bg-grph-portr.webp', 'bg-brand-900 text-white', 'text-brand-50' ),
 );
 
 $columns    = array();

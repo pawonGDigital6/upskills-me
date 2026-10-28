@@ -57,7 +57,7 @@ $looks = array(
 	),
 	'dark'  => array(
 		'card'    => 'bg-[#2f1a51] text-white',
-		'texture' => 'texture-brand.webp',
+		'texture' => 'card-bg-grph.webp',
 		'chip'    => 'border-white/18 bg-white/10 text-white',
 		'number'  => 'text-white/60',
 		'text'    => 'text-white/68',
