@@ -28,7 +28,8 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
 - **Reuse modules.** Same structure, different content → reuse the block. Small differences (a
   colour, an optional element) → an ACF option. A section whose layout differs gets its own
   purpose-built block, never a layout option (the user's rule; heroes included: page-hero /
-  heading-hero / ladder-hero / hub-hero / resources-hero). Same module + same content on several
+  heading-hero / ladder-hero / hub-hero; an optional element on the same layout stays a toggle,
+  e.g. page-hero "Show chips"). Same module + same content on several
   pages → a synced pattern.
   LearnDash/plugin-dependent modules wait until the plugin is installed and assessed.
 - **Interactions.** Keep the established hover, focus and animation behaviour (button arrow nudge
@@ -171,10 +172,10 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   announcement bar, header + mega panels, mobile drawer, search dialog, CTA band, footer.
 - **Why UpSkill Me, About, Resources, Blogs, Blog detail, Case Studies** — built (non-LMS sections).
   Heroes (one block per design since 28 Oct, no layout switch): `page-hero` (copy beside a photo
-  or illustration — About, Blogs, Guides), `heading-hero` (eyebrow, headline, intro; centred —
-  Case Studies, or left on a panel — FAQs), `ladder-hero` (Why: two badges, first left/purple,
-  second right/green, and the ladder), `resources-hero` (Resources: photo with link chips),
-  `hub-hero` (Industries, Categories). One purpose-built block per card section (2026-10-20; card-grid retired):
+  or illustration — About, Resources, Blogs, Guides; **Show chips** puts up to four link chips
+  over the photo — Resources), `heading-hero` (eyebrow, headline, intro; centred — Case Studies,
+  or left on a panel — FAQs), `ladder-hero` (Why: two badges, first left/purple, second
+  right/green, and the ladder), `hub-hero` (Industries, Categories). One purpose-built block per card section (2026-10-20; card-grid retired):
   `feature-grid`, `principles`, `mission-pillars`, `expertise-highlights`, `impact-highlights`,
   `training-needs`, `textured-cards`, `resource-links`, `icon-rows`, `outcome-columns`. White cards
   that turn dark on hover share the `feature-card` classes (`scss/components/_feature-card.scss`).

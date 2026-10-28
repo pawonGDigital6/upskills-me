@@ -2,13 +2,13 @@
 /**
  * Page Hero block.
  *
- * Figma: About 49325:14606, Blogs 49325:16868, Guides (390: 49374:46982).
- * Eyebrow, headline, intro, two buttons and a note beside a photo (cropped to
- * fill) or an illustration (shown whole).
+ * Figma: About 49325:14606, Resources 49325:16382, Blogs 49325:16868, Guides
+ * (390: 49374:46982, 49374:101478). Eyebrow, headline, intro, two buttons and
+ * a note beside a photo (cropped to fill) or an illustration (shown whole).
+ * "Show chips" puts up to four link chips over the photo (Resources).
  *
  * Other heroes have their own blocks: heading-hero (Case Studies, FAQs),
- * ladder-hero (Why UpSkill Me), resources-hero (Resources) and hub-hero
- * (Industries, Categories).
+ * ladder-hero (Why UpSkill Me) and hub-hero (Industries, Categories).
  *
  * @param array $block The block settings and attributes.
  *
@@ -18,6 +18,25 @@
 $media    = get_field( 'media' );
 $is_photo = 'illustration' !== get_field( 'media_style' );
 $note     = get_field( 'note' );
+$chips    = $is_photo && get_field( 'show_chips' ) ? array_slice( array_values( array_filter( (array) get_field( 'chips' ), static fn( $chip ) => ! empty( $chip['label'] ) ) ), 0, 4 ) : array();
+
+/*
+ * Chip spots over the photo, from the 640-wide Resources photo (49325:16381):
+ * side offset and top offset, both as a share of the photo's width so the
+ * chips scale with it. Right-hand chips are measured from the right edge, so a
+ * narrower photo (1025-1200) never clips them.
+ */
+$chip_spots = array(
+	'upper-left'   => 'justify-self-start ml-[2.7%] mt-[27.5%]',
+	'top-right'    => 'justify-self-end mr-[5.6%] mt-[12.2%]',
+	'lower-left'   => 'justify-self-start ml-[21.3%] mt-[69.4%]',
+	'bottom-right' => 'justify-self-end mr-[10.5%] mt-[74.1%]',
+);
+$chip_tones = array(
+	'purple' => 'bg-brand-100 text-[#6b2fe3]',
+	'blue'   => 'bg-[#e2edfa] text-[#2f6fb5]',
+	'green'  => 'bg-[#e7f6d8] text-[#4d7c0f]',
+);
 
 // Inner pages leave 56px under the header before the hero section (Figma frames
 // start every inner hero at y 176), plus the hero's own 48px on desktop.
@@ -61,7 +80,7 @@ $attributes = upskill_block_attributes( $block, 'block-page-hero overflow-hidden
 			</div>
 
 			<?php if ( $media && $is_photo ) : ?>
-				<?php // The photo fills the media column. ?>
+				<?php // The photo fills the media column; chips share its grid cell (from lg; the 390 frame leaves them out). ?>
 				<div class="page-hero__media grid grid-cols-1 grid-rows-1 overflow-hidden rounded-2xl sm:rounded-xl lg:min-w-0 lg:flex-1">
 					<?php
 					upskill_image(
@@ -75,6 +94,19 @@ $attributes = upskill_block_attributes( $block, 'block-page-hero overflow-hidden
 						)
 					);
 					?>
+					<?php foreach ( $chips as $index => $chip ) : ?>
+						<?php
+						$spot = isset( $chip_spots[ $chip['position'] ] ) ? $chip_spots[ $chip['position'] ] : $chip_spots['upper-left'];
+						$tone = isset( $chip_tones[ $chip['tone'] ] ) ? $chip_tones[ $chip['tone'] ] : $chip_tones['purple'];
+						$tag  = ! empty( $chip['link']['url'] ) ? 'a' : 'span';
+						?>
+						<<?php echo esc_attr( $tag ); ?> class="page-hero__chip reveal col-start-1 row-start-1 hidden items-center gap-2.5 self-start rounded-full bg-white py-2 pr-[18px] pl-2 text-sm leading-none font-semibold text-[#0e0e14] drop-shadow-[0_14px_16px_rgb(20_12_48/14%)] transition-transform duration-300 hover:-translate-y-0.5 lg:flex <?php echo esc_attr( $spot ); ?>"<?php echo 'a' === $tag ? upskill_link_attributes( $chip['link'] ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?> style="--i:<?php echo (int) $index + 1; ?>">
+							<span class="grid size-[30px] place-items-center rounded-full <?php echo esc_attr( $tone ); ?>" aria-hidden="true">
+								<?php upskill_icon( $chip['icon'] ? $chip['icon'] : 'book', 'size-[15px]' ); ?>
+							</span>
+							<?php echo esc_html( $chip['label'] ); ?>
+						</<?php echo esc_attr( $tag ); ?>>
+					<?php endforeach; ?>
 				</div>
 			<?php elseif ( $media ) : ?>
 				<?php

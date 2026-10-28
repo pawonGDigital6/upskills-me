@@ -128,6 +128,127 @@
             "wrapper": {
                 "width": "40"
             }
+        },
+        {
+            "key": "field_upskill_page_hero_show_chips",
+            "label": "Show chips",
+            "name": "show_chips",
+            "type": "true_false",
+            "instructions": "Link chips over the photo (Resources).",
+            "default_value": 0,
+            "ui": 1,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_media_style",
+                        "operator": "==",
+                        "value": "photo"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_page_hero_chips",
+            "label": "Photo chips",
+            "name": "chips",
+            "type": "repeater",
+            "instructions": "Up to four link chips over the photo (desktop).",
+            "layout": "table",
+            "min": 0,
+            "max": 4,
+            "button_label": "Add chip",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_page_hero_chips_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)"
+                    },
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_tone",
+                    "label": "Tone",
+                    "name": "tone",
+                    "type": "select",
+                    "choices": {
+                        "purple": "Purple",
+                        "blue": "Blue",
+                        "green": "Green"
+                    },
+                    "default_value": "purple",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_position",
+                    "label": "Position",
+                    "name": "position",
+                    "type": "select",
+                    "choices": {
+                        "upper-left": "Upper left",
+                        "top-right": "Top right",
+                        "lower-left": "Lower left",
+                        "bottom-right": "Bottom right"
+                    },
+                    "default_value": "upper-left",
+                    "return_format": "value"
+                },
+                {
+                    "key": "field_upskill_page_hero_chips_link",
+                    "label": "Link",
+                    "name": "link",
+                    "type": "link",
+                    "return_format": "array"
+                }
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_page_hero_show_chips",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ]
         }
     ],
     "location": [
@@ -148,5 +269,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1793175485
+    "modified": 1793179499
 }
