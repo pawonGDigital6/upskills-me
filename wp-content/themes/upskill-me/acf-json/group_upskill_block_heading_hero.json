@@ -1,0 +1,110 @@
+{
+    "key": "group_upskill_block_heading_hero",
+    "title": "Block: Heading Hero",
+    "fields": [
+        {
+            "key": "field_upskill_heading_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_heading_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person",
+                "brand-mark": "Brand mark"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_heading_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_heading_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_heading_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_heading_hero_align",
+            "label": "Alignment",
+            "name": "align",
+            "type": "button_group",
+            "choices": {
+                "center": "Centred",
+                "left": "Left, on a panel"
+            },
+            "default_value": "center",
+            "return_format": "value",
+            "layout": "horizontal",
+            "allow_null": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/heading-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793175485
+}

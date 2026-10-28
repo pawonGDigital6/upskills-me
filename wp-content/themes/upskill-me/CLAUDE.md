@@ -28,7 +28,8 @@ is a copy and interaction reference only — its tokens, breakpoints and markup 
 - **Reuse modules.** Same structure, different content → reuse the block. Small differences (a
   colour, an optional element) → an ACF option. A section whose layout differs gets its own
   purpose-built block, never a layout option (the user's rule; heroes included: page-hero /
-  hub-hero / resources-hero). Same module + same content on several pages → a synced pattern.
+  heading-hero / ladder-hero / hub-hero / resources-hero). Same module + same content on several
+  pages → a synced pattern.
   LearnDash/plugin-dependent modules wait until the plugin is installed and assessed.
 - **Interactions.** Keep the established hover, focus and animation behaviour (button arrow nudge
   and press, card lifts, image zooms, scroll reveals, mega-panel slide, the designer's category
@@ -169,9 +170,11 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   `industry-showcase`, `category-list`, `how-it-works`, `feature-media`, `cohort-cards`, `faqs`. Global:
   announcement bar, header + mega panels, mobile drawer, search dialog, CTA band, footer.
 - **Why UpSkill Me, About, Resources, Blogs, Blog detail, Case Studies** — built (non-LMS sections).
-  New reusable blocks: `page-hero` (split with a photo or illustration — About, Blogs, Guides;
-  centred with badges and the ladder — Why, Case Studies; text only — FAQs), `resources-hero`
-  (Resources: photo with link chips), one purpose-built block per card section (2026-10-20; card-grid retired):
+  Heroes (one block per design since 28 Oct, no layout switch): `page-hero` (copy beside a photo
+  or illustration — About, Blogs, Guides), `heading-hero` (eyebrow, headline, intro; centred —
+  Case Studies, or left on a panel — FAQs), `ladder-hero` (Why: two badges, first left/purple,
+  second right/green, and the ladder), `resources-hero` (Resources: photo with link chips),
+  `hub-hero` (Industries, Categories). One purpose-built block per card section (2026-10-20; card-grid retired):
   `feature-grid`, `principles`, `mission-pillars`, `expertise-highlights`, `impact-highlights`,
   `training-needs`, `textured-cards`, `resource-links`, `icon-rows`, `outcome-columns`. White cards
   that turn dark on hover share the `feature-card` classes (`scss/components/_feature-card.scss`).
@@ -184,7 +187,7 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 - **FAQs, Guides, Case Study detail, Contact, 404, Privacy, Terms, Returns** — built 2026-10-07,
   awaiting review. New blocks: `statement` (centred two-tone statement + details row), `contact-hero`
   (photo card + Contact Form 7 form card), `location-map` (Google embed). Options added: FAQs "Grouped
-  by topic" (grouped.php, phone chips + search in view.js), page-hero "Text only", media-story social links + "boxed". Templates:
+  by topic" (grouped.php, phone chips + search in view.js), media-story social links + "boxed" (the FAQs hero is `heading-hero`, left). Templates:
   `single-case_study.php` (hero image field, related case studies via template-parts/related-posts),
   `template-policy.php` (native editor content, "Policy navigation" from its headings, texturize off so
   hyphens stay hyphens), `404.php` (no CTA band). CF7: inc/contact-form-7.php (no plugin CSS/autop,

@@ -1,0 +1,226 @@
+{
+    "key": "group_upskill_block_ladder_hero",
+    "title": "Block: Ladder Hero",
+    "fields": [
+        {
+            "key": "field_upskill_ladder_hero_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_ladder_hero_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "": "None",
+                "video-book": "Video book",
+                "free-video": "Free video",
+                "industry": "Industry",
+                "category": "Category",
+                "how-it-works": "How it works",
+                "book-open": "Open book",
+                "cohorts": "Cohorts",
+                "faqs": "FAQs",
+                "building": "Building",
+                "award": "Award",
+                "real-world": "Real world",
+                "compliance": "Compliance",
+                "flowchart": "Flowchart",
+                "story": "Story",
+                "box": "Box",
+                "target": "Target",
+                "resources": "Resources",
+                "book-open-alt": "Open book (outline)",
+                "book-open-text": "Open book (text)",
+                "blogs": "Blogs",
+                "project": "Project",
+                "overview": "Overview",
+                "solution": "Solution",
+                "user-alt": "Person",
+                "brand-mark": "Brand mark"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "wrapper": {
+                "width": "30"
+            }
+        },
+        {
+            "key": "field_upskill_ladder_hero_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "wrapper": {
+                "width": "70"
+            }
+        },
+        {
+            "key": "field_upskill_ladder_hero_heading",
+            "label": "Heading",
+            "name": "heading",
+            "type": "text",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break."
+        },
+        {
+            "key": "field_upskill_ladder_hero_intro",
+            "label": "Intro",
+            "name": "intro",
+            "type": "textarea",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_upskill_ladder_hero_button",
+            "label": "Button",
+            "name": "button",
+            "type": "link",
+            "return_format": "array",
+            "wrapper": {
+                "width": "50"
+            }
+        },
+        {
+            "key": "field_upskill_ladder_hero_badges",
+            "label": "Floating badges",
+            "name": "badges",
+            "type": "repeater",
+            "instructions": "Two small cards beside the heading (desktop). The first sits on the left, the second on the right.",
+            "layout": "table",
+            "min": 0,
+            "max": 2,
+            "button_label": "Add badge",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_ladder_hero_badges_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_ladder_hero_badges_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text"
+                },
+                {
+                    "key": "field_upskill_ladder_hero_badges_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "shield": "Shield",
+                        "training": "Training",
+                        "work-alert": "Work alert",
+                        "mortarboard": "Graduation cap",
+                        "real-world": "Real world",
+                        "badge-check": "Badge check",
+                        "text-lines": "Text lines",
+                        "list-settings": "List settings",
+                        "info": "Info",
+                        "refresh": "Refresh",
+                        "globe": "Globe",
+                        "clock": "Clock",
+                        "phone": "Phone",
+                        "sliders": "Sliders",
+                        "chart": "Chart",
+                        "legal-document": "Legal document",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "arrow-to-line": "Arrow to line",
+                        "book-columns": "Book",
+                        "check": "Check",
+                        "trending": "Trending",
+                        "star-outline": "Star",
+                        "pencil": "Pencil",
+                        "book": "Book (open)",
+                        "users": "People",
+                        "help": "Help",
+                        "industry": "Industry",
+                        "future": "Future",
+                        "hexagon": "Hexagon",
+                        "time": "Clock (outline)",
+                        "play-video": "Play Video"
+                    },
+                    "return_format": "value"
+                }
+            ]
+        },
+        {
+            "key": "field_upskill_ladder_hero_ladder",
+            "label": "The ladder",
+            "name": "ladder",
+            "type": "group",
+            "instructions": "Optional row of numbered steps under the hero.",
+            "layout": "block",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_ladder_hero_ladder_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "placeholder": "The ladder"
+                },
+                {
+                    "key": "field_upskill_ladder_hero_ladder_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "wrapper": {
+                        "width": "60"
+                    }
+                },
+                {
+                    "key": "field_upskill_ladder_hero_ladder_steps",
+                    "label": "Steps",
+                    "name": "steps",
+                    "type": "repeater",
+                    "layout": "table",
+                    "min": 0,
+                    "max": 5,
+                    "button_label": "Add step",
+                    "sub_fields": [
+                        {
+                            "key": "field_upskill_ladder_hero_ladder_steps_title",
+                            "label": "Title",
+                            "name": "title",
+                            "type": "text"
+                        },
+                        {
+                            "key": "field_upskill_ladder_hero_ladder_steps_text",
+                            "label": "Text",
+                            "name": "text",
+                            "type": "text"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/ladder-hero"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793175485
+}
