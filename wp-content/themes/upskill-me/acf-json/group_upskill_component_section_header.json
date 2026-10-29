@@ -36,7 +36,6 @@
                 "target": "Target",
                 "target-white": "Target White",
                 "resources": "Resources",
-                "tools": "Tools",
                 "book-open-alt": "Open book (outline)",
                 "book-open-text": "Open book (text)",
                 "blogs": "Blogs",
@@ -44,7 +43,9 @@
                 "overview": "Overview",
                 "solution": "Solution",
                 "user-alt": "Person",
-                "site-logo-sm": "Site Logo Small"
+                "site-logo-sm": "Site Logo Small",
+                "manufature": "Setting Gear",
+                "user-gear": "User Gear"
             },
             "default_value": false,
             "return_format": "value",
@@ -155,5 +156,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792379313
+    "modified": 1793259290
 }

@@ -9,8 +9,8 @@
  * any, comes first, still without the industry being viewed. Each card keeps
  * its number in the full industry list (Manufacturing 01, Training 02, …) and
  * takes its words, icon and tags from the industry's card fields, as in
- * Industry Showcase; the light look is for light/outlined industries, the
- * purple one for dark/purple.
+ * Industry Showcase; the first card is light for light/outlined industries,
+ * purple for dark/purple, and the second always takes the other look.
  *
  * @param array $block The block settings and attributes.
  *
@@ -75,9 +75,13 @@ $attributes = upskill_block_attributes( $block, 'block-related-industries bg-whi
 
 		<?php if ( $terms ) : ?>
 			<ul class="related-industries__list mt-12 grid gap-4 md:grid-cols-2">
+				<?php $first = ''; ?>
 				<?php foreach ( $terms as $index => $term ) : ?>
 					<?php
-					$look  = $looks[ in_array( get_field( 'card_style', $term ), array( 'dark', 'brand' ), true ) ? 'dark' : 'light' ];
+					// The first card follows its industry; the second always takes the other look, so the pair never repeats a background.
+					$key   = $first ? ( 'dark' === $first ? 'light' : 'dark' ) : ( in_array( get_field( 'card_style', $term ), array( 'dark', 'brand' ), true ) ? 'dark' : 'light' );
+					$first = $first ? $first : $key;
+					$look  = $looks[ $key ];
 					$tags  = array_filter( array_map( 'trim', explode( ',', (string) get_field( 'card_tags', $term ) ) ) );
 					$label = (string) get_field( 'card_link_label', $term );
 					$icon  = (string) get_field( 'card_icon', $term );
