@@ -240,10 +240,10 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 - **Industry and category pages (2026-10-29):** one template (`term-page.php`), content per term.
   Hero = term fields (photo, heading, intro). Page sections = the term's own synced pattern
   (`page_sections`), named "Industry page sections: <term>" / "Category page sections: <term>";
-  #944 / #945 stay the fallback (#944 = Manufacturing's). Each pattern holds only what Figma varies
-  per term (Training Reasons, plus Training Needs for industries) and embeds the shared, identical
-  sections as nested synced patterns: "Industry pages: free sessions, industries, categories",
-  "Industry pages: why Upskillme, testimonials, FAQs, keep exploring" and "Category pages: free
-  sessions, testimonials, FAQs, keep exploring". Edit a shared section once there. Categories use
+  #944 / #945 stay the fallback (#944 = Manufacturing's). Each term pattern holds only what Figma
+  varies per term (Training Reasons, plus Training Needs for industries) and refers to one synced
+  pattern per shared section, never a combination: Free Session Grid, Industry Grid, Category Lists,
+  Why UpSkillMe (also on Home), Testimonials, FAQs, Related Industries, Related Categories. Edit a
+  shared section once in its own pattern. Categories use
   Training Reasons (Figma 49329:27122); levels (#946) still use textured-cards. "Future +" is a
   training category (`/training-category/future/`, footer "Future categories").

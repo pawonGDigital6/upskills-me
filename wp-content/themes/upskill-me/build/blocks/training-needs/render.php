@@ -38,8 +38,8 @@ $attributes = upskill_block_attributes( $block, 'block-training-needs section-y 
 		?>
 
 		<?php if ( $needs ) : ?>
-			<div class="training-needs__frame mt-[46px] rounded-[32px] lg:mt-12 bg-gray-100 p-2 sm:p-4">
-				<ul class="training-needs__list grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			<div class="training-needs__frame mt-[46px] sm:rounded-[32px] rounded-2xl lg:mt-12 bg-gray-100 p-2 sm:p-4">
+				<ul class="training-needs__list grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
 					<?php foreach ( $needs as $index => $need ) : ?>
 						<?php $points = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) ( $need['points'] ?? '' ) ) ) ); ?>
 						<?php // Figma 49325:15015 / 49354:95613: 20px corners, 16 (phones) / 24 padding; the first card draws the hover look, purple texture with white text. ?>

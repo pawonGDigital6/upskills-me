@@ -90,7 +90,7 @@ $styles = array(
 								<p class="industry-showcase__text mb-4 text-base <?php echo esc_attr( $tokens['text'] ); ?>"><?php echo esc_html( $term->description ); ?></p>
 							<?php endif; ?>
 							<?php if ( $link_label ) : ?>
-								<span class="industry-showcase__more inline-flex items-center gap-2 text-sm font-medium <?php echo esc_attr( $tokens['link'] ); ?>" aria-hidden="true">
+								<span class="industry-showcase__more inline-flex items-center gap-2 text-sm font-medium capitalize <?php echo esc_attr( $tokens['link'] ); ?>" aria-hidden="true">
 									<?php echo esc_html( $link_label ); ?>
 									<?php upskill_icon( 'arrow-up-right', 'size-[11px] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' ); ?>
 								</span>

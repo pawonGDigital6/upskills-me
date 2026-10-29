@@ -2598,6 +2598,9 @@
       color: color-mix(in oklab, var(--color-white) 86%, transparent);
     }
   }
+  .capitalize {
+    text-transform: capitalize;
+  }
   .uppercase {
     text-transform: uppercase;
   }
@@ -3124,6 +3127,9 @@
     .max-sm\:py-1 {
       padding-block: var(--spacing);
     }
+    .max-sm\:py-4 {
+      padding-block: calc(var(--spacing) * 4);
+    }
     .max-sm\:pt-10 {
       padding-top: calc(var(--spacing) * 10);
     }
@@ -3342,6 +3348,9 @@
     }
     .sm\:rounded-\[20px\] {
       border-radius: 20px;
+    }
+    .sm\:rounded-\[32px\] {
+      border-radius: 32px;
     }
     .sm\:rounded-card {
       border-radius: var(--radius-card);

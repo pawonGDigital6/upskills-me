@@ -107,7 +107,7 @@ $attributes = upskill_block_attributes( $block, 'block-related-industries bg-whi
 									<p class="related-industries__text text-base <?php echo esc_attr( $look['text'] ); ?>"><?php echo esc_html( $term->description ); ?></p>
 								<?php endif; ?>
 								<?php if ( $label ) : ?>
-									<span class="related-industries__more inline-flex items-center gap-[7px] pt-2 text-sm font-medium <?php echo esc_attr( $look['link'] ); ?>" aria-hidden="true">
+									<span class="related-industries__more inline-flex items-center gap-[7px] pt-2 text-sm font-medium capitalize <?php echo esc_attr( $look['link'] ); ?>" aria-hidden="true">
 										<?php echo esc_html( $label ); ?>
 										<?php upskill_icon( 'arrow-up-right', 'size-[11px] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5' ); ?>
 									</span>
