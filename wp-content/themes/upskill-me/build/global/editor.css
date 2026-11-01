@@ -459,9 +459,6 @@
   .mt-\[-2px\] {
     margin-top: -2px;
   }
-  .mt-\[-3\.5px\] {
-    margin-top: -3.5px;
-  }
   .mt-\[-3px\] {
     margin-top: -3px;
   }
@@ -1020,9 +1017,6 @@
   .max-w-\[769px\] {
     max-width: 769px;
   }
-  .max-w-\[792px\] {
-    max-width: 792px;
-  }
   .max-w-\[854px\] {
     max-width: 854px;
   }
@@ -1574,9 +1568,6 @@
   .bg-\[\#f0fbd4\] {
     background-color: #f0fbd4;
   }
-  .bg-\[\#fafafa\] {
-    background-color: #fafafa;
-  }
   .bg-\[\#fef3f2\] {
     background-color: #fef3f2;
   }
@@ -1837,9 +1828,6 @@
   .p-\[6px_11px_3px\] {
     padding: 6px 11px 3px;
   }
-  .p-\[9px_7px\] {
-    padding: 9px 7px;
-  }
   .p-\[16px_26px_25px_22px\] {
     padding: 16px 26px 25px 22px;
   }
@@ -1944,15 +1932,6 @@
   }
   .py-\[7px\] {
     padding-block: 7px;
-  }
-  .py-\[8px_8px\] {
-    padding-block: 8px 8px;
-  }
-  .py-\[9px_7px\] {
-    padding-block: 9px 7px;
-  }
-  .py-\[9px_8px\] {
-    padding-block: 9px 8px;
   }
   .py-\[10px_7px\] {
     padding-block: 10px 7px;
@@ -3701,12 +3680,6 @@
     .lg\:min-h-\[43px\] {
       min-height: 43px;
     }
-    .lg\:min-h-\[46px\] {
-      min-height: 46px;
-    }
-    .lg\:min-h-\[52px\] {
-      min-height: 52px;
-    }
     .lg\:min-h-\[236px\] {
       min-height: 236px;
     }
@@ -4876,6 +4849,12 @@
   .session-chip--lg .session-chip__count {
     border-width: 2px;
     border-radius: 8px;
+    min-width: 32px;
+    padding: 8px 4px 4px;
+    @media screen and (max-width: 767px) {
+      min-width: 35px;
+      min-height: 31px;
+    }
   }
   .tag {
     display: inline-flex;

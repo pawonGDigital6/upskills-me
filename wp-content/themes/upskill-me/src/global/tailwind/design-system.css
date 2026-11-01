@@ -560,17 +560,11 @@
 		line-height: 1;
 		min-width: 18px;
 		min-height: 18px;
-
-		/* @media screen and (max-width: 767px) {
-			min-width: 35px;
-			min-height: 31px;
-		} */
 	}
 
 	/* The large version on the category rows (scaled 1.966x in Figma). */
 	.session-chip--lg {
 		gap: 12px;
-		/* 14 -> 19.66 */
 		font-size: clamp(0.875rem, 0.7436rem + 0.539vw, 1.2288rem);
 
 		@media screen and (max-width: 767px) {
@@ -581,6 +575,13 @@
 	.session-chip--lg .session-chip__count {
 		border-width: 2px;
 		border-radius: 8px;
+		min-width: 32px;
+		padding: 8px 4px 4px;
+
+		@media screen and (max-width: 767px) {
+			min-width: 35px;
+			min-height: 31px;
+		}
 	}
 
 	/**
