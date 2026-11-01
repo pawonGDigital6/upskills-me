@@ -129,7 +129,7 @@ $uid = wp_unique_id( 'hero-' );
 						<div class="flex w-full rounded-full border border-gray-100 bg-gray-50 p-1.5 lg:w-auto" role="tablist" aria-label="<?php esc_attr_e( 'Find training', 'upskill-me' ); ?>">
 							<?php $first = true; ?>
 							<?php foreach ( $tabs as $key => $tab ) : ?>
-								<button class="h-[37px] flex-1 rounded-full text-sm font-medium text-gray-950 transition-colors lg:w-[98px] lg:flex-none aria-selected:bg-gray-900 aria-selected:text-white aria-selected:shadow-btn" type="button" role="tab" id="<?php echo esc_attr( $uid . '-tab-' . $key ); ?>" aria-controls="<?php echo esc_attr( $uid . '-panel-' . $key ); ?>" aria-selected="<?php echo $first ? 'true' : 'false'; ?>" tabindex="<?php echo $first ? '0' : '-1'; ?>" data-pathway-tab><?php echo esc_html( $tab['label'] ); ?></button>
+								<button class="h-[37px] flex-1 rounded-full text-sm font-medium text-gray-950 transition-colors p-[5px_12px_4px] lg:flex-none aria-selected:bg-gray-900 aria-selected:text-white aria-selected:shadow-btn" type="button" role="tab" id="<?php echo esc_attr( $uid . '-tab-' . $key ); ?>" aria-controls="<?php echo esc_attr( $uid . '-panel-' . $key ); ?>" aria-selected="<?php echo $first ? 'true' : 'false'; ?>" tabindex="<?php echo $first ? '0' : '-1'; ?>" data-pathway-tab><?php echo esc_html( $tab['label'] ); ?></button>
 								<?php $first = false; ?>
 							<?php endforeach; ?>
 						</div>
@@ -164,7 +164,7 @@ $uid = wp_unique_id( 'hero-' );
 					<form class="border-t border-gray-900/10 px-5 py-4 lg:flex lg:w-full lg:items-center lg:gap-4 lg:border-0 lg:p-0 mc:ml-auto mc:w-auto" role="search" method="get" action="<?php echo esc_url( home_url( '/' ) ); ?>">
 						<label class="screen-reader-text" for="<?php echo esc_attr( $uid . '-search' ); ?>"><?php esc_html_e( 'Search for training', 'upskill-me' ); ?></label>
 						<?php // The pill is the field: icon, input and (on the 390 frame) the round submit sit side by side inside it. ?>
-						<span class="flex min-h-12 items-center gap-[11px] rounded-full border border-gray-900/20 bg-white py-1 pr-1 pl-4 focus-within:outline-2 focus-within:outline-offset-3 focus-within:outline-brand-700 lg:min-h-[46px] lg:flex-1 lg:py-0 lg:pr-[18px] lg:pl-[17px] mc:w-[382px] mc:flex-none">
+						<span class="flex min-h-12 items-center gap-[11px] rounded-full border border-gray-900/20 bg-white py-1 pr-1 pl-4 focus-within:outline-2 focus-within:outline-offset-3 focus-within:outline-brand-700 lg:min-h-13 lg:flex-1 lg:py-0 lg:pr-[18px] lg:pl-[17px] mc:w-[382px] mc:flex-none">
 							<?php upskill_icon( 'search', 'hidden size-[18px] flex-none text-[#6e6e74] lg:block' ); ?>
 							<input class="min-w-0 flex-1 bg-transparent text-base text-gray-950 placeholder:text-[#6b6b72] focus:outline-none" id="<?php echo esc_attr( $uid . '-search' ); ?>" type="search" name="s" placeholder="<?php echo esc_attr( get_field( 'search_placeholder' ) ? get_field( 'search_placeholder' ) : __( 'Or describe what you need', 'upskill-me' ) ); ?>">
 							<?php // On the 390 frame the submit is a round button inside the field. ?>
