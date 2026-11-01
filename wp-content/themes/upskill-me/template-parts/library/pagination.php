@@ -79,28 +79,28 @@ $upskill_step = 'inline-flex items-center gap-2 text-sm font-medium';
 	<div class="flex flex-1">
 		<?php if ( $upskill_page > 1 ) : ?>
 			<a class="<?php echo esc_attr( $upskill_step ); ?> text-[#6744A8] hover:text-brand-700" href="<?php echo esc_url( $upskill_link( $upskill_page - 1 ) ); ?>" rel="prev" data-library-page="<?php echo esc_attr( $upskill_page - 1 ); ?>">
-				<?php upskill_icon( 'arrow-right', 'size-4 -scale-x-100' ); ?>
+				<?php upskill_icon( 'arrow-right', 'size-4 -scale-x-100 mt-[-3px]' ); ?>
 				<?php esc_html_e( 'Previous', 'upskill-me' ); ?>
 			</a>
 		<?php else : ?>
 			<span class="<?php echo esc_attr( $upskill_step ); ?> cursor-default text-[#a4a7ae]" aria-disabled="true">
-				<?php upskill_icon( 'arrow-right', 'size-4 -scale-x-100' ); ?>
+				<?php upskill_icon( 'arrow-right', 'size-4 -scale-x-100 mt-[-3px]' ); ?>
 				<?php esc_html_e( 'Previous', 'upskill-me' ); ?>
 			</span>
 		<?php endif; ?>
 	</div>
-	<ul class="flex items-center gap-0.5" role="list">
+	<ul class="flex items-center gap-0.5 flex-wrap" role="list">
 		<?php foreach ( $upskill_items as $upskill_item ) : ?>
 			<li class="<?php echo esc_attr( $upskill_only[ $upskill_item[1] ] ); ?>">
 				<?php if ( 'dots' === $upskill_item[0] ) : ?>
 					<span class="grid size-10 place-items-center text-sm text-[#717680]" aria-hidden="true">&hellip;</span>
 				<?php elseif ( $upskill_item[0] === $upskill_page ) : ?>
-					<span class="grid size-10 place-items-center rounded-lg bg-[#fafafa] text-sm text-brand-700" aria-current="page">
+					<span class="grid size-10 place-items-center rounded-[8px] bg-white pt-[2px] text-sm text-brand-700 leading-none" aria-current="page">
 						<span class="screen-reader-text"><?php esc_html_e( 'Page', 'upskill-me' ); ?></span>
 						<?php echo esc_html( number_format_i18n( $upskill_item[0] ) ); ?>
 					</span>
 				<?php else : ?>
-					<a class="grid size-10 place-items-center rounded-lg text-sm text-[#717680] transition-colors duration-200 hover:bg-brand-25 hover:text-brand-700" href="<?php echo esc_url( $upskill_link( $upskill_item[0] ) ); ?>" data-library-page="<?php echo esc_attr( $upskill_item[0] ); ?>">
+					<a class="grid size-10 place-items-center rounded-[8px] text-sm text-[#717680] transition-colors duration-200 leading-none hover:bg-brand-25 hover:text-brand-700" href="<?php echo esc_url( $upskill_link( $upskill_item[0] ) ); ?>" data-library-page="<?php echo esc_attr( $upskill_item[0] ); ?>">
 						<span class="screen-reader-text"><?php esc_html_e( 'Page', 'upskill-me' ); ?></span>
 						<?php echo esc_html( number_format_i18n( $upskill_item[0] ) ); ?>
 					</a>
@@ -112,12 +112,12 @@ $upskill_step = 'inline-flex items-center gap-2 text-sm font-medium';
 		<?php if ( $upskill_page < $upskill_pages ) : ?>
 			<a class="<?php echo esc_attr( $upskill_step ); ?> text-[#6744A8] hover:text-brand-700" href="<?php echo esc_url( $upskill_link( $upskill_page + 1 ) ); ?>" rel="next" data-library-page="<?php echo esc_attr( $upskill_page + 1 ); ?>">
 				<?php esc_html_e( 'Next', 'upskill-me' ); ?>
-				<?php upskill_icon( 'arrow-right', 'size-4' ); ?>
+				<?php upskill_icon( 'arrow-right', 'size-4 mt-[-3px]' ); ?>
 			</a>
 		<?php else : ?>
 			<span class="<?php echo esc_attr( $upskill_step ); ?> cursor-default text-[#a4a7ae]" aria-disabled="true">
 				<?php esc_html_e( 'Next', 'upskill-me' ); ?>
-				<?php upskill_icon( 'arrow-right', 'size-4' ); ?>
+				<?php upskill_icon( 'arrow-right', 'size-4 mt-[-3px]' ); ?>
 			</span>
 		<?php endif; ?>
 	</div>

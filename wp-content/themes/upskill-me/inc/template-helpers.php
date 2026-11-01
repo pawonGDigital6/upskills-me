@@ -718,7 +718,7 @@ if (!function_exists('upskill_pagination')) {
 				<?php if ($current > 1): ?>
 					<a class="pagination__step inline-flex items-center gap-2 text-sm font-medium text-[#6744A8]"
 						href="<?php echo esc_url(get_pagenum_link($current - 1)); ?>" rel="prev">
-						<svg class="mt-[-2px] xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
+						<svg class="mt-[-2px]" xmlns="http://www.w3.org/2000/svg" width="11" height="9" viewBox="0 0 11 9" fill="none">
 							<path d="M9.8068 4.29899H0.732263M4.29726 7.86398L0.732263 4.29899L4.29726 0.733991" stroke-width="1.46667"
 								stroke-linecap="round" stroke-linejoin="round" stroke="#6744A8" />
 						</svg>

@@ -24,7 +24,7 @@ $upskill_suggest = (array) apply_filters( 'upskill_library_suggestions', array( 
 ?>
 <main id="primary" class="site-main bg-gray-25">
 	<section class="container pt-6 pb-10 lg:pt-14 lg:pb-20" aria-labelledby="library-heading">
-		<div class="mx-auto flex max-w-[792px] flex-col items-start gap-6 lg:items-center lg:text-center">
+		<div class="mx-auto flex lg:max-w-[792px] flex-col items-start gap-6 lg:items-center lg:text-center">
 			<div class="flex flex-col items-start gap-5 lg:items-center">
 				<?php upskill_eyebrow( __( 'Search training', 'upskill-me' ), 'search' ); ?>
 				<h1 id="library-heading" class="heading text-h1 font-medium text-gray-900 lg:font-semibold lg:tracking-[-0.01em]"><?php echo wp_kses( __( 'Find the training <br><em>you need.</em>', 'upskill-me' ), upskill_inline_kses() ); ?></h1>
@@ -49,7 +49,7 @@ $upskill_suggest = (array) apply_filters( 'upskill_library_suggestions', array( 
 						<span class="text-sm text-[#8b8b97]"><?php esc_html_e( 'Try:', 'upskill-me' ); ?></span>
 						<ul class="flex flex-wrap gap-2 lg:flex-nowrap lg:gap-[9px]" role="list">
 							<?php foreach ( $upskill_suggest as $upskill_term ) : ?>
-								<li><a class="block rounded-full border border-line bg-white px-3.5 py-2 text-sm text-gray-500 transition-colors hover:border-brand-300 hover:text-brand-700" href="<?php echo esc_url( add_query_arg( 'q', rawurlencode( $upskill_term ), $upskill_base ) . '#results' ); ?>" data-library-suggest="<?php echo esc_attr( $upskill_term ); ?>"><?php echo esc_html( $upskill_term ); ?></a></li>
+								<li><a class="block rounded-full border border-line bg-white px-3.5 py-[10px_7px] text-sm text-gray-500 transition-colors hover:border-brand-300 hover:text-brand-700" href="<?php echo esc_url( add_query_arg( 'q', rawurlencode( $upskill_term ), $upskill_base ) . '#results' ); ?>" data-library-suggest="<?php echo esc_attr( $upskill_term ); ?>"><?php echo esc_html( $upskill_term ); ?></a></li>
 							<?php endforeach; ?>
 						</ul>
 					</div>
