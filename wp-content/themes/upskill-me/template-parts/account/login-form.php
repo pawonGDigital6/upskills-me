@@ -39,7 +39,7 @@ if ( isset( $_GET['login'] ) && 'failed' === $_GET['login'] ) {
 }
 // phpcs:enable
 
-$upskill_field = 'h-[50px] w-full min-w-0 rounded-lg border border-gray-900/20 bg-gray-25 py-3 pr-3 pl-11 text-base text-gray-950 transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-[#999] hover:border-gray-900/30 focus:border-brand-700 focus:bg-white focus:shadow-[0_0_0_3px_rgb(109_66_175/14%)] focus:outline-none';
+$upskill_field = 'h-[50px] w-full min-w-0 rounded-[8px] border border-gray-900/20 bg-gray-25 py-3 pr-3 pl-11 text-base text-gray-950 transition-[border-color,background-color,box-shadow] duration-200 placeholder:text-[#999] hover:border-gray-900/30 focus:border-brand-700 focus:bg-white focus:shadow-[0_0_0_3px_rgb(109_66_175/14%)] focus:outline-none';
 $upskill_disc  = 'pointer-events-none ml-3 grid size-6 place-items-center self-center justify-self-start rounded-full bg-gray-100 text-gray-800';
 ?>
 <?php if ( $upskill_notice ) : ?>
