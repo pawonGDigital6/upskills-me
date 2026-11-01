@@ -81,13 +81,13 @@ if ( ! $upskill_pattern ) {
 	<?php // Figma 49325:14838 / 49354:95610: 30px over and 46px under the photo on phones; on desktop the library follows straight on. ?>
 	<section class="term-page-hero container pt-[30px] pb-[46px] lg:pt-16 lg:pb-0" aria-labelledby="term-heading">
 		<?php // Photo and copy share one grid cell; Figma's black 0–80% top-to-bottom gradient keeps the white text readable. ?>
-		<div class="grid grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] bg-gray-950 *:col-start-1 *:row-start-1">
+		<div class="grid grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] bg-gray-950 *:col-start-1 *:row-start-1 relative">
 			<?php if ( $upskill_photo ) : ?>
 				<?php // Phones crop the photo as Figma does, from 78% across. Drawn by height there (730 × the photo's ratio). ?>
-				<?php upskill_image( $upskill_photo, 'full', array( 'class' => 'size-full object-cover max-lg:object-[78%_50%]', 'alt' => '', 'loading' => 'eager', 'sizes' => '(min-width: 1440px) 1360px, (min-width: 1025px) calc(100vw - 80px), 1360px' ) ); ?>
+				<?php upskill_image( $upskill_photo, 'full', array( 'class' => 'absolute inset-0 size-full object-cover max-lg:object-[78%_50%]', 'alt' => '', 'loading' => 'eager', 'sizes' => '(min-width: 1440px) 1360px, (min-width: 1025px) calc(100vw - 80px), 1360px' ) ); ?>
 			<?php endif; ?>
-			<div class="bg-[linear-gradient(180deg,rgb(0_0_0/0%)_-15%,rgb(0_0_0/80%)_100%)]" aria-hidden="true"></div>
-			<div class="relative flex min-h-[730px] flex-col justify-center gap-6 px-4 py-17.5 text-white sm:px-8 sm:py-8 lg:px-16 lg:py-13 lg:max-w-[784px]">
+			<div class="bg-[linear-gradient(180deg,rgb(0_0_0/0%)_-15%,rgb(0_0_0/80%)_100%)] z-1 pointer-events-none" aria-hidden="true"></div>
+			<div class="relative flex min-h-[730px] flex-col justify-center gap-6 px-4 py-17.5 text-white sm:px-8 sm:py-8 lg:px-16 lg:py-13 lg:max-w-[784px] z-1">
 				<div class="flex flex-col items-start gap-3">
 					<p class="eyebrow"><?php upskill_icon( 'free-video', 'eyebrow__icon' ); ?><span><?php echo esc_html( $upskill_name ); ?></span></p>
 					<h1 id="term-heading" class="heading text-h1 font-medium text-white max-xs:text-[2.25rem] lg:font-semibold lg:tracking-[-0.01em] [&_em]:text-white">
