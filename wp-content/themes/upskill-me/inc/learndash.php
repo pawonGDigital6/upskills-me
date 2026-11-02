@@ -103,3 +103,18 @@ if ( ! function_exists( 'upskill_dequeue_orphan_jquery' ) ) {
 }
 add_action( 'wp_enqueue_scripts', 'upskill_dequeue_orphan_jquery', 1001 );
 add_action( 'wp_print_footer_scripts', 'upskill_dequeue_learndash_assets', 1 );
+
+/**
+ * Admin: hide the Quizzes and Questions menus. The training has no quizzes
+ * (courses complete on their video sessions), so the menus only add noise for
+ * the client. This only hides the links; the post types, settings and
+ * reports stay registered, so LearnDash keeps working as normal.
+ */
+add_filter(
+	'learndash_submenu',
+	static function ( $submenu ) {
+		unset( $submenu['sfwd-quiz'], $submenu['sfwd-question'] );
+
+		return $submenu;
+	}
+);

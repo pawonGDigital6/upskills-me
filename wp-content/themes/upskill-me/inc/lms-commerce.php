@@ -289,3 +289,48 @@ add_filter(
 		return $items;
 	}
 );
+
+if ( ! function_exists( 'upskill_refund_group_note' ) ) {
+	/**
+	 * Refunded or cancelled seat orders: LearnDash removes the buyer's course
+	 * access, but Group Registration leaves the group, its seats and its
+	 * members untouched. Changing those is a judgement call (seats may come
+	 * from several orders, members may be mid-course), so it stays a manual
+	 * admin step; this adds an order note naming the group to check.
+	 *
+	 * @param int $order_id Order ID.
+	 * @return void
+	 */
+	function upskill_refund_group_note( $order_id ) {
+		global $wpdb;
+
+		$order = wc_get_order( $order_id );
+
+		if ( ! $order ) {
+			return;
+		}
+
+		$group_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			$wpdb->prepare(
+				"SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key LIKE %s AND meta_value = %s",
+				$wpdb->esc_like( 'wdm_group_reg_order_id_' ) . '%',
+				(string) $order->get_id()
+			)
+		);
+
+		foreach ( $group_ids as $group_id ) {
+			$order->add_order_note(
+				sprintf(
+					/* translators: 1: group name, 2: group ID, 3: members, 4: total seats. */
+					__( 'Group "%1$s" (#%2$d) still has %3$d member(s) and %4$d seat(s). Check it in LearnDash LMS → Groups: reduce the seats or remove members if the refund should take access away.', 'upskill-me' ),
+					get_the_title( $group_id ),
+					$group_id,
+					function_exists( 'learndash_get_groups_user_ids' ) ? count( learndash_get_groups_user_ids( $group_id ) ) : 0,
+					(int) get_post_meta( $group_id, 'wdm_group_total_users_limit_' . $group_id, true )
+				)
+			);
+		}
+	}
+}
+add_action( 'woocommerce_order_refunded', 'upskill_refund_group_note' );
+add_action( 'woocommerce_order_status_cancelled', 'upskill_refund_group_note' );
