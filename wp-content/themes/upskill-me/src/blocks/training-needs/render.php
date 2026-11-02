@@ -11,7 +11,7 @@
  * become the industry's name (template-parts/library/term-page.php).
  *
  * Card style "Course" (course page "What you'll learn", Figma 49325:20808): a
- * white section, no grey frame, and a plain "01" label instead of the box.
+ * page-grey section (Figma #f7f7f7), no grey frame, and a plain "01" label instead of the box.
  *
  * @param array $block The block settings and attributes.
  *
@@ -29,7 +29,7 @@ $needs = array_values(
 
 $plain = 'plain' === get_field( 'card_style' );
 
-$attributes = upskill_block_attributes( $block, 'block-training-needs section-y ' . ( $plain ? 'bg-white' : 'bg-brand-25' ) );
+$attributes = upskill_block_attributes( $block, 'block-training-needs section-y ' . ( $plain ? 'bg-gray-25' : 'bg-brand-25' ) );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">

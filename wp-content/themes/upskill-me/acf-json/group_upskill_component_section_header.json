@@ -47,7 +47,9 @@
                 "manufature": "Setting Gear",
                 "user-gear": "User Gear",
                 "binoculars": "Binoculars",
-                "play-square": "Play (square)"
+                "play-square": "Play (square)",
+                "factory": "Factory",
+                "expert": "Expert"
             },
             "default_value": false,
             "return_format": "value",
@@ -158,5 +160,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793614044
+    "modified": 1793642800
 }

@@ -235,7 +235,9 @@ if ( ! function_exists( 'upskill_course_block_template' ) ) {
 				array(
 					'data' => array_merge(
 						array(
-							'eyebrow'  => __( 'At a glance', 'upskill-me' ),
+							'eyebrow_icon'  => 'binoculars',
+							'_eyebrow_icon' => 'field_upskill_course_glance_eyebrow_icon',
+							'eyebrow'       => __( 'At a glance', 'upskill-me' ),
 							'_eyebrow' => 'field_upskill_course_glance_eyebrow',
 						),
 						$rows(
@@ -258,7 +260,7 @@ if ( ! function_exists( 'upskill_course_block_template' ) ) {
 				'acf-block/training-needs',
 				array(
 					'data' => array_merge(
-						$header( 'book-open-text', __( "What you'll learn", 'upskill-me' ), __( 'Knowledge you can <em>use on the job.</em>', 'upskill-me' ) ),
+						$header( 'book-open-alt', __( "What you'll learn", 'upskill-me' ), __( 'Knowledge you can <em>use on the job.</em>', 'upskill-me' ) ),
 						array(
 							'card_style'  => 'plain',
 							'_card_style' => 'field_upskill_training_needs_card_style',
@@ -290,7 +292,7 @@ if ( ! function_exists( 'upskill_course_block_template' ) ) {
 					),
 				),
 			),
-			array( 'acf-block/course-content', array( 'data' => $header( 'book-open-text', __( 'Course content', 'upskill-me' ), __( 'Explore <em>the training.</em>', 'upskill-me' ) ) ) ),
+			array( 'acf-block/course-content', array( 'data' => $header( 'book-open-alt', __( 'Course content', 'upskill-me' ), __( 'Explore <em>the training.</em>', 'upskill-me' ) ) ) ),
 			array( 'acf-block/course-reviews', array( 'data' => $header( 'award', __( 'Reviews', 'upskill-me' ), __( 'What learners <em>are saying.</em>', 'upskill-me' ) ) ) ),
 		);
 

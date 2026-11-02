@@ -74,10 +74,10 @@ export function CourseGallery( root = document ) {
 		const thumbs = strip
 			? new Swiper( strip, {
 				modules: [ A11y ],
-				slidesPerView: 4,
-				spaceBetween: 8,
+				// Fixed 156px thumbnails, 12px apart (Figma); the strip scrolls where four do not fit.
+				slidesPerView: 'auto',
+				spaceBetween: 12,
 				watchSlidesProgress: true,
-				breakpoints: { 1025: { spaceBetween: 12 } },
 			} )
 			: null;
 

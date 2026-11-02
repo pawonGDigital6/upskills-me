@@ -50,28 +50,30 @@ $upskill_first    = $upskill_levels ? $upskill_levels[0] : null;
 $upskill_library  = function_exists( 'upskill_library_page_url' ) ? upskill_library_page_url() : home_url( '/' );
 $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 ?>
-<div class="<?php echo esc_attr( learndash_the_wrapper_class() ); ?> course-product">
+<?php // Not wrapped in LearnDash's .learndash-wrapper: its CSS (e.g. box-shadow: none !important on every link) would restyle the theme blocks below. ?>
+<div class="course-product">
 	<?php
 	/** This action is documented in the LearnDash course template. */
 	do_action( 'learndash-course-before', get_the_ID(), $course_id, $user_id );
 	?>
 
-	<section class="course-hero bg-gray-25 pt-6 pb-12 lg:pt-10 lg:pb-16">
+	<section class="course-hero bg-gray-25 pt-6 pb-16 lg:pt-10 lg:pb-[72px]">
 		<div class="container">
-			<nav class="flex flex-wrap items-center gap-2 text-sm text-gray-500" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
+			<nav class="flex flex-wrap items-center gap-2 text-xs leading-[1.62] tracking-[-0.01em] text-[#6b6b72]" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
 				<a class="hover:text-brand-700" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'upskill-me' ); ?></a>
-				<span aria-hidden="true">/</span>
+				<span class="text-[#c3c3c8]" aria-hidden="true">/</span>
 				<a class="hover:text-brand-700" href="<?php echo esc_url( $upskill_library ); ?>"><?php esc_html_e( 'Courses', 'upskill-me' ); ?></a>
 				<?php if ( $upskill_category && ! is_wp_error( $upskill_term_url ) ) : ?>
-					<span aria-hidden="true">/</span>
+					<span class="text-[#c3c3c8]" aria-hidden="true">/</span>
 					<a class="hover:text-brand-700" href="<?php echo esc_url( $upskill_term_url ); ?>"><?php echo esc_html( $upskill_category->name ); ?></a>
 				<?php endif; ?>
-				<span aria-hidden="true">/</span>
-				<span class="text-brand-700" aria-current="page"><?php echo esc_html( get_the_title( $course_id ) ); ?></span>
+				<span class="text-[#c3c3c8]" aria-hidden="true">/</span>
+				<span class="font-medium text-[#5d3a8f]" aria-current="page"><?php echo esc_html( get_the_title( $course_id ) ); ?></span>
 			</nav>
 
 			<div class="mt-6 grid gap-8 lg:mt-8 lg:grid-cols-[minmax(0,659fr)_minmax(0,664fr)] lg:items-start lg:gap-10">
-				<div class="course-hero__media flex flex-col gap-3">
+				<?php // min-w-0: a grid item sizes to its content by default, and Swiper sizes to its container, so without it they grow each other. ?>
+				<div class="course-hero__media flex min-w-0 flex-col gap-3">
 					<?php
 					// Gallery items: the preview video (first free session), then each other session's preview image
 					// (its featured image); without a preview video the course image leads.
@@ -145,7 +147,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 									<div class="swiper-wrapper">
 										<?php foreach ( $upskill_gallery as $upskill_item ) : ?>
 											<?php $upskill_number = $upskill_item['session'] ? str_pad( (string) ( array_search( $upskill_item['session'], $upskill_sessions, true ) + 1 ), 2, '0', STR_PAD_LEFT ) : ''; ?>
-											<div class="swiper-slide grid aspect-[156/87] cursor-pointer grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-white *:col-start-1 *:row-start-1 hover:border-brand-500 [&.swiper-slide-thumb-active]:border-brand-700">
+											<div class="swiper-slide grid aspect-[156/87] w-[156px]! cursor-pointer grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-white *:col-start-1 *:row-start-1 hover:border-brand-500 [&.swiper-slide-thumb-active]:border-brand-700">
 												<?php if ( $upskill_item['image'] ) : ?>
 													<?php upskill_image( $upskill_item['image'], 'full', array( 'class' => 'size-full object-cover', 'alt' => '', 'sizes' => '(min-width: 1440px) 156px, (min-width: 1025px) 11vw, 23vw' ) ); ?>
 												<?php endif; ?>
@@ -154,7 +156,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 												<?php endif; ?>
 												<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
 													<span class="text-sm font-medium"><?php echo esc_html( $upskill_number ); ?></span>
-													<span><?php echo esc_html( $upskill_item['session'] ? (string) get_field( 'duration', $upskill_item['session'] ) : '' ); ?></span>
+													<span class="text-[10px] leading-[1.5]"><?php echo esc_html( $upskill_item['session'] ? (string) get_field( 'duration', $upskill_item['session'] ) : '' ); ?></span>
 												</span>
 												<span class="sr-only"><?php echo esc_html( $upskill_caption( $upskill_item ) ); ?></span>
 											</div>
@@ -181,16 +183,16 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 
 					<?php // Share copies the course link (the copy-link script from the blog, js/components/article.js). ?>
 					<div class="relative mt-2 flex">
-						<button class="inline-flex h-[42px] items-center rounded-full border border-line bg-white px-5 text-base font-medium text-gray-950 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700" type="button" data-copy-link="<?php echo esc_url( get_permalink( $course_id ) ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>"><?php esc_html_e( 'Share', 'upskill-me' ); ?></button>
+						<button class="inline-flex h-[42px] items-center rounded-full border border-line bg-white px-5 text-sm font-medium text-gray-950 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700" type="button" data-copy-link="<?php echo esc_url( get_permalink( $course_id ) ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>"><?php esc_html_e( 'Share', 'upskill-me' ); ?></button>
 						<span class="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[220px] rounded-md bg-gray-950 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-xs transition-opacity duration-200 data-visible:opacity-100" role="status" data-copy-status></span>
 					</div>
 				</div>
 
 				<div class="course-hero__panel flex flex-col rounded-[24px] border border-line bg-white p-5 shadow-xs lg:p-6">
 					<?php upskill_eyebrow( trim( ( $upskill_category ? $upskill_category->name . ' · ' : '' ) . __( 'On The Job Training', 'upskill-me' ) ), 'monitor', 'self-start' ); ?>
-					<?php upskill_heading( $upskill_heading ? $upskill_heading : esc_html( get_the_title( $course_id ) ), 'h1', 'pt-3 text-h3 font-medium text-gray-950' ); ?>
+					<?php upskill_heading( $upskill_heading ? $upskill_heading : esc_html( get_the_title( $course_id ) ), 'h1', 'pt-3 text-[clamp(1.5rem,1.2214rem+1.1429vw,2.25rem)] leading-[1.1] font-medium tracking-[-0.01em] text-gray-950' ); ?>
 					<?php if ( $upskill_summary ) : ?>
-						<p class="pt-3 text-base text-gray-500"><?php echo esc_html( $upskill_summary ); ?></p>
+						<p class="pt-3 text-base leading-[1.6] text-gray-500"><?php echo esc_html( $upskill_summary ); ?></p>
 					<?php endif; ?>
 
 					<?php if ( $upskill_reviews['count'] ) : ?>
@@ -202,7 +204,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 								<?php endfor; ?>
 							</span>
 							<span>
-								<span class="font-medium text-gray-950"><?php echo esc_html( number_format_i18n( $upskill_reviews['average'], 1 ) ); ?></span>
+								<span class="font-bold text-gray-950"><?php echo esc_html( number_format_i18n( $upskill_reviews['average'], 1 ) ); ?></span>
 								<?php
 								/* translators: %d: number of reviews. */
 								echo esc_html( ' · ' . sprintf( _n( '%d review', '%d reviews', $upskill_reviews['count'], 'upskill-me' ), $upskill_reviews['count'] ) );
@@ -215,7 +217,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 					<?php if ( $upskill_levels ) : ?>
 						<form class="mt-5 flex flex-col" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" data-buy-box>
 							<p class="flex items-baseline gap-2">
-								<span class="text-h3 font-medium text-gray-950" data-buy-price><?php echo wp_kses_post( $upskill_first['price_html'] ); ?></span>
+								<span class="text-[36px] leading-[1.1] font-medium tracking-[-0.01em] text-gray-950" data-buy-price><?php echo wp_kses_post( $upskill_first['price_html'] ); ?></span>
 								<span class="text-sm text-gray-500" data-buy-unit>
 									<?php
 									/* translators: %s: level name. */
@@ -226,15 +228,15 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 
 							<?php if ( count( $upskill_levels ) > 1 ) : ?>
 								<fieldset class="mt-6">
-									<legend class="float-left text-base font-medium text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
-									<span class="float-right pt-0.5 text-sm text-gray-500"><?php esc_html_e( 'Choose what you need', 'upskill-me' ); ?></span>
+									<legend class="float-left text-xl leading-[1.3] font-medium tracking-[-0.02em] text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
+									<span class="clear-left block pt-1 text-sm text-[#8b8b97] sm:clear-none sm:float-right sm:pt-1"><?php esc_html_e( 'Choose what you need', 'upskill-me' ); ?></span>
 									<?php // Three levels sit in one row (Figma); any other count pairs up so no card is left alone on a row. ?>
 									<div class="clear-both grid gap-2 pt-3 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
 										<?php foreach ( $upskill_levels as $upskill_i => $upskill_lvl ) : ?>
 											<?php $upskill_save = $upskill_lvl['bundle'] ? array_sum( wp_list_pluck( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ), 'price' ) ) - $upskill_lvl['price'] : 0; ?>
-											<label class="buy-level relative flex cursor-pointer flex-col gap-1 rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
+											<label class="buy-level relative flex cursor-pointer items-center justify-between gap-1 rounded-2xl sm:flex-col sm:items-start sm:justify-start border border-line bg-white p-4 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
 												<input class="sr-only" type="radio" name="variation_id" value="<?php echo esc_attr( $upskill_lvl['id'] ); ?>" data-price="<?php echo esc_attr( wp_strip_all_tags( $upskill_lvl['price_html'] ) ); ?>" data-label="<?php echo esc_attr( $upskill_lvl['label'] ); ?>" data-text="<?php echo esc_attr( $upskill_lvl['text'] ); ?>" data-attributes="<?php echo esc_attr( wp_json_encode( $upskill_lvl['attributes'] ) ); ?>"<?php checked( 0, $upskill_i ); ?>>
-												<span class="text-sm font-medium text-gray-950">
+												<span class="text-sm font-medium text-[#55555f] [.buy-level:has(:checked)_&]:text-[#6b2fe3]">
 													<?php echo esc_html( $upskill_lvl['label'] ); ?>
 													<?php if ( $upskill_save > 0 ) : ?>
 														<span class="ml-2 rounded-sm bg-signal px-2 py-0.5 text-xs font-semibold text-gray-950">
@@ -245,7 +247,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 														</span>
 													<?php endif; ?>
 												</span>
-												<span class="text-lg font-medium text-brand-700"><?php echo wp_kses_post( $upskill_lvl['price_html'] ); ?></span>
+												<span class="text-xl leading-[1.55] font-medium tracking-[-0.02em] text-gray-950"><?php echo wp_kses_post( $upskill_lvl['price_html'] ); ?></span>
 											</label>
 										<?php endforeach; ?>
 									</div>
@@ -253,7 +255,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 							<?php endif; ?>
 
 							<?php // The chosen level's line (its WooCommerce variation description); buy-box.js swaps it with the level. ?>
-							<p class="pt-4 text-sm text-gray-500" data-buy-text<?php echo $upskill_first['text'] ? '' : ' hidden'; ?>><?php echo esc_html( $upskill_first['text'] ); ?></p>
+							<p class="pt-4 text-sm leading-[1.45] text-[#55555f]" data-buy-text<?php echo $upskill_first['text'] ? '' : ' hidden'; ?>><?php echo esc_html( $upskill_first['text'] ); ?></p>
 
 							<div class="mt-6 flex flex-wrap items-center gap-3">
 								<label class="sr-only" for="buy-seats"><?php esc_html_e( 'Seats', 'upskill-me' ); ?></label>
@@ -262,7 +264,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 									<input class="w-12 appearance-none bg-transparent text-center text-base font-medium text-gray-950 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none" id="buy-seats" type="number" name="quantity" value="1" min="1" max="999" inputmode="numeric">
 									<button class="grid size-[50px] place-items-center rounded-full text-xl text-gray-700 hover:text-brand-700" type="button" data-buy-step="1"><span class="sr-only"><?php esc_html_e( 'More seats', 'upskill-me' ); ?></span><span aria-hidden="true">+</span></button>
 								</span>
-								<button class="btn btn--primary btn--md min-h-[50px] flex-1 justify-center" type="submit" name="add-to-cart" value="<?php echo esc_attr( $upskill_product->get_id() ); ?>">
+								<button class="btn btn--primary btn--md min-h-[50px] flex-1 justify-center max-sm:basis-full" type="submit" name="add-to-cart" value="<?php echo esc_attr( $upskill_product->get_id() ); ?>">
 									<span class="btn__label"><?php esc_html_e( 'Add to Cart', 'upskill-me' ); ?></span>
 									<span class="btn__nest" aria-hidden="true"><?php upskill_icon( 'arrow-up-right', 'btn__icon' ); ?></span>
 								</button>
@@ -276,8 +278,8 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 							<?php if ( ! $upskill_product->is_type( 'variable' ) ) : ?>
 								<input type="hidden" name="variation_id" value="">
 							<?php endif; ?>
-							<p class="pt-4 text-sm text-gray-500"><?php esc_html_e( 'One seat per learner.', 'upskill-me' ); ?></p>
-							<p class="flex items-center gap-2 pt-2 text-sm text-gray-500"><?php upskill_icon( 'shield', 'size-4 text-brand-700' ); ?><?php esc_html_e( 'Secure checkout · On demand access', 'upskill-me' ); ?></p>
+							<p class="pt-4 text-sm text-[#8b8b97]"><?php esc_html_e( 'One seat per learner.', 'upskill-me' ); ?></p>
+							<p class="flex items-center gap-2 pt-2 text-sm text-[#8b8b97]"><?php upskill_icon( 'shield', 'size-4 text-brand-700' ); ?><?php esc_html_e( 'Secure checkout · On demand access', 'upskill-me' ); ?></p>
 						</form>
 					<?php else : ?>
 						<div class="mt-6 rounded-2xl bg-brand-25 p-5">
