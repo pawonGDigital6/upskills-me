@@ -18,8 +18,6 @@ $facts    = array_values( array_filter( (array) get_field( 'facts' ), static fn(
 $video    = get_field( 'video' );
 $poster   = get_field( 'poster' );
 $title    = get_field( 'video_title' );
-// Media position: the video column on the right (default, Why page) or the left (course page, Figma 49325:21289); only the columns swap.
-$left = 'left' === get_field( 'media_position' );
 
 $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark relative isolate section-y bg-[#0e0e10] text-white' );
 ?>
@@ -29,7 +27,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 	<div class="container">
 		<?php // One grid: header and features share the left column, the video spans the right. Phones read header, video, facts, then features (Figma 49374:44290). ?>
 		<div class="grid gap-10 lg:grid-cols-2 lg:gap-x-14">
-			<div class="<?php echo $left ? 'lg:col-start-2' : 'lg:col-start-1'; ?> lg:row-start-1">
+			<div class="lg:col-start-1 lg:row-start-1">
 				<?php
 				upskill_section_header(
 					array(
@@ -44,7 +42,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 			</div>
 
 			<?php if ( $poster || ! empty( $video['url'] ) ) : ?>
-				<div class="flex flex-col gap-6 <?php echo $left ? 'lg:col-start-1' : 'lg:col-start-2'; ?> lg:row-span-2 lg:row-start-1 lg:min-w-0">
+				<div class="flex flex-col gap-6 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:min-w-0">
 					<?php // Poster, play button and caption share one grid cell; the video replaces them once started. ?>
 					<div class="reveal video-card grid aspect-[358/256] grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] border border-white/10 bg-[linear-gradient(157deg,#241946_8%,#14102a_54%,#0e0c1a_92%)] sm:aspect-[652/476]" data-video-card>
 						<?php
@@ -98,7 +96,7 @@ $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark rel
 			<?php endif; ?>
 
 			<?php if ( $features ) : ?>
-				<ul class="grid gap-4 sm:grid-cols-2 <?php echo $left ? 'lg:col-start-2' : 'lg:col-start-1'; ?> lg:row-start-2 lg:self-start">
+				<ul class="grid gap-4 sm:grid-cols-2 lg:col-start-1 lg:row-start-2 lg:self-start">
 					<?php foreach ( $features as $index => $feature ) : ?>
 						<li class="reveal flex flex-col rounded-[18px] border border-white/10 bg-white/4 p-[22px] min-h-[203px]" style="--i:<?php echo (int) $index; ?>">
 							<?php if ( ! empty( $feature['icon'] ) ) : ?>

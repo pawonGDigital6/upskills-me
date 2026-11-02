@@ -461,14 +461,6 @@ if ( ! function_exists( 'upskill_library_card' ) ) {
 		$first    = $sessions ? $sessions[0] : 0;
 		$settings = $first && function_exists( 'learndash_get_setting' ) ? (array) learndash_get_setting( $first ) : array();
 		$free     = in_array( (int) $course_id, upskill_library_free_course_ids(), true );
-		$sample   = 0;
-
-		foreach ( $free ? $sessions : array() as $session_id ) {
-			if ( 'on' === learndash_get_setting( $session_id, 'sample_lesson' ) ) {
-				$sample = $session_id;
-				break;
-			}
-		}
 		$category = get_the_terms( $course_id, 'training_category' );
 		$image    = get_post_thumbnail_id( $course_id ) ? get_post_thumbnail_id( $course_id ) : ( $first ? get_post_thumbnail_id( $first ) : 0 );
 
@@ -482,8 +474,8 @@ if ( ! function_exists( 'upskill_library_card' ) ) {
 			'free'     => $free,
 			'image'    => (int) $image,
 			'video'    => ! empty( $settings['lesson_video_enabled'] ) && ! empty( $settings['lesson_video_url'] ) ? (string) $settings['lesson_video_url'] : '',
-			// A free session opens straight away; anything else opens its course.
-			'url'      => $sample ? learndash_get_step_permalink( $sample, $course_id ) : get_permalink( $course_id ),
+			// Always the course page (details, levels, Add to Cart); a free video plays in the card itself.
+			'url'      => get_permalink( $course_id ),
 		);
 	}
 }

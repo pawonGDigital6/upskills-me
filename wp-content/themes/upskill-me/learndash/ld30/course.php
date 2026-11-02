@@ -72,70 +72,111 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 
 			<div class="mt-6 grid gap-8 lg:mt-8 lg:grid-cols-[minmax(0,659fr)_minmax(0,664fr)] lg:items-start lg:gap-10">
 				<div class="course-hero__media flex flex-col gap-3">
-					<?php if ( $upskill_preview ) : ?>
-						<?php // The first free (Sample) session plays here as the preview, with the shared transport bar (template-parts/video/controls.php). ?>
-						<div class="video-card grid aspect-[659/444] grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] bg-gray-950 *:col-start-1 *:row-start-1" data-video-card>
-							<video class="size-full object-cover" preload="none" playsinline controls data-video<?php echo $upskill_image ? ' poster="' . esc_url( (string) wp_get_attachment_image_url( $upskill_image, 'full' ) ) . '"' : ''; ?> aria-label="<?php echo esc_attr( sprintf( /* translators: %s: session title. */ __( 'Free preview: %s', 'upskill-me' ), upskill_session_title( $upskill_preview['id'] ) ) ); ?>">
-								<source src="<?php echo esc_url( $upskill_preview['video'] ); ?>" type="video/mp4">
-							</video>
-							<div class="video-card__scrim pointer-events-none<?php echo $upskill_image ? '' : ' video-card__scrim--tint'; ?>" aria-hidden="true"></div>
-							<?php get_template_part( 'template-parts/video/controls', null, array( 'class' => 'z-10 px-3 pb-2' ) ); ?>
-						</div>
-					<?php elseif ( $upskill_image ) : ?>
-						<div class="overflow-hidden rounded-[24px] bg-gray-950">
-							<?php upskill_image( $upskill_image, 'full', array( 'class' => 'aspect-[659/444] w-full object-cover', 'loading' => 'eager', 'sizes' => '(min-width: 1440px) 659px, (min-width: 1025px) 46vw, 92vw' ) ); ?>
-						</div>
-					<?php else : ?>
-						<div class="grid aspect-[659/444] place-items-center rounded-[24px] bg-gray-950"><img class="w-2/5 max-w-[200px] opacity-80" src="<?php echo esc_url( upskill_theme_image( 'logo-white.webp' ) ); ?>" alt="" width="192" height="44"></div>
-					<?php endif; ?>
+					<?php
+					// Gallery items: the preview video (first free session), then each other session's preview image
+					// (its featured image); without a preview video the course image leads.
+					$upskill_gallery = array();
 
-					<?php if ( $upskill_sessions ) : ?>
+					if ( $upskill_preview ) {
+						$upskill_gallery[] = array(
+							'type'    => 'video',
+							'session' => $upskill_preview['id'],
+							'image'   => get_post_thumbnail_id( $upskill_preview['id'] ) ? get_post_thumbnail_id( $upskill_preview['id'] ) : $upskill_image,
+						);
+					} elseif ( $upskill_image ) {
+						$upskill_gallery[] = array(
+							'type'    => 'image',
+							'session' => 0,
+							'image'   => $upskill_image,
+						);
+					}
+
+					foreach ( $upskill_sessions as $upskill_session ) {
+						if ( ( ! $upskill_preview || $upskill_preview['id'] !== $upskill_session ) && get_post_thumbnail_id( $upskill_session ) ) {
+							$upskill_gallery[] = array(
+								'type'    => 'image',
+								'session' => $upskill_session,
+								'image'   => get_post_thumbnail_id( $upskill_session ),
+							);
+						}
+					}
+
+					// "01 · Session title" (the course title for the course image).
+					$upskill_caption = static function ( $item ) use ( $upskill_sessions, $course_id ) {
+						if ( ! $item['session'] ) {
+							return get_the_title( $course_id );
+						}
+
+						return str_pad( (string) ( array_search( $item['session'], $upskill_sessions, true ) + 1 ), 2, '0', STR_PAD_LEFT ) . ' · ' . upskill_session_title( $item['session'] );
+					};
+					?>
+					<?php if ( $upskill_gallery ) : ?>
 						<?php
-						// Session tabs: a session with a preview image (its featured image) opens it in the
-						// lightbox, stepping through the others (js/components/lightbox.js); one without
-						// opens its row in Course Content (#session-N). The video above keeps playing in place.
+						// WooCommerce-style gallery on Swiper (js/components/course-gallery.js): the thumbnails only change
+						// the main slide; clicking an image slide opens it in the popup; the video slide plays in place
+						// with the shared transport bar (template-parts/video/controls.php).
 						?>
-						<div class="course-hero__gallery" data-lightbox>
-							<ol class="course-hero__sessions grid grid-cols-4 gap-2 lg:gap-3" aria-label="<?php esc_attr_e( 'Sessions', 'upskill-me' ); ?>">
-								<?php foreach ( array_slice( $upskill_sessions, 0, 4 ) as $upskill_i => $upskill_session ) : ?>
-									<?php
-									$upskill_thumb  = get_post_thumbnail_id( $upskill_session );
-									$upskill_number = str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT );
-									$upskill_label  = $upskill_number . ' · ' . upskill_session_title( $upskill_session );
-									$upskill_tab    = 'group grid aspect-[156/87] w-full grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-left text-white *:col-start-1 *:row-start-1 hover:border-brand-500 ' . ( 0 === $upskill_i ? 'border-brand-700!' : '' );
-									?>
-									<li>
-										<?php if ( $upskill_thumb ) : ?>
-											<button class="<?php echo esc_attr( $upskill_tab ); ?>" type="button" data-lightbox-item data-src="<?php echo esc_url( (string) wp_get_attachment_image_url( $upskill_thumb, 'full' ) ); ?>" data-srcset="<?php echo esc_attr( (string) wp_get_attachment_image_srcset( $upskill_thumb, 'full' ) ); ?>" data-caption="<?php echo esc_attr( $upskill_label ); ?>">
-												<?php upskill_image( $upskill_thumb, 'full', array( 'class' => 'size-full object-cover transition-transform duration-300 group-hover:scale-105', 'alt' => '', 'sizes' => '(min-width: 1440px) 156px, (min-width: 1025px) 11vw, 23vw' ) ); ?>
-										<?php else : ?>
-											<a class="<?php echo esc_attr( $upskill_tab ); ?>" href="#session-<?php echo (int) ( $upskill_i + 1 ); ?>">
-										<?php endif; ?>
-											<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
-												<span class="text-sm font-medium"><?php echo esc_html( $upskill_number ); ?></span>
-												<span><?php echo esc_html( (string) get_field( 'duration', $upskill_session ) ); ?></span>
-											</span>
-											<span class="sr-only"><?php echo esc_html( $upskill_thumb ? sprintf( /* translators: %s: session number and title. */ __( 'View preview: %s', 'upskill-me' ), $upskill_label ) : upskill_session_title( $upskill_session ) ); ?></span>
-										<?php echo $upskill_thumb ? '</button>' : '</a>'; ?>
-									</li>
-								<?php endforeach; ?>
-							</ol>
+						<div class="course-hero__gallery flex flex-col gap-3" data-course-gallery>
+							<div class="swiper w-full overflow-hidden rounded-[24px] bg-gray-950" data-gallery-main>
+								<div class="swiper-wrapper">
+									<?php foreach ( $upskill_gallery as $upskill_index => $upskill_item ) : ?>
+										<div class="swiper-slide">
+											<?php if ( 'video' === $upskill_item['type'] ) : ?>
+												<div class="video-card grid aspect-[659/444] grid-cols-1 grid-rows-1 overflow-hidden bg-gray-950 *:col-start-1 *:row-start-1" data-video-card>
+													<video class="size-full object-cover" preload="none" playsinline controls data-video<?php echo $upskill_image ? ' poster="' . esc_url( (string) wp_get_attachment_image_url( $upskill_image, 'full' ) ) . '"' : ''; ?> aria-label="<?php echo esc_attr( sprintf( /* translators: %s: session title. */ __( 'Free preview: %s', 'upskill-me' ), upskill_session_title( $upskill_item['session'] ) ) ); ?>">
+														<source src="<?php echo esc_url( $upskill_preview['video'] ); ?>" type="video/mp4">
+													</video>
+													<div class="video-card__scrim pointer-events-none<?php echo $upskill_image ? '' : ' video-card__scrim--tint'; ?>" aria-hidden="true"></div>
+													<?php get_template_part( 'template-parts/video/controls', null, array( 'class' => 'z-10 px-3 pb-2' ) ); ?>
+												</div>
+											<?php else : ?>
+												<button class="block w-full cursor-zoom-in" type="button" data-gallery-zoom data-src="<?php echo esc_url( (string) wp_get_attachment_image_url( $upskill_item['image'], 'full' ) ); ?>" data-srcset="<?php echo esc_attr( (string) wp_get_attachment_image_srcset( $upskill_item['image'], 'full' ) ); ?>" data-caption="<?php echo esc_attr( $upskill_caption( $upskill_item ) ); ?>">
+													<span class="sr-only"><?php echo esc_html( sprintf( /* translators: %s: image caption. */ __( 'Enlarge: %s', 'upskill-me' ), $upskill_caption( $upskill_item ) ) ); ?></span>
+													<?php upskill_image( $upskill_item['image'], 'full', array( 'class' => 'aspect-[659/444] w-full object-contain', 'alt' => '', 'loading' => 0 === $upskill_index ? 'eager' : 'lazy', 'sizes' => '(min-width: 1440px) 659px, (min-width: 1025px) 46vw, 92vw' ) ); ?>
+												</button>
+											<?php endif; ?>
+										</div>
+									<?php endforeach; ?>
+								</div>
+							</div>
 
-							<dialog class="course-hero__lightbox m-auto max-h-none w-[min(1100px,calc(100vw-32px))] max-w-none overflow-visible bg-transparent p-0 text-white backdrop:bg-gray-950/85" aria-label="<?php esc_attr_e( 'Session previews', 'upskill-me' ); ?>" data-lightbox-dialog>
+							<?php if ( count( $upskill_gallery ) > 1 ) : ?>
+								<div class="swiper w-full" data-gallery-thumbs>
+									<div class="swiper-wrapper">
+										<?php foreach ( $upskill_gallery as $upskill_item ) : ?>
+											<?php $upskill_number = $upskill_item['session'] ? str_pad( (string) ( array_search( $upskill_item['session'], $upskill_sessions, true ) + 1 ), 2, '0', STR_PAD_LEFT ) : ''; ?>
+											<div class="swiper-slide grid aspect-[156/87] cursor-pointer grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-white *:col-start-1 *:row-start-1 hover:border-brand-500 [&.swiper-slide-thumb-active]:border-brand-700">
+												<?php if ( $upskill_item['image'] ) : ?>
+													<?php upskill_image( $upskill_item['image'], 'full', array( 'class' => 'size-full object-cover', 'alt' => '', 'sizes' => '(min-width: 1440px) 156px, (min-width: 1025px) 11vw, 23vw' ) ); ?>
+												<?php endif; ?>
+												<?php if ( 'video' === $upskill_item['type'] ) : ?>
+													<span class="grid size-7 place-items-center self-center justify-self-center rounded-full bg-gray-950/60" aria-hidden="true"><?php upskill_icon( 'play', 'size-3' ); ?></span>
+												<?php endif; ?>
+												<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
+													<span class="text-sm font-medium"><?php echo esc_html( $upskill_number ); ?></span>
+													<span><?php echo esc_html( $upskill_item['session'] ? (string) get_field( 'duration', $upskill_item['session'] ) : '' ); ?></span>
+												</span>
+												<span class="sr-only"><?php echo esc_html( $upskill_caption( $upskill_item ) ); ?></span>
+											</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+							<?php endif; ?>
+
+							<dialog class="m-auto max-h-none w-[min(1100px,calc(100vw-32px))] max-w-none overflow-visible bg-transparent p-0 text-white backdrop:bg-gray-950/85" aria-label="<?php esc_attr_e( 'Image preview', 'upskill-me' ); ?>" data-gallery-popup>
 								<figure class="flex flex-col gap-3">
-									<img class="aspect-[1912/1066] w-full rounded-2xl bg-gray-950 object-contain" src="" alt="" sizes="(min-width: 1140px) 1100px, calc(100vw - 32px)" data-lightbox-image>
-									<figcaption class="flex items-center justify-between gap-4 text-sm">
-										<span data-lightbox-caption></span>
-										<span class="text-white/70" data-lightbox-counter></span>
-									</figcaption>
+									<img class="w-full rounded-2xl bg-gray-950" src="" alt="" sizes="(min-width: 1140px) 1100px, calc(100vw - 32px)" data-gallery-popup-image>
+									<figcaption class="text-sm" data-gallery-popup-caption></figcaption>
 								</figure>
 								<div class="mt-4 flex justify-center gap-3">
-									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-lightbox-prev><span class="sr-only"><?php esc_html_e( 'Previous', 'upskill-me' ); ?></span><?php upskill_icon( 'chevron-right', 'size-4 rotate-180' ); ?></button>
-									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-lightbox-close><span class="sr-only"><?php esc_html_e( 'Close', 'upskill-me' ); ?></span><?php upskill_icon( 'close', 'size-4' ); ?></button>
-									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-lightbox-next><span class="sr-only"><?php esc_html_e( 'Next', 'upskill-me' ); ?></span><?php upskill_icon( 'chevron-right', 'size-4' ); ?></button>
+									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-gallery-popup-prev><span class="sr-only"><?php esc_html_e( 'Previous image', 'upskill-me' ); ?></span><?php upskill_icon( 'chevron-right', 'size-4 rotate-180' ); ?></button>
+									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-gallery-popup-close><span class="sr-only"><?php esc_html_e( 'Close', 'upskill-me' ); ?></span><?php upskill_icon( 'close', 'size-4' ); ?></button>
+									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-gallery-popup-next><span class="sr-only"><?php esc_html_e( 'Next image', 'upskill-me' ); ?></span><?php upskill_icon( 'chevron-right', 'size-4' ); ?></button>
 								</div>
 							</dialog>
 						</div>
+					<?php else : ?>
+						<div class="grid aspect-[659/444] place-items-center rounded-[24px] bg-gray-950"><img class="w-2/5 max-w-[200px] opacity-80" src="<?php echo esc_url( upskill_theme_image( 'logo-white.webp' ) ); ?>" alt="" width="192" height="44"></div>
 					<?php endif; ?>
 
 					<?php // Share copies the course link (the copy-link script from the blog, js/components/article.js). ?>

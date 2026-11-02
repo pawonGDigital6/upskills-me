@@ -26,6 +26,7 @@
         "@tailwindcss/postcss": "^4.3.3",
         "@wordpress/dom-ready": "^4.15.0",
         "postcss": "^8.5.29",
+        "swiper": "^11.2.10",
         "tailwindcss": "^4.3.3"
     },
     "private": true
