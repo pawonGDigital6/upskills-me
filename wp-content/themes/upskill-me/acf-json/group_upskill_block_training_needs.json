@@ -24,6 +24,20 @@
             "prefix_name": 0
         },
         {
+            "key": "field_upskill_training_needs_card_style",
+            "label": "Card style",
+            "name": "card_style",
+            "type": "button_group",
+            "instructions": "Industry: numbered boxes, bullet points, grey frame (industry pages). Course: plain \"01\" numbers on a white section (course page, What you’ll learn).",
+            "choices": {
+                "": "Industry",
+                "plain": "Course"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "layout": "horizontal"
+        },
+        {
             "key": "field_upskill_training_needs_needs",
             "label": "Training needs",
             "name": "needs",
@@ -83,5 +97,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792503148
+    "modified": 1793614044
 }

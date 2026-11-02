@@ -1,0 +1,93 @@
+{
+    "key": "group_upskill_block_course_details",
+    "title": "Block: Course Details",
+    "fields": [
+        {
+            "key": "field_upskill_course_details_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_course_details_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_course_details_rows",
+            "label": "Rows",
+            "name": "rows",
+            "type": "repeater",
+            "instructions": "Pick a LearnDash source to fill the value from the course automatically; a row whose source has no value is hidden.",
+            "layout": "table",
+            "min": 0,
+            "max": 14,
+            "button_label": "Add row",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_course_details_rows_label",
+                    "label": "Label",
+                    "name": "label",
+                    "type": "text",
+                    "required": 1,
+                    "parent_repeater": "field_upskill_course_details_rows"
+                },
+                {
+                    "key": "field_upskill_course_details_rows_source",
+                    "label": "Value from",
+                    "name": "source",
+                    "type": "select",
+                    "choices": {
+                        "": "Typed below",
+                        "sessions": "Number of sessions",
+                        "duration": "Total duration",
+                        "level": "Learning level (course field)",
+                        "category": "Training category",
+                        "title": "Course title",
+                        "certificate": "Certificate (shown only when set)"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "parent_repeater": "field_upskill_course_details_rows"
+                },
+                {
+                    "key": "field_upskill_course_details_rows_value",
+                    "label": "Value",
+                    "name": "value",
+                    "type": "text",
+                    "instructions": "Used when \"Value from\" is \"Typed below\".",
+                    "parent_repeater": "field_upskill_course_details_rows"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/course-details"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793614064
+}

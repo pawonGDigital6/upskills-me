@@ -1,0 +1,30 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/course-content",
+	"version": "1.0.0",
+	"title": "Course Content",
+	"category": "acf-blocks",
+	"icon": "playlist-video",
+	"description": "Course page: the course's sessions from LearnDash, as an accordion.",
+	"keywords": [ "course", "sessions", "content" ],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": false
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

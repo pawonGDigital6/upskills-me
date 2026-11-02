@@ -6,12 +6,17 @@
  * Figma: Product Detail - admin 49325:20483 (1440) / 49354:101532 (390).
  *
  * Learners who already have access get LearnDash's own course page (status,
- * progress, session list, certificate): the plugin template is included
- * unchanged. Everyone else gets the product page as drawn: the course and its
- * buy box (the linked WooCommerce product's levels, seats = quantity, posted to
- * WooCommerce's add-to-cart), then the facts, the course text, the session list
- * and the course details. Free (Sample) sessions link straight to the player.
- * LearnDash's before/after hooks still run.
+ * progress, session list, certificate, reviews tab): the plugin template is
+ * included unchanged, with the course summary as its text (the course's
+ * blocks are the sales page, not a learner's course description).
+ *
+ * Everyone else gets the product page. This template draws the hero: the
+ * course preview and session tabs, and the buy box (the linked WooCommerce
+ * product's levels, seats = quantity, posted to WooCommerce's add-to-cart).
+ * Everything below it is the course's own block content (At a Glance, About
+ * This Training, What You'll Learn, Course Details, Course Content, Reviews,
+ * the shared "Course page sections" pattern), which new courses start with
+ * (inc/lms-course.php). LearnDash's before/after hooks still run.
  *
  * Variables from LearnDash: $course_id, $user_id, $has_access, $content,
  * $lessons, $logged_in (and the rest documented in the plugin template).
@@ -24,52 +29,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( $has_access || ! function_exists( 'upskill_course_product' ) ) {
+	if ( $has_access && function_exists( 'upskill_learner_course_summary' ) ) {
+		$content = wpautop( esc_html( has_excerpt( $course_id ) ? get_the_excerpt( $course_id ) : upskill_learner_course_summary( $course_id ) ) );
+	}
 	include LEARNDASH_LMS_PLUGIN_DIR . 'themes/ld30/templates/course.php';
 	return;
 }
 
 $upskill_product  = upskill_course_product( $course_id );
 $upskill_levels   = $upskill_product ? upskill_product_levels( $upskill_product ) : array();
-$upskill_sessions = array_values( array_map( 'intval', (array) learndash_course_get_steps_by_type( $course_id, learndash_get_post_type_slug( 'lesson' ) ) ) );
-$upskill_count    = count( $upskill_sessions );
-$upskill_duration = upskill_course_duration( $upskill_sessions );
+$upskill_sessions = upskill_course_sessions( $course_id );
 $upskill_category = get_the_terms( $course_id, 'training_category' );
 $upskill_category = is_array( $upskill_category ) ? $upskill_category[0] : null;
-$upskill_industry = get_the_terms( $course_id, 'industry' );
-$upskill_industry = is_array( $upskill_industry ) ? $upskill_industry[0] : null;
-$upskill_level    = get_the_terms( $course_id, 'cohort' );
-$upskill_level    = is_array( $upskill_level ) ? implode( ', ', wp_list_pluck( $upskill_level, 'name' ) ) : '';
-$upskill_format   = $upskill_sessions ? (string) get_field( 'format', $upskill_sessions[0] ) : '';
-$upskill_cert     = (bool) learndash_get_setting( $course_id, 'certificate' );
-$upskill_outcomes = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) get_field( 'outcomes', $course_id ) ) ) );
-$upskill_areas    = array_filter( (array) get_field( 'learn_areas', $course_id ), static fn( $row ) => ! empty( $row['title'] ) );
 $upskill_summary  = function_exists( 'upskill_learner_course_summary' ) ? upskill_learner_course_summary( $course_id ) : '';
+$upskill_heading  = trim( (string) get_field( 'display_title', $course_id ) );
+$upskill_reviews  = upskill_course_reviews( $course_id );
+$upskill_preview  = upskill_course_preview_session( $course_id );
+$upskill_image    = get_post_thumbnail_id( $course_id );
 $upskill_first    = $upskill_levels ? $upskill_levels[0] : null;
 $upskill_library  = function_exists( 'upskill_library_page_url' ) ? upskill_library_page_url() : home_url( '/' );
-
-$upskill_facts = array_filter(
-	array(
-		array( 'video-book', $upskill_count ? sprintf( /* translators: %d: number of sessions. */ _n( '%d video session', '%d video sessions', $upskill_count, 'upskill-me' ), $upskill_count ) : '', __( 'Focused video-based learning', 'upskill-me' ) ),
-		array( 'clock', $upskill_duration ? sprintf( /* translators: %s: duration. */ __( '%s total', 'upskill-me' ), $upskill_duration ) : '', __( 'Total learning time', 'upskill-me' ) ),
-		array( 'monitor', __( 'On demand', 'upskill-me' ), __( 'Learn when you need it', 'upskill-me' ) ),
-		array( 'workplace', __( 'On The Job', 'upskill-me' ), __( 'Practical workplace knowledge', 'upskill-me' ) ),
-		$upskill_cert ? array( 'award', __( 'Certificate', 'upskill-me' ), __( 'Certificate of completion', 'upskill-me' ) ) : array(),
-	),
-	static fn( $fact ) => ! empty( $fact[1] )
-);
-
-$upskill_details = array_filter(
-	array(
-		__( 'Category', 'upskill-me' )   => $upskill_category ? $upskill_category->name : '',
-		__( 'Course', 'upskill-me' )     => get_the_title( $course_id ),
-		__( 'Format', 'upskill-me' )     => $upskill_format ? ucfirst( $upskill_format ) : __( 'Video sessions', 'upskill-me' ),
-		__( 'Sessions', 'upskill-me' )   => $upskill_count ? (string) $upskill_count : '',
-		__( 'Duration', 'upskill-me' )   => $upskill_duration,
-		__( 'Level', 'upskill-me' )      => $upskill_level,
-		__( 'Access', 'upskill-me' )     => __( 'On demand', 'upskill-me' ),
-		__( 'Completion', 'upskill-me' ) => $upskill_cert ? __( 'Certificate of completion', 'upskill-me' ) : '',
-	)
-);
+$upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 ?>
 <div class="<?php echo esc_attr( learndash_the_wrapper_class() ); ?> course-product">
 	<?php
@@ -77,52 +56,95 @@ $upskill_details = array_filter(
 	do_action( 'learndash-course-before', get_the_ID(), $course_id, $user_id );
 	?>
 
-	<section class="bg-gray-25 pt-6 pb-12 lg:pt-12 lg:pb-20">
+	<section class="course-hero bg-gray-25 pt-6 pb-12 lg:pt-10 lg:pb-16">
 		<div class="container">
 			<nav class="flex flex-wrap items-center gap-2 text-sm text-gray-500" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
 				<a class="hover:text-brand-700" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'upskill-me' ); ?></a>
 				<span aria-hidden="true">/</span>
-				<a class="hover:text-brand-700" href="<?php echo esc_url( $upskill_library ); ?>"><?php esc_html_e( 'Training', 'upskill-me' ); ?></a>
-				<?php if ( $upskill_category ) : ?>
+				<a class="hover:text-brand-700" href="<?php echo esc_url( $upskill_library ); ?>"><?php esc_html_e( 'Courses', 'upskill-me' ); ?></a>
+				<?php if ( $upskill_category && ! is_wp_error( $upskill_term_url ) ) : ?>
 					<span aria-hidden="true">/</span>
-					<a class="hover:text-brand-700" href="<?php echo esc_url( add_query_arg( 'category[]', $upskill_category->slug, $upskill_library ) ); ?>"><?php echo esc_html( $upskill_category->name ); ?></a>
+					<a class="hover:text-brand-700" href="<?php echo esc_url( $upskill_term_url ); ?>"><?php echo esc_html( $upskill_category->name ); ?></a>
 				<?php endif; ?>
 				<span aria-hidden="true">/</span>
-				<span class="text-gray-950" aria-current="page"><?php echo esc_html( get_the_title( $course_id ) ); ?></span>
+				<span class="text-brand-700" aria-current="page"><?php echo esc_html( get_the_title( $course_id ) ); ?></span>
 			</nav>
 
-			<div class="mt-8 grid gap-8 lg:mt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,636px)] lg:items-start lg:gap-16">
-				<div class="flex flex-col gap-4">
-					<div class="overflow-hidden rounded-[24px] bg-gray-950">
-						<?php if ( has_post_thumbnail( $course_id ) ) : ?>
-							<?php upskill_image( get_post_thumbnail_id( $course_id ), 'full', array( 'class' => 'aspect-[16/10] w-full object-cover', 'loading' => 'eager', 'sizes' => '(min-width: 1025px) 46vw, 92vw' ) ); ?>
-						<?php else : ?>
-							<div class="grid aspect-[16/10] place-items-center"><img class="w-2/5 max-w-[200px] opacity-80" src="<?php echo esc_url( upskill_theme_image( 'logo-white.webp' ) ); ?>" alt="" width="192" height="44"></div>
-						<?php endif; ?>
-					</div>
+			<div class="mt-6 grid gap-8 lg:mt-8 lg:grid-cols-[minmax(0,659fr)_minmax(0,664fr)] lg:items-start lg:gap-10">
+				<div class="course-hero__media flex flex-col gap-3">
+					<?php if ( $upskill_preview ) : ?>
+						<?php // The first free (Sample) session plays here as the preview, with the shared transport bar (template-parts/video/controls.php). ?>
+						<div class="video-card grid aspect-[659/444] grid-cols-1 grid-rows-1 overflow-hidden rounded-[24px] bg-gray-950 *:col-start-1 *:row-start-1" data-video-card>
+							<video class="size-full object-cover" preload="none" playsinline controls data-video<?php echo $upskill_image ? ' poster="' . esc_url( (string) wp_get_attachment_image_url( $upskill_image, 'full' ) ) . '"' : ''; ?> aria-label="<?php echo esc_attr( sprintf( /* translators: %s: session title. */ __( 'Free preview: %s', 'upskill-me' ), upskill_session_title( $upskill_preview['id'] ) ) ); ?>">
+								<source src="<?php echo esc_url( $upskill_preview['video'] ); ?>" type="video/mp4">
+							</video>
+							<div class="video-card__scrim pointer-events-none<?php echo $upskill_image ? '' : ' video-card__scrim--tint'; ?>" aria-hidden="true"></div>
+							<?php get_template_part( 'template-parts/video/controls', null, array( 'class' => 'z-10 px-3 pb-2' ) ); ?>
+						</div>
+					<?php elseif ( $upskill_image ) : ?>
+						<div class="overflow-hidden rounded-[24px] bg-gray-950">
+							<?php upskill_image( $upskill_image, 'full', array( 'class' => 'aspect-[659/444] w-full object-cover', 'loading' => 'eager', 'sizes' => '(min-width: 1440px) 659px, (min-width: 1025px) 46vw, 92vw' ) ); ?>
+						</div>
+					<?php else : ?>
+						<div class="grid aspect-[659/444] place-items-center rounded-[24px] bg-gray-950"><img class="w-2/5 max-w-[200px] opacity-80" src="<?php echo esc_url( upskill_theme_image( 'logo-white.webp' ) ); ?>" alt="" width="192" height="44"></div>
+					<?php endif; ?>
+
 					<?php if ( $upskill_sessions ) : ?>
-						<ol class="grid grid-cols-2 gap-2 sm:grid-cols-4" aria-label="<?php esc_attr_e( 'Sessions', 'upskill-me' ); ?>">
+						<?php // Session tabs: each opens its row in Course Content (#session-N). ?>
+						<ol class="course-hero__sessions grid grid-cols-4 gap-2 lg:gap-3" aria-label="<?php esc_attr_e( 'Sessions', 'upskill-me' ); ?>">
 							<?php foreach ( array_slice( $upskill_sessions, 0, 4 ) as $upskill_i => $upskill_session ) : ?>
-								<li class="flex items-center justify-between gap-2 rounded-xl border border-line bg-white px-3 py-2.5 text-sm">
-									<span class="font-medium text-brand-700"><?php echo esc_html( str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-									<span class="text-gray-500"><?php echo esc_html( (string) get_field( 'duration', $upskill_session ) ); ?></span>
+								<?php $upskill_thumb = get_post_thumbnail_id( $upskill_session ); ?>
+								<li>
+									<a class="group grid aspect-[156/87] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-white *:col-start-1 *:row-start-1 hover:border-brand-500 <?php echo 0 === $upskill_i ? 'border-brand-700!' : ''; ?>" href="#session-<?php echo (int) ( $upskill_i + 1 ); ?>">
+										<?php if ( $upskill_thumb ) : ?>
+											<?php upskill_image( $upskill_thumb, 'full', array( 'class' => 'size-full object-cover transition-transform duration-300 group-hover:scale-105', 'alt' => '', 'sizes' => '(min-width: 1440px) 156px, (min-width: 1025px) 11vw, 23vw' ) ); ?>
+										<?php endif; ?>
+										<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
+											<span class="text-sm font-medium"><?php echo esc_html( str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+											<span><?php echo esc_html( (string) get_field( 'duration', $upskill_session ) ); ?></span>
+										</span>
+										<span class="sr-only"><?php echo esc_html( upskill_session_title( $upskill_session ) ); ?></span>
+									</a>
 								</li>
 							<?php endforeach; ?>
 						</ol>
 					<?php endif; ?>
+
+					<?php // Share copies the course link (the copy-link script from the blog, js/components/article.js). ?>
+					<div class="relative mt-2 flex">
+						<button class="inline-flex h-[42px] items-center rounded-full border border-line bg-white px-5 text-base font-medium text-gray-950 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700" type="button" data-copy-link="<?php echo esc_url( get_permalink( $course_id ) ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>"><?php esc_html_e( 'Share', 'upskill-me' ); ?></button>
+						<span class="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[220px] rounded-md bg-gray-950 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-xs transition-opacity duration-200 data-visible:opacity-100" role="status" data-copy-status></span>
+					</div>
 				</div>
 
-				<div class="flex flex-col rounded-[24px] border border-line bg-white p-5 shadow-xs lg:p-8">
-					<p class="text-sm font-medium text-brand-700">
-						<?php echo esc_html( trim( ( $upskill_category ? $upskill_category->name . ' · ' : '' ) . __( 'On The Job Training', 'upskill-me' ) ) ); ?>
-					</p>
-					<h1 class="pt-3 text-h3 font-medium text-gray-950"><?php echo esc_html( get_the_title( $course_id ) ); ?></h1>
+				<div class="course-hero__panel flex flex-col rounded-[24px] border border-line bg-white p-5 shadow-xs lg:p-6">
+					<?php upskill_eyebrow( trim( ( $upskill_category ? $upskill_category->name . ' · ' : '' ) . __( 'On The Job Training', 'upskill-me' ) ), 'monitor', 'self-start' ); ?>
+					<?php upskill_heading( $upskill_heading ? $upskill_heading : esc_html( get_the_title( $course_id ) ), 'h1', 'pt-3 text-h3 font-medium text-gray-950' ); ?>
 					<?php if ( $upskill_summary ) : ?>
-						<p class="pt-4 text-base text-gray-500"><?php echo esc_html( $upskill_summary ); ?></p>
+						<p class="pt-3 text-base text-gray-500"><?php echo esc_html( $upskill_summary ); ?></p>
+					<?php endif; ?>
+
+					<?php if ( $upskill_reviews['count'] ) : ?>
+						<p class="flex flex-wrap items-center gap-x-2 gap-y-1 pt-4 text-sm text-gray-500">
+							<?php // LearnDash Course Reviews average, linked to the Course Reviews block (#reviews). ?>
+							<span class="flex gap-0.5 text-[#f79009]" aria-hidden="true">
+								<?php for ( $upskill_star = 1; $upskill_star <= 5; $upskill_star++ ) : ?>
+									<?php upskill_icon( $upskill_star <= round( $upskill_reviews['average'] ) ? 'star' : 'star-outline', 'size-3.5' ); ?>
+								<?php endfor; ?>
+							</span>
+							<span>
+								<span class="font-medium text-gray-950"><?php echo esc_html( number_format_i18n( $upskill_reviews['average'], 1 ) ); ?></span>
+								<?php
+								/* translators: %d: number of reviews. */
+								echo esc_html( ' · ' . sprintf( _n( '%d review', '%d reviews', $upskill_reviews['count'], 'upskill-me' ), $upskill_reviews['count'] ) );
+								?>
+							</span>
+							<a class="font-medium text-brand-700 hover:underline" href="#reviews"><?php esc_html_e( 'Read reviews', 'upskill-me' ); ?></a>
+						</p>
 					<?php endif; ?>
 
 					<?php if ( $upskill_levels ) : ?>
-						<form class="mt-6 flex flex-col" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" data-buy-box>
+						<form class="mt-5 flex flex-col" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" data-buy-box>
 							<p class="flex items-baseline gap-2">
 								<span class="text-h3 font-medium text-gray-950" data-buy-price><?php echo wp_kses_post( $upskill_first['price_html'] ); ?></span>
 								<span class="text-sm text-gray-500" data-buy-unit>
@@ -135,13 +157,14 @@ $upskill_details = array_filter(
 
 							<?php if ( count( $upskill_levels ) > 1 ) : ?>
 								<fieldset class="mt-6">
-									<legend class="text-base font-medium text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
+									<legend class="float-left text-base font-medium text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
+									<span class="float-right pt-0.5 text-sm text-gray-500"><?php esc_html_e( 'Choose what you need', 'upskill-me' ); ?></span>
 									<?php // Three levels sit in one row (Figma); any other count pairs up so no card is left alone on a row. ?>
-									<div class="mt-3 grid gap-2 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
+									<div class="clear-both grid gap-2 pt-3 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
 										<?php foreach ( $upskill_levels as $upskill_i => $upskill_lvl ) : ?>
 											<?php $upskill_save = $upskill_lvl['bundle'] ? array_sum( wp_list_pluck( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ), 'price' ) ) - $upskill_lvl['price'] : 0; ?>
 											<label class="buy-level relative flex cursor-pointer flex-col gap-1 rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
-												<input class="sr-only" type="radio" name="variation_id" value="<?php echo esc_attr( $upskill_lvl['id'] ); ?>" data-price="<?php echo esc_attr( wp_strip_all_tags( $upskill_lvl['price_html'] ) ); ?>" data-label="<?php echo esc_attr( $upskill_lvl['label'] ); ?>" data-attributes="<?php echo esc_attr( wp_json_encode( $upskill_lvl['attributes'] ) ); ?>"<?php checked( 0, $upskill_i ); ?>>
+												<input class="sr-only" type="radio" name="variation_id" value="<?php echo esc_attr( $upskill_lvl['id'] ); ?>" data-price="<?php echo esc_attr( wp_strip_all_tags( $upskill_lvl['price_html'] ) ); ?>" data-label="<?php echo esc_attr( $upskill_lvl['label'] ); ?>" data-text="<?php echo esc_attr( $upskill_lvl['text'] ); ?>" data-attributes="<?php echo esc_attr( wp_json_encode( $upskill_lvl['attributes'] ) ); ?>"<?php checked( 0, $upskill_i ); ?>>
 												<span class="text-sm font-medium text-gray-950">
 													<?php echo esc_html( $upskill_lvl['label'] ); ?>
 													<?php if ( $upskill_save > 0 ) : ?>
@@ -159,6 +182,9 @@ $upskill_details = array_filter(
 									</div>
 								</fieldset>
 							<?php endif; ?>
+
+							<?php // The chosen level's line (its WooCommerce variation description); buy-box.js swaps it with the level. ?>
+							<p class="pt-4 text-sm text-gray-500" data-buy-text<?php echo $upskill_first['text'] ? '' : ' hidden'; ?>><?php echo esc_html( $upskill_first['text'] ); ?></p>
 
 							<div class="mt-6 flex flex-wrap items-center gap-3">
 								<label class="sr-only" for="buy-seats"><?php esc_html_e( 'Seats', 'upskill-me' ); ?></label>
@@ -181,7 +207,7 @@ $upskill_details = array_filter(
 							<?php if ( ! $upskill_product->is_type( 'variable' ) ) : ?>
 								<input type="hidden" name="variation_id" value="">
 							<?php endif; ?>
-							<p class="pt-4 text-sm text-gray-500"><?php esc_html_e( 'One seat per learner. Assign seats to your people after checkout.', 'upskill-me' ); ?></p>
+							<p class="pt-4 text-sm text-gray-500"><?php esc_html_e( 'One seat per learner.', 'upskill-me' ); ?></p>
 							<p class="flex items-center gap-2 pt-2 text-sm text-gray-500"><?php upskill_icon( 'shield', 'size-4 text-brand-700' ); ?><?php esc_html_e( 'Secure checkout · On demand access', 'upskill-me' ); ?></p>
 						</form>
 					<?php else : ?>
@@ -202,137 +228,7 @@ $upskill_details = array_filter(
 		</div>
 	</section>
 
-	<?php if ( $upskill_facts ) : ?>
-		<section class="border-y border-line bg-white py-10" aria-labelledby="course-glance">
-			<div class="container">
-				<h2 class="sr-only" id="course-glance"><?php esc_html_e( 'At a glance', 'upskill-me' ); ?></h2>
-				<ul class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
-					<?php foreach ( $upskill_facts as $upskill_fact ) : ?>
-						<li class="flex items-start gap-3">
-							<span class="grid size-11 flex-none place-items-center rounded-[13px] bg-brand-100 text-brand-700" aria-hidden="true"><?php upskill_icon( $upskill_fact[0], 'size-5' ); ?></span>
-							<span class="flex flex-col">
-								<span class="text-base font-medium text-gray-950"><?php echo esc_html( $upskill_fact[1] ); ?></span>
-								<span class="text-sm text-gray-500"><?php echo esc_html( $upskill_fact[2] ); ?></span>
-							</span>
-						</li>
-					<?php endforeach; ?>
-				</ul>
-			</div>
-		</section>
-	<?php endif; ?>
-
-	<?php if ( trim( wp_strip_all_tags( (string) $content ) ) || $upskill_outcomes ) : ?>
-		<section class="section-y bg-white" aria-labelledby="course-about">
-			<div class="container grid gap-10 lg:grid-cols-2 lg:gap-14">
-				<div class="flex flex-col items-start gap-5">
-					<?php upskill_eyebrow( __( 'About this training', 'upskill-me' ), 'book-open' ); ?>
-					<h2 class="text-h3 font-medium text-gray-950" id="course-about"><?php echo esc_html( get_the_title( $course_id ) ); ?></h2>
-					<div class="course-product__content flex flex-col gap-4 text-base text-gray-500"><?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- LearnDash passes filtered post content. ?></div>
-				</div>
-				<?php if ( $upskill_outcomes ) : ?>
-					<div class="rounded-[24px] border border-line bg-gray-25 p-6 lg:p-8">
-						<p class="text-lg font-medium text-gray-950"><?php esc_html_e( 'This course is designed to help people:', 'upskill-me' ); ?></p>
-						<ul class="mt-5 flex flex-col gap-3">
-							<?php foreach ( $upskill_outcomes as $upskill_outcome ) : ?>
-								<li class="flex items-start gap-3 text-base text-gray-950">
-									<span class="mt-0.5 grid size-6 flex-none place-items-center rounded-full bg-brand-100 text-brand-700" aria-hidden="true"><?php upskill_icon( 'check', 'size-3' ); ?></span>
-									<?php echo esc_html( $upskill_outcome ); ?>
-								</li>
-							<?php endforeach; ?>
-						</ul>
-					</div>
-				<?php endif; ?>
-			</div>
-		</section>
-	<?php endif; ?>
-
-	<?php if ( $upskill_areas ) : ?>
-		<section class="section-y bg-brand-25" aria-labelledby="course-learn">
-			<div class="container">
-				<div class="flex flex-col items-start gap-5">
-					<?php upskill_eyebrow( __( "What you'll learn", 'upskill-me' ), 'target' ); ?>
-					<h2 class="text-h3 font-medium text-gray-950" id="course-learn"><?php esc_html_e( 'Knowledge you can use on the job.', 'upskill-me' ); ?></h2>
-				</div>
-				<ol class="mt-stack grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-					<?php foreach ( array_values( $upskill_areas ) as $upskill_i => $upskill_area ) : ?>
-						<li class="flex flex-col rounded-[22px] border border-line bg-white p-6">
-							<span class="text-sm font-semibold tracking-[0.1em] text-[#8b8b97]"><?php echo esc_html( str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-							<h3 class="pt-2.5 text-lg font-medium text-gray-950"><?php echo esc_html( $upskill_area['title'] ); ?></h3>
-							<?php if ( ! empty( $upskill_area['text'] ) ) : ?>
-								<p class="pt-2 text-base text-gray-500"><?php echo esc_html( $upskill_area['text'] ); ?></p>
-							<?php endif; ?>
-						</li>
-					<?php endforeach; ?>
-				</ol>
-			</div>
-		</section>
-	<?php endif; ?>
-
-	<?php if ( $upskill_sessions ) : ?>
-		<section class="section-y bg-white" aria-labelledby="course-content">
-			<div class="container">
-				<div class="flex flex-col items-start gap-5">
-					<?php upskill_eyebrow( __( 'Course content', 'upskill-me' ), 'video-book' ); ?>
-					<h2 class="text-h3 font-medium text-gray-950" id="course-content"><?php esc_html_e( 'Explore the training.', 'upskill-me' ); ?></h2>
-					<p class="text-sm text-gray-500">
-						<?php
-						echo esc_html(
-							trim(
-								/* translators: %d: number of sessions. */
-								sprintf( _n( '%d session', '%d sessions', $upskill_count, 'upskill-me' ), $upskill_count ) . ( $upskill_duration ? ' · ' . $upskill_duration : '' )
-							)
-						);
-						?>
-					</p>
-				</div>
-				<ol class="mt-8 flex flex-col overflow-hidden rounded-[22px] border border-line">
-					<?php foreach ( $upskill_sessions as $upskill_i => $upskill_session ) : ?>
-						<?php
-						$upskill_free  = 'on' === learndash_get_setting( $upskill_session, 'sample_lesson' );
-						$upskill_title = preg_replace( '/^\s*session\s*:\s*/i', '', get_the_title( $upskill_session ) );
-						$upskill_text  = has_excerpt( $upskill_session ) ? get_the_excerpt( $upskill_session ) : '';
-						?>
-						<li class="flex flex-col gap-2 border-line bg-white px-5 py-5 not-first:border-t lg:flex-row lg:items-start lg:gap-6 lg:px-8">
-							<span class="w-8 flex-none text-sm font-medium text-gray-500"><?php echo esc_html( str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-							<div class="flex min-w-0 flex-1 flex-col gap-1.5">
-								<h3 class="text-lg font-medium text-gray-950"><?php echo esc_html( $upskill_title ); ?></h3>
-								<?php if ( $upskill_text ) : ?>
-									<p class="text-base text-gray-500"><?php echo esc_html( $upskill_text ); ?></p>
-								<?php endif; ?>
-								<?php if ( $upskill_free ) : ?>
-									<a class="inline-flex items-center gap-2 self-start pt-1 text-sm font-semibold text-brand-700 hover:underline" href="<?php echo esc_url( learndash_get_step_permalink( $upskill_session, $course_id ) ); ?>"><?php upskill_icon( 'play', 'size-3' ); ?><?php esc_html_e( 'Watch Free Training', 'upskill-me' ); ?></a>
-								<?php endif; ?>
-							</div>
-							<span class="flex-none text-sm text-gray-500">
-								<?php if ( $upskill_free ) : ?>
-									<span class="mr-2 rounded-sm bg-signal px-2 py-0.5 text-xs font-semibold text-gray-950 uppercase"><?php esc_html_e( 'Free', 'upskill-me' ); ?></span>
-								<?php endif; ?>
-								<?php echo esc_html( (string) get_field( 'duration', $upskill_session ) ); ?>
-							</span>
-						</li>
-					<?php endforeach; ?>
-				</ol>
-			</div>
-		</section>
-	<?php endif; ?>
-
-	<section class="section-y bg-gray-25" aria-labelledby="course-details">
-		<div class="container grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,766px)] lg:gap-14">
-			<div class="flex flex-col items-start gap-5">
-				<?php upskill_eyebrow( __( 'Course details', 'upskill-me' ), 'list-settings' ); ?>
-				<h2 class="text-h3 font-medium text-gray-950" id="course-details"><?php esc_html_e( 'Everything specified.', 'upskill-me' ); ?></h2>
-				<p class="text-base text-gray-500"><?php esc_html_e( 'A quick overview of the course format, content, learning level, access, duration and completion.', 'upskill-me' ); ?></p>
-			</div>
-			<dl class="overflow-hidden rounded-[22px] border border-line bg-white">
-				<?php foreach ( $upskill_details as $upskill_term => $upskill_value ) : ?>
-					<div class="grid grid-cols-2 gap-4 border-line px-5 py-4 not-first:border-t lg:px-8">
-						<dt class="text-base text-gray-500"><?php echo esc_html( $upskill_term ); ?></dt>
-						<dd class="text-base font-medium text-gray-950"><?php echo esc_html( $upskill_value ); ?></dd>
-					</div>
-				<?php endforeach; ?>
-			</dl>
-		</div>
-	</section>
+	<?php echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- LearnDash passes filtered post content (the course's blocks). ?>
 
 	<?php
 	/** This action is documented in the LearnDash course template. */

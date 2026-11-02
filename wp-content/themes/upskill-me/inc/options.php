@@ -92,8 +92,8 @@ if ( ! function_exists( 'upskill_hide_footer_cta' ) ) {
 	 * @return bool
 	 */
 	function upskill_hide_footer_cta() {
-		// The 404 and LearnDash session pages are drawn without the band.
-		if ( is_404() || is_singular( 'sfwd-lessons' ) ) {
+		// The 404, LearnDash session and course pages are drawn without the band.
+		if ( is_404() || is_singular( array( 'sfwd-lessons', 'sfwd-courses' ) ) ) {
 			return true;
 		}
 

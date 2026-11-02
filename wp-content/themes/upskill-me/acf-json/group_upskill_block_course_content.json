@@ -1,0 +1,53 @@
+{
+    "key": "group_upskill_block_course_content",
+    "title": "Block: Course Content",
+    "fields": [
+        {
+            "key": "field_upskill_course_content_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_course_content_section_header",
+            "label": "Section Header",
+            "name": "section_header",
+            "type": "clone",
+            "clone": [
+                "group_upskill_component_section_header"
+            ],
+            "display": "seamless",
+            "layout": "block",
+            "prefix_label": 0,
+            "prefix_name": 0
+        },
+        {
+            "key": "field_upskill_course_content_message",
+            "label": "Sessions",
+            "name": "",
+            "type": "message",
+            "message": "The session list comes from the course builder (LearnDash LMS → Courses → this course → Builder): order, titles, excerpts, the session Duration field and the Sample (free preview) setting."
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/course-content"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793614064
+}

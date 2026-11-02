@@ -2,13 +2,15 @@
  * Course buy box (learndash/ld30/course.php).
  *
  * A plain form posting to WooCommerce's add-to-cart. Here: choosing a level
- * updates the shown price and the variation's attribute fields WooCommerce
- * checks, and the − / + buttons step the seat count.
+ * updates the shown price, the level's line of text (its variation
+ * description) and the variation's attribute fields WooCommerce checks, and
+ * the − / + buttons step the seat count.
  */
 export function BuyBox( root = document ) {
 	root.querySelectorAll( '[data-buy-box]' ).forEach( ( form ) => {
 		const price = form.querySelector( '[data-buy-price]' );
 		const unit = form.querySelector( '[data-buy-unit]' );
+		const text = form.querySelector( '[data-buy-text]' );
 		const seats = form.querySelector( 'input[name="quantity"]' );
 		const unitText = unit?.textContent.trim().replace( /·.*$/, '' ).trim();
 
@@ -25,6 +27,11 @@ export function BuyBox( root = document ) {
 
 			if ( unit && unitText ) {
 				unit.textContent = `${ unitText } · ${ level.dataset.label }`;
+			}
+
+			if ( text ) {
+				text.textContent = level.dataset.text || '';
+				text.hidden = ! level.dataset.text;
 			}
 
 			form.querySelectorAll( '[data-buy-attribute]' ).forEach( ( field ) => field.remove() );

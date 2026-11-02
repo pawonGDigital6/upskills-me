@@ -45,7 +45,9 @@
                 "user-alt": "Person",
                 "site-logo-sm": "Site Logo Small",
                 "manufature": "Setting Gear",
-                "user-gear": "User Gear"
+                "user-gear": "User Gear",
+                "binoculars": "Binoculars",
+                "play-square": "Play (square)"
             },
             "default_value": false,
             "return_format": "value",
@@ -84,7 +86,7 @@
             "name": "heading",
             "aria-label": "",
             "type": "text",
-            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.<\/em> Use <br> to force a line break.",
+            "instructions": "Wrap the highlighted phrase in <em>, e.g. Get a <em>head start.</em> Use <br> to force a line break.",
             "required": false,
             "conditional_logic": false,
             "wrapper": {
@@ -156,5 +158,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793259290
+    "modified": 1793614044
 }

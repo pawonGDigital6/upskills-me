@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/course-details",
+	"version": "1.0.0",
+	"title": "Course Details",
+	"category": "acf-blocks",
+	"icon": "list-view",
+	"description": "Course page: a table of course facts, filled from LearnDash where possible.",
+	"keywords": [ "course", "details", "specification" ],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": false
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}

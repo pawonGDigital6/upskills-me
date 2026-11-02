@@ -10,6 +10,9 @@
  * Used in the industry page pattern, so {term} and {term_lower} in the copy
  * become the industry's name (template-parts/library/term-page.php).
  *
+ * Card style "Course" (course page "What you'll learn", Figma 49325:20808): a
+ * white section, no grey frame, and a plain "01" label instead of the box.
+ *
  * @param array $block The block settings and attributes.
  *
  * @package upskill-me
@@ -24,7 +27,9 @@ $needs = array_values(
 	)
 );
 
-$attributes = upskill_block_attributes( $block, 'block-training-needs section-y bg-brand-25' );
+$plain = 'plain' === get_field( 'card_style' );
+
+$attributes = upskill_block_attributes( $block, 'block-training-needs section-y ' . ( $plain ? 'bg-white' : 'bg-brand-25' ) );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">
@@ -38,7 +43,7 @@ $attributes = upskill_block_attributes( $block, 'block-training-needs section-y 
 		?>
 
 		<?php if ( $needs ) : ?>
-			<div class="training-needs__frame mt-[46px] sm:rounded-[32px] rounded-2xl lg:mt-12 bg-gray-100 p-2 sm:p-4">
+			<div class="training-needs__frame mt-[46px] lg:mt-12 <?php echo $plain ? '' : 'sm:rounded-[32px] rounded-2xl bg-gray-100 p-2 sm:p-4'; ?>">
 				<ul class="training-needs__list grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
 					<?php foreach ( $needs as $index => $need ) : ?>
 						<?php $points = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) ( $need['points'] ?? '' ) ) ) ); ?>
@@ -49,8 +54,12 @@ $attributes = upskill_block_attributes( $block, 'block-training-needs section-y 
 							</span>
 							<div class="training-needs__body flex flex-1 flex-col p-4 lg:p-6">
 								<div class="training-needs__content flex flex-col">
+									<?php if ( $plain ) : ?>
+										<span class="training-needs__label mb-6 text-sm text-gray-500 group-hover:text-white" aria-hidden="true"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+									<?php else : ?>
 									<?php // A 44px box, the title 93px below its top. ?>
 									<span class="training-needs__number mb-[49px] grid size-11 place-items-center rounded-[2px] border border-gray-950/10 text-lg font-medium text-gray-500 group-hover:border-brand-100 group-hover:text-white" aria-hidden="true"><?php echo esc_html( (string) ( $index + 1 ) ); ?></span>
+									<?php endif; ?>
 									<h3 class="training-needs__title text-lg leading-[1.5] font-medium text-gray-950 group-hover:text-white"><?php echo esc_html( $need['title'] ); ?></h3>
 									<?php if ( ! empty( $need['text'] ) ) : ?>
 										<?php // Figma #414651 (Untitled UI gray-600; no theme token). ?>

@@ -1,0 +1,135 @@
+{
+    "key": "group_upskill_block_course_glance",
+    "title": "Block: At a Glance",
+    "fields": [
+        {
+            "key": "field_upskill_course_glance_tab_content",
+            "label": "Content",
+            "name": "",
+            "type": "tab",
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_upskill_course_glance_eyebrow_icon",
+            "label": "Eyebrow icon",
+            "name": "eyebrow_icon",
+            "type": "select",
+            "choices": {
+                "binoculars": "Binoculars",
+                "": "None"
+            },
+            "default_value": "binoculars",
+            "return_format": "value"
+        },
+        {
+            "key": "field_upskill_course_glance_eyebrow",
+            "label": "Eyebrow",
+            "name": "eyebrow",
+            "type": "text",
+            "default_value": "At a glance"
+        },
+        {
+            "key": "field_upskill_course_glance_items",
+            "label": "Facts",
+            "name": "items",
+            "type": "repeater",
+            "instructions": "One tile per fact. Pick a LearnDash source to fill the title from the course automatically; a tile whose source has no value (e.g. no certificate) is hidden.",
+            "layout": "block",
+            "min": 0,
+            "max": 6,
+            "button_label": "Add fact",
+            "collapsed": "field_upskill_course_glance_items_text",
+            "sub_fields": [
+                {
+                    "key": "field_upskill_course_glance_items_icon",
+                    "label": "Icon",
+                    "name": "icon",
+                    "type": "select",
+                    "choices": {
+                        "": "None",
+                        "play-box": "Play (box)",
+                        "clock": "Clock",
+                        "refresh": "Refresh",
+                        "briefcase": "Briefcase",
+                        "chart": "Chart",
+                        "award": "Award",
+                        "video-book": "Video book",
+                        "monitor": "Monitor",
+                        "workplace": "Workplace",
+                        "users": "People",
+                        "shield": "Shield",
+                        "globe": "Globe",
+                        "badge-check": "Badge check",
+                        "book": "Book (open)",
+                        "star-outline": "Star"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "25"
+                    },
+                    "parent_repeater": "field_upskill_course_glance_items"
+                },
+                {
+                    "key": "field_upskill_course_glance_items_source",
+                    "label": "Title from",
+                    "name": "source",
+                    "type": "select",
+                    "choices": {
+                        "": "Typed below",
+                        "sessions": "Number of sessions",
+                        "duration": "Total duration",
+                        "level": "Learning level (course field)",
+                        "category": "Training category",
+                        "title": "Course title",
+                        "certificate": "Certificate (shown only when set)"
+                    },
+                    "default_value": "",
+                    "return_format": "value",
+                    "wrapper": {
+                        "width": "35"
+                    },
+                    "parent_repeater": "field_upskill_course_glance_items"
+                },
+                {
+                    "key": "field_upskill_course_glance_items_title",
+                    "label": "Title",
+                    "name": "title",
+                    "type": "text",
+                    "instructions": "Used when \"Title from\" is \"Typed below\", and for Certificate.",
+                    "wrapper": {
+                        "width": "40"
+                    },
+                    "parent_repeater": "field_upskill_course_glance_items"
+                },
+                {
+                    "key": "field_upskill_course_glance_items_text",
+                    "label": "Text",
+                    "name": "text",
+                    "type": "text",
+                    "parent_repeater": "field_upskill_course_glance_items"
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf-block/course-glance"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1793614064
+}

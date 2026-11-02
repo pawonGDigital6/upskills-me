@@ -1,0 +1,29 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "acf-block/course-reviews",
+	"version": "1.0.0",
+	"title": "Course Reviews",
+	"category": "acf-blocks",
+	"icon": "star-filled",
+	"description": "Course page: LearnDash course reviews (average, list and form).",
+	"keywords": [ "course", "reviews", "ratings" ],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"multiple": false
+	},
+	"textdomain": "upskill-me",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"acf": {
+		"mode": "preview",
+		"renderTemplate": "render.php",
+		"blockVersion": 3,
+		"hideFieldsInSidebar": true,
+		"expandedEditorButtons": [
+			"toolbar"
+		]
+	}
+}
