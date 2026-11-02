@@ -1,0 +1,1 @@
+{"version":3,"file":"course-reviews/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/course-reviews/editor.scss"],"sourcesContent":["/**\n * Course Reviews block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-course-reviews a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

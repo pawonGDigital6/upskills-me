@@ -1,0 +1,1 @@
+{"version":3,"file":"course-about/index.css","mappings":";;;AAAA,gBAAgB;AAAhB;;EAAA;AAIA;EACC;AACD,C","sources":["webpack://upskill-me-theme/./src/blocks/course-about/editor.scss"],"sourcesContent":["/**\n * About This Training block — block editor only styles.\n */\n\n.editor-styles-wrapper .block-course-about a {\n\tpointer-events: none;\n}\n"],"names":[],"sourceRoot":""}

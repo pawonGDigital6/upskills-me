@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 2,
+  "name": "acf-block/course-glance",
+  "version": "1.0.0",
+  "title": "At a Glance",
+  "category": "acf-blocks",
+  "icon": "visibility",
+  "description": "Course page: a row of key facts, filled from LearnDash where possible.",
+  "keywords": [
+    "course",
+    "glance",
+    "facts"
+  ],
+  "supports": {
+    "html": false,
+    "anchor": true,
+    "multiple": false
+  },
+  "textdomain": "upskill-me",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "acf": {
+    "mode": "preview",
+    "renderTemplate": "render.php",
+    "blockVersion": 3,
+    "hideFieldsInSidebar": true,
+    "expandedEditorButtons": [
+      "toolbar"
+    ]
+  }
+}
