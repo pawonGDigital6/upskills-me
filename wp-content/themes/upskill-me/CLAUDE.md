@@ -139,7 +139,8 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
     with the installed stack. Recurring + seats needs WooCommerce Subscriptions (US$279/yr) — Group
     Registration only integrates with it; MemberDash (in the LD download) recurs but has no seats/cart.
   - Payment gateway: not named in any resource (spec only says "credit card").
-  - GST: tax off in WooCommerce until confirmed (prices incl./excl., ABN-registered for GST).
+  - GST: answered 2 Nov — prices exclude GST; WooCommerce adds 10% "GST" (AU billing only) at
+    checkout, and the buy box says "ex GST".
   - Course vs session: client videos are single sessions (OH002, GG001, GG200); Figma splits a course
     into 6 sessions. Levels (Team Member/Manager/Director): separate courses vs one course.
   - Spec fields not in the design: Compliance/Performance type, discipline, org type, jurisdiction,
@@ -147,7 +148,7 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
 - **LMS stack installed 2026-10-12**: LearnDash LMS 5.2.1 (core already includes the WooCommerce
   integration, Reports/ProPanel, Notifications, Course Reviews and Course Grid — do not install those
   add-ons separately; the WooCommerce add-on fatals as a duplicate), WooCommerce 11.2.1 (AUD, AU:QLD,
-  0 decimals, accounts required at checkout, coming-soon off, Terms/Returns = the site's pages) and
+  2 decimals, GST 10% exclusive, accounts required at checkout, coming-soon off, Terms/Returns = the site's pages) and
   LearnDash Group Registration 4.4.2.1 (purchase with N seats → group; [wdm_group_users] on
   /groups-dashboard/). LearnDash: course archive off (/courses/ stays the library), LD course
   categories/tags off, Groups not public, native gateways off. `inc/learndash.php` and

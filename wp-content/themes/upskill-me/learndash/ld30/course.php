@@ -128,7 +128,7 @@ $upskill_details = array_filter(
 								<span class="text-sm text-gray-500" data-buy-unit>
 									<?php
 									/* translators: %s: level name. */
-									echo esc_html( sprintf( __( 'per learner · %s', 'upskill-me' ), $upskill_first['label'] ) );
+									echo esc_html( sprintf( __( 'per learner, ex GST · %s', 'upskill-me' ), $upskill_first['label'] ) );
 									?>
 								</span>
 							</p>
