@@ -136,7 +136,8 @@ $upskill_details = array_filter(
 							<?php if ( count( $upskill_levels ) > 1 ) : ?>
 								<fieldset class="mt-6">
 									<legend class="text-base font-medium text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
-									<div class="mt-3 grid gap-2 sm:grid-cols-3">
+									<?php // Three levels sit in one row (Figma); any other count pairs up so no card is left alone on a row. ?>
+									<div class="mt-3 grid gap-2 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
 										<?php foreach ( $upskill_levels as $upskill_i => $upskill_lvl ) : ?>
 											<?php $upskill_save = $upskill_lvl['bundle'] ? array_sum( wp_list_pluck( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ), 'price' ) ) - $upskill_lvl['price'] : 0; ?>
 											<label class="buy-level relative flex cursor-pointer flex-col gap-1 rounded-2xl border border-line bg-white p-4 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
