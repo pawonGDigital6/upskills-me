@@ -28,7 +28,7 @@
             "label": "Reviews",
             "name": "",
             "type": "message",
-            "message": "LearnDash Course Reviews for this course. Switch them on in the course Settings → \"Show reviews\"; approve reviews under Comments. The section is hidden while reviews are off."
+            "message": "LearnDash Course Reviews for this course: the average, the count and the six newest approved reviews.\n\n• Switch on/off: this course → Settings tab → Course Reviews → \"Allow Reviews for this Course?\".\n• Who reviews: learners who have started the course, from the Reviews tab on their course page (star rating, title, text).\n• Approve, edit, reply or delete: Comments in the admin menu (a review is a comment of type Review; its rating is edited in the Rating box).\n\nThe section is hidden while reviews are off or none is approved."
         }
     ],
     "location": [
@@ -49,5 +49,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1793614064
+    "modified": 1793638245
 }

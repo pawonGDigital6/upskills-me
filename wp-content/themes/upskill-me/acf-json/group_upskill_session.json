@@ -9,7 +9,7 @@
             "type": "text",
             "instructions": "e.g. OH002. Shown on session cards.",
             "wrapper": {
-                "width": "34"
+                "width": ""
             }
         },
         {
@@ -22,7 +22,7 @@
             "min": 0,
             "default_value": 1,
             "wrapper": {
-                "width": "33"
+                "width": ""
             }
         },
         {
@@ -37,7 +37,7 @@
             "default_value": "landscape",
             "return_format": "value",
             "wrapper": {
-                "width": "33"
+                "width": ""
             }
         },
         {
@@ -48,7 +48,7 @@
             "instructions": "Video length as m:ss or h:mm:ss, e.g. 14:30.",
             "placeholder": "14:30",
             "wrapper": {
-                "width": "34"
+                "width": ""
             }
         },
         {
@@ -60,7 +60,7 @@
             "new_lines": "",
             "instructions": "One point per line (the \"Key points\" list beside the player).",
             "wrapper": {
-                "width": "66"
+                "width": ""
             }
         },
         {
@@ -84,7 +84,7 @@
                     "new_lines": "",
                     "parent_repeater": "field_upskill_session_notes",
                     "wrapper": {
-                        "width": "75"
+                        "width": ""
                     }
                 },
                 {
@@ -98,7 +98,7 @@
                     "first_day": 1,
                     "parent_repeater": "field_upskill_session_notes",
                     "wrapper": {
-                        "width": "25"
+                        "width": ""
                     }
                 }
             ]
@@ -114,7 +114,7 @@
         ]
     ],
     "menu_order": 0,
-    "position": "acf_after_title",
+    "position": "side",
     "style": "default",
     "label_placement": "top",
     "instruction_placement": "label",
@@ -122,5 +122,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791996717
+    "modified": 1793638083
 }

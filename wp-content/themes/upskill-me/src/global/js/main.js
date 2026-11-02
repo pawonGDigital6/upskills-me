@@ -10,6 +10,7 @@ import { Article } from './components/article';
 import { PasswordToggle } from './components/password-toggle';
 import { Library } from './components/library';
 import { BuyBox } from './components/buy-box';
+import { Lightbox } from './components/lightbox';
 
 domReady( () => {
 	Announcement();
@@ -23,4 +24,5 @@ domReady( () => {
 	PasswordToggle();
 	Library();
 	BuyBox();
+	Lightbox();
 } );

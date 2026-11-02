@@ -90,24 +90,52 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 					<?php endif; ?>
 
 					<?php if ( $upskill_sessions ) : ?>
-						<?php // Session tabs: each opens its row in Course Content (#session-N). ?>
-						<ol class="course-hero__sessions grid grid-cols-4 gap-2 lg:gap-3" aria-label="<?php esc_attr_e( 'Sessions', 'upskill-me' ); ?>">
-							<?php foreach ( array_slice( $upskill_sessions, 0, 4 ) as $upskill_i => $upskill_session ) : ?>
-								<?php $upskill_thumb = get_post_thumbnail_id( $upskill_session ); ?>
-								<li>
-									<a class="group grid aspect-[156/87] grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-white *:col-start-1 *:row-start-1 hover:border-brand-500 <?php echo 0 === $upskill_i ? 'border-brand-700!' : ''; ?>" href="#session-<?php echo (int) ( $upskill_i + 1 ); ?>">
+						<?php
+						// Session tabs: a session with a preview image (its featured image) opens it in the
+						// lightbox, stepping through the others (js/components/lightbox.js); one without
+						// opens its row in Course Content (#session-N). The video above keeps playing in place.
+						?>
+						<div class="course-hero__gallery" data-lightbox>
+							<ol class="course-hero__sessions grid grid-cols-4 gap-2 lg:gap-3" aria-label="<?php esc_attr_e( 'Sessions', 'upskill-me' ); ?>">
+								<?php foreach ( array_slice( $upskill_sessions, 0, 4 ) as $upskill_i => $upskill_session ) : ?>
+									<?php
+									$upskill_thumb  = get_post_thumbnail_id( $upskill_session );
+									$upskill_number = str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT );
+									$upskill_label  = $upskill_number . ' · ' . upskill_session_title( $upskill_session );
+									$upskill_tab    = 'group grid aspect-[156/87] w-full grid-cols-1 grid-rows-1 overflow-hidden rounded-xl border-2 border-transparent bg-gray-950 text-left text-white *:col-start-1 *:row-start-1 hover:border-brand-500 ' . ( 0 === $upskill_i ? 'border-brand-700!' : '' );
+									?>
+									<li>
 										<?php if ( $upskill_thumb ) : ?>
-											<?php upskill_image( $upskill_thumb, 'full', array( 'class' => 'size-full object-cover transition-transform duration-300 group-hover:scale-105', 'alt' => '', 'sizes' => '(min-width: 1440px) 156px, (min-width: 1025px) 11vw, 23vw' ) ); ?>
+											<button class="<?php echo esc_attr( $upskill_tab ); ?>" type="button" data-lightbox-item data-src="<?php echo esc_url( (string) wp_get_attachment_image_url( $upskill_thumb, 'full' ) ); ?>" data-srcset="<?php echo esc_attr( (string) wp_get_attachment_image_srcset( $upskill_thumb, 'full' ) ); ?>" data-caption="<?php echo esc_attr( $upskill_label ); ?>">
+												<?php upskill_image( $upskill_thumb, 'full', array( 'class' => 'size-full object-cover transition-transform duration-300 group-hover:scale-105', 'alt' => '', 'sizes' => '(min-width: 1440px) 156px, (min-width: 1025px) 11vw, 23vw' ) ); ?>
+										<?php else : ?>
+											<a class="<?php echo esc_attr( $upskill_tab ); ?>" href="#session-<?php echo (int) ( $upskill_i + 1 ); ?>">
 										<?php endif; ?>
-										<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
-											<span class="text-sm font-medium"><?php echo esc_html( str_pad( (string) ( $upskill_i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-											<span><?php echo esc_html( (string) get_field( 'duration', $upskill_session ) ); ?></span>
-										</span>
-										<span class="sr-only"><?php echo esc_html( upskill_session_title( $upskill_session ) ); ?></span>
-									</a>
-								</li>
-							<?php endforeach; ?>
-						</ol>
+											<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
+												<span class="text-sm font-medium"><?php echo esc_html( $upskill_number ); ?></span>
+												<span><?php echo esc_html( (string) get_field( 'duration', $upskill_session ) ); ?></span>
+											</span>
+											<span class="sr-only"><?php echo esc_html( $upskill_thumb ? sprintf( /* translators: %s: session number and title. */ __( 'View preview: %s', 'upskill-me' ), $upskill_label ) : upskill_session_title( $upskill_session ) ); ?></span>
+										<?php echo $upskill_thumb ? '</button>' : '</a>'; ?>
+									</li>
+								<?php endforeach; ?>
+							</ol>
+
+							<dialog class="course-hero__lightbox m-auto max-h-none w-[min(1100px,calc(100vw-32px))] max-w-none overflow-visible bg-transparent p-0 text-white backdrop:bg-gray-950/85" aria-label="<?php esc_attr_e( 'Session previews', 'upskill-me' ); ?>" data-lightbox-dialog>
+								<figure class="flex flex-col gap-3">
+									<img class="aspect-[1912/1066] w-full rounded-2xl bg-gray-950 object-contain" src="" alt="" sizes="(min-width: 1140px) 1100px, calc(100vw - 32px)" data-lightbox-image>
+									<figcaption class="flex items-center justify-between gap-4 text-sm">
+										<span data-lightbox-caption></span>
+										<span class="text-white/70" data-lightbox-counter></span>
+									</figcaption>
+								</figure>
+								<div class="mt-4 flex justify-center gap-3">
+									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-lightbox-prev><span class="sr-only"><?php esc_html_e( 'Previous', 'upskill-me' ); ?></span><?php upskill_icon( 'chevron-right', 'size-4 rotate-180' ); ?></button>
+									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-lightbox-close><span class="sr-only"><?php esc_html_e( 'Close', 'upskill-me' ); ?></span><?php upskill_icon( 'close', 'size-4' ); ?></button>
+									<button class="grid size-11 place-items-center rounded-full bg-white/15 hover:bg-white/25" type="button" data-lightbox-next><span class="sr-only"><?php esc_html_e( 'Next', 'upskill-me' ); ?></span><?php upskill_icon( 'chevron-right', 'size-4' ); ?></button>
+								</div>
+							</dialog>
+						</div>
 					<?php endif; ?>
 
 					<?php // Share copies the course link (the copy-link script from the blog, js/components/article.js). ?>

@@ -24,6 +24,20 @@
             "prefix_name": 0
         },
         {
+            "key": "field_upskill_video_feature_media_position",
+            "label": "Media position",
+            "name": "media_position",
+            "type": "button_group",
+            "instructions": "Which side the video sits on at desktop. Phones are unchanged.",
+            "choices": {
+                "": "Right",
+                "left": "Left"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "layout": "horizontal"
+        },
+        {
             "key": "field_upskill_video_feature_acc_features",
             "label": "Features",
             "name": "",
@@ -201,5 +215,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791351143
+    "modified": 1793638109
 }
