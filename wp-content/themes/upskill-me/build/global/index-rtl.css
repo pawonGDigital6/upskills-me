@@ -9067,6 +9067,9 @@ body.woocommerce-checkout .woocommerce-terms-and-conditions ul {
 body.woocommerce-checkout .woocommerce-terms-and-conditions ol {
   list-style-type: number;
 }
+body.woocommerce-checkout .woocommerce-form-login > *:first-child {
+  margin-bottom: 24px;
+}
 body.woocommerce-checkout:has(.woocommerce-NoticeGroup-checkout) #order_review_heading {
   display: none;
 }

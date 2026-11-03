@@ -68,6 +68,10 @@ body {
 			}
 		}
 
+		.woocommerce-form-login > *:first-child{
+			margin-bottom: 24px;
+		}
+
 		&:has(.woocommerce-NoticeGroup-checkout) #order_review_heading{
 			display: none;
 		}
