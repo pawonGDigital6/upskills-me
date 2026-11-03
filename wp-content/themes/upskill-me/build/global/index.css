@@ -454,6 +454,9 @@
   .order-first {
     order: -9999;
   }
+  .col-1 {
+    grid-column: 1;
+  }
   .col-2 {
     grid-column: 2;
   }
@@ -8188,6 +8191,7 @@
 .store-content .woocommerce .select2-container .select2-selection--single .select2-selection__arrow {
   top: 11px;
   right: 10px;
+  height: 26px;
 }
 .store-content .woocommerce .form-row {
   margin: 0 0 16px;
@@ -8688,7 +8692,7 @@
   font-size: var(--text-sm);
 }
 .store-content .woocommerce .woocommerce-terms-and-conditions-wrapper .form-row {
-  margin-bottom: 16px;
+  margin-block: 12px 16px;
 }
 .store-content .woocommerce .woocommerce-order .woocommerce-thankyou-order-received:empty,
 .store-content .woocommerce .woocommerce-order ul.woocommerce-order-overview {
@@ -8837,7 +8841,6 @@
   }
   .store-content form.checkout #order_review_heading {
     margin-top: 24px;
-    padding: 0 24px;
   }
   .store-content .woocommerce-order {
     display: grid;
@@ -8998,6 +9001,74 @@ body.woocommerce-cart .cart-line__select {
   body.woocommerce-cart .cart-summary__checkout {
     justify-content: center;
   }
+}
+
+body.woocommerce-checkout .checkout .checkout-inline-error-message {
+  margin-top: 8px;
+}
+body.woocommerce-checkout .checkout .woocommerce-error {
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 50px;
+}
+body.woocommerce-checkout .checkout .woocommerce-error li {
+  list-style: disc;
+}
+body.woocommerce-checkout .checkout .woocommerce-error li a {
+  text-decoration: none !important;
+}
+body.woocommerce-checkout .checkout .woocommerce-error li strong {
+  display: initial;
+  text-decoration: underline;
+}
+body.woocommerce-checkout .checkout_coupon {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+body.woocommerce-checkout .checkout_coupon .form-row {
+  margin: 0;
+}
+body.woocommerce-checkout .checkout_coupon .clear {
+  display: none;
+}
+@media (width < 568px) {
+  body.woocommerce-checkout .woocommerce form .form-row {
+    width: 100%;
+  }
+}
+@media (width < 1025px) {
+  body.woocommerce-checkout .woocommerce .col2-set .col-1,
+  body.woocommerce-checkout .woocommerce-page .col2-set .col-1 {
+    width: 100%;
+  }
+}
+@media (width < 1025px) {
+  body.woocommerce-checkout #customer_details {
+    margin-bottom: 64px;
+  }
+}
+body.woocommerce-checkout .woocommerce-terms-and-conditions-checkbox-text a {
+  text-decoration: underline;
+}
+body.woocommerce-checkout .woocommerce-terms-and-conditions > * {
+  margin-block-end: 1rem;
+}
+body.woocommerce-checkout .woocommerce-terms-and-conditions a {
+  text-decoration: underline;
+}
+body.woocommerce-checkout .woocommerce-terms-and-conditions ul,
+body.woocommerce-checkout .woocommerce-terms-and-conditions ol {
+  padding-left: 19px;
+}
+body.woocommerce-checkout .woocommerce-terms-and-conditions ul {
+  list-style-type: disc;
+}
+body.woocommerce-checkout .woocommerce-terms-and-conditions ol {
+  list-style-type: number;
+}
+body.woocommerce-checkout:has(.woocommerce-NoticeGroup-checkout) #order_review_heading {
+  display: none;
 }
 
 html .btn:not(:where(.upload-btn-wrapper .btn)) {

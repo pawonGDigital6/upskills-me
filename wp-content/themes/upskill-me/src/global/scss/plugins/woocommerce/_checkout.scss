@@ -1,0 +1,75 @@
+body {
+	&.woocommerce-checkout {
+		.checkout .checkout-inline-error-message {
+			margin-top: 8px;
+		}
+		.checkout .woocommerce-error {
+			flex-direction: column;
+			gap: 10px;
+			padding-left: 50px;
+
+			li {
+				list-style: disc;
+				a {
+					text-decoration: none !important;
+				}
+				strong {
+					display: initial;
+					text-decoration: underline;
+				}
+			}
+		}
+		.checkout_coupon {
+			display: flex;
+			gap: 18px;
+			flex-wrap: wrap;
+			.form-row {
+				margin: 0;
+			}
+			.clear {
+				display: none;
+			}
+		}
+		.woocommerce form .form-row {
+			@media (width < 568px) {
+				width: 100%;
+			}
+		}
+		.woocommerce .col2-set .col-1,
+		.woocommerce-page .col2-set .col-1 {
+			@media (width < 1025px) {
+				width: 100%;
+			}
+		}
+		#customer_details {
+			@media (width < 1025px) {
+				margin-bottom: 64px;
+			}
+		}
+		.woocommerce-terms-and-conditions-checkbox-text a {
+			text-decoration: underline;
+		}
+		.woocommerce-terms-and-conditions > * {
+			margin-block-end: 1rem;
+		}
+		.woocommerce-terms-and-conditions {
+			a {
+				text-decoration: underline;
+			}
+			ul,
+			ol {
+				padding-left: 19px;
+			}
+			ul {
+				list-style-type: disc;
+			}
+			ol {
+				list-style-type: number;
+			}
+		}
+
+		&:has(.woocommerce-NoticeGroup-checkout) #order_review_heading{
+			display: none;
+		}
+	}
+}
