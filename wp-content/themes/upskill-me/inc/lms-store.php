@@ -145,6 +145,26 @@ add_filter(
 );
 
 /**
+ * Cart line link: the course page. Course products are hidden from the shop,
+ * so WooCommerce has no product link for the line and its cart template then
+ * prints the name followed by a stray "&nbsp;" (a gap under the name). With
+ * a link it takes its other branch; the name filter above still sets the
+ * line's markup, and the thumbnail links to the course.
+ */
+add_filter(
+	'woocommerce_cart_item_permalink',
+	static function ( $permalink, $cart_item ) {
+		if ( $permalink || ! function_exists( 'is_cart' ) || ! is_cart() ) {
+			return $permalink;
+		}
+
+		return upskill_store_item( $cart_item['data'] ?? false )['url'] ?: $permalink;
+	},
+	10,
+	2
+);
+
+/**
  * Cart line "Cohort" select (form controls cannot go through the name
  * filter, which WooCommerce prints with wp_kses_post).
  */
