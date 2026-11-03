@@ -247,6 +247,71 @@ function BuyBox(root = document) {
 
 /***/ },
 
+/***/ "./src/global/js/components/cart.js"
+/*!******************************************!*\
+  !*** ./src/global/js/components/cart.js ***!
+  \******************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   Cart: () => (/* binding */ Cart)
+/* harmony export */ });
+/**
+ * Cart (WooCommerce classic cart, inc/lms-store.php).
+ *
+ * The − / + buttons step a line's seats (WooCommerce's own quantity input),
+ * and a changed seat count or "Cohort" select submits WooCommerce's own
+ * "Update cart" button, so WooCommerce updates the cart (by AJAX, replacing
+ * the cart and totals) exactly as it would by hand. Listeners sit on the
+ * document because WooCommerce replaces the cart markup after each update.
+ * The "Update cart" button itself is hidden once this runs (has-cart-js).
+ */
+let timer = 0;
+function submitCart(delay) {
+  window.clearTimeout(timer);
+  timer = window.setTimeout(() => {
+    const button = document.querySelector('.woocommerce-cart-form [name="update_cart"]');
+    if (button) {
+      button.disabled = false;
+      button.removeAttribute('aria-disabled');
+      button.click();
+    }
+  }, delay);
+}
+function Cart() {
+  if (!document.querySelector('.woocommerce-cart-form')) {
+    return;
+  }
+  document.documentElement.classList.add('has-cart-js');
+  document.addEventListener('click', event => {
+    const step = event.target.closest('[data-seat-step]');
+    const input = step?.closest('.cart-seats')?.querySelector('input.qty');
+    if (!input) {
+      return;
+    }
+    const min = Number(input.min) || 1;
+    const max = Number(input.max) || Infinity;
+    const next = Math.min(max, Math.max(min, (Number(input.value) || min) + Number(step.dataset.seatStep) * (Number(input.step) || 1)));
+    if (next !== Number(input.value)) {
+      input.value = String(next);
+      input.dispatchEvent(new Event('change', {
+        bubbles: true
+      }));
+    }
+  });
+  document.addEventListener('change', event => {
+    if (event.target.matches('.woocommerce-cart-form input.qty')) {
+      // A short pause, so several clicks on − / + make one update.
+      submitCart(600);
+    } else if (event.target.matches('[data-cart-level]')) {
+      submitCart(0);
+    }
+  });
+}
+
+/***/ },
+
 /***/ "./src/global/js/components/deferred-video.js"
 /*!****************************************************!*\
   !*** ./src/global/js/components/deferred-video.js ***!
@@ -1212,6 +1277,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_password_toggle__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/password-toggle */ "./src/global/js/components/password-toggle.js");
 /* harmony import */ var _components_library__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/library */ "./src/global/js/components/library.js");
 /* harmony import */ var _components_buy_box__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/buy-box */ "./src/global/js/components/buy-box.js");
+/* harmony import */ var _components_cart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/cart */ "./src/global/js/components/cart.js");
+
 
 
 
@@ -1236,6 +1303,7 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(() => {
   (0,_components_password_toggle__WEBPACK_IMPORTED_MODULE_9__.PasswordToggle)();
   (0,_components_library__WEBPACK_IMPORTED_MODULE_10__.Library)();
   (0,_components_buy_box__WEBPACK_IMPORTED_MODULE_11__.BuyBox)();
+  (0,_components_cart__WEBPACK_IMPORTED_MODULE_12__.Cart)();
   // The course hero gallery (Swiper) loads only on a course page.
   if (document.querySelector('[data-course-gallery]')) {
     Promise.all(/*! import() | course-gallery */[__webpack_require__.e("vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459"), __webpack_require__.e("course-gallery")]).then(() => (__webpack_require__(/*! ./components/course-gallery */ "./src/global/js/components/course-gallery.js"))).then(({
