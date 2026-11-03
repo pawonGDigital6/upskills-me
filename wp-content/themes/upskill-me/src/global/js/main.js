@@ -10,6 +10,7 @@ import { Article } from './components/article';
 import { PasswordToggle } from './components/password-toggle';
 import { Library } from './components/library';
 import { BuyBox } from './components/buy-box';
+import { Cart } from './components/cart';
 
 domReady( () => {
 	Announcement();
@@ -23,6 +24,7 @@ domReady( () => {
 	PasswordToggle();
 	Library();
 	BuyBox();
+	Cart();
 	// The course hero gallery (Swiper) loads only on a course page.
 	if ( document.querySelector( '[data-course-gallery]' ) ) {
 		import( /* webpackChunkName: "course-gallery" */ './components/course-gallery' ).then( ( { CourseGallery } ) => CourseGallery() );

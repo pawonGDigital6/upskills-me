@@ -181,6 +181,7 @@ require get_template_directory() . '/inc/lms-library.php';
 require get_template_directory() . '/inc/lms-free-sessions.php';
 require get_template_directory() . '/inc/lms-commerce.php';
 require get_template_directory() . '/inc/lms-course.php';
+require get_template_directory() . '/inc/lms-store.php';
 require get_template_directory() . '/inc/lms-organisation.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/template-tags.php';

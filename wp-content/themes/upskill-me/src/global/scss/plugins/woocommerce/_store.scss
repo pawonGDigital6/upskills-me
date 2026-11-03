@@ -1,54 +1,72 @@
 // WooCommerce cart, checkout and order confirmation (classic shortcodes) inside
-// template-store.php. Figma: Cart 49325:15876, Post Checkout Flow 49325:20216.
-// WooCommerce's own layout CSS still loads; this only restyles its markup to the
-// design tokens. Scoped to .store-content so no other WooCommerce screen changes.
+// template-store.php. Figma: Cart 49325:15876, Post Checkout Flow 49325:20216
+// (checkout has no design; it follows the cart). WooCommerce's own layout CSS
+// still loads; this only restyles its markup to the design tokens. Scoped to
+// .store-content so no other WooCommerce screen changes. The theme markup
+// added by inc/lms-store.php (template-parts/commerce/) carries Tailwind.
 
 // .woocommerce in the selector lifts these above WooCommerce's own rules.
 .store-content .woocommerce {
 	color: var(--color-gray-950);
 	font-size: var(--text-base);
 
-	// Notices: added to cart, errors, info.
+	// Notices (Figma "Cohort updated." 49325:15896): lilac panel, 16/500 brand,
+	// the info icon; errors red.
 	.woocommerce-message,
 	.woocommerce-info,
 	.woocommerce-error {
-		border-top-color: var(--color-line);
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: 12px;
-		margin: 0 0 24px;
-		padding: 14px 18px;
-		border: 1px solid var(--color-line);
+		align-items: flex-start;
+		gap: 4px 12px;
+		margin: 0 0 20px;
+		padding: 16px 20px 16px 50px;
+		border: 1px solid #e5def6; // Figma, no token.
 		border-radius: 16px;
-		background: var(--color-white);
-		color: var(--color-gray-700);
+		background: var(--color-brand-25);
+		color: var(--color-brand-700);
+		font-weight: 500;
+		line-height: 1.5;
 		list-style: none;
+		position: relative;
 
+		// Figma's info icon (images/icons/info-circle.svg, inlined so the build
+		// resolves no file) in place of WooCommerce's icon-font glyph.
 		&::before {
-			position: static;
-			color: var(--color-brand-700);
+			top: 19px;
+			left: 21px;
+			width: 17px;
+			height: 18px;
+			background: currentcolor;
+			content: "";
+			mask: url("data:image/svg+xml;charset=utf-8,%3Csvg width='17' height='18' viewBox='0 0 17 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15.1109 9.49978C15.1109 13.151 12.151 16.1109 8.49978 16.1109C4.84857 16.1109 1.88867 13.151 1.88867 9.49978C1.88867 5.84857 4.84857 2.88867 8.49978 2.88867C12.151 2.88867 15.1109 5.84857 15.1109 9.49978Z' stroke-width='1.41667' stroke='%23000'/%3E%3Cpath d='M8.5 8.74449V12.5223M8.5 6.57227V6.66671' stroke-width='1.51111' stroke-linecap='round' stroke='%23000'/%3E%3C/svg%3E") center / contain no-repeat;
+		}
+
+		strong {
+			display: block;
+			width: 100%;
+			font-weight: 500;
 		}
 
 		.button {
 			order: 2;
 			margin-left: auto;
 		}
+
+		a:not(.button) {
+			text-decoration: underline;
+		}
 	}
 
 	.woocommerce-error {
 		border-color: #f3c7c7;
 		background: #fdf4f4;
-
-		&::before {
-			color: #b42318;
-		}
+		color: #b42318;
 	}
 
 	// Buttons: the site's pill button.
 	:is(a, button, input).button,
-	#place_order,
-	.checkout-button {
+	#place_order {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -70,7 +88,6 @@
 		}
 	}
 
-	:is(a, button, input).checkout-button,
 	#place_order,
 	:is(a, button, input).button.alt {
 		width: 100%;
@@ -88,7 +105,6 @@
 
 	// Fields.
 	form .form-row :is(input.input-text, select, textarea),
-	.coupon input.input-text,
 	.select2-container .select2-selection--single {
 		width: 100%;
 		min-height: 48px;
@@ -127,6 +143,10 @@
 			font-weight: 500;
 			font-size: var(--text-sm);
 		}
+
+		&.woocommerce-invalid :is(input.input-text, select) {
+			border-color: #f3c7c7;
+		}
 	}
 
 	.required {
@@ -134,14 +154,17 @@
 		text-decoration: none;
 	}
 
-	h3 {
-		margin: 0 0 16px;
+	// WooCommerce's own form headings (not the theme cards on these screens).
+	:is(.woocommerce-billing-fields, .woocommerce-shipping-fields, .woocommerce-additional-fields) > h3,
+	h3#order_review_heading {
+		margin: 0 0 20px;
 		font-weight: 500;
 		font-size: var(--text-xl);
 		line-height: 1.5;
 	}
 
-	// Tables (cart items, totals, order review, order details).
+	// Tables (My Account orders and order details; the cart, totals and order
+	// review below restyle their own).
 	table.shop_table {
 		overflow: hidden;
 		width: 100%;
@@ -214,117 +237,598 @@
 		}
 	}
 
-	.quantity .qty {
-		width: 80px;
-		min-height: 44px;
+
+	// WooCommerce's responsive tables relabel cells on phones; these screens
+	// lay their rows out themselves.
+	table.shop_table_responsive tr td::before {
+		display: none;
+	}
+
+	// ---------------------------------------------------------------- Cart
+
+	// Lines (Figma: rows ruled top and bottom, 24px tall padding).
+	table.shop_table.cart {
+		display: block;
+		margin: 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+
+		thead {
+			display: none;
+		}
+
+		tbody {
+			display: block;
+			border-top: 1px solid var(--color-gray-100);
+		}
+
+		// !important: WooCommerce's small-screen sheet right-aligns every cell with it.
+		td {
+			display: block;
+			padding: 0;
+			border: 0;
+			background: none;
+			text-align: left !important;
+		}
+
+		// One line: picture, course and seats, total and "Remove".
+		tr.cart_item {
+			display: grid;
+			grid-template-columns: 104px minmax(0, 1fr) auto;
+			grid-template-areas:
+				"thumb name total"
+				"thumb name price"
+				"thumb seats remove";
+			gap: 0 16px;
+			align-items: start;
+			padding: 24px 0;
+			border-bottom: 1px solid var(--color-gray-100);
+		}
+
+		.product-thumbnail {
+			grid-area: thumb;
+
+			img {
+				width: 104px;
+				aspect-ratio: 104 / 66;
+				height: auto;
+				border-radius: 8px;
+				object-fit: cover;
+			}
+		}
+
+		.product-name {
+			grid-area: name;
+			min-width: 0;
+			padding-right: 24px;
+		}
+
+		.product-subtotal {
+			grid-area: total;
+			color: var(--color-gray-900);
+			font-weight: 700;
+			font-size: var(--text-lg);
+			line-height: 1.5;
+			text-align: right !important;
+		}
+
+		.product-price {
+			grid-area: price;
+			color: var(--color-gray-500);
+			font-size: 12px;
+			text-align: right !important;
+			white-space: nowrap;
+		}
+
+		.product-quantity {
+			grid-area: seats;
+			padding-top: 14px;
+		}
+
+		.product-remove {
+			grid-area: remove;
+			align-self: center;
+			padding-top: 14px;
+			text-align: right !important;
+
+			a.remove {
+				display: inline-flex;
+				align-items: center;
+				gap: 5px;
+				width: auto;
+				height: auto;
+				border-radius: 0;
+				color: var(--color-gray-500) !important;
+				font-weight: 400;
+				font-size: 10px;
+				line-height: 1.5;
+
+				&:hover {
+					background: none;
+					color: var(--color-brand-700) !important;
+				}
+			}
+
+			.cart-remove__icon {
+				width: 13px;
+				height: 13px;
+			}
+		}
+
+		// The coupon / "Update cart" row: coupons are entered at checkout, and
+		// the cart updates itself (js/components/cart.js).
+		td.actions {
+			padding: 16px 0 0;
+
+			.coupon {
+				display: none;
+			}
+		}
+	}
+
+	// Seats: "Access On demand", the − / + pill, "seats" (Figma 106x38 pill).
+	.cart-seats {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px 16px;
+	}
+
+	.cart-seats__access {
+		color: var(--color-gray-500);
+		font-size: 10px;
+		line-height: 1.5;
+
+		strong {
+			font-weight: 400;
+		}
+	}
+
+	.cart-seats__stepper {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		height: 38px;
+		padding: 3px;
 		border: 1px solid var(--color-line);
 		border-radius: 999px;
+		background: var(--color-white);
+	}
+
+	.cart-seats__step {
+		display: grid;
+		width: 30px;
+		height: 30px;
+		place-items: center;
+		border-radius: 999px;
+		color: var(--color-gray-700);
+		font-size: var(--text-base);
+		line-height: 1;
+		cursor: pointer;
+
+		&:hover {
+			background: var(--color-brand-25);
+			color: var(--color-brand-700);
+		}
+	}
+
+	.cart-seats__unit {
+		color: var(--color-gray-500);
+		font-size: var(--text-sm);
+	}
+
+	.quantity .qty {
+		width: 36px;
+		min-height: 0;
+		height: 30px;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: var(--color-gray-900);
+		font-weight: 500;
+		font-size: var(--text-base);
 		text-align: center;
+		appearance: textfield;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			margin: 0;
+			appearance: none;
+		}
+
+		&:focus {
+			outline: 2px solid var(--color-brand-300);
+			outline-offset: 2px;
+			border-radius: 6px;
+		}
 	}
 
-	.coupon .input-text {
-		width: auto;
-		min-width: 160px;
+	.cart-price__unit {
+		display: block;
 	}
 
-	// Cart: items left, totals right (Figma "Order summary").
-	.cart-collaterals .cart_totals {
+	.cart-browse {
+		padding-top: 20px;
+	}
+
+	// Order summary card (Figma 380 wide, 24px padding and corners).
+	.cart-collaterals {
 		width: 100%;
 
-		h2 {
-			margin: 0 0 16px;
-			font-weight: 500;
-			font-size: var(--text-xl);
+		.cart_totals {
+			float: none;
+			width: 100%;
+			padding: 24px;
+			border-radius: 24px;
+			background: var(--color-white);
+			box-shadow: var(--shadow-card);
+
+			// WooCommerce's "Cart totals" heading gives way to "Order summary".
+			> h2:not(.cart-summary__title) {
+				display: none;
+			}
+
+			table.shop_table {
+				margin: 0;
+				border: 0;
+				border-radius: 0;
+
+				tr {
+					display: table-row;
+				}
+
+				th,
+				td {
+					display: table-cell;
+					padding: 10px 0;
+					border: 0;
+					background: none;
+					color: var(--color-gray-900);
+					font-weight: 400;
+					font-size: var(--text-base);
+				}
+
+				th {
+					color: var(--color-gray-500);
+				}
+
+				td {
+					text-align: right;
+				}
+
+				.order-total :is(th, td) {
+					padding-top: 20px;
+					border-top: 1px solid var(--color-gray-100);
+					color: var(--color-gray-900);
+					font-weight: 500;
+				}
+
+				.order-total td strong {
+					font-weight: 500;
+				}
+
+				small.includes_tax {
+					display: block;
+					color: var(--color-gray-500);
+					font-size: 12px;
+				}
+			}
+		}
+	}
+
+	.cart-summary__title {
+		margin: 0 0 14px;
+		font-weight: 500;
+		font-size: var(--text-xl);
+		line-height: 1.5;
+	}
+
+	.cart-summary__counts {
+		margin: 0;
+
+		div {
+			display: flex;
+			justify-content: space-between;
+			padding: 10px 0;
+		}
+
+		dt {
+			color: var(--color-gray-500);
+		}
+
+		dd {
+			margin: 0;
+			color: var(--color-gray-900);
 		}
 	}
 
 	.wc-proceed-to-checkout {
-		padding: 16px 0 0;
+		padding: 20px 0 0;
+
+		a.btn {
+			margin: 0;
+		}
 	}
 
-	// Checkout: payment box.
-	#payment {
+	// Empty cart.
+	.cart-empty.woocommerce-info {
+		margin-bottom: 24px;
+	}
+
+	.return-to-shop .button {
+		border-color: var(--color-brand-700);
+		background: var(--color-brand-700);
+		color: var(--color-white);
+
+		&:hover {
+			background: var(--color-brand-800);
+			color: var(--color-white);
+		}
+	}
+
+	// ------------------------------------------------------------ Checkout
+
+	// "Returning customer?" / "Have a coupon?" toggles: compact notices.
+	.woocommerce-form-login-toggle,
+	.woocommerce-form-coupon-toggle {
+		.woocommerce-info {
+			margin-bottom: 12px;
+			padding-top: 12px;
+			padding-bottom: 12px;
+			border-color: var(--color-line);
+			background: var(--color-white);
+			color: var(--color-gray-700);
+			font-weight: 400;
+
+			&::before {
+				top: 15px;
+				color: var(--color-brand-700);
+			}
+
+			a {
+				color: var(--color-brand-700);
+				font-weight: 500;
+			}
+		}
+	}
+
+	form.checkout_coupon,
+	form.woocommerce-form-login {
+		margin: 0 0 20px;
+		padding: 20px;
 		border: 1px solid var(--color-line);
-		border-radius: 20px;
+		border-radius: 16px;
 		background: var(--color-white);
+	}
+
+	// Billing details and order review as white cards.
+	#customer_details,
+	#order_review {
+		padding: 24px;
+		border-radius: 24px;
+		background: var(--color-white);
+		box-shadow: var(--shadow-card);
+	}
+
+	#order_review_heading {
+		margin: 0 0 16px;
+	}
+
+	// Order review lines and totals.
+	table.woocommerce-checkout-review-order-table {
+		margin: 0;
+		border: 0;
+		border-radius: 0;
+		background: none;
+
+		th,
+		td {
+			padding: 12px 0;
+			border: 0;
+			border-top: 1px solid var(--color-gray-100);
+			background: none;
+			font-weight: 400;
+		}
+
+		thead th {
+			padding-top: 0;
+			border-top: 0;
+			color: var(--color-gray-500);
+			font-size: var(--text-sm);
+		}
+
+		td.product-total,
+		tfoot td,
+		thead th.product-total {
+			text-align: right;
+		}
+
+		tfoot th {
+			color: var(--color-gray-500);
+		}
+
+		.order-total :is(th, td) {
+			color: var(--color-gray-900);
+			font-weight: 500;
+		}
+
+		.order-total td strong {
+			font-weight: 500;
+		}
+	}
+
+	.store-line__title {
+		display: block;
+		color: var(--color-gray-900);
+		font-weight: 500;
+	}
+
+	.store-line__level {
+		display: inline;
+		color: var(--color-gray-500);
+		font-size: var(--text-sm);
+	}
+
+	.product-name .product-quantity {
+		color: var(--color-gray-500);
+		font-weight: 400;
+		font-size: var(--text-sm);
+	}
+
+	// Payment.
+	#payment {
+		margin-top: 20px;
+		border-radius: 16px;
+		background: var(--color-gray-25);
 
 		ul.payment_methods {
-			padding: 20px;
+			padding: 16px 20px;
 			border-bottom: 1px solid var(--color-line);
+
+			li {
+				line-height: 1.5;
+
+				label {
+					font-weight: 500;
+				}
+			}
 		}
 
 		div.payment_box {
+			margin-top: 10px;
 			border-radius: 12px;
-			background: var(--color-brand-25);
+			background: var(--color-white);
 			color: var(--color-gray-700);
+			font-size: var(--text-sm);
 
 			&::before {
-				border-bottom-color: var(--color-brand-25);
+				border-bottom-color: var(--color-white);
 			}
 		}
 
 		div.form-row {
+			margin: 0;
 			padding: 20px;
 		}
 	}
 
+	.woocommerce-privacy-policy-text,
 	.woocommerce-terms-and-conditions-wrapper {
 		color: var(--color-gray-500);
 		font-size: var(--text-sm);
 	}
 
-	// Order received.
+	.woocommerce-terms-and-conditions-wrapper .form-row {
+		margin-bottom: 16px;
+	}
+
+	// --------------------------------------------------- Order received
+
 	.woocommerce-order {
-		.woocommerce-thankyou-order-received {
-			color: var(--color-gray-700);
+		// The page header, strip, items, next steps and help are theme markup
+		// (template-parts/commerce/); WooCommerce's thanks line and overview give way.
+		.woocommerce-thankyou-order-received:empty,
+		ul.woocommerce-order-overview {
+			display: none;
 		}
 
-		ul.order_details {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-			gap: 16px;
-			margin: 24px 0 40px;
+		// Bank transfer details while the order waits for payment.
+		.woocommerce-bacs-bank-details {
+			margin-top: 40px;
 			padding: 24px;
-			border: 1px solid var(--color-line);
-			border-radius: 20px;
+			border: 1px solid var(--color-gray-100);
+			border-radius: 16px;
 			background: var(--color-white);
 
-			li {
+			.wc-bacs-bank-details-heading {
+				margin: 0 0 12px;
+				font-weight: 500;
+				font-size: var(--text-xl);
+			}
+
+			ul.bacs_details {
 				margin: 0;
 				padding: 0;
 				border: 0;
-				color: var(--color-gray-500);
-				font-size: var(--text-sm);
-				text-transform: none;
 
-				strong {
-					display: block;
-					padding-top: 4px;
-					color: var(--color-gray-950);
-					font-size: var(--text-base);
+				li {
+					margin: 6px 0 0;
+					padding: 0;
+					border: 0;
+					color: var(--color-gray-500);
+					font-size: var(--text-sm);
+					text-transform: none;
+
+					strong {
+						color: var(--color-gray-900);
+					}
 				}
 			}
 		}
 
-		.woocommerce-order-details,
-		.woocommerce-customer-details,
-		.woocommerce-bacs-bank-details {
+		> p {
+			margin-top: 24px;
+			color: var(--color-gray-500);
+		}
+	}
+}
+
+@media (width < 1025px) {
+
+	.store-content .woocommerce {
+
+		// Phones and tablets: picture beside the course, then seats, then
+		// remove, unit price and total.
+		table.shop_table.cart tr.cart_item {
+			grid-template-columns: 72px minmax(0, 1fr) auto;
+			grid-template-areas:
+				"thumb name name"
+				"seats seats seats"
+				"remove price total";
+			gap: 0 12px;
+			align-items: start;
+
+			.product-thumbnail img {
+				width: 72px;
+			}
+
+			.product-name {
+				padding-right: 0;
+			}
+
+			.product-quantity {
+				padding: 16px 0 14px;
+			}
+
+			.product-remove {
+				padding-top: 0;
+				text-align: left !important;
+			}
+		}
+
+		// The order summary card follows the cart.
+		.cart-collaterals {
+			margin-top: 32px;
+		}
+
+		#order_review_heading {
 			margin-top: 40px;
 		}
 
-		.woocommerce-column__title,
-		.woocommerce-order-details__title,
-		.wc-bacs-bank-details-heading {
-			font-weight: 500;
-			font-size: var(--text-xl);
-		}
+		// Order received: header and strip first, then the summary, then the rest.
+		.woocommerce-order {
+			display: flex;
+			flex-direction: column;
 
-		address {
-			padding: 20px;
-			border: 1px solid var(--color-line);
-			border-radius: 20px;
-			background: var(--color-white);
-			font-style: normal;
+			> .order-hero,
+			> .order-overview {
+				order: -1;
+			}
+
+			> .order-summary {
+				margin-top: 32px;
+			}
 		}
 	}
 }
@@ -333,15 +837,24 @@
 
 	.store-content {
 
-		// Cart: line items beside the order summary.
+		// Cart: notices and lines beside the order summary (Figma 940 + 380).
 		.woocommerce:has(.woocommerce-cart-form) {
 			display: grid;
-			grid-template-columns: minmax(0, 1fr) 375px;
+			grid-template-columns: minmax(0, 1fr) 380px;
 			gap: 0 40px;
 			align-items: start;
 
 			> .woocommerce-notices-wrapper {
-				grid-column: 1 / -1;
+				grid-column: 1;
+			}
+
+			> .woocommerce-cart-form {
+				grid-column: 1;
+			}
+
+			> .cart-collaterals {
+				grid-column: 2;
+				grid-row: 1 / span 2;
 			}
 		}
 
@@ -366,7 +879,7 @@
 					width: 100%;
 				}
 
-				.col-2 {
+				.col-2:not(:empty) {
 					margin-top: 24px;
 				}
 			}
@@ -375,6 +888,31 @@
 			#order_review {
 				grid-column: 2;
 			}
+
+			#order_review_heading {
+				margin-top: 24px;
+				padding: 0 24px;
+			}
+		}
+
+		// Order received: everything in the left column, the order summary card
+		// beside it (Figma 940 + 380), staying in view.
+		.woocommerce-order {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 380px;
+			gap: 0 40px;
+			align-items: start;
+
+			> * {
+				grid-column: 1;
+			}
+
+			> .order-summary {
+				position: sticky;
+				top: calc(var(--upskill-header-height, 96px) + 24px);
+				grid-column: 2;
+				grid-row: 1 / span 12;
+			}
 		}
 	}
 }
@@ -382,5 +920,11 @@
 // Group Registration's own "Proceed to Group" link repeats the "Enrol Your
 // Team" button in "What happens next" (template-parts/commerce/next-steps.php).
 .store-content .ldgr-goto-dashboard-div {
+	display: none;
+}
+
+// The cart updates itself once js/components/cart.js runs; WooCommerce's
+// "Update cart" button stays in the markup for it (and without JavaScript).
+html.has-cart-js .store-content .woocommerce table.shop_table.cart tr:has(> td.actions) {
 	display: none;
 }
