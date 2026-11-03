@@ -3575,17 +3575,28 @@
       font-size: 2.25rem;
     }
   }
+  @media (width >= 375px) {
+    .xs\:flex-row {
+      flex-direction: row;
+    }
+  }
   @media (width >= 480px) {
     .sml\:grid {
       display: grid;
     }
   }
   @media (width >= 576px) {
+    .smlr\:flex {
+      display: flex;
+    }
     .smlr\:w-\[203px\] {
       width: 203px;
     }
     .smlr\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .smlr\:flex-wrap {
+      flex-wrap: wrap;
     }
     .smlr\:items-center {
       align-items: center;

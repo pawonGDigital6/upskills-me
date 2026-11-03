@@ -26,7 +26,7 @@ $upskill_paid  = $upskill_order->is_paid();
 			$upskill_item    = upskill_store_item( $upskill_product );
 			$upskill_image   = $upskill_item['course'] ? get_post_thumbnail_id( $upskill_item['course'] ) : ( $upskill_product ? $upskill_product->get_image_id() : 0 );
 			?>
-			<li class="flex flex-col gap-4 border-gray-100 py-6 not-first:border-t sm:flex-row sm:gap-5">
+			<li class="flex flex-col gap-4 border-gray-100 py-6 not-first:border-t xs:flex-row sm:gap-5">
 				<?php if ( $upskill_image ) : ?>
 					<?php upskill_image( $upskill_image, 'full', array( 'class' => 'h-[53px] w-[84px] flex-none self-start rounded-lg object-cover', 'alt' => '', 'sizes' => '84px' ) ); ?>
 				<?php endif; ?>
@@ -36,7 +36,7 @@ $upskill_paid  = $upskill_order->is_paid();
 					<?php if ( $upskill_item['summary'] ) : ?>
 						<p class="pt-1 text-base text-gray-500"><?php echo esc_html( $upskill_item['summary'] ); ?></p>
 					<?php endif; ?>
-					<dl class="flex flex-wrap gap-x-6 gap-y-3 pt-4 text-[15px] leading-[1.62] tracking-[-0.01em]">
+					<dl class="smlr:flex smlr:flex-wrap grid grid-cols-2 gap-x-6 gap-y-3 pt-4 text-[15px] leading-[1.62] tracking-[-0.01em]">
 						<?php if ( $upskill_item['level'] ) : ?>
 							<div><dt class="text-xs text-[#6b6b72]"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?></dt><dd class="pt-0.5 font-medium text-gray-900"><?php echo esc_html( $upskill_item['level'] ); ?></dd></div>
 						<?php endif; ?>
