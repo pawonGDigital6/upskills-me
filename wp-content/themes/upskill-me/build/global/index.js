@@ -279,11 +279,35 @@ function submitCart(delay) {
     }
   }, delay);
 }
+
+/**
+ * The header cart badge (template-parts/commerce/header-cart.php) follows the
+ * cart lines as WooCommerce redraws the cart in place (seats, level, remove).
+ */
+function syncHeaderCount() {
+  const badge = document.querySelector('[data-cart-count]');
+  const label = document.querySelector('[data-cart-label]');
+  const count = document.querySelectorAll('.woocommerce-cart-form tr.cart_item').length;
+  if (badge) {
+    badge.textContent = String(count);
+    badge.hidden = !count;
+  }
+  if (label) {
+    label.textContent = count ? (1 === count ? label.dataset.labelOne : label.dataset.labelMany).replace('%d', String(count)) : label.dataset.labelEmpty;
+  }
+}
 function Cart() {
+  const content = document.querySelector('.store-content');
   if (!document.querySelector('.woocommerce-cart-form')) {
     return;
   }
   document.documentElement.classList.add('has-cart-js');
+  if (content && 'MutationObserver' in window) {
+    new MutationObserver(syncHeaderCount).observe(content, {
+      childList: true,
+      subtree: true
+    });
+  }
   document.addEventListener('click', event => {
     const step = event.target.closest('[data-seat-step]');
     const input = step?.closest('.cart-seats')?.querySelector('input.qty');
@@ -1417,7 +1441,7 @@ module.exports = window["wp"]["domReady"];
 /******/ 	
 /******/ 	/* webpack/runtime/get javascript chunk filename */
 /******/ 	// This function allow to reference async chunks
-/******/ 	__webpack_require__.u = (chunkId) => (chunkId + ".js?ver=" + {"vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459":"cb17ec859bff411b533f","course-gallery":"bb0bd8f34e9eaf2e996d"}[chunkId] + "");
+/******/ 	__webpack_require__.u = (chunkId) => (chunkId + ".js?ver=" + {"vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459":"cb17ec859bff411b533f","course-gallery":"68e52abf704d24800b08"}[chunkId] + "");
 /******/ 	
 /******/ 	/* webpack/runtime/get mini-css chunk filename */
 /******/ 	// This function allow to reference async chunks
