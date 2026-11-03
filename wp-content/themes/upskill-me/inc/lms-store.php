@@ -269,11 +269,30 @@ if ( ! function_exists( 'upskill_cart_switch_levels' ) ) {
 			}
 		}
 
-		// WooCommerce then says "Cart updated.", as for a seat change.
+		// What changed, for the message (see the woocommerce_add_success filter below).
+		$GLOBALS['upskill_cart_change'] = $done ? 'cohort' : ( $cart_updated ? 'seats' : '' );
+
 		return $cart_updated || $done;
 	}
 }
 add_filter( 'woocommerce_update_cart_action_cart_updated', 'upskill_cart_switch_levels' );
+
+/**
+ * WooCommerce's "Cart updated." names what changed: the cohort (level) or
+ * the number of seats. Only in the update request handled above.
+ */
+add_filter(
+	'woocommerce_add_success',
+	static function ( $message ) {
+		$change = $GLOBALS['upskill_cart_change'] ?? '';
+
+		if ( ! $change || __( 'Cart updated.', 'woocommerce' ) !== $message ) { // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch -- WooCommerce's own string.
+			return $message;
+		}
+
+		return 'cohort' === $change ? __( 'Cohort updated in cart.', 'upskill-me' ) : __( 'Number of seats updated in cart.', 'upskill-me' );
+	}
+);
 
 /**
  * Coupons are entered at checkout ("Have a coupon?"); the cart, as drawn,

@@ -452,11 +452,10 @@
 		padding-top: 20px;
 	}
 
-	// While it updates the cart, WooCommerce's cart.js lays a blockUI sheet over
-	// the lines and the summary with an inline white background (hence
-	// !important); only its spinner (::before) is kept.
-	:is(.woocommerce-cart-form, .cart_totals) .blockUI.blockOverlay {
-		background: none !important;
+	// Room around the lines, so WooCommerce's update overlay (blockUI, laid over
+	// the form while the cart updates) does not sit tight against them.
+	.woocommerce-cart-form {
+		padding: 12px;
 	}
 
 	// Order summary card (Figma 380 wide, 24px padding and corners).
