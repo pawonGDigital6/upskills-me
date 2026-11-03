@@ -42,16 +42,16 @@ if ( 'name' === ( $args['part'] ?? 'name' ) ) :
 endif;
 ?>
 	<?php if ( count( $upskill_levels ) > 1 ) : ?>
-		<span class="cart-line__cohort flex items-center gap-2.5 pt-4">
+		<span class="cart-line__cohort flex max-smlr:flex-col smlr:items-center gap-2.5 pt-4">
 			<label class="text-sm text-gray-500" for="<?php echo esc_attr( 'cohort-' . $upskill_key ); ?>"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?></label>
 			<?php // Figma dropdown: 203x46 pill, 14/500 #55555f. ?>
 			<span class="inline-grid *:col-start-1 *:row-start-1">
-				<select class="cart-line__select h-[46px] w-[203px] max-w-full cursor-pointer appearance-none rounded-full border border-line bg-white pr-11 pl-4 text-sm font-medium text-[#55555f] focus:border-brand-700 focus:outline-none" id="<?php echo esc_attr( 'cohort-' . $upskill_key ); ?>" name="<?php echo esc_attr( 'upskill_level[' . $upskill_key . ']' ); ?>" data-cart-level>
+				<select class="cart-line__select h-[46px] smlr:w-[203px] w-full indent-0.5 max-w-full cursor-pointer appearance-none rounded-full border border-line bg-white pr-11! pl-4! text-sm font-medium text-[#55555f] focus:border-brand-700 focus:outline-none" id="<?php echo esc_attr( 'cohort-' . $upskill_key ); ?>" name="<?php echo esc_attr( 'upskill_level[' . $upskill_key . ']' ); ?>" data-cart-level>
 					<?php foreach ( $upskill_levels as $upskill_level ) : ?>
 						<option value="<?php echo esc_attr( $upskill_level['id'] ); ?>"<?php selected( (int) $upskill_line['variation_id'], (int) $upskill_level['id'] ); ?>><?php echo esc_html( $upskill_level['label'] ); ?></option>
 					<?php endforeach; ?>
 				</select>
-				<span class="pointer-events-none mr-4 self-center justify-self-end text-gray-950" aria-hidden="true"><?php upskill_icon( 'field-chevron', 'size-4' ); ?></span>
+				<span class="pointer-events-none mr-4 self-center justify-self-end text-gray-950" aria-hidden="true"><?php upskill_icon( 'field-chevron', 'size-6' ); ?></span>
 			</span>
 		</span>
 	<?php elseif ( $upskill_item['level'] ) : ?>

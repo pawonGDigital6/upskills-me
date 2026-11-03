@@ -353,6 +353,7 @@
 			.cart-remove__icon {
 				width: 13px;
 				height: 13px;
+				margin-top: -4px;
 			}
 		}
 
@@ -416,6 +417,7 @@
 	.cart-seats__unit {
 		color: var(--color-gray-500);
 		font-size: var(--text-sm);
+		margin-top: 2px;
 	}
 
 	.quantity .qty {
@@ -444,8 +446,16 @@
 		}
 	}
 
+	.woocommerce-Price-amount{
+		font-weight: 600;
+	}
+
 	.cart-price__unit {
 		display: block;
+		@media (width < 568px) {
+			display: inline-block;
+			margin-top: 2px;
+		}
 	}
 
 	.cart-browse {

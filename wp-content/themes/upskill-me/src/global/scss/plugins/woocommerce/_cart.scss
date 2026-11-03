@@ -1,0 +1,37 @@
+body {
+	&.woocommerce-cart {
+		.woocommerce-notices-wrapper:not(:has(.woocommerce-message)) {
+			display: none;
+		}
+		.cart-line__select {
+			border-radius: 50px !important;
+		}
+		.woocommerce table.shop_table.cart tr.cart_item .product-quantity {
+			@media (width < 568px) {
+				width: calc(100vw - 160px);
+				margin-left: auto;
+			}
+		}
+		.woocommerce .cart-seats__access {
+			@media (width < 568px) {
+				width: 100%;
+			}
+		}
+		.woocommerce table.shop_table.cart tr.cart_item {
+			@media (width < 568px) {
+				grid-template-areas: "thumb name name" "seats seats seats" "total price remove ";
+			}
+		}
+		.woocommerce table.shop_table.cart tr.cart_item > .product-subtotal {
+			@media (width < 568px) {
+				min-width: 152px;
+				text-align: left !important;
+			}
+		}
+		.cart-summary__checkout {
+			@media (width < 568px) {
+				justify-content: center;
+			}
+		}
+	}
+}
