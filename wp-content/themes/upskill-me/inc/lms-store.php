@@ -269,26 +269,11 @@ if ( ! function_exists( 'upskill_cart_switch_levels' ) ) {
 			}
 		}
 
-		if ( $done ) {
-			$GLOBALS['upskill_cart_level_switched'] = true;
-			wc_add_notice( '<strong>' . esc_html__( 'Cohort updated.', 'upskill-me' ) . '</strong> ' . esc_html__( 'Your selection is saved. Seats and pricing update at checkout.', 'upskill-me' ), 'notice' );
-		}
-
+		// WooCommerce then says "Cart updated.", as for a seat change.
 		return $cart_updated || $done;
 	}
 }
 add_filter( 'woocommerce_update_cart_action_cart_updated', 'upskill_cart_switch_levels' );
-
-/**
- * After a level switch, the "Cohort updated" notice replaces WooCommerce's
- * generic "Cart updated."
- */
-add_filter(
-	'woocommerce_add_success',
-	static function ( $message ) {
-		return ! empty( $GLOBALS['upskill_cart_level_switched'] ) && __( 'Cart updated.', 'woocommerce' ) === $message ? '' : $message; // phpcs:ignore WordPress.WP.I18n.TextDomainMismatch -- comparing WooCommerce's own string.
-	}
-);
 
 /**
  * Coupons are entered at checkout ("Have a coupon?"); the cart, as drawn,
