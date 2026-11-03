@@ -64,6 +64,7 @@ $upskill_cta          = upskill_option( 'header_cta' );
 				<span class="screen-reader-text"><?php esc_html_e( 'Search training', 'upskill-me' ); ?></span>
 				<?php upskill_icon( 'search' ); ?>
 			</button>
+			<?php get_template_part( 'template-parts/commerce/header-cart' ); ?>
 			<?php get_template_part( 'template-parts/account/header-menu' ); ?>
 			<?php upskill_button( $upskill_cta, array( 'size' => 'sm', 'class' => 'site-header__cta' ) ); ?>
 			<button class="site-header__icon site-header__burger" type="button" aria-expanded="false" aria-controls="site-drawer" data-drawer-toggle>

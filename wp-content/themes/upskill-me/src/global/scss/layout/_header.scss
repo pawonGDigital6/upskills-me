@@ -260,6 +260,19 @@
 	}
 }
 
+// Below the 390 frame the logo and four icons (search, cart, account, menu)
+// only fit with 34px hit areas and no gap (down to 320).
+@media (width < 390px) {
+	.site-header__actions {
+		gap: 0;
+	}
+
+	.site-header__icon {
+		width: 34px;
+		height: 34px;
+	}
+}
+
 .site-header__cta {
 	display: none;
 
