@@ -57,7 +57,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 	do_action( 'learndash-course-before', get_the_ID(), $course_id, $user_id );
 	?>
 
-	<section class="course-hero bg-gray-25 pt-6 pb-16 lg:pt-10 lg:pb-[72px]">
+	<section class="course-hero overflow-hidden bg-gray-25 pt-6 pb-16 lg:pt-10 lg:pb-[72px]">
 		<div class="container">
 			<nav class="flex flex-wrap items-center gap-2 text-xs leading-[1.62] tracking-[-0.01em] text-[#6b6b72]" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
 				<a class="hover:text-brand-700" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'upskill-me' ); ?></a>
@@ -71,7 +71,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 				<span class="font-medium text-[#5d3a8f]" aria-current="page"><?php echo esc_html( get_the_title( $course_id ) ); ?></span>
 			</nav>
 
-			<div class="mt-6 grid gap-8 lg:mt-8 lg:grid-cols-[minmax(0,659fr)_minmax(0,664fr)] lg:items-start lg:gap-10">
+			<div class="mt-6 grid gap-4 lg:mt-8 lg:grid-cols-[minmax(0,659fr)_minmax(0,664fr)] lg:items-start lg:gap-10">
 				<?php // min-w-0: a grid item sizes to its content by default, and Swiper sizes to its container, so without it they grow each other. ?>
 				<div class="course-hero__media flex min-w-0 flex-col gap-3">
 					<?php
@@ -143,7 +143,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 							</div>
 
 							<?php if ( count( $upskill_gallery ) > 1 ) : ?>
-								<div class="swiper w-full" data-gallery-thumbs>
+								<div class="swiper sm:w-full !w-[calc(100%+32px)] max-sm:-mr-4! max-sm:pr-6!" data-gallery-thumbs>
 									<div class="swiper-wrapper">
 										<?php foreach ( $upskill_gallery as $upskill_item ) : ?>
 											<?php $upskill_number = $upskill_item['session'] ? str_pad( (string) ( array_search( $upskill_item['session'], $upskill_sessions, true ) + 1 ), 2, '0', STR_PAD_LEFT ) : ''; ?>
@@ -182,7 +182,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 					<?php endif; ?>
 
 					<?php // Share copies the course link (the copy-link script from the blog, js/components/article.js). ?>
-					<div class="relative mt-2 flex">
+					<div class="relative sm:mt-2 mt-1 flex">
 						<button class="inline-flex h-[42px] items-center rounded-full border border-line bg-white px-5 text-sm font-medium text-gray-950 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700 leading-none" type="button" data-copy-link="<?php echo esc_url( get_permalink( $course_id ) ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>"><?php esc_html_e( 'Share', 'upskill-me' ); ?></button>
 						<span class="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[220px] rounded-md bg-gray-950 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-xs transition-opacity duration-200 data-visible:opacity-100 z-4" role="status" data-copy-status></span>
 					</div>

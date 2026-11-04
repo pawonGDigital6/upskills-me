@@ -51,7 +51,7 @@ if ( ! $items ) {
 	return;
 }
 
-$attributes = upskill_block_attributes( $block, 'block-course-glance bg-gray-25 pt-2 pb-16 lg:pb-20' );
+$attributes = upskill_block_attributes( $block, 'block-course-glance bg-gray-25 pt-2 pb-12 lg:pb-20' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<div class="container">

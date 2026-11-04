@@ -24,7 +24,7 @@ $attributes = upskill_block_attributes( $block, 'block-course-about grid grid-co
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
 	<?php // Figma's silk photograph fills the section (theme image, cropped from the Figma original). ?>
 	<img class="course-about__texture size-full object-cover" src="<?php echo esc_url( upskill_theme_image( 'texture-silk.webp' ) ); ?>" alt="" width="1024" height="384" loading="lazy" decoding="async">
-	<div class="container section-y relative grid gap-10 lg:grid-cols-[1fr_50.9%] lg:items-start lg:gap-16">
+	<div class="container section-y relative grid sm:gap-10 gap-6 lg:grid-cols-[1fr_50.9%] lg:items-start lg:gap-16">
 		<?php
 		upskill_section_header(
 			array(
@@ -35,7 +35,7 @@ $attributes = upskill_block_attributes( $block, 'block-course-about grid grid-co
 		);
 		?>
 		<?php if ( $list ) : ?>
-			<div class="course-about__card reveal rounded-[24px] bg-white p-6 shadow-xs" style="--i:1">
+			<div class="course-about__card reveal rounded-[24px] bg-white sm:p-6 p-4 shadow-xs" style="--i:1">
 				<?php if ( get_field( 'list_title' ) ) : ?>
 					<h3 class="course-about__list-title text-[20px] font-medium text-gray-950"><?php echo esc_html( (string) get_field( 'list_title' ) ); ?></h3>
 				<?php endif; ?>
