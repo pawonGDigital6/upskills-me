@@ -44,7 +44,7 @@ $upskill_page_url = static fn( $page ) => ( $page > 1 ? add_query_arg( 'team-pag
 		<?php get_template_part( 'template-parts/account/pending-orders' ); ?>
 	</section>
 
-	<section class="bg-white py-12 lg:py-16" aria-labelledby="org-training">
+	<section class="up-active-trainings pb-8 pt-7" aria-labelledby="org-training">
 		<div class="container">
 			<?php
 			get_template_part(
@@ -52,7 +52,7 @@ $upskill_page_url = static fn( $page ) => ( $page > 1 ? add_query_arg( 'team-pag
 				null,
 				array(
 					'eyebrow' => __( 'Active training', 'upskill-me' ),
-					'icon'    => 'video-book',
+					'icon'    => 'category',
 					'heading' => __( 'Your training packages.', 'upskill-me' ),
 					'id'      => 'org-training',
 					'intro'   => __( 'Choose a purchased training package to begin assigning seats to your people.', 'upskill-me' ),
@@ -62,7 +62,7 @@ $upskill_page_url = static fn( $page ) => ( $page > 1 ? add_query_arg( 'team-pag
 			?>
 
 			<?php if ( $upskill_groups ) : ?>
-				<ul class="mt-8 grid gap-5 md:grid-cols-2 lg:mt-12 xl:grid-cols-3" role="list">
+				<ul class="mt-8 grid gap-5 lg:grid-cols-3 md:grid-cols-2 lg:mt-12 xl:grid-cols-3" role="list">
 					<?php foreach ( $upskill_groups as $upskill_group ) : ?>
 						<?php $upskill_used_pc = $upskill_group['seats'] ? (int) round( 100 * $upskill_group['used'] / $upskill_group['seats'] ) : 0; ?>
 						<li class="org-card flex flex-col rounded-[24px] border border-gray-900/10 bg-white p-6">
@@ -153,7 +153,7 @@ $upskill_page_url = static fn( $page ) => ( $page > 1 ? add_query_arg( 'team-pag
 		</div>
 	</section>
 
-	<section class="py-12 lg:py-16" aria-labelledby="org-team">
+	<section class="upskill-team-enroll py-16" aria-labelledby="org-team">
 		<div class="container">
 			<?php
 			get_template_part(

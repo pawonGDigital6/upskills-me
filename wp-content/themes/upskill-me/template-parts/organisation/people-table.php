@@ -38,8 +38,8 @@ if ( ! $upskill_rows ) {
 	return;
 }
 ?>
-<div class="org-people overflow-hidden rounded-lg border border-gray-900/10 bg-white">
-	<table class="w-full border-collapse text-left text-base text-gray-950 max-md:block">
+<div class="org-people md:overflow-auto rounded-lg border border-gray-900/10 bg-white">
+	<table class="border-collapse text-left text-base text-gray-950 max-md:block w-full">
 		<thead class="max-md:hidden">
 			<tr>
 				<?php foreach ( $upskill_heading as $upskill_key => $upskill_label ) : ?>

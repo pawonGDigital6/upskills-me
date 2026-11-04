@@ -1407,6 +1407,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .overflow-auto {
+    overflow: auto;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -2107,6 +2110,12 @@
   .py-6\.5 {
     padding-block: calc(var(--spacing) * 6.5);
   }
+  .py-8 {
+    padding-block: calc(var(--spacing) * 8);
+  }
+  .py-10 {
+    padding-block: calc(var(--spacing) * 10);
+  }
   .py-12 {
     padding-block: calc(var(--spacing) * 12);
   }
@@ -2130,6 +2139,15 @@
   }
   .py-\[10px_8px\] {
     padding-block: 10px 8px;
+  }
+  .py-\[12\] {
+    padding-block: 12;
+  }
+  .py-\[12_10\] {
+    padding-block: 12 10;
+  }
+  .py-\[12_\] {
+    padding-block: 12 ;
   }
   .py-\[19px\] {
     padding-block: 19px;
@@ -2178,6 +2196,9 @@
   }
   .pt-8 {
     padding-top: calc(var(--spacing) * 8);
+  }
+  .pt-9 {
+    padding-top: calc(var(--spacing) * 9);
   }
   .pt-10 {
     padding-top: calc(var(--spacing) * 10);
@@ -2289,6 +2310,9 @@
   }
   .pb-7 {
     padding-bottom: calc(var(--spacing) * 7);
+  }
+  .pb-8 {
+    padding-bottom: calc(var(--spacing) * 8);
   }
   .pb-10 {
     padding-bottom: calc(var(--spacing) * 10);
@@ -3914,6 +3938,9 @@
     .md\:w-\[190px\] {
       width: 190px;
     }
+    .md\:w-max {
+      width: max-content;
+    }
     .md\:auto-cols-fr {
       grid-auto-columns: minmax(0, 1fr);
     }
@@ -3931,6 +3958,9 @@
     }
     .md\:grid-cols-none {
       grid-template-columns: none;
+    }
+    .md\:overflow-auto {
+      overflow: auto;
     }
     .md\:border-t {
       border-top-style: var(--tw-border-style);
@@ -4423,6 +4453,9 @@
     .lg\:self-stretch {
       align-self: stretch;
     }
+    .lg\:overflow-auto {
+      overflow: auto;
+    }
     .lg\:overflow-hidden {
       overflow: hidden;
     }
@@ -4734,8 +4767,14 @@
     .lg\:pb-9 {
       padding-bottom: calc(var(--spacing) * 9);
     }
+    .lg\:pb-10 {
+      padding-bottom: calc(var(--spacing) * 10);
+    }
     .lg\:pb-12 {
       padding-bottom: calc(var(--spacing) * 12);
+    }
+    .lg\:pb-16 {
+      padding-bottom: calc(var(--spacing) * 16);
     }
     .lg\:pb-20 {
       padding-bottom: calc(var(--spacing) * 20);
