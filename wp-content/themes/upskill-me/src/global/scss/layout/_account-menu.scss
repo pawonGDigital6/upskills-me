@@ -30,7 +30,9 @@
 	height: 32px;
 	border-radius: 999px;
 	background-color: var(--color-brand-700);
-	box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-100);
+	box-shadow:
+		0 0 0 2px var(--color-white),
+		0 0 0 3px var(--color-brand-100);
 	color: var(--color-white);
 	font-family: var(--font-sans); // a <button> does not inherit the page font
 	font-weight: 600;
@@ -38,10 +40,13 @@
 	line-height: 1;
 	letter-spacing: 0.02em;
 	transition: box-shadow 0.25s ease;
+	padding-top: 1px;
 
 	.account-menu__trigger:hover &,
 	.account-menu__trigger[aria-expanded="true"] & {
-		box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-300);
+		box-shadow:
+			0 0 0 2px var(--color-white),
+			0 0 0 3px var(--color-brand-300);
 	}
 
 	@media (width < 390px) {
