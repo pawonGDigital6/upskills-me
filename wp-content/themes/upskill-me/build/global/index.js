@@ -1174,6 +1174,39 @@ function Search() {
 
 /***/ },
 
+/***/ "./src/global/js/components/session-tabs.js"
+/*!**************************************************!*\
+  !*** ./src/global/js/components/session-tabs.js ***!
+  \**************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SessionTabs: () => (/* binding */ SessionTabs)
+/* harmony export */ });
+/**
+ * Session page progress strip (learndash/ld30/lesson.php, `[data-session-tabs]`).
+ *
+ * On phones the strip scrolls sideways (scss/plugins/learndash/_session.scss).
+ * Bring the current session into view so a learner on session 7 of 8 sees it
+ * without swiping. Only the strip scrolls (scrollLeft), never the page; does
+ * nothing when the strip fits.
+ */
+function SessionTabs(root = document) {
+  root.querySelectorAll('[data-session-tabs]').forEach(strip => {
+    const current = strip.querySelector('[aria-current="step"]')?.closest('li');
+    if (!current || strip.scrollWidth <= strip.clientWidth) {
+      return;
+    }
+
+    // Keep the previous session's edge visible as a hint that the strip scrolls.
+    const peek = current.previousElementSibling ? 24 : 0;
+    strip.scrollLeft = Math.max(0, current.offsetLeft - strip.offsetLeft - peek);
+  });
+}
+
+/***/ },
+
 /***/ "./src/global/js/components/video-player.js"
 /*!**************************************************!*\
   !*** ./src/global/js/components/video-player.js ***!
@@ -1302,6 +1335,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_library__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/library */ "./src/global/js/components/library.js");
 /* harmony import */ var _components_buy_box__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/buy-box */ "./src/global/js/components/buy-box.js");
 /* harmony import */ var _components_cart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/cart */ "./src/global/js/components/cart.js");
+/* harmony import */ var _components_session_tabs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/session-tabs */ "./src/global/js/components/session-tabs.js");
+
 
 
 
@@ -1328,6 +1363,7 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(() => {
   (0,_components_library__WEBPACK_IMPORTED_MODULE_10__.Library)();
   (0,_components_buy_box__WEBPACK_IMPORTED_MODULE_11__.BuyBox)();
   (0,_components_cart__WEBPACK_IMPORTED_MODULE_12__.Cart)();
+  (0,_components_session_tabs__WEBPACK_IMPORTED_MODULE_13__.SessionTabs)();
   // The course hero gallery (Swiper) loads only on a course page.
   if (document.querySelector('[data-course-gallery]')) {
     Promise.all(/*! import() | course-gallery */[__webpack_require__.e("vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459"), __webpack_require__.e("course-gallery")]).then(() => (__webpack_require__(/*! ./components/course-gallery */ "./src/global/js/components/course-gallery.js"))).then(({

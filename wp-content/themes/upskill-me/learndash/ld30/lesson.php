@@ -66,11 +66,14 @@ $upskill_session_label = static function ( $index, $session ) use ( $upskill_ses
 				<span>
 					<?php
 					/* translators: 1: current session number, 2: number of sessions, 3: percent complete. */
-					printf( esc_html__( 'Session %1$d of %2$d · %3$d%% Complete', 'upskill-me' ), (int) $upskill_index + 1, (int) $upskill_total, (int) $upskill_percent );
+					printf( esc_html__( 'Session %1$d of %2$d · %3$d%%', 'upskill-me' ), (int) $upskill_index + 1, (int) $upskill_total, (int) $upskill_percent );
 					?>
+					<?php // Figma greys the word "Complete". ?>
+					<span class="session__progress-muted"><?php esc_html_e( 'Complete', 'upskill-me' ); ?></span>
 				</span>
 			</p>
-			<ol class="session__tabs" style="--sessions: <?php echo (int) max( 1, $upskill_total ); ?>">
+			<?php // Phones: a strip that scrolls sideways to the screen edge; js/components/session-tabs.js brings the current session into view. ?>
+			<ol class="session__tabs" style="--sessions: <?php echo (int) max( 1, $upskill_total ); ?>" data-session-tabs>
 				<?php foreach ( $upskill_sessions as $upskill_i => $upskill_session_id ) : ?>
 					<?php
 					$upskill_complete = $user_id && learndash_is_lesson_complete( $user_id, $upskill_session_id, $course_id );

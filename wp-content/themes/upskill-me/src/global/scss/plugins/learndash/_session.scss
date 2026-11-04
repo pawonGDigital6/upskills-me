@@ -43,6 +43,17 @@ $session-bar: #6744a8;
 		}
 	}
 
+	// Figma greys the word "Complete".
+	&__progress-muted {
+		color: #6b6b72;
+		font-weight: 400;
+
+		@media (width >= 1025px) {
+			color: var(--color-gray-500);
+			font-weight: 500;
+		}
+	}
+
 	&__tabs {
 		display: grid;
 		grid-template-columns: repeat(var(--sessions, 1), minmax(0, 1fr));
@@ -53,6 +64,33 @@ $session-bar: #6744a8;
 
 		@media (width >= 1025px) {
 			gap: 6px;
+		}
+
+		// Phones: one row that scrolls sideways (no squeezed, wrapping labels),
+		// running to the right edge of the screen; each session keeps 76px and
+		// a few sessions still share the width.
+		@media (width < 640px) {
+			position: relative; // Contains the labels' screen-reader text, which otherwise widened the page.
+			display: flex;
+			overflow-x: auto;
+			margin-right: calc(-1 * var(--spacing-gutter));
+			padding-right: var(--spacing-gutter);
+			padding-bottom: 4px;
+			scroll-padding-inline: 0 var(--spacing-gutter);
+			scroll-snap-type: x proximity;
+			scrollbar-width: none;
+			overscroll-behavior-x: contain;
+
+			&::-webkit-scrollbar {
+				display: none;
+			}
+		}
+	}
+
+	&__tab {
+		@media (width < 640px) {
+			flex: 1 0 76px;
+			scroll-snap-align: start;
 		}
 	}
 
@@ -100,20 +138,15 @@ $session-bar: #6744a8;
 		background-size: 100% 100%, auto;
 	}
 
-	// Phones: six labels share 350px, so they wrap (as drawn) and the tick is
-	// left to the filled bar.
+	// One line at every width (phones scroll the strip instead of wrapping).
 	&__tab-label {
 		display: inline-flex;
 		align-items: center;
 		gap: 4px;
 		min-width: 0;
-		font-size: 11px;
-		line-height: 1.1;
-		overflow-wrap: anywhere;
-
-		@media (width >= 640px) {
-			white-space: nowrap;
-		}
+		font-size: 12px;
+		line-height: 1.2;
+		white-space: nowrap;
 
 		@media (width >= 1025px) {
 			gap: 5px;
@@ -133,15 +166,11 @@ $session-bar: #6744a8;
 	}
 
 	&__tab-icon {
-		display: none;
+		display: block;
 		flex: none;
 		width: 11px;
 		height: 11px;
 		color: $session-bar;
-
-		@media (width >= 640px) {
-			display: block;
-		}
 	}
 
 	// Main: 52px on phones, 48 on desktop; 36/48 below.
@@ -257,6 +286,17 @@ $session-bar: #6744a8;
 			line-height: 1;
 		}
 
+		// Start / end times on the bar's centre line, with the play button,
+		// track and icons (MediaElement's 16px top padding sat them 3px low).
+		.ld-video .mejs-container .mejs-currenttime-container,
+		.ld-video .mejs-container .mejs-duration-container {
+			display: flex;
+			align-items: center;
+			height: 40px;
+			padding-top: 0;
+			padding-bottom: 0;
+		}
+
 		.mejs-time-total {
 			background: rgb(255 255 255 / 14%);
 		}
@@ -277,6 +317,52 @@ $session-bar: #6744a8;
 		}
 	}
 
+	// The theme's primary pill, not LearnDash's full-width blue bar with a tick
+	// (its rules carry two :not()s, hence the element and both form classes here).
+	.session__complete form.session__complete-form.sfwd-mark-complete {
+		display: inline-block;
+		width: auto;
+
+		&::after {
+			display: none;
+		}
+
+		input.session__complete-button {
+			width: auto;
+			max-width: none;
+			min-height: 48px;
+			margin: 0;
+			padding: 0 28px;
+			border: 0;
+			border-radius: 999px;
+			background-color: var(--color-brand-700);
+			color: var(--color-white);
+			font-weight: 500;
+			font-size: var(--text-sm);
+			text-align: center;
+			cursor: pointer;
+			transition: background-color 0.2s ease;
+			line-height: 1;
+
+			&:hover {
+				background-color: var(--color-brand-800);
+			}
+
+			&:focus-visible {
+				outline: 2px solid var(--color-brand-700);
+				outline-offset: 2px;
+			}
+
+			@media (width < 640px) {
+				width: 100%;
+			}
+		}
+
+		@media (width < 640px) {
+			display: block;
+		}
+	}
+
 	// Previous / next session cards.
 	&__nav {
 		display: grid;
@@ -288,12 +374,16 @@ $session-bar: #6744a8;
 		}
 	}
 
+	// Figma 49325:18592: #f2f2f2 card, 1px #e6e6e6 border, 16px corners, 12/14 padding.
+	// LearnDash's ".learndash-wrapper:not():not() a:not(.button)" sets
+	// border-bottom: none and box-shadow: none, both !important, on every link
+	// (it cut the cards' bottom edge), so the border is restated with !important.
 	&__nav-link {
 		display: flex;
 		align-items: center;
 		gap: 12px;
 		padding: 12px 14px;
-		border: 1px solid var(--color-gray-100);
+		border: 1px solid var(--color-gray-100) !important;
 		border-radius: 16px;
 		background-color: var(--color-gray-50);
 		color: inherit;
@@ -301,13 +391,23 @@ $session-bar: #6744a8;
 		transition: border-color 0.25s ease, background-color 0.25s ease;
 
 		&:hover {
-			border-color: var(--color-brand-500);
+			border-color: var(--color-brand-500) !important;
 			background-color: var(--color-white);
 		}
 
 		&:focus-visible {
 			outline: 2px solid var(--color-brand-700);
 			outline-offset: 2px;
+		}
+	}
+
+	// Outranks LearnDash's rule (0,5,1, !important): wrapper and page classes,
+	// the nav and link classes, and the same two :not()s.
+	&.learndash-wrapper .session__nav a.session__nav-link:not(.button):not(.screen-reader-shortcut) {
+		border-bottom: 1px solid var(--color-gray-100) !important;
+
+		&:hover {
+			border-bottom-color: var(--color-brand-500) !important;
 		}
 	}
 
@@ -327,15 +427,22 @@ $session-bar: #6744a8;
 		width: 42px;
 		height: 42px;
 		border-radius: 999px;
-		background-color: var(--color-brand-700);
-		box-shadow: var(--shadow-btn);
+		// Figma: the 42px purple button with a 34px white-16% disc behind the arrow.
+		background:
+			radial-gradient(circle, rgb(255 255 255 / 16%) 12.5px, transparent 10px),
+			var(--color-brand-700);
+		// Figma's two drop shadows (0 4 14 -6 #2f1a51 10%, 0 1 2 #1a1a1a 4%).
+		box-shadow:
+			0 4px 14px -6px rgb(47 26 81 / 10%),
+			0 1px 2px rgb(26 26 26 / 4%);
 		color: var(--color-white);
 		transition: transform 0.4s cubic-bezier(0.22, 0.72, 0, 1);
 	}
 
+	// Figma: an 18px icon box (11px arrow).
 	&__nav-arrow {
-		width: 15px;
-		height: 15px;
+		width: 18px;
+		height: 18px;
 	}
 
 	&__nav-link--previous &__nav-arrow {
@@ -384,6 +491,10 @@ $session-bar: #6744a8;
 		@media (width >= 1025px) {
 			padding: 28px;
 		}
+
+		a.btn.session__info-button{
+			border-bottom: inherit !important;
+		}
 	}
 
 	&__info-label,
@@ -400,7 +511,7 @@ $session-bar: #6744a8;
 	}
 
 	&__info-title {
-		padding-top: 16px;
+		padding-top: 27px;
 		color: $session-ink;
 		font-weight: 500;
 		font-size: var(--text-h6);
@@ -466,13 +577,158 @@ $session-bar: #6744a8;
 		margin-top: 18px;
 		border-color: rgb(26 26 26 / 20%);
 		box-shadow: none;
+
 	}
 
-	// LearnDash's own alerts (step completed, lesson progression) keep their
-	// markup; give them the theme's spacing and corners.
-	.ld-alert {
-		margin-top: 24px;
+	// LearnDash's link rule also strips this pill's bottom border (see the
+	// session cards above); restated with the same specificity trick.
+	&.learndash-wrapper .session__info a.session__info-button:not(.button):not(.screen-reader-shortcut) {
+		font-size: 14px !important;
+		border-bottom: 1px solid rgb(26 26 26 / 20%) !important;
+	}
+
+	// LearnDash's own alerts ("step completed", "complete the previous
+	// session"), markup and links unchanged: one theme layout instead of
+	// LearnDash's (absolute icon, blue / yellow fills, a 185px blue button):
+	// icon and message on the left, a pill button on the right; stacked and
+	// centred on phones. Success is the brand tint, the progression warning
+	// amber (#fffaeb / #fedf89 / #f79009, the theme's review-star amber; no tokens).
+	.session__main .ld-alert {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px 20px;
+		margin: 24px 0 0;
+		padding: 16px 20px;
+		border: 1px solid var(--color-brand-200);
 		border-radius: 16px;
+		background-color: var(--color-brand-25);
+		color: var(--color-gray-700);
+		font-size: var(--text-sm);
+		line-height: 1.5;
+		text-align: left;
+
+		&:focus,
+		&:focus-visible {
+			outline: 2px solid var(--color-brand-300);
+			outline-offset: 2px;
+		}
+
+		.ld-alert-content {
+			display: flex;
+			flex: 1 1 280px;
+			align-items: center;
+			gap: 12px;
+			width: auto;
+			margin: 0;
+		}
+
+		.ld-alert-icon {
+			position: static;
+			display: grid;
+			flex: none;
+			place-items: center;
+			width: 36px;
+			height: 36px;
+			margin: 0;
+			padding: 0;
+			border-radius: 999px;
+			font-size: 18px;
+			transform: none;
+
+			&::before {
+				position: static;
+				display: block;
+				line-height: 1;
+				transform: none;
+			}
+		}
+
+		.ld-alert-messages,
+		.ld-alert-text {
+			color: var(--color-gray-950);
+			font-weight: 500;
+		}
+
+		// a.: LearnDash's .learndash-wrapper:not():not() .ld-button ties with a class here.
+		a.ld-button {
+			position: relative;
+			display: inline-flex;
+			flex: none;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+			width: auto;
+			min-width: 0;
+			max-width: none !important; // LearnDash caps it at 185–190px with !important.
+			min-height: 44px;
+			margin: 0;
+			padding: 0 20px;
+			border-radius: 999px;
+			background-color: var(--color-brand-700);
+			color: var(--color-white);
+			font-weight: 500;
+			font-size: var(--text-sm);
+			text-decoration: none !important;
+			transition: background-color 0.2s ease;
+			line-height: 1;
+
+			.ld-icon {
+				position: static;
+				order: 2;
+				font-size: 12px;
+				transform: none;
+				display: none;
+			}
+
+			.ld-icon-arrow-left {
+				order: 0;
+			}
+
+			&:hover {
+				background-color: var(--color-brand-800);
+			}
+
+			&:focus-visible {
+				outline: 2px solid var(--color-brand-700);
+				outline-offset: 2px;
+			}
+		}
+
+		@media (width < 640px) {
+			flex-direction: column;
+			align-items: stretch;
+			padding: 16px;
+
+			.ld-alert-content {
+				flex: none;
+				align-items: flex-start;
+			}
+
+			a.ld-button {
+				width: 100%;
+			}
+		}
+	}
+
+	.session__main .ld-alert-success .ld-alert-icon {
+		background-color: var(--color-brand-700);
+		color: var(--color-white);
+	}
+
+	.session__main .ld-alert-warning {
+		border-color: #fedf89;
+		background-color: #fffaeb;
+
+		// The alert glyph draws its own circle: amber glyph, no fill behind it.
+		.ld-alert-icon {
+			width: auto;
+			height: auto;
+			background: none;
+			color: #f79009;
+			font-size: 32px;
+			line-height: 1;
+		}
 	}
 }
 
