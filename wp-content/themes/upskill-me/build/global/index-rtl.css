@@ -6398,8 +6398,10 @@
   width: 19px;
   height: 19px;
 }
-.site-header__icon:hover {
-  background-color: rgba(26, 26, 26, 0.06);
+@media (hover: hover) {
+  .site-header__icon:hover {
+    background-color: rgba(26, 26, 26, 0.06);
+  }
 }
 
 @media (width < 390px) {

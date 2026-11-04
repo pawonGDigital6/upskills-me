@@ -254,9 +254,10 @@
 		width: 19px;
 		height: 19px;
 	}
-
-	&:hover {
-		background-color: rgb(26 26 26 / 6%);
+	@media (hover: hover) {
+		&:hover {
+			background-color: rgb(26 26 26 / 6%);
+		}
 	}
 }
 

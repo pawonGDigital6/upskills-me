@@ -36,7 +36,8 @@ $upskill_counts = array(
 		'label'  => __( 'Completed', 'upskill-me' ),
 		'value'  => count( $upskill_courses['completed'] ),
 		'text'   => __( 'Courses you have finished so far.', 'upskill-me' ),
-		'anchor' => '#completed-courses',
+		// The "Completed courses" section renders only once a course is finished.
+		'anchor' => $upskill_courses['completed'] ? '#completed-courses' : '#current-courses',
 	),
 	array(
 		'label'  => __( 'Total courses', 'upskill-me' ),

@@ -324,6 +324,13 @@ if (!function_exists('upskill_render_mobile_nav')) {
 													<?php echo esc_html($child->title); ?></a>
 											</li>
 										<?php endforeach; ?>
+										<?php // The parent's button only opens the panel; its own page ("View Industries") ends the list. ?>
+										<?php if ($item->url && '#' !== $item->url): ?>
+											<li>
+												<a<?php echo upskill_menu_item_link_atts($item, 'drawer__sublink'); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
+													<?php /* translators: %s: menu item title, e.g. Industries. */ echo esc_html(sprintf(__('View %s', 'upskill-me'), $item->title)); ?></a>
+											</li>
+										<?php endif; ?>
 									</ul>
 								</div>
 							<?php else: ?>
