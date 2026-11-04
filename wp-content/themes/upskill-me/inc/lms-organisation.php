@@ -184,3 +184,58 @@ if ( ! function_exists( 'upskill_group_registration_needs_assets' ) ) {
 	}
 }
 add_filter( 'upskill_needs_learndash_assets', 'upskill_group_registration_needs_assets' );
+
+if ( ! function_exists( 'upskill_org_course_groups' ) ) {
+	/**
+	 * The groups a user leads that hold a course, for the course page's
+	 * "Manage team" / "Buy more seats" bar and its add-seats buy box.
+	 *
+	 * Each group's level is the WooCommerce variation of the order that
+	 * created it (Group Registration keeps the order IDs on the group), so
+	 * extra seats are bought at the level the group already has. Group
+	 * Registration itself re-checks every add-seats purchase.
+	 *
+	 * @param int $user_id   User ID.
+	 * @param int $course_id Course ID.
+	 * @return array[] upskill_org_group_summary() fields (no rows) plus
+	 *                 product_id and variation_id (0 when unknown).
+	 */
+	function upskill_org_course_groups( $user_id, $course_id ) {
+		$groups = array();
+
+		foreach ( upskill_org_groups( $user_id ) as $group_id ) {
+			if ( ! in_array( (int) $course_id, array_map( 'intval', (array) learndash_group_enrolled_courses( $group_id ) ), true ) ) {
+				continue;
+			}
+
+			$summary = upskill_org_group_summary( $group_id );
+			unset( $summary['rows'] );
+			$summary['product_id']   = 0;
+			$summary['variation_id'] = 0;
+
+			foreach ( (array) get_post_meta( $group_id, 'wdm_group_reg_order_id_' . $group_id ) as $order_id ) {
+				$order = function_exists( 'wc_get_order' ) ? wc_get_order( (int) $order_id ) : null;
+
+				if ( ! $order ) {
+					continue;
+				}
+
+				foreach ( $order->get_items() as $item ) {
+					$product = $item instanceof WC_Order_Item_Product ? $item->get_product() : null;
+
+					$parent  = $product ? wc_get_product( $item->get_product_id() ) : null;
+
+					if ( $parent && function_exists( 'upskill_product_course' ) && (int) upskill_product_course( $parent ) === (int) $course_id ) {
+						$summary['product_id']   = (int) $item->get_product_id();
+						$summary['variation_id'] = (int) $item->get_variation_id();
+						break 2;
+					}
+				}
+			}
+
+			$groups[] = $summary;
+		}
+
+		return $groups;
+	}
+}

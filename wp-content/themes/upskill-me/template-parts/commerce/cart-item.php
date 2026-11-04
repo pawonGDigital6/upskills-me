@@ -25,6 +25,8 @@ $upskill_line   = $args['cart_item'];
 $upskill_key    = $args['key'];
 $upskill_parent = ! empty( $upskill_line['variation_id'] ) ? wc_get_product( $upskill_line['product_id'] ) : null;
 $upskill_levels = $upskill_parent && function_exists( 'upskill_product_levels' ) ? upskill_product_levels( $upskill_parent ) : array();
+// Extra seats for an existing group (Group Registration's "increase seats"): the level is the group's, so it is not switchable here.
+$upskill_add_to = 'increase_seats' === ( $upskill_line['ldgr_dynamic_option'] ?? '' ) ? (int) ( $upskill_line['ldgr_dynamic_value'] ?? 0 ) : 0;
 
 if ( 'name' === ( $args['part'] ?? 'name' ) ) :
 	?>
@@ -41,7 +43,17 @@ if ( 'name' === ( $args['part'] ?? 'name' ) ) :
 	return;
 endif;
 ?>
-	<?php if ( count( $upskill_levels ) > 1 ) : ?>
+	<?php if ( $upskill_add_to ) : ?>
+		<?php if ( $upskill_item['level'] ) : ?>
+			<span class="cart-line__cohort flex items-center gap-2.5 pt-4 text-sm text-gray-500"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?> <strong class="font-medium text-[#55555f]"><?php echo esc_html( $upskill_item['level'] ); ?></strong></span>
+		<?php endif; ?>
+		<span class="cart-line__seats-for block pt-2 text-sm text-gray-500">
+			<?php
+			/* translators: %s: group (team) name. */
+			printf( esc_html__( 'Extra seats for %s', 'upskill-me' ), '<strong class="font-medium text-[#55555f]">' . esc_html( get_the_title( $upskill_add_to ) ) . '</strong>' );
+			?>
+		</span>
+	<?php elseif ( count( $upskill_levels ) > 1 ) : ?>
 		<span class="cart-line__cohort flex max-smlr:flex-col smlr:items-center gap-2.5 pt-4">
 			<label class="text-sm text-gray-500" for="<?php echo esc_attr( 'cohort-' . $upskill_key ); ?>"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?></label>
 			<?php // Figma dropdown: 203x46 pill, 14/500 #55555f. ?>

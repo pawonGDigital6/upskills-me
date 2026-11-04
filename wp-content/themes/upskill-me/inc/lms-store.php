@@ -135,7 +135,16 @@ add_filter(
 		}
 
 		if ( is_checkout() ) {
-			return '<span class="store-line__title">' . esc_html( $item['title'] ) . '</span>' . ( $item['level'] ? '<span class="store-line__level">' . esc_html( $item['level'] ) . '</span>' : '' );
+			$level = $item['level'];
+
+			// Extra seats for an existing group (Group Registration's "increase seats"): say which team.
+			if ( 'increase_seats' === ( $cart_item['ldgr_dynamic_option'] ?? '' ) && ! empty( $cart_item['ldgr_dynamic_value'] ) ) {
+				/* translators: %s: group (team) name. */
+				$extra = sprintf( __( 'Extra seats for %s', 'upskill-me' ), get_the_title( (int) $cart_item['ldgr_dynamic_value'] ) );
+				$level = $level ? $level . ' · ' . $extra : $extra;
+			}
+
+			return '<span class="store-line__title">' . esc_html( $item['title'] ) . '</span>' . ( $level ? '<span class="store-line__level">' . esc_html( $level ) . '</span>' : '' );
 		}
 
 		return $name;
@@ -262,6 +271,11 @@ if ( ! function_exists( 'upskill_cart_switch_levels' ) ) {
 			$line         = $cart->get_cart_item( $key );
 
 			if ( ! $line || ! $variation_id || (int) $line['variation_id'] === $variation_id ) {
+				continue;
+			}
+
+			// Extra seats for an existing group keep the group's level (re-adding the line would also lose Group Registration's "increase seats" choice).
+			if ( 'increase_seats' === ( $line['ldgr_dynamic_option'] ?? '' ) ) {
 				continue;
 			}
 

@@ -28,13 +28,36 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-// Organisation admins always get the product page: they buy training and more seats here, even for a course they already have (inc/lms-access.php).
-$upskill_org_admin = function_exists( 'upskill_is_org_admin' ) && upskill_is_org_admin( $user_id );
+// Organisation admins (inc/lms-access.php): with the course, LearnDash's course view under a bar with their
+// groups' seats, "Manage Team" and "Buy More Seats"; ?add-seats=<group> opens the buy box for that group instead.
+$upskill_org_admin  = function_exists( 'upskill_is_org_admin' ) && upskill_is_org_admin( $user_id );
+$upskill_org_groups = $upskill_org_admin && function_exists( 'upskill_org_course_groups' ) ? upskill_org_course_groups( $user_id, $course_id ) : array();
+$upskill_add_to     = null;
 
-if ( ( $has_access && ! $upskill_org_admin ) || ! function_exists( 'upskill_course_product' ) ) {
+if ( isset( $_GET['add-seats'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view switch; Group Registration checks the purchase.
+	foreach ( $upskill_org_groups as $upskill_group ) {
+		if ( absint( $_GET['add-seats'] ) === $upskill_group['id'] && $upskill_group['product_id'] && ! $upskill_group['unlimited'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$upskill_add_to = $upskill_group;
+		}
+	}
+}
+
+if ( ( $has_access && ! $upskill_add_to ) || ! function_exists( 'upskill_course_product' ) ) {
 	if ( $has_access && function_exists( 'upskill_learner_course_summary' ) ) {
 		$content = wpautop( esc_html( has_excerpt( $course_id ) ? get_the_excerpt( $course_id ) : upskill_learner_course_summary( $course_id ) ) );
 	}
+
+	if ( $upskill_org_groups ) {
+		get_template_part(
+			'template-parts/account/course-org-bar',
+			null,
+			array(
+				'groups'    => $upskill_org_groups,
+				'course_id' => $course_id,
+			)
+		);
+	}
+
 	include LEARNDASH_LMS_PLUGIN_DIR . 'themes/ld30/templates/course.php';
 	return;
 }
@@ -54,8 +77,12 @@ $upskill_library  = function_exists( 'upskill_library_page_url' ) ? upskill_libr
 $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 // A learner without access (their organisation has not assigned this course) gets a message instead of the buy box.
 $upskill_learner = ! $has_access && function_exists( 'upskill_is_learner' ) && upskill_is_learner( $user_id );
-$upskill_lessons = $upskill_org_admin && $has_access ? learndash_course_get_steps_by_type( $course_id, 'sfwd-lessons' ) : array();
-$upskill_org_url = function_exists( 'upskill_org_dashboard_page_id' ) && upskill_org_dashboard_page_id() ? get_permalink( upskill_org_dashboard_page_id() ) : '';
+
+// Add-seats mode: only the level the group was bought at (its seats are charged at that level's price).
+if ( $upskill_add_to ) {
+	$upskill_levels = array_values( array_filter( $upskill_levels, static fn( $level ) => (int) $level['id'] === ( $upskill_add_to['variation_id'] ? $upskill_add_to['variation_id'] : $upskill_add_to['product_id'] ) ) );
+	$upskill_first  = $upskill_levels ? $upskill_levels[0] : null;
+}
 ?>
 <?php // Not wrapped in LearnDash's .learndash-wrapper: its CSS (e.g. box-shadow: none !important on every link) would restyle the theme blocks below. ?>
 <div class="course-product">
@@ -221,23 +248,33 @@ $upskill_org_url = function_exists( 'upskill_org_dashboard_page_id' ) && upskill
 						</p>
 					<?php endif; ?>
 
-					<?php if ( $upskill_org_admin ) : ?>
-						<?php // Organisation admin: what this page means for them (own the course already, or not yet). ?>
+					<?php if ( $upskill_add_to ) : ?>
+						<?php // Add-seats mode (?add-seats=<group>, from the bar on the course view). ?>
+						<div id="buy" class="course-hero__notice mt-5 scroll-mt-28 rounded-2xl bg-brand-25 p-4 text-sm leading-[1.5] text-gray-700">
+							<p class="font-medium text-gray-950">
+								<?php
+								/* translators: %s: group (team) name. */
+								echo esc_html( sprintf( __( 'Adding seats to %s', 'upskill-me' ), $upskill_add_to['title'] ) );
+								?>
+							</p>
+							<p class="pt-1">
+								<?php
+								echo esc_html(
+									sprintf(
+										/* translators: 1: seats in use, 2: seats bought, 3: level name. */
+										__( '%1$s of %2$s seats in use. Extra seats join this team at its %3$s level.', 'upskill-me' ),
+										number_format_i18n( $upskill_add_to['used'] ),
+										number_format_i18n( $upskill_add_to['seats'] ),
+										$upskill_first ? $upskill_first['label'] : ''
+									)
+								);
+								?>
+							</p>
+							<p class="pt-2"><a class="font-medium text-brand-700 hover:underline" href="<?php echo esc_url( get_permalink( $course_id ) ); ?>"><?php esc_html_e( 'Back to the training', 'upskill-me' ); ?></a></p>
+						</div>
+					<?php elseif ( $upskill_org_admin && ! $has_access ) : ?>
 						<div class="course-hero__notice mt-5 rounded-2xl bg-brand-25 p-4 text-sm leading-[1.5] text-gray-700">
-							<?php if ( $has_access ) : ?>
-								<p class="font-medium text-gray-950"><?php esc_html_e( 'Your organisation already has this training.', 'upskill-me' ); ?></p>
-								<p class="pt-1"><?php esc_html_e( 'Add more seats below, or manage your team’s access from your dashboard.', 'upskill-me' ); ?></p>
-								<p class="flex flex-wrap gap-x-4 gap-y-1 pt-2">
-									<?php if ( $upskill_org_url ) : ?>
-										<a class="font-medium text-brand-700 hover:underline" href="<?php echo esc_url( $upskill_org_url ); ?>"><?php esc_html_e( 'Organisation dashboard', 'upskill-me' ); ?></a>
-									<?php endif; ?>
-									<?php if ( $upskill_lessons ) : ?>
-										<a class="font-medium text-brand-700 hover:underline" href="<?php echo esc_url( learndash_get_step_permalink( $upskill_lessons[0], $course_id ) ); ?>"><?php esc_html_e( 'Open the training', 'upskill-me' ); ?></a>
-									<?php endif; ?>
-								</p>
-							<?php else : ?>
-								<p><?php esc_html_e( 'Your organisation doesn’t have this training yet. Choose a level and the number of seats to add it for your team.', 'upskill-me' ); ?></p>
-							<?php endif; ?>
+							<p><?php esc_html_e( 'Your organisation doesn’t have this training yet. Choose a level and the number of seats to add it for your team.', 'upskill-me' ); ?></p>
 						</div>
 					<?php endif; ?>
 
@@ -302,7 +339,7 @@ $upskill_org_url = function_exists( 'upskill_org_dashboard_page_id' ) && upskill
 									<button class="grid size-[50px] place-items-center rounded-full text-xl text-gray-700 hover:text-brand-700" type="button" data-buy-step="1"><span class="sr-only"><?php esc_html_e( 'More seats', 'upskill-me' ); ?></span><span aria-hidden="true">+</span></button>
 								</span>
 								<button class="btn btn--primary btn--md min-h-[50px] flex-1 justify-center max-sm:basis-full" type="submit" name="add-to-cart" value="<?php echo esc_attr( $upskill_product->get_id() ); ?>">
-									<span class="btn__label"><?php esc_html_e( 'Add to Cart', 'upskill-me' ); ?></span>
+									<span class="btn__label"><?php echo esc_html( $upskill_add_to ? __( 'Add Seats to Cart', 'upskill-me' ) : __( 'Add to Cart', 'upskill-me' ) ); ?></span>
 									<span class="btn__nest" aria-hidden="true"><?php upskill_icon( 'arrow-up-right', 'btn__icon' ); ?></span>
 								</button>
 							</div>
@@ -311,9 +348,17 @@ $upskill_org_url = function_exists( 'upskill_org_dashboard_page_id' ) && upskill
 								<input type="hidden" name="<?php echo esc_attr( $upskill_key ); ?>" value="<?php echo esc_attr( $upskill_value ); ?>" data-buy-attribute>
 							<?php endforeach; ?>
 							<?php // Group Registration names the group the seats go into; the buyer can rename it in their dashboard. ?>
-							<input type="hidden" name="ldgr_group_name" value="<?php echo esc_attr( get_the_title( $course_id ) ); ?>">
+							<input type="hidden" name="ldgr_group_name" value="<?php echo esc_attr( $upskill_add_to ? $upskill_add_to['title'] : get_the_title( $course_id ) ); ?>">
+							<?php if ( $upskill_add_to ) : ?>
+								<?php // Group Registration's own "increase seats to existing group" purchase: it checks the user leads the group and adds the seats on completion. ?>
+								<input type="hidden" name="ldgr_dynamic_option" value="increase_seats">
+								<input type="hidden" name="ldgr_dynamic_value" value="<?php echo esc_attr( $upskill_add_to['id'] ); ?>">
+							<?php endif; ?>
 							<?php if ( ! $upskill_product->is_type( 'variable' ) ) : ?>
 								<input type="hidden" name="variation_id" value="">
+							<?php elseif ( 1 === count( $upskill_levels ) ) : ?>
+								<?php // One level (e.g. add-seats mode): no level radios, so the variation goes as a hidden field. ?>
+								<input type="hidden" name="variation_id" value="<?php echo esc_attr( $upskill_first['id'] ); ?>">
 							<?php endif; ?>
 							<p class="pt-4 text-sm text-[#8b8b97]"><?php esc_html_e( 'One seat per learner.', 'upskill-me' ); ?></p>
 							<p class="flex gap-2 pt-2 text-sm text-[#8b8b97]"><?php upskill_icon( 'shield', 'size-4 text-brand-700' ); ?><?php esc_html_e( 'Secure checkout · On demand access', 'upskill-me' ); ?></p>
