@@ -20,6 +20,62 @@
 	background-color: rgb(26 26 26 / 7.5%);
 }
 
+// Signed in: the person's initials in a brand circle replace the outline
+// icon (any role). 32px in the 44px icon button, 28px in the 34px one below 390.
+.account-menu__avatar {
+	display: grid;
+	flex: none;
+	place-items: center;
+	width: 32px;
+	height: 32px;
+	border-radius: 999px;
+	background-color: var(--color-brand-700);
+	box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-100);
+	color: var(--color-white);
+	font-family: var(--font-sans); // a <button> does not inherit the page font
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 1;
+	letter-spacing: 0.02em;
+	transition: box-shadow 0.25s ease;
+
+	.account-menu__trigger:hover &,
+	.account-menu__trigger[aria-expanded="true"] & {
+		box-shadow: 0 0 0 2px var(--color-white), 0 0 0 3px var(--color-brand-300);
+	}
+
+	@media (width < 390px) {
+		width: 28px;
+		height: 28px;
+		font-size: 11px;
+	}
+}
+
+// The larger circle heading the open menu.
+.account-menu__avatar--lg {
+	width: 44px;
+	height: 44px;
+	box-shadow: none;
+	font-size: 15px;
+
+	@media (width < 390px) {
+		width: 44px;
+		height: 44px;
+		font-size: 15px;
+	}
+}
+
+// Who is signed in: avatar, "Hello, name" and their role, set off from the
+// rows by a rule and the same 16px inset as the rows.
+.account-menu__profile {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin: 8px 0 12px 1rem;
+	padding-bottom: 16px;
+	border-bottom: 1px solid var(--color-gray-100);
+}
+
 .account-menu__panel {
 	position: absolute;
 	top: calc(100% + 6px);

@@ -248,6 +248,15 @@ $session-bar: #6744a8;
 			font-size: 14px;
 		}
 
+		// MediaElement sizes the times as content-box (24px + 16px top padding =
+		// the 40px bar); LearnDash's `.learndash-wrapper:not():not() *` makes
+		// everything border-box, which left 8px for the text and clipped it.
+		// Four classes to outrank that rule; line height follows the 14px size.
+		.ld-video .mejs-container .mejs-time {
+			box-sizing: content-box;
+			line-height: 1;
+		}
+
 		.mejs-time-total {
 			background: rgb(255 255 255 / 14%);
 		}

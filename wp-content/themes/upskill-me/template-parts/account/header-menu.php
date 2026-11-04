@@ -15,6 +15,26 @@ $upskill_items = upskill_account_menu_items();
 $upskill_user  = wp_get_current_user();
 $upskill_name  = $upskill_user->exists() ? ( $upskill_user->first_name ? $upskill_user->first_name : $upskill_user->display_name ) : '';
 
+// Signed in: the person's initials replace the outline icon (first + last name, else the display name).
+$upskill_initials = '';
+$upskill_role     = '';
+
+if ( $upskill_user->exists() ) {
+	$upskill_parts    = array_filter( array( $upskill_user->first_name, $upskill_user->last_name ) );
+	$upskill_parts    = $upskill_parts ? $upskill_parts : preg_split( '/[\s._@-]+/', (string) $upskill_user->display_name, -1, PREG_SPLIT_NO_EMPTY );
+	$upskill_initials = mb_strtoupper( implode( '', array_map( static fn( $part ) => mb_substr( $part, 0, 1 ), array_slice( array_values( $upskill_parts ), 0, 2 ) ) ) );
+
+	if ( user_can( $upskill_user, 'manage_options' ) ) {
+		$upskill_role = __( 'Administrator', 'upskill-me' );
+	} elseif ( function_exists( 'upskill_is_org_admin' ) && upskill_is_org_admin( $upskill_user->ID ) ) {
+		$upskill_role = __( 'Organisation admin', 'upskill-me' );
+	} elseif ( function_exists( 'upskill_is_learner' ) && upskill_is_learner( $upskill_user->ID ) ) {
+		$upskill_role = __( 'Learner', 'upskill-me' );
+	} else {
+		$upskill_role = $upskill_user->user_email;
+	}
+}
+
 if ( ! $upskill_items ) :
 	if ( empty( $upskill_link['url'] ) ) {
 		return;
@@ -32,9 +52,8 @@ endif;
 	<button class="site-header__icon account-menu__trigger" type="button" aria-expanded="false" aria-controls="account-menu" data-account-trigger>
 		<?php if ( $upskill_user->exists() ) : ?>
 			<span class="screen-reader-text"><?php echo esc_html( sprintf( /* translators: %s: user's first name. */ __( 'Your account (signed in as %s)', 'upskill-me' ), $upskill_name ) ); ?></span>
-			<?php upskill_icon( 'user', 'col-start-1 row-start-1' ); ?>
-			<?php // Signed in, whatever the role: a tick on the icon, always visible. ?>
-			<span class="account-menu__signed-in col-start-1 row-start-1 mr-1 mb-1 grid size-3.5 place-items-center self-end justify-self-end rounded-full bg-signal text-gray-950 ring-2 ring-white" aria-hidden="true"><?php upskill_icon( 'tick-sm', 'size-2.5' ); ?></span>
+			<?php // Signed in, whatever the role: the person's initials instead of the outline icon. ?>
+			<span class="account-menu__avatar" aria-hidden="true"><?php echo esc_html( $upskill_initials ); ?></span>
 		<?php else : ?>
 			<span class="screen-reader-text"><?php esc_html_e( 'Your account', 'upskill-me' ); ?></span>
 			<?php upskill_icon( 'user' ); ?>
@@ -42,13 +61,19 @@ endif;
 	</button>
 	<div class="account-menu__panel" id="account-menu" hidden data-account-panel>
 		<?php if ( $upskill_user->exists() ) : ?>
-			<?php // The greeting heads the menu, so it shows on hover (mouse) and on tap (touch) alike. ?>
-			<p class="account-menu__greeting px-4 pt-2 text-sm text-gray-500">
-				<?php
-				/* translators: %s: user's first name. */
-				printf( esc_html__( 'Hello, %s', 'upskill-me' ), '<span class="font-medium text-gray-950">' . esc_html( $upskill_name ) . '</span>' );
-				?>
-			</p>
+			<?php // Who is signed in heads the menu, so it shows on hover (mouse) and on tap (touch) alike. ?>
+			<div class="account-menu__profile">
+				<span class="account-menu__avatar account-menu__avatar--lg" aria-hidden="true"><?php echo esc_html( $upskill_initials ); ?></span>
+				<span class="min-w-0">
+					<span class="block truncate text-base leading-[1.4] font-medium text-gray-950">
+						<?php
+						/* translators: %s: user's first name. */
+						echo esc_html( sprintf( __( 'Hello, %s', 'upskill-me' ), $upskill_name ) );
+						?>
+					</span>
+					<span class="block truncate text-sm leading-[1.4] text-gray-500"><?php echo esc_html( $upskill_role ); ?></span>
+				</span>
+			</div>
 		<?php endif; ?>
 		<ul class="mega__list account-menu__list">
 			<?php foreach ( $upskill_items as $upskill_item ) : ?>
