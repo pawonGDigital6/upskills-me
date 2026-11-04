@@ -154,7 +154,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 												<?php if ( 'video' === $upskill_item['type'] ) : ?>
 													<span class="grid size-7 place-items-center self-center justify-self-center rounded-full bg-gray-950/60" aria-hidden="true"><?php upskill_icon( 'play', 'size-3' ); ?></span>
 												<?php endif; ?>
-												<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5 text-xs">
+												<span class="flex items-end justify-between gap-1 self-end bg-linear-to-t from-gray-950/70 to-transparent px-2 pt-4 pb-1.5">
 													<span class="text-sm font-medium"><?php echo esc_html( $upskill_number ); ?></span>
 													<span class="text-[10px] leading-[1.5]"><?php echo esc_html( $upskill_item['session'] ? (string) get_field( 'duration', $upskill_item['session'] ) : '' ); ?></span>
 												</span>
@@ -183,8 +183,8 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 
 					<?php // Share copies the course link (the copy-link script from the blog, js/components/article.js). ?>
 					<div class="relative mt-2 flex">
-						<button class="inline-flex h-[42px] items-center rounded-full border border-line bg-white px-5 text-sm font-medium text-gray-950 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700" type="button" data-copy-link="<?php echo esc_url( get_permalink( $course_id ) ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>"><?php esc_html_e( 'Share', 'upskill-me' ); ?></button>
-						<span class="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[220px] rounded-md bg-gray-950 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-xs transition-opacity duration-200 data-visible:opacity-100" role="status" data-copy-status></span>
+						<button class="inline-flex h-[42px] items-center rounded-full border border-line bg-white px-5 text-sm font-medium text-gray-950 hover:border-brand-700 hover:text-brand-700 data-copied:border-brand-700 data-copied:text-brand-700 leading-none" type="button" data-copy-link="<?php echo esc_url( get_permalink( $course_id ) ); ?>" data-copied-label="<?php esc_attr_e( 'Link copied!', 'upskill-me' ); ?>" data-copy-failed-label="<?php esc_attr_e( 'Couldn’t copy. Copy the address bar instead.', 'upskill-me' ); ?>"><?php esc_html_e( 'Share', 'upskill-me' ); ?></button>
+						<span class="pointer-events-none absolute bottom-full left-0 mb-2 w-max max-w-[220px] rounded-md bg-gray-950 px-2.5 py-1.5 text-xs font-medium text-white opacity-0 shadow-xs transition-opacity duration-200 data-visible:opacity-100 z-4" role="status" data-copy-status></span>
 					</div>
 				</div>
 
@@ -196,9 +196,9 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 					<?php endif; ?>
 
 					<?php if ( $upskill_reviews['count'] ) : ?>
-						<p class="flex flex-wrap items-center gap-x-2 gap-y-1 pt-4 text-sm text-gray-500">
+						<p class="flex flex-wrap items-center gap-x-3 gap-y-1 pt-4 text-sm text-gray-500">
 							<?php // LearnDash Course Reviews average, linked to the Course Reviews block (#reviews). ?>
-							<span class="flex gap-0.5 text-[#f79009]" aria-hidden="true">
+							<span class="flex gap-0.5 text-[#f79009] -mt-1" aria-hidden="true">
 								<?php for ( $upskill_star = 1; $upskill_star <= 5; $upskill_star++ ) : ?>
 									<?php upskill_icon( $upskill_star <= round( $upskill_reviews['average'] ) ? 'star' : 'star-outline', 'size-3.5' ); ?>
 								<?php endfor; ?>
@@ -231,10 +231,10 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 									<legend class="float-left text-xl leading-[1.3] font-medium tracking-[-0.02em] text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
 									<span class="clear-left block pt-1 text-sm text-[#8b8b97] sm:clear-none sm:float-right sm:pt-1"><?php esc_html_e( 'Choose what you need', 'upskill-me' ); ?></span>
 									<?php // Three levels sit in one row (Figma); any other count pairs up so no card is left alone on a row. ?>
-									<div class="clear-both grid gap-2 pt-3 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
+									<div class="clear-both grid gap-2 pt-6 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
 										<?php foreach ( $upskill_levels as $upskill_i => $upskill_lvl ) : ?>
 											<?php $upskill_save = $upskill_lvl['bundle'] ? array_sum( wp_list_pluck( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ), 'price' ) ) - $upskill_lvl['price'] : 0; ?>
-											<label class="buy-level relative flex cursor-pointer items-center justify-between gap-1 rounded-2xl sm:flex-col sm:items-start sm:justify-start border border-line bg-white p-4 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
+											<label class="buy-level relative flex cursor-pointer items-center justify-between gap-1 rounded-[14px] sm:flex-col sm:items-start sm:justify-start border border-line bg-white p-4 py-3.5 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
 												<input class="sr-only" type="radio" name="variation_id" value="<?php echo esc_attr( $upskill_lvl['id'] ); ?>" data-price="<?php echo esc_attr( wp_strip_all_tags( $upskill_lvl['price_html'] ) ); ?>" data-label="<?php echo esc_attr( $upskill_lvl['label'] ); ?>" data-text="<?php echo esc_attr( $upskill_lvl['text'] ); ?>" data-attributes="<?php echo esc_attr( wp_json_encode( $upskill_lvl['attributes'] ) ); ?>"<?php checked( 0, $upskill_i ); ?>>
 												<span class="text-sm font-medium text-[#55555f] [.buy-level:has(:checked)_&]:text-[#6b2fe3]">
 													<?php echo esc_html( $upskill_lvl['label'] ); ?>
@@ -259,7 +259,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 
 							<div class="mt-6 flex flex-wrap items-center gap-3">
 								<label class="sr-only" for="buy-seats"><?php esc_html_e( 'Seats', 'upskill-me' ); ?></label>
-								<span class="flex h-[50px] items-center rounded-full border border-line bg-white">
+								<span class="flex justify-between h-[50px] md:w-[190px] px-[6px] items-center rounded-full border border-line bg-white shadow-[0_1px_2px_0_rgba(26,26,26,0.04),0_4px_14px_-6px_rgba(47,26,81,0.10)]">
 									<button class="grid size-[50px] place-items-center rounded-full text-xl text-gray-700 hover:text-brand-700" type="button" data-buy-step="-1"><span class="sr-only"><?php esc_html_e( 'Fewer seats', 'upskill-me' ); ?></span><span aria-hidden="true">−</span></button>
 									<input class="w-12 appearance-none bg-transparent text-center text-base font-medium text-gray-950 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none" id="buy-seats" type="number" name="quantity" value="1" min="1" max="999" inputmode="numeric">
 									<button class="grid size-[50px] place-items-center rounded-full text-xl text-gray-700 hover:text-brand-700" type="button" data-buy-step="1"><span class="sr-only"><?php esc_html_e( 'More seats', 'upskill-me' ); ?></span><span aria-hidden="true">+</span></button>
@@ -279,7 +279,7 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 								<input type="hidden" name="variation_id" value="">
 							<?php endif; ?>
 							<p class="pt-4 text-sm text-[#8b8b97]"><?php esc_html_e( 'One seat per learner.', 'upskill-me' ); ?></p>
-							<p class="flex items-center gap-2 pt-2 text-sm text-[#8b8b97]"><?php upskill_icon( 'shield', 'size-4 text-brand-700' ); ?><?php esc_html_e( 'Secure checkout · On demand access', 'upskill-me' ); ?></p>
+							<p class="flex gap-2 pt-2 text-sm text-[#8b8b97]"><?php upskill_icon( 'shield', 'size-4 text-brand-700' ); ?><?php esc_html_e( 'Secure checkout · On demand access', 'upskill-me' ); ?></p>
 						</form>
 					<?php else : ?>
 						<div class="mt-6 rounded-2xl bg-brand-25 p-5">

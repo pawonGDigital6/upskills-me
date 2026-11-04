@@ -288,6 +288,9 @@
   .z-1 {
     z-index: 1;
   }
+  .z-4 {
+    z-index: 4;
+  }
   .z-10 {
     z-index: 10;
   }
@@ -404,6 +407,9 @@
   }
   .my-10 {
     margin-block: calc(var(--spacing) * 10);
+  }
+  .-mt-1 {
+    margin-top: calc(var(--spacing) * -1);
   }
   .-mt-2 {
     margin-top: calc(var(--spacing) * -2);
@@ -1438,6 +1444,9 @@
   .rounded-\[13px\] {
     border-radius: 13px;
   }
+  .rounded-\[14px\] {
+    border-radius: 14px;
+  }
   .rounded-\[16px\] {
     border-radius: 16px;
   }
@@ -2021,6 +2030,9 @@
   .px-6 {
     padding-inline: calc(var(--spacing) * 6);
   }
+  .px-\[6px\] {
+    padding-inline: 6px;
+  }
   .px-\[9px\] {
     padding-inline: 9px;
   }
@@ -2424,6 +2436,9 @@
   }
   .text-\[19\.2px\] {
     font-size: 19.2px;
+  }
+  .text-\[20px\] {
+    font-size: 20px;
   }
   .text-\[23px\] {
     font-size: 23px;
@@ -2845,6 +2860,10 @@
   }
   .shadow-\[0_1px_1px_rgb\(10_13_18\/5\%\)\] {
     --tw-shadow: 0 1px 1px var(--tw-shadow-color, rgb(10 13 18/5%));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-\[0_1px_2px_0_rgba\(26\,26\,26\,0\.04\)\,0_4px_14px_-6px_rgba\(47\,26\,81\,0\.10\)\] {
+    --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgba(26,26,26,0.04)), 0 4px 14px -6px var(--tw-shadow-color, rgba(47,26,81,0.10));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[0_4px_10px_rgb\(26_26_26\/3\%\)\,0_32px_70px_rgb\(47_26_81\/22\%\)\] {
@@ -3737,6 +3756,9 @@
     .md\:aspect-\[443\/538\] {
       aspect-ratio: 443/538;
     }
+    .md\:w-\[190px\] {
+      width: 190px;
+    }
     .md\:auto-cols-fr {
       grid-auto-columns: minmax(0, 1fr);
     }
@@ -4110,6 +4132,9 @@
     }
     .lg\:grid-cols-6 {
       grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+    .lg\:grid-cols-\[1fr_50\.9\%\] {
+      grid-template-columns: 1fr 50.9%;
     }
     .lg\:grid-cols-\[44px_minmax\(0\,1fr\)_minmax\(0\,1fr\)\] {
       grid-template-columns: 44px minmax(0,1fr) minmax(0,1fr);

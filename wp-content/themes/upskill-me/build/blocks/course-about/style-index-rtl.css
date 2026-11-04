@@ -6,3 +6,9 @@
  *
  * Layout and colour are utilities in render.php.
  */
+.block-course-about .section-header {
+  gap: 45px;
+}
+.block-course-about .section-header__intro {
+  font-size: inherit;
+}
