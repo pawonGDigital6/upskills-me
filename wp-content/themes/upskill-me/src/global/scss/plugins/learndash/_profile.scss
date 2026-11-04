@@ -1,0 +1,533 @@
+// LearnDash Profile (the "LearnDash Profile" block on /profile/, inside
+// template-profile.php): the block's own markup, unchanged. No Figma: the
+// cards, stat tiles and pills follow the learner dashboard and the course
+// view (_course.scss). LearnDash's blue (#235af3) becomes the brand purple.
+//
+// #1a1a1a at 10% (gray-900) borders and #6b6b72 muted labels as on the other
+// LMS screens (no tokens).
+
+$profile-border: color-mix(in srgb, var(--color-gray-900) 10%, transparent);
+$profile-muted: #6b6b72;
+
+.profile-page .profile-content .learndash-wrapper {
+	font-family: var(--font-sans);
+	color: var(--color-gray-950);
+
+	.ld-primary-background,
+	.ld-secondary-background {
+		background-color: var(--color-brand-700) !important;
+	}
+
+	.ld-primary-color,
+	.ld-secondary-color {
+		color: var(--color-brand-700) !important;
+	}
+
+	// Profile card: avatar, name and "Edit profile" beside the four stats.
+	.ld-profile-summary {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		margin: 0 0 48px;
+		padding: 20px;
+		border: 1px solid $profile-border;
+		border-radius: var(--radius-lg);
+		background: var(--color-white);
+
+		@media (min-width: 1024px) {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			padding: 24px 32px;
+		}
+	}
+
+	.ld-profile-summary .ld-profile-card {
+		flex-direction: row;
+		align-items: center;
+		gap: 16px;
+		width: auto;
+		margin: 0;
+	}
+
+	.ld-profile-summary .ld-profile-card .ld-profile-avatar {
+		flex: none;
+		width: 72px;
+		height: 72px;
+		border: 0;
+
+		@media (min-width: 1024px) {
+			width: 88px;
+			height: 88px;
+		}
+	}
+
+	.ld-profile-summary .ld-profile-card .ld-profile-heading {
+		margin: 0;
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: clamp(1.5rem, 1.2214rem + 1.1429vw, 2.25rem);
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+	}
+
+	// Name and link stack beside the avatar.
+	.ld-profile-summary .ld-profile-card {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		grid-template-rows: auto auto;
+		column-gap: 16px;
+		row-gap: 6px;
+
+		.ld-profile-avatar {
+			grid-row: 1 / span 2;
+		}
+
+		.ld-profile-heading {
+			align-self: end;
+		}
+
+		a.ld-profile-edit-link {
+			align-self: start;
+			justify-self: start;
+			color: var(--color-brand-700);
+			font-weight: 500;
+			font-size: var(--text-sm);
+			text-decoration: none;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	// Stats: four tiles (two per row on phones).
+	#ld-profile .ld-profile-stats {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 8px;
+		flex-wrap: nowrap;
+
+		@media (min-width: 768px) {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+			gap: 12px;
+		}
+
+		@media (min-width: 1024px) {
+			grid-template-columns: repeat(4, 120px);
+		}
+
+		.ld-profile-stat {
+			width: auto;
+			margin: 0 !important; // LearnDash's own rule is !important.
+			padding: 14px 16px !important;
+			border: 1px solid $profile-border;
+			border-radius: 12px;
+			background: var(--color-gray-25);
+			text-align: left;
+
+			strong {
+				margin: 0 0 4px;
+				color: var(--color-gray-950);
+				font-weight: 500;
+				font-size: 2rem;
+				line-height: 1.1;
+			}
+
+			span {
+				color: $profile-muted;
+				font-size: var(--text-sm);
+			}
+		}
+	}
+
+	// "Your Courses": the heading, then the search and Expand All buttons on
+	// the right; 24px down to the list. #ld-profile matches LearnDash's own
+	// rules here (margin-bottom: 0, a 3em gap after the search icon, 120px
+	// buttons, a 1.4em icon).
+	#ld-profile .ld-item-list.ld-course-list .ld-section-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		margin: 0 0 24px;
+
+		@media (min-width: 1024px) {
+			margin-bottom: 32px;
+		}
+
+		// Phones: the buttons on their own line under the heading, so the row
+		// does not jump when "Expand All" turns into "Collapse All".
+		@media (max-width: 639px) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 12px;
+		}
+
+		h3 {
+			margin: 0;
+			color: var(--color-gray-950);
+			font-weight: 500;
+			font-size: clamp(1.75rem, 1.5643rem + 0.7619vw, 2.25rem); // The theme's h5 scale, 28 → 36.
+			line-height: 1.1;
+			letter-spacing: -0.01em;
+			text-align: left;
+		}
+
+		.ld-item-list-actions {
+			display: flex;
+			flex: none;
+			align-items: center;
+			justify-content: flex-end;
+			gap: 8px;
+			width: auto;
+			margin: 0;
+		}
+	}
+
+	// Search: a 44px circle with a 16px glyph (the glyph is the button's own font icon).
+	#ld-profile .ld-item-list .ld-section-heading .ld-search-prompt {
+		display: grid;
+		flex: none;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		margin: 0;
+		padding: 0;
+		border: 1px solid $profile-border;
+		border-radius: 999px;
+		background: var(--color-white);
+		color: var(--color-gray-950);
+		font-size: 16px;
+		line-height: 1;
+		transition:
+			border-color 0.2s ease,
+			color 0.2s ease;
+
+		&:hover,
+		&[aria-expanded="true"] {
+			border-color: var(--color-brand-700);
+			color: var(--color-brand-700);
+		}
+
+		&:focus {
+			outline: none;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--color-brand-700);
+			outline-offset: 2px;
+		}
+	}
+
+	// Expand All: the theme's expand pill (course page): label, then the
+	// chevron in a small purple circle.
+	#ld-profile .ld-item-list .ld-section-heading .ld-item-list-actions .ld-expand-button {
+		display: inline-flex;
+		flex: none;
+		align-items: center;
+		gap: 10px;
+		width: auto;
+		min-width: 0;
+		max-width: none;
+		height: 44px;
+		margin: 0;
+		padding: 0 6px 0 18px;
+		border: 1px solid $profile-border;
+		border-radius: 999px;
+		background: var(--color-white) !important; // LearnDash's colour helpers are !important.
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: var(--text-sm);
+		line-height: 1;
+		transition: border-color 0.2s ease;
+
+		.ld-text {
+			order: 1;
+			padding: 0;
+		}
+
+		.ld-icon {
+			display: grid;
+			order: 2;
+			place-items: center;
+			width: 30px;
+			height: 30px;
+			margin: 0;
+			border-radius: 999px;
+			background: var(--color-brand-25);
+			color: var(--color-brand-700);
+			font-size: 11px;
+		}
+
+		&:hover {
+			border-color: var(--color-brand-300);
+		}
+
+		// The browser's blue ring after a click; keyboard focus keeps a brand one.
+		&:focus {
+			outline: none;
+			box-shadow: none;
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--color-brand-700);
+			outline-offset: 2px;
+		}
+	}
+
+	// Course search (opened by the search pill).
+	.ld-item-search {
+		margin: 0 0 16px;
+	}
+
+	.ld-item-search .ld-item-search-wrapper {
+		margin: 0;
+		padding: 20px;
+		border: 1px solid $profile-border;
+		border-radius: var(--radius-lg);
+		background: var(--color-white);
+
+		// LearnDash's pointer to the search button.
+		&::before {
+			display: none;
+		}
+	}
+
+	.ld-item-search .ld-item-search-heading {
+		margin: 0 0 12px;
+		font-weight: 500;
+		font-size: var(--text-base);
+	}
+
+	// A row that wraps (LearnDash's phone column made the 260px basis a height).
+	.ld-item-search .ld-item-search-fields {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		gap: 12px;
+
+		label {
+			display: block;
+			margin-bottom: 6px;
+			color: var(--color-gray-500);
+			font-weight: 500;
+			font-size: var(--text-sm);
+		}
+
+		input[type="text"] {
+			width: 100%;
+			height: 44px;
+			padding: 0 14px;
+			border: 1px solid var(--color-gray-200);
+			border-radius: 8px;
+			background: var(--color-white);
+		}
+
+		.ld-item-search-name {
+			flex: 1 1 260px;
+			margin-bottom: 0;
+		}
+
+		.ld-item-search-submit {
+			flex: none;
+			padding: 0;
+		}
+
+		.ld-button {
+			min-height: 44px;
+			margin: 0 !important;
+			padding: 8px 24px !important;
+			border-radius: 999px !important;
+			background: var(--color-brand-700) !important;
+			text-align: center; // LearnDash left-aligns it on phones.
+			color: var(--color-white);
+			font-weight: 500 !important;
+			font-size: var(--text-sm) !important;
+			text-align: center !important;
+		}
+	}
+
+	.ld-item-search .ld-closer {
+		color: $profile-muted;
+		font-size: var(--text-sm);
+	}
+
+	// Course rows: white cards with the status, title, status pill and expand.
+	.ld-course-list .ld-item-list-items {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.ld-course-list .ld-item-list-item {
+		margin: 0;
+		overflow: hidden;
+		border: 1px solid $profile-border;
+		border-radius: var(--radius-lg);
+		background: var(--color-white);
+		box-shadow: none;
+	}
+
+	.ld-course-list .ld-item-list-item .ld-item-list-item-preview {
+		gap: 12px 16px;
+		padding: 16px;
+
+		@media (min-width: 1024px) {
+			padding: 20px 24px;
+		}
+	}
+
+	.ld-course-list .ld-item-list-item .ld-item-name {
+		align-items: center;
+		gap: 12px;
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: var(--text-base);
+		text-decoration: none;
+
+		@media (min-width: 1024px) {
+			font-size: var(--text-xl);
+		}
+
+		&:hover {
+			color: var(--color-brand-700);
+		}
+
+		.ld-status-icon {
+			margin: 0;
+		}
+	}
+
+	.ld-course-list .ld-status-icon.ld-status-in-progress {
+		border-color: var(--color-gray-100);
+		border-top-color: var(--color-brand-700);
+		border-left-color: var(--color-brand-700);
+	}
+
+	.ld-course-list .ld-status-icon.ld-status-incomplete {
+		border-color: var(--color-gray-100);
+	}
+
+	.ld-course-list .ld-item-details {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	.ld-status {
+		padding: 6px 12px;
+		border-radius: 999px;
+		font-weight: 500;
+		font-size: var(--text-xs);
+		letter-spacing: 0.02em;
+	}
+
+	.ld-status.ld-status-progress {
+		background-color: var(--color-brand-25) !important;
+		color: var(--color-brand-700);
+	}
+
+	.ld-item-details .ld-expand-button.ld-compact {
+		display: grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		margin: 0;
+		border-radius: 999px;
+		background-color: var(--color-brand-25) !important;
+		color: var(--color-brand-700);
+		flex-basis: initial !important;
+	}
+
+	.ld-item-details .ld-expand-button.ld-button-alternate .ld-text {
+		font-weight: 500;
+		font-size: var(--text-sm);
+	}
+
+	.ld-item-details .ld-expand-button.ld-button-alternate .ld-icon {
+		background: var(--color-brand-700) !important;
+		min-width: 24px;
+		height: 24px !important;
+		padding: 5px 4px 4px;
+	}
+
+	// Expanded: course progress.
+	.ld-course-list .ld-item-list-item-expanded {
+		border-top: 1px solid $profile-border;
+		background: var(--color-gray-25);
+
+		// LearnDash's pointer under the row.
+		&::before {
+			display: none;
+		}
+
+		.ld-progress {
+			background: transparent;
+		}
+	}
+
+	.ld-course-list .ld-item-list-item-expanded .ld-progress {
+		margin: 0;
+		padding: 16px;
+
+		@media (min-width: 1024px) {
+			padding: 20px 24px;
+		}
+	}
+
+	.ld-progress .ld-progress-heading {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.ld-progress .ld-progress-label {
+		color: var(--color-gray-950);
+		font-weight: 500;
+		font-size: var(--text-base);
+		text-transform: none;
+	}
+
+	.ld-progress .ld-progress-stats {
+		display: flex;
+		gap: 12px;
+	}
+
+	.ld-progress .ld-progress-percentage,
+	.ld-progress .ld-progress-steps {
+		font-weight: 500;
+		font-size: var(--text-sm);
+		text-transform: none !important; // LearnDash capitalises it.
+	}
+
+	.ld-progress .ld-progress-steps {
+		color: $profile-muted;
+	}
+
+	.ld-progress .ld-progress-bar {
+		height: 8px;
+		margin: 24px 0 0;
+		border-radius: 999px;
+		background-color: var(--color-brand-100);
+	}
+
+	.ld-progress .ld-progress-bar .ld-progress-bar-percentage {
+		height: 8px;
+		border-radius: 999px;
+	}
+
+	// The lists inside an expanded course (quizzes, if any).
+	.ld-item-list-item-expanded .ld-table-list {
+		margin: 0 16px 16px;
+		border-radius: 12px;
+	}
+
+	.ld-pagination {
+		margin-top: 16px;
+	}
+}

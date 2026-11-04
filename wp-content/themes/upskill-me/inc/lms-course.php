@@ -329,3 +329,40 @@ add_filter(
 	10,
 	2
 );
+
+/**
+ * LearnDash's session list on the course view (learner with access): session
+ * titles without the "Session:" prefix, as the product page's Course Content
+ * block prints them (upskill_session_title()). Only while that list renders;
+ * the session posts keep their titles.
+ */
+add_action(
+	'learndash-course-content-list-before',
+	static function () {
+		add_filter( 'the_title', 'upskill_strip_session_prefix', 10, 2 );
+	}
+);
+
+add_action(
+	'learndash-course-content-list-after',
+	static function () {
+		remove_filter( 'the_title', 'upskill_strip_session_prefix', 10 );
+	}
+);
+
+if ( ! function_exists( 'upskill_strip_session_prefix' ) ) {
+	/**
+	 * The title without a leading "Session:" for sessions (LearnDash lessons).
+	 *
+	 * @param string $title   Title.
+	 * @param int    $post_id Post ID.
+	 * @return string
+	 */
+	function upskill_strip_session_prefix( $title, $post_id = 0 ) {
+		if ( $post_id && 'sfwd-lessons' === get_post_type( $post_id ) ) {
+			return (string) preg_replace( '/^\s*session\s*:\s*/i', '', (string) $title );
+		}
+
+		return $title;
+	}
+}

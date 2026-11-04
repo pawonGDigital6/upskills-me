@@ -47,6 +47,11 @@ if ( ( $has_access && ! $upskill_add_to ) || ! function_exists( 'upskill_course_
 		$content = wpautop( esc_html( has_excerpt( $course_id ) ? get_the_excerpt( $course_id ) : upskill_learner_course_summary( $course_id ) ) );
 	}
 
+	if ( $has_access && function_exists( 'upskill_course_sessions' ) ) {
+		// The course heading (no Figma: the product page's breadcrumb, eyebrow and title).
+		get_template_part( 'template-parts/course/learner-hero', null, array( 'course_id' => $course_id ) );
+	}
+
 	if ( $upskill_org_groups ) {
 		get_template_part(
 			'template-parts/account/course-org-bar',
@@ -58,7 +63,11 @@ if ( ( $has_access && ! $upskill_add_to ) || ! function_exists( 'upskill_course_
 		);
 	}
 
+	// LearnDash's own course view (status, tabs, reviews, session list), unchanged,
+	// in the page container; restyled by scss/plugins/learndash/_course.scss.
+	echo '<div class="course-learner container pt-6 pb-16 lg:pt-8 lg:pb-24">';
 	include LEARNDASH_LMS_PLUGIN_DIR . 'themes/ld30/templates/course.php';
+	echo '</div>';
 	return;
 }
 

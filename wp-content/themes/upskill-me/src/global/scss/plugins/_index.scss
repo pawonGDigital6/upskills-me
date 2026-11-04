@@ -14,6 +14,8 @@
 
 @use "learndash/session";
 @use "learndash/account";
+@use "learndash/course";
+@use "learndash/profile";
 
 @use "woocommerce/store";
 @use "woocommerce/account" as wc-account;

@@ -114,3 +114,21 @@ add_filter(
 	},
 	5
 );
+
+/**
+ * "Edit profile" (LearnDash Profile, get_edit_user_link()) for the same
+ * people: WooCommerce's Account details form instead of wp-admin/profile.php,
+ * which they cannot open (it redirected them to the My Account dashboard).
+ */
+add_filter(
+	'get_edit_user_link',
+	static function ( $link, $user_id ) {
+		if ( (int) $user_id !== get_current_user_id() || current_user_can( 'manage_options' ) || current_user_can( 'manage_woocommerce' ) || current_user_can( 'edit_posts' ) || ! function_exists( 'wc_get_account_endpoint_url' ) ) {
+			return $link;
+		}
+
+		return wc_get_account_endpoint_url( 'edit-account' );
+	},
+	10,
+	2
+);
