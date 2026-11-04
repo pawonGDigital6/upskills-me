@@ -334,3 +334,33 @@ if ( ! function_exists( 'upskill_refund_group_note' ) ) {
 }
 add_action( 'woocommerce_order_refunded', 'upskill_refund_group_note' );
 add_action( 'woocommerce_order_status_cancelled', 'upskill_refund_group_note' );
+
+/**
+ * A paid order of training (every line virtual) completes straight away, so
+ * Group Registration sets up the group and seats without anyone approving it
+ * (it acts on "Completed"). Only runs when a gateway reports a successful
+ * payment (card/PayPal); bank transfer orders still wait "On hold" for the
+ * Super Admin to confirm the money arrived.
+ */
+add_filter(
+	'woocommerce_payment_complete_order_status',
+	static function ( $status, $order_id, $order ) {
+		$order = $order instanceof WC_Order ? $order : wc_get_order( $order_id );
+
+		if ( ! $order || 'processing' !== $status ) {
+			return $status;
+		}
+
+		foreach ( $order->get_items() as $item ) {
+			$product = $item instanceof WC_Order_Item_Product ? $item->get_product() : null;
+
+			if ( ! $product || ! $product->is_virtual() ) {
+				return $status;
+			}
+		}
+
+		return 'completed';
+	},
+	10,
+	3
+);

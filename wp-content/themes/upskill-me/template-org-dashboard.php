@@ -64,6 +64,8 @@ $upskill_group_button = static function ( $group_id, $label, $primary = false ) 
 			<p class="max-w-[400px] text-base text-gray-500"><?php esc_html_e( 'See your training, team enrolments and progress at a glance.', 'upskill-me' ); ?></p>
 		</div>
 
+		<?php get_template_part( 'template-parts/account/pending-orders' ); ?>
+
 		<ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:mt-12 lg:grid-cols-4">
 			<?php foreach ( $upskill_counts as $upskill_count ) : ?>
 				<li class="flex flex-col rounded-[22px] border border-line bg-white p-6">

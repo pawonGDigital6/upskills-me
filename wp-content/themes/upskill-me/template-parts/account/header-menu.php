@@ -12,6 +12,8 @@
 
 $upskill_link  = upskill_account_link();
 $upskill_items = upskill_account_menu_items();
+$upskill_user  = wp_get_current_user();
+$upskill_name  = $upskill_user->exists() ? ( $upskill_user->first_name ? $upskill_user->first_name : $upskill_user->display_name ) : '';
 
 if ( ! $upskill_items ) :
 	if ( empty( $upskill_link['url'] ) ) {
@@ -28,12 +30,25 @@ endif;
 ?>
 <div class="account-menu" data-account-menu>
 	<button class="site-header__icon account-menu__trigger" type="button" aria-expanded="false" aria-controls="account-menu" data-account-trigger>
-		<span class="screen-reader-text"><?php esc_html_e( 'Your account', 'upskill-me' ); ?></span>
-		<?php upskill_icon( 'user' ); ?>
+		<?php if ( $upskill_user->exists() ) : ?>
+			<span class="screen-reader-text"><?php echo esc_html( sprintf( /* translators: %s: user's first name. */ __( 'Your account (signed in as %s)', 'upskill-me' ), $upskill_name ) ); ?></span>
+			<?php upskill_icon( 'user', 'col-start-1 row-start-1' ); ?>
+			<?php // Signed in, whatever the role: a tick on the icon, always visible. ?>
+			<span class="account-menu__signed-in col-start-1 row-start-1 mr-1 mb-1 grid size-3.5 place-items-center self-end justify-self-end rounded-full bg-signal text-gray-950 ring-2 ring-white" aria-hidden="true"><?php upskill_icon( 'tick-sm', 'size-2.5' ); ?></span>
+		<?php else : ?>
+			<span class="screen-reader-text"><?php esc_html_e( 'Your account', 'upskill-me' ); ?></span>
+			<?php upskill_icon( 'user' ); ?>
+		<?php endif; ?>
 	</button>
 	<div class="account-menu__panel" id="account-menu" hidden data-account-panel>
-		<?php if ( is_user_logged_in() ) : ?>
-			<p class="screen-reader-text"><?php echo esc_html( sprintf( /* translators: %s: user's display name. */ __( 'Signed in as %s', 'upskill-me' ), wp_get_current_user()->display_name ) ); ?></p>
+		<?php if ( $upskill_user->exists() ) : ?>
+			<?php // The greeting heads the menu, so it shows on hover (mouse) and on tap (touch) alike. ?>
+			<p class="account-menu__greeting px-4 pt-2 text-sm text-gray-500">
+				<?php
+				/* translators: %s: user's first name. */
+				printf( esc_html__( 'Hello, %s', 'upskill-me' ), '<span class="font-medium text-gray-950">' . esc_html( $upskill_name ) . '</span>' );
+				?>
+			</p>
 		<?php endif; ?>
 		<ul class="mega__list account-menu__list">
 			<?php foreach ( $upskill_items as $upskill_item ) : ?>

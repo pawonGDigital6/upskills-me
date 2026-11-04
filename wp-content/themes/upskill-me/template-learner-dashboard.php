@@ -19,7 +19,8 @@ $upskill_courses = upskill_learner_courses( $upskill_user->ID );
 $upskill_name    = $upskill_user->first_name ? $upskill_user->first_name : $upskill_user->display_name;
 $upskill_shown   = 3; // Completed courses listed before "View All Completed Courses".
 $upskill_all_url = upskill_learndash_profile_url(); // LearnDash's profile lists every course.
-$upskill_profile = get_edit_profile_url( $upskill_user->ID );
+// WooCommerce My Account → Account details: name, display name, email and password, on the site.
+$upskill_profile = function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'edit-account' ) : get_edit_profile_url( $upskill_user->ID );
 
 // Section headings: 24px on phones to 36px at 1440 (Figma).
 $upskill_h2 = 'heading text-[clamp(1.5rem,1.2214rem+1.1429vw,2.25rem)] leading-[1.1] font-medium tracking-[-0.01em] text-gray-950';
@@ -58,7 +59,7 @@ $upskill_settings = array(
 		'title' => __( 'Password & Security', 'upskill-me' ),
 		'text'  => __( 'Manage your password and account security.', 'upskill-me' ),
 		'label' => __( 'Manage', 'upskill-me' ),
-		'url'   => $upskill_profile . '#password',
+		'url'   => $upskill_profile . '#password_current', // WooCommerce's "Current password" field.
 	),
 );
 ?>
@@ -76,6 +77,8 @@ $upskill_settings = array(
 			</div>
 			<p class="text-lead text-gray-500"><?php esc_html_e( 'Continue your training, pick up where you left off and keep building your knowledge.', 'upskill-me' ); ?></p>
 		</div>
+
+		<?php get_template_part( 'template-parts/account/pending-orders' ); ?>
 
 		<ul class="mt-6 grid grid-cols-2 gap-2 lg:mt-20 lg:grid-cols-3 lg:gap-4" role="list">
 			<?php foreach ( $upskill_counts as $upskill_i => $upskill_count ) : ?>

@@ -28,7 +28,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( $has_access || ! function_exists( 'upskill_course_product' ) ) {
+// Organisation admins always get the product page: they buy training and more seats here, even for a course they already have (inc/lms-access.php).
+$upskill_org_admin = function_exists( 'upskill_is_org_admin' ) && upskill_is_org_admin( $user_id );
+
+if ( ( $has_access && ! $upskill_org_admin ) || ! function_exists( 'upskill_course_product' ) ) {
 	if ( $has_access && function_exists( 'upskill_learner_course_summary' ) ) {
 		$content = wpautop( esc_html( has_excerpt( $course_id ) ? get_the_excerpt( $course_id ) : upskill_learner_course_summary( $course_id ) ) );
 	}
@@ -49,6 +52,10 @@ $upskill_image    = get_post_thumbnail_id( $course_id );
 $upskill_first    = $upskill_levels ? $upskill_levels[0] : null;
 $upskill_library  = function_exists( 'upskill_library_page_url' ) ? upskill_library_page_url() : home_url( '/' );
 $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
+// A learner without access (their organisation has not assigned this course) gets a message instead of the buy box.
+$upskill_learner = ! $has_access && function_exists( 'upskill_is_learner' ) && upskill_is_learner( $user_id );
+$upskill_lessons = $upskill_org_admin && $has_access ? learndash_course_get_steps_by_type( $course_id, 'sfwd-lessons' ) : array();
+$upskill_org_url = function_exists( 'upskill_org_dashboard_page_id' ) && upskill_org_dashboard_page_id() ? get_permalink( upskill_org_dashboard_page_id() ) : '';
 ?>
 <?php // Not wrapped in LearnDash's .learndash-wrapper: its CSS (e.g. box-shadow: none !important on every link) would restyle the theme blocks below. ?>
 <div class="course-product">
@@ -214,7 +221,37 @@ $upskill_term_url = $upskill_category ? get_term_link( $upskill_category ) : '';
 						</p>
 					<?php endif; ?>
 
-					<?php if ( $upskill_levels ) : ?>
+					<?php if ( $upskill_org_admin ) : ?>
+						<?php // Organisation admin: what this page means for them (own the course already, or not yet). ?>
+						<div class="course-hero__notice mt-5 rounded-2xl bg-brand-25 p-4 text-sm leading-[1.5] text-gray-700">
+							<?php if ( $has_access ) : ?>
+								<p class="font-medium text-gray-950"><?php esc_html_e( 'Your organisation already has this training.', 'upskill-me' ); ?></p>
+								<p class="pt-1"><?php esc_html_e( 'Add more seats below, or manage your team’s access from your dashboard.', 'upskill-me' ); ?></p>
+								<p class="flex flex-wrap gap-x-4 gap-y-1 pt-2">
+									<?php if ( $upskill_org_url ) : ?>
+										<a class="font-medium text-brand-700 hover:underline" href="<?php echo esc_url( $upskill_org_url ); ?>"><?php esc_html_e( 'Organisation dashboard', 'upskill-me' ); ?></a>
+									<?php endif; ?>
+									<?php if ( $upskill_lessons ) : ?>
+										<a class="font-medium text-brand-700 hover:underline" href="<?php echo esc_url( learndash_get_step_permalink( $upskill_lessons[0], $course_id ) ); ?>"><?php esc_html_e( 'Open the training', 'upskill-me' ); ?></a>
+									<?php endif; ?>
+								</p>
+							<?php else : ?>
+								<p><?php esc_html_e( 'Your organisation doesn’t have this training yet. Choose a level and the number of seats to add it for your team.', 'upskill-me' ); ?></p>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+
+					<?php if ( $upskill_learner ) : ?>
+						<div class="course-hero__notice mt-6 rounded-2xl bg-brand-25 p-5">
+							<p class="text-base font-medium text-gray-950"><?php esc_html_e( 'This training hasn’t been assigned to you.', 'upskill-me' ); ?></p>
+							<p class="pt-1 text-base text-gray-700"><?php esc_html_e( 'Training is bought and assigned by your organisation. Contact your organisation admin to request access.', 'upskill-me' ); ?></p>
+							<?php
+							if ( function_exists( 'upskill_learner_dashboard_url' ) && upskill_learner_dashboard_url() ) {
+								upskill_button( array( 'url' => upskill_learner_dashboard_url(), 'title' => __( 'Go to My Learning', 'upskill-me' ) ), array( 'class' => 'mt-4' ) );
+							}
+							?>
+						</div>
+					<?php elseif ( $upskill_levels ) : ?>
 						<form class="mt-5 flex flex-col" action="<?php echo esc_url( wc_get_cart_url() ); ?>" method="post" data-buy-box>
 							<p class="flex items-baseline gap-2">
 								<span class="text-[36px] leading-[1.1] font-medium tracking-[-0.01em] text-gray-950" data-buy-price><?php echo wp_kses_post( $upskill_first['price_html'] ); ?></span>

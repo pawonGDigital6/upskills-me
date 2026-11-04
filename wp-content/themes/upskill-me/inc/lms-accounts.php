@@ -151,6 +151,8 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 		$org     = function_exists( 'upskill_org_dashboard_page_id' ) && upskill_org_dashboard_page_id() ? (string) get_permalink( upskill_org_dashboard_page_id() ) : '';
 		$learner = function_exists( 'upskill_learner_dashboard_url' ) ? upskill_learner_dashboard_url() : '';
 		$items   = array();
+		// WooCommerce My Account → Account details (name, email, password) for organisation admins and learners.
+		$account = function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'edit-account' ) : '';
 
 		if ( user_can( $user, 'manage_options' ) ) {
 			$items = array(
@@ -165,6 +167,7 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 				array( __( 'Team Results', 'upskill-me' ), __( 'Track your team’s progress', 'upskill-me' ), $org ? $org . '#org-team' : '' ),
 				array( __( 'Manage Team', 'upskill-me' ), __( 'Enrol and manage team members', 'upskill-me' ), function_exists( 'upskill_groups_dashboard_url' ) ? upskill_groups_dashboard_url() : '' ),
 				array( __( 'Orders & Billing', 'upskill-me' ), __( 'Invoices and billing details', 'upskill-me' ), function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'orders' ) : '' ),
+				array( __( 'Account Details', 'upskill-me' ), __( 'Your name, email and password', 'upskill-me' ), $account ),
 			);
 		} else {
 			$profile = function_exists( 'upskill_learndash_profile_url' ) ? upskill_learndash_profile_url() : '';
@@ -172,6 +175,7 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 				array( __( 'Dashboard', 'upskill-me' ), __( 'Your training at a glance', 'upskill-me' ), $learner ),
 				array( __( 'My Courses', 'upskill-me' ), __( 'Continue your learning journey', 'upskill-me' ), $learner ? $learner . '#current-courses' : '' ),
 				array( __( 'Results', 'upskill-me' ), __( 'Track your learning progress', 'upskill-me' ), $profile ? $profile : ( $learner ? $learner . '#completed-courses' : '' ) ),
+				array( __( 'Account Details', 'upskill-me' ), __( 'Your name, email and password', 'upskill-me' ), $account ),
 			);
 		}
 
@@ -321,21 +325,6 @@ if ( ! function_exists( 'upskill_login_redirect_landing' ) ) {
 		return upskill_login_destination( $user );
 	}
 }
-
-/**
- * Learners keep WordPress's own profile screen (name, email, password,
- * sessions), which the dashboard's "Profile" and "Password & Security" link
- * to. WooCommerce otherwise turns away everyone without editing rights from
- * wp-admin, sending them to its My Account page.
- */
-add_filter(
-	'woocommerce_prevent_admin_access',
-	static function ( $prevent ) {
-		global $pagenow;
-
-		return 'profile.php' === $pagenow ? false : $prevent;
-	}
-);
 
 /**
  * Logging out returns to the "Log in" page with a confirmation, instead of
