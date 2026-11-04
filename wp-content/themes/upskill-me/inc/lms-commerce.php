@@ -364,3 +364,31 @@ add_filter(
 	10,
 	3
 );
+
+/**
+ * Group Registration saves "Group Name" on an order line twice for products
+ * with levels (once from the group name, once from its per-variation copy,
+ * which its "Autofill group name" setting fills with the same value), so
+ * orders, emails and the admin order screen listed it twice. Only the
+ * display drops an identical repeat; the stored meta, which Group
+ * Registration reads back, is untouched.
+ */
+add_filter(
+	'woocommerce_order_item_get_formatted_meta_data',
+	static function ( $formatted_meta ) {
+		$seen = array();
+
+		foreach ( (array) $formatted_meta as $meta_id => $meta ) {
+			$signature = $meta->key . "\0" . $meta->value;
+
+			if ( isset( $seen[ $signature ] ) ) {
+				unset( $formatted_meta[ $meta_id ] );
+			} else {
+				$seen[ $signature ] = true;
+			}
+		}
+
+		return $formatted_meta;
+	},
+	20
+);
