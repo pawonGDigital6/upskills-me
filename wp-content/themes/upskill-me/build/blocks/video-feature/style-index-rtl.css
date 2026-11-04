@@ -18,3 +18,9 @@
 .block-video-feature .section-header .eyebrow svg path {
   color: var(--color-white);
 }
+
+@media (width < 768px) {
+  .block-video-feature--layout-2 .section-header__title {
+    gap: 20px;
+  }
+}

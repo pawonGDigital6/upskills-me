@@ -19,4 +19,10 @@
   color: var(--color-white);
 }
 
+@media (width < 768px) {
+  .block-video-feature--layout-2 .section-header__title {
+    gap: 20px;
+  }
+}
+
 /*# sourceMappingURL=style-index.css.map*/
