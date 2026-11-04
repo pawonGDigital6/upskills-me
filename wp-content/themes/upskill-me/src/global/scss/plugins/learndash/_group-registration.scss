@@ -76,3 +76,608 @@ html .btn:not(:where(.upload-btn-wrapper .btn)) {
 		background: var(--color-white);
 	}
 }
+
+// ---------------------------------------------------------------------------
+// Groups dashboard to Figma "Enrol Users" (49325:17392), styles only: the
+// plugin's markup, scripts, forms and enrolment flow are untouched.
+// Borders are Figma's #1a1a1a at 10% (gray-900); table head #f7f7f7 / #e6e6e6
+// (gray-25 / gray-100). Figma's error red #b4351f has no token.
+// ---------------------------------------------------------------------------
+
+$ldgr-border: color-mix(in srgb, var(--color-gray-900) 10%, transparent);
+$ldgr-border-strong: color-mix(in srgb, var(--color-gray-900) 20%, transparent);
+$ldgr-muted: #6b6b72; // Figma "Seats" / "Available" labels.
+$ldgr-danger: #b4351f;
+
+.store-content {
+
+	// Team list = Figma "Select training": one white card, a row per team with
+	// the radio circle, the name, and seats left on the right.
+	.ldgr-group-listing {
+
+		.ldgr-search-groups {
+			margin-bottom: 24px;
+
+			.ldgr-icon-Search {
+				left: 16px;
+				color: var(--color-gray-500);
+				font-size: 18px;
+			}
+
+			input {
+				width: 396px;
+				height: 48px;
+				padding-left: 46px;
+				border-color: $ldgr-border;
+				border-radius: 999px;
+				font-size: var(--text-sm);
+			}
+		}
+
+		.ldgr-group-items.list {
+			overflow: hidden;
+			border: 1px solid $ldgr-border;
+			border-radius: var(--radius-lg);
+			background: var(--color-white);
+		}
+
+		.list .ldgr-group-item {
+			padding: 0;
+			border-bottom: 1px solid $ldgr-border;
+			transition: background-color 0.2s ease;
+
+			&:last-child {
+				border-bottom: 0;
+			}
+
+			&:hover {
+				background: var(--color-brand-25);
+			}
+		}
+
+		.list .ldgr-main-group-content {
+			flex-wrap: nowrap;
+			gap: 14px;
+			padding: 20px;
+
+			// Figma's radio circle (22px, 20% border); filled purple on hover.
+			&::before {
+				content: "";
+				flex: none;
+				width: 22px;
+				height: 22px;
+				border: 1px solid $ldgr-border-strong;
+				border-radius: 999px;
+				transition: border-color 0.2s ease, box-shadow 0.2s ease;
+			}
+
+			&:hover::before {
+				border-color: var(--color-brand-700);
+				box-shadow: inset 0 0 0 5px var(--color-brand-700);
+			}
+		}
+
+		// The plugin's "No Image Available" placeholder is not in the design;
+		// a team image, when one is set, still shows.
+		.gr-icon:has(img[src*="no_image"]) {
+			display: none;
+		}
+
+		.gr-icon img {
+			width: 56px !important; // The plugin sets an inline width.
+			height: 56px;
+			border-radius: var(--radius-md);
+			object-fit: cover;
+		}
+
+		.list .gr-title {
+			margin: 0;
+			color: var(--color-gray-900);
+			font-weight: 500;
+			font-size: var(--text-base);
+			line-height: 1.6;
+		}
+
+		.list .gr-left {
+			flex: none;
+			margin: 0 0 0 auto;
+			color: $ldgr-muted;
+			font-size: var(--text-sm);
+			text-align: right;
+		}
+
+		.ldgr-pagination {
+			margin-top: 24px;
+		}
+	}
+
+	// Selected team: a white card with the name, seats and the two actions.
+	.ldgr-group-single .ldgr-top-banner {
+		min-height: 0;
+		gap: 16px 24px;
+		padding: 20px;
+		border: 1px solid $ldgr-border;
+		border-radius: var(--radius-lg);
+		background-color: var(--color-white) !important; // The plugin sets an inline tint.
+
+		.ldgr-group-image:has(img[src*="no_image"]) {
+			display: none;
+		}
+
+		.ldgrs-title-wrap > div {
+			align-items: center;
+			gap: 16px;
+		}
+
+		.ldgrs-title-wrap h1 {
+			margin: 0;
+			color: var(--color-gray-900);
+			font-weight: 500;
+			font-size: clamp(1.5rem, 1.2214rem + 1.1429vw, 2.25rem); // Figma section heading, 24 → 36.
+			line-height: 1.1;
+			letter-spacing: -0.01em;
+		}
+
+		.ldgrs-title-wrap .ldgr-u-left {
+			margin: 8px 0 0;
+			color: $ldgr-muted;
+			font-weight: 400;
+			font-size: var(--text-sm);
+		}
+
+		.ldgrs-title-wrap .sub-group-of {
+			margin-left: 0;
+		}
+
+		.ldgr-right-button-container {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 12px 20px;
+		}
+
+		.ldgr-edit-group {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			font-weight: 500;
+			font-size: var(--text-sm);
+			cursor: pointer;
+		}
+
+		.ldgrs-edit-wrap > div {
+			margin-top: 0;
+		}
+	}
+
+	// Tabs: Figma's underline tabs in the brand colour.
+	#wdm_groups_tab {
+		margin-top: 40px;
+
+		ul.tabs {
+			margin-bottom: 24px;
+			border-bottom-color: $ldgr-border;
+		}
+
+		ul.tabs li a {
+			display: inline-block;
+			padding: 12px 4px;
+			color: $ldgr-muted;
+			font-weight: 500;
+			font-size: var(--text-base);
+		}
+
+		ul.tabs li.current a {
+			border-bottom: 2px solid var(--color-brand-700);
+			color: var(--color-brand-700) !important; // The plugin's accent rule is !important.
+			font-weight: 500;
+		}
+
+		.tab-content {
+			background: transparent;
+		}
+	}
+
+	// Enrolled users and report tables: Figma's table card.
+	#wdm_group,
+	#wdm_ldgr_group_report {
+		overflow: hidden;
+		margin: 16px 0;
+		border: 1px solid $ldgr-border;
+		border-radius: var(--radius-lg);
+
+		thead th {
+			padding: 16px 20px;
+			border-bottom: 1px solid var(--color-gray-100);
+			background-color: var(--color-gray-25);
+			color: var(--color-gray-500);
+			font-weight: 500;
+			font-size: var(--text-sm);
+			text-transform: uppercase;
+		}
+
+		tbody td {
+			padding: 16px 20px;
+			border-top: 1px solid $ldgr-border;
+			color: var(--color-gray-900);
+			font-size: var(--text-base);
+			vertical-align: middle;
+
+			p {
+				margin: 0;
+			}
+		}
+
+		tbody tr:first-child td {
+			border-top: 0;
+		}
+	}
+
+	#wdm_group tbody td {
+		border-bottom: 0; // The plugin underlines the actions cell only.
+	}
+
+	// Phones: the plugin turns each person into a block; draw each as a white
+	// card (no tint or shadow) with label / value lines.
+	@media (max-width: 600px) {
+
+		#wdm_group {
+			overflow: visible;
+			border: 0;
+			border-radius: 0;
+			background: transparent;
+		}
+
+		#wdm_group tr.odd,
+		#wdm_group tr.even {
+			overflow: hidden;
+			margin-bottom: 12px;
+			border: 1px solid $ldgr-border;
+			border-radius: var(--radius-lg);
+			background-color: var(--color-white);
+			box-shadow: none;
+		}
+
+		#wdm_group tbody td {
+			padding: 10px 16px;
+			border-top: 0;
+		}
+
+		#wdm_group td p {
+			margin: 0;
+		}
+
+		#wdm_group td::before {
+			min-width: 56px;
+			color: $ldgr-muted;
+			font-weight: 500;
+			font-size: var(--text-sm);
+		}
+
+		#wdm_group td.ldgr-actions {
+			border-top: 1px solid $ldgr-border;
+			text-align: right;
+		}
+	}
+
+	// A plugin stylesheet sets Arial on the cells.
+	#wdm_group,
+	#wdm_group td p,
+	#wdm_ldgr_group_report {
+		font-family: var(--font-sans);
+	}
+
+	// DataTables' search: the same pill as the team search (ids beat a
+	// plugin's 3px radius).
+	#wdm_group_filter input {
+		height: 44px;
+		border-color: $ldgr-border;
+		border-radius: 999px;
+		font-size: var(--text-sm);
+
+		@media (max-width: 767px) {
+			width: 100%;
+			margin-left: 0;
+		}
+	}
+
+	@media (max-width: 767px) {
+
+		#wdm_group_filter,
+		#wdm_group_filter label {
+			display: block;
+			width: 100%;
+		}
+	}
+
+	// Remove in Figma's delete colour.
+	#wdm_group .wdm_remove {
+		padding: 0;
+		border: 0;
+		background: none;
+		color: $ldgr-danger;
+		font-weight: 500;
+		font-size: var(--text-sm);
+		box-shadow: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	#bulk_remove {
+		min-height: 44px;
+		padding: 10px 20px;
+		border: 1px solid $ldgr-border-strong;
+		border-radius: 999px;
+		background: var(--color-white);
+		color: var(--color-gray-900);
+		font-weight: 500;
+		font-size: var(--text-sm);
+		cursor: pointer;
+	}
+
+	.dataTables_wrapper {
+
+		.dataTables_info {
+			color: $ldgr-muted;
+			font-size: var(--text-sm);
+		}
+
+		.dataTables_paginate .paginate_button {
+			min-width: 40px;
+			margin-left: 4px;
+			padding: 8px 12px;
+			border: 1px solid transparent !important; // DataTables' own rules are !important.
+			border-radius: 999px;
+			background: none !important;
+			color: var(--color-gray-900) !important;
+			font-size: var(--text-sm);
+		}
+
+		.dataTables_paginate .paginate_button.current,
+		.dataTables_paginate .paginate_button.current:hover {
+			background: var(--color-brand-700) !important;
+			color: var(--color-white) !important;
+		}
+
+		.dataTables_paginate .paginate_button:not(.current, .disabled):hover {
+			border-color: $ldgr-border !important;
+		}
+
+		.dataTables_paginate .paginate_button.disabled {
+			color: var(--color-gray-200) !important;
+		}
+	}
+
+	// Report: course picker and button.
+	#tab-2 .wdm-select-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 12px;
+
+		h6 {
+			flex-basis: 100%;
+			margin: 0;
+			color: var(--color-gray-500);
+			font-weight: 500;
+			font-size: var(--text-sm);
+			text-transform: uppercase;
+		}
+	}
+
+	#wdm_ldgr_show_report {
+		min-height: 44px;
+		padding: 10px 20px;
+		border: 0;
+		border-radius: 999px;
+		color: var(--color-white);
+		font-weight: 500;
+		font-size: var(--text-sm);
+		cursor: pointer;
+	}
+
+	// Pop-ups (Enrol New Users, Edit group details): Figma's rounded panels
+	// and "Add your people" fields.
+	.ldgr-lightbox {
+		background-color: color-mix(in srgb, var(--color-gray-950) 70%, transparent);
+
+		.ldgr-popup {
+			padding: 32px 20px 24px;
+			border-radius: var(--radius-lg);
+			line-height: 1.5;
+
+			@media (min-width: 768px) {
+				padding: 40px;
+			}
+		}
+
+		// Wider enrol panel so a person fits on one row; the plugin's own
+		// rules use the id.
+		&#ldgr-enroll-users-popup .ldgr-popup {
+			width: 960px;
+			max-width: calc(100% - 32px);
+			padding: 32px 20px 24px;
+
+			@media (min-width: 768px) {
+				padding: 40px;
+			}
+		}
+
+		// The plugin fixes the rows at 650px, which overflows on phones.
+		.ldgr-tabs-content .ldgr-add-users {
+			width: 100%;
+		}
+
+		.ldgr-popup .ldgr-icon-Close {
+			top: 20px;
+			right: 20px;
+			color: var(--color-gray-900);
+		}
+
+		.ldgr-popup .ldgr-popup-title {
+			margin: 0 32px 24px 0;
+			color: var(--color-gray-900);
+			font-weight: 500;
+			font-size: clamp(1.5rem, 1.2214rem + 1.1429vw, 2.25rem);
+			line-height: 1.1;
+			letter-spacing: -0.01em;
+		}
+
+		.ldgr-tabs {
+			gap: 24px;
+			margin-bottom: 8px;
+			border-bottom-color: $ldgr-border;
+
+			li {
+				margin: 0;
+				padding: 12px 4px;
+				color: $ldgr-muted;
+				font-weight: 500;
+				font-size: var(--text-base);
+			}
+
+			li.current {
+				border-bottom: 2px solid var(--color-brand-700);
+				color: var(--color-brand-700) !important; // The plugin's accent rule is !important.
+			}
+		}
+
+		// Labels as Figma's table head: 14px caps, #666.
+		.ldgr-add-user .ldgr-field label,
+		.ldgr-edit-gn label,
+		.ldgr-edit-gicon label {
+			margin-bottom: 8px;
+			color: var(--color-gray-500);
+			font-weight: 500;
+			font-size: var(--text-sm);
+			text-transform: uppercase;
+		}
+
+		.ldgr-add-user .ldgr-field .ldgr-textbox,
+		.ldgr-add-user .ldgr-field .ldgr-dynamic-textbox,
+		.ldgr-add-user .ldgr-field .ldgr-dynamic-number,
+		.ldgr-add-user .ldgr-field .ldgr-dynamic-textarea,
+		.ldgr-edit-gn input {
+			width: 100% !important; // The plugin fixes 299px with !important.
+			height: 50px;
+			padding: 12px;
+			border: 1px solid var(--color-gray-200);
+			border-radius: 8px;
+			background: var(--color-white);
+			color: var(--color-gray-900);
+			font-size: var(--text-sm);
+			transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+			&:focus {
+				border-color: var(--color-brand-700);
+				outline: none;
+				box-shadow: 0 0 0 3px var(--color-brand-100);
+			}
+		}
+
+		// Figma's highlighted field: red border once the plugin writes a message.
+		.ldgr-field:has(.ldgr-field-error:not(:empty)) input {
+			border-color: $ldgr-danger;
+		}
+
+		.ldgr-field-error {
+			color: $ldgr-danger;
+			font-size: var(--text-xs);
+			line-height: 1.5;
+
+			&:not(:empty) {
+				padding-top: 6px;
+			}
+		}
+
+		// One person per row from md (first name, last name, email, any custom
+		// fields, then Remove), as Figma's people table.
+		.ldgr-add-user {
+			gap: 0 16px;
+
+			@media (min-width: 768px) {
+				flex-wrap: nowrap;
+				align-items: flex-start;
+
+				.ldgr-field {
+					flex: 1 1 0;
+					min-width: 0;
+					padding: 16px 0 !important; // Beats the plugin's odd/even column padding.
+				}
+
+				.ldgr-field.remove-user {
+					flex: none;
+					align-self: flex-start;
+					padding-top: 50px !important; // Label (21) + gap (8) + centred in the 50px field.
+				}
+			}
+		}
+
+		.ldgr-add-user .remove-user {
+			gap: 6px;
+			color: $ldgr-danger;
+
+			i,
+			span {
+				margin: 0;
+				color: inherit;
+			}
+
+			span {
+				font-weight: 500;
+				font-size: var(--text-sm);
+			}
+		}
+
+		.ldgr-tabs-content .ldgr-add-users-wrap form .ldgr-add-users > .ldgr-add-user {
+			margin-bottom: 0;
+			padding-bottom: 0;
+			border-bottom-color: $ldgr-border;
+		}
+
+		// "Add more users" as Figma's "Add Another User" pill.
+		.ldgr-add-more-users {
+			width: fit-content;
+			gap: 12px;
+			margin: 16px 0 24px;
+			padding: 12px 18px 12px 8px;
+			border: 1px solid $ldgr-border;
+			border-radius: 999px;
+			background: var(--color-white);
+			transition: border-color 0.2s ease;
+
+			&:hover {
+				border-color: var(--color-brand-700);
+			}
+
+			.ldgr-plus {
+				width: 24px;
+				height: 24px;
+				margin: 0;
+				border: 0;
+				border-radius: 999px;
+				background: var(--color-gray-25);
+				color: var(--color-gray-900);
+			}
+
+			.ldgr-amu {
+				color: var(--color-gray-950) !important; // The plugin's accent rule is !important.
+				font-weight: 500;
+				font-size: 13px; // Figma 13/21.
+			}
+		}
+
+		.ldgr-eg-actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			margin-top: 8px;
+
+			.ldgr-btn {
+				margin: 0;
+			}
+		}
+	}
+}

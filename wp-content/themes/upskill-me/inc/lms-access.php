@@ -61,11 +61,19 @@ if ( ! function_exists( 'upskill_is_learner' ) ) {
  * redirect to My Account, which inc/lms-commerce.php forwards to the
  * organisation or learner dashboard). LearnDash lets Group Leaders in at
  * priority 20 (learndash_check_group_leader_access); this runs after it.
- * AJAX and admin-post requests are never blocked (WooCommerce skips them).
+ * AJAX and admin-post requests are never blocked.
  */
 add_filter(
 	'woocommerce_prevent_admin_access',
 	static function ( $prevent ) {
+		// WooCommerce runs this filter for admin-ajax.php and admin-post.php
+		// too (it only leaves them out of its own default), and the front end
+		// depends on them: Group Registration's enrol check, reports and
+		// removals all post to admin-ajax.php.
+		if ( wp_doing_ajax() || ( isset( $_SERVER['SCRIPT_FILENAME'] ) && 'admin-post.php' === basename( sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_FILENAME'] ) ) ) ) ) {
+			return $prevent;
+		}
+
 		if ( current_user_can( 'manage_options' ) || current_user_can( 'manage_woocommerce' ) || current_user_can( 'edit_posts' ) ) {
 			return $prevent;
 		}

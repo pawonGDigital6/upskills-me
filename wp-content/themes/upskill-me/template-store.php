@@ -29,11 +29,13 @@ $upskill_display  = $upskill_cart || $upskill_checkout || $upskill_received;
 $upskill_heading  = esc_html( get_the_title() );
 $upskill_intro    = '';
 $upskill_crumbs   = array();
+$upskill_groups   = function_exists( 'ldgr_get_groups_dashboard_page' ) && (int) ldgr_get_groups_dashboard_page() === get_queried_object_id();
 
-if ( function_exists( 'ldgr_get_groups_dashboard_page' ) && (int) ldgr_get_groups_dashboard_page() === get_queried_object_id() ) {
-	// Figma "Enrol" 49325:17392.
-	$upskill_heading = esc_html__( 'Manage your team.', 'upskill-me' );
-	$upskill_intro   = __( 'Add your people to your training, see who is enrolled and follow their progress.', 'upskill-me' );
+if ( $upskill_groups ) {
+	// Figma "Enrol Users" 49325:17392: eyebrow, display heading, 20px intro
+	// (the per-person cohort is left out: a team's cohort is the level bought).
+	$upskill_heading = __( 'Get your <em>people started.</em>', 'upskill-me' );
+	$upskill_intro   = __( 'Select the training you want to assign, add your team members and follow their progress.', 'upskill-me' );
 } elseif ( $upskill_received ) {
 	$upskill_heading = __( 'Thank you for <em>your order.</em>', 'upskill-me' );
 	$upskill_intro   = __( 'Your confirmation has been emailed to you, and your orders are always in your account.', 'upskill-me' );
@@ -69,6 +71,12 @@ if ( function_exists( 'ldgr_get_groups_dashboard_page' ) && (int) ldgr_get_group
 					<?php if ( $upskill_intro ) : ?>
 						<p class="max-w-[666px] pt-4 text-base text-gray-500 lg:pt-6"><?php echo esc_html( $upskill_intro ); ?></p>
 					<?php endif; ?>
+				<?php elseif ( $upskill_groups ) : ?>
+					<div class="flex flex-col items-start gap-3 lg:gap-4">
+						<?php upskill_eyebrow( __( 'Enrol your team', 'upskill-me' ), 'monitor' ); ?>
+						<h1 class="heading text-h1 font-medium text-gray-950 lg:font-semibold"><?php echo wp_kses( $upskill_heading, upskill_inline_kses() ); ?></h1>
+					</div>
+					<p class="max-w-[960px] pt-4 text-base leading-[1.5] text-[#666] lg:pt-6 lg:text-lead"><?php echo esc_html( $upskill_intro ); ?></p>
 				<?php else : ?>
 					<nav class="flex flex-wrap items-center gap-2 text-sm text-gray-500" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
 						<a class="hover:text-brand-700" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'upskill-me' ); ?></a>
@@ -81,7 +89,7 @@ if ( function_exists( 'ldgr_get_groups_dashboard_page' ) && (int) ldgr_get_group
 					<?php endif; ?>
 				<?php endif; ?>
 			<?php endif; ?>
-			<div class="store-content <?php echo $upskill_header ? ( $upskill_display ? 'mt-8 lg:mt-[72px]' : 'mt-8 lg:mt-12' ) : ''; ?>">
+			<div class="store-content <?php echo $upskill_header ? ( $upskill_display ? 'mt-8 lg:mt-[72px]' : ( $upskill_groups ? 'mt-10 lg:mt-20' : 'mt-8 lg:mt-12' ) ) : ''; ?>">
 				<?php
 				while ( have_posts() ) :
 					the_post();
