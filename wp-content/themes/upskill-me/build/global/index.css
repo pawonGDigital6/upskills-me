@@ -1704,6 +1704,9 @@
   .border-\[\#111827\]\/14 {
     border-color: color-mix(in oklab, #111827 14%, transparent);
   }
+  .border-\[\#F3F1FB\] {
+    border-color: #F3F1FB;
+  }
   .border-\[\#d2c2f0\] {
     border-color: #d2c2f0;
   }
@@ -1727,6 +1730,12 @@
   }
   .border-\[\#fecdca\] {
     border-color: #fecdca;
+  }
+  .border-\[F3F1FB\] {
+    border-color: F3F1FB;
+  }
+  .border-\[gray-100\] {
+    border-color: gray-100;
   }
   .border-brand-100 {
     border-color: var(--color-brand-100);
@@ -1863,8 +1872,17 @@
   .bg-\[\#fff6e5\] {
     background-color: #fff6e5;
   }
+  .bg-\[F3F1FB\] {
+    background-color: F3F1FB;
+  }
+  .bg-\[brand-25\] {
+    background-color: brand-25;
+  }
   .bg-\[rgb\(14_14_16\/34\%\)\] {
     background-color: rgb(14 14 16/34%);
+  }
+  .bg-\[white\] {
+    background-color: white;
   }
   .bg-black {
     background-color: var(--color-black);
@@ -3548,6 +3566,9 @@
     .max-sm\:grid-cols-1 {
       grid-template-columns: repeat(1, minmax(0, 1fr));
     }
+    .max-sm\:self-center {
+      align-self: center;
+    }
     .max-sm\:rounded-b-4xl {
       border-bottom-right-radius: var(--radius-4xl);
       border-bottom-left-radius: var(--radius-4xl);
@@ -3590,6 +3611,9 @@
     }
     .max-sm\:text-left {
       text-align: left;
+    }
+    .max-sm\:align-middle {
+      vertical-align: middle;
     }
     .max-sm\:text-base {
       font-size: var(--text-base);

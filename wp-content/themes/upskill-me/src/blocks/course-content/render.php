@@ -46,8 +46,8 @@ $attributes = upskill_block_attributes( $block, 'block-course-content section-y 
 		?>
 
 		<div class="course-content__box reveal mt-10 lg:mt-20 overflow-hidden rounded-[22px] border border-line bg-white shadow-xs" data-course-content>
-			<div class="course-content__summary flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4 bg-brand-25 px-4 py-4 lg:px-6">
-				<p class="text-lg text-gray-950 lg:text-xl">
+			<div class="course-content__summary flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-4 bg-brand-25 px-4 sm:py-5 py-4 lg:px-6">
+				<p class="text-gray-950 text-xl">
 					<?php
 					echo esc_html(
 						/* translators: %d: number of sessions. */
@@ -58,7 +58,7 @@ $attributes = upskill_block_attributes( $block, 'block-course-content section-y 
 				<?php if ( $count > 1 ) : ?>
 					<button class="course-content__expand group inline-flex h-[42px] flex-none items-center gap-2 rounded-full border border-gray-100 bg-white pr-2 pl-[18px] text-sm font-medium text-gray-950 hover:border-brand-300" type="button" aria-pressed="false" data-course-expand data-label-expand="<?php esc_attr_e( 'Expand all', 'upskill-me' ); ?>" data-label-collapse="<?php esc_attr_e( 'Collapse all', 'upskill-me' ); ?>">
 						<span data-course-expand-label><?php esc_html_e( 'Expand all', 'upskill-me' ); ?></span>
-						<span class="grid size-7 place-items-center rounded-full bg-brand-25 text-brand-700 transition-transform group-aria-pressed:rotate-180" aria-hidden="true"><?php upskill_icon( 'chevron-sm', 'size-[11px]' ); ?></span>
+						<span class="grid size-7 place-items-center rounded-full bg-[#F3F1FB] text-brand-700 transition-transform group-aria-pressed:rotate-180" aria-hidden="true"><?php upskill_icon( 'chevron-sm', 'size-[11px]' ); ?></span>
 					</button>
 				<?php endif; ?>
 			</div>
@@ -74,8 +74,8 @@ $attributes = upskill_block_attributes( $block, 'block-course-content section-y 
 					?>
 					<li class="course-content__item border-t border-line" id="session-<?php echo (int) ( $index + 1 ); ?>">
 						<h3>
-							<button class="course-content__toggle group flex w-full items-center gap-3 px-4 py-4 text-left lg:gap-5 lg:px-6 lg:py-5" type="button" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $panel_id ); ?>" data-disclosure>
-								<span class="course-content__number grid size-[38px] flex-none place-items-center rounded-lg bg-brand-25 text-sm font-medium text-brand-700"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+							<button class="course-content__toggle group flex w-full sm:items-center gap-3 px-4 py-4 text-left lg:gap-5 lg:px-6 lg:py-5" type="button" aria-expanded="<?php echo $open ? 'true' : 'false'; ?>" aria-controls="<?php echo esc_attr( $panel_id ); ?>" data-disclosure>
+								<span class="course-content__number grid size-[38px] flex-none place-items-center rounded-[11px] bg-brand-25 text-sm font-medium text-brand-700 leading-none"><?php echo esc_html( str_pad( (string) ( $index + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 								<span class="flex min-w-0 flex-1 flex-wrap items-center gap-x-6 gap-y-1">
 									<span class="course-content__title text-base leading-[1.3] font-medium text-gray-950 lg:text-xl lg:leading-normal"><?php echo esc_html( upskill_session_title( $session ) ); ?></span>
 									<?php if ( $free ) : ?>
@@ -88,7 +88,7 @@ $attributes = upskill_block_attributes( $block, 'block-course-content section-y 
 									<span class="course-content__duration flex-none text-sm text-gray-500 max-sm:hidden"><?php echo esc_html( $minutes ); ?></span>
 								<?php endif; ?>
 								<?php // Figma 16px chevron (8px glyph), #333. ?>
-								<span class="flex-none text-gray-800 transition-transform group-aria-expanded:rotate-180" aria-hidden="true"><?php upskill_icon( 'chevron-row', 'size-4' ); ?></span>
+								<span class="flex-none text-gray-800 transition-transform group-aria-expanded:rotate-180 max-sm:self-center" aria-hidden="true"><?php upskill_icon( 'chevron-row', 'size-4' ); ?></span>
 							</button>
 						</h3>
 						<div class="collapse<?php echo $open ? ' is-open' : ''; ?>" id="<?php echo esc_attr( $panel_id ); ?>">
