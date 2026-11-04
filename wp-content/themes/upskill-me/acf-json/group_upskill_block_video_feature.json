@@ -11,6 +11,20 @@
             "endpoint": 0
         },
         {
+            "key": "field_upskill_video_feature_layout",
+            "label": "Layout",
+            "name": "layout",
+            "type": "button_group",
+            "instructions": "Layout 1: header and feature cards beside the video, facts under it (Why UpSkill Me). Layout 2: header across the top, video beside a list of feature cards (course page, \"The people behind the training\"); it shows no facts or caption.",
+            "choices": {
+                "1": "Layout 1",
+                "2": "Layout 2"
+            },
+            "default_value": "1",
+            "return_format": "value",
+            "layout": "horizontal"
+        },
+        {
             "key": "field_upskill_video_feature_section_header",
             "label": "Section Header",
             "name": "section_header",
@@ -140,7 +154,16 @@
             "type": "text",
             "wrapper": {
                 "width": "30"
-            }
+            },
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_video_feature_layout",
+                        "operator": "!=",
+                        "value": "2"
+                    }
+                ]
+            ]
         },
         {
             "key": "field_upskill_video_feature_video_title",
@@ -149,14 +172,24 @@
             "type": "text",
             "wrapper": {
                 "width": "70"
-            }
+            },
+            "instructions": "Also the play button's accessible name. Layout 2 does not show the caption."
         },
         {
             "key": "field_upskill_video_feature_video_meta",
             "label": "Details line",
             "name": "video_meta",
             "type": "text",
-            "placeholder": "Free session · 12 min · Vetted by subject specialists"
+            "placeholder": "Free session · 12 min · Vetted by subject specialists",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_video_feature_layout",
+                        "operator": "!=",
+                        "value": "2"
+                    }
+                ]
+            ]
         },
         {
             "key": "field_upskill_video_feature_facts",
@@ -180,6 +213,15 @@
                     "name": "text",
                     "type": "text"
                 }
+            ],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_video_feature_layout",
+                        "operator": "!=",
+                        "value": "2"
+                    }
+                ]
             ]
         }
     ],
@@ -201,5 +243,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1791351143
+    "modified": 1793768715
 }

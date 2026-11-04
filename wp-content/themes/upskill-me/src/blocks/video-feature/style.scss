@@ -17,3 +17,10 @@
 .block-video-feature .section-header .eyebrow svg path{
 	color: var(--color-white);
 }
+
+// Layout 2 (course page): Figma keeps 20px between eyebrow and heading on phones too (49371:40935).
+@media (width < 768px) {
+	.block-video-feature--layout-2 .section-header__title {
+		gap: 20px;
+	}
+}

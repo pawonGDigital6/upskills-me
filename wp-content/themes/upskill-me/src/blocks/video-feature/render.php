@@ -19,6 +19,12 @@ $video    = get_field( 'video' );
 $poster   = get_field( 'poster' );
 $title    = get_field( 'video_title' );
 
+// Layout 2: the course page's "The people behind the training" (layout-2.php). Layout 1 (default, also blocks saved before the option) continues below.
+if ( '2' === (string) get_field( 'layout' ) ) {
+	require __DIR__ . '/layout-2.php';
+	return;
+}
+
 $attributes = upskill_block_attributes( $block, 'block-video-feature is-dark relative isolate section-y bg-[#0e0e10] text-white' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
