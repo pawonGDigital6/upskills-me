@@ -41,7 +41,7 @@ foreach ( (array) get_field( 'rows' ) as $row ) {
 $attributes = upskill_block_attributes( $block, 'block-course-details section-y bg-gray-50' );
 ?>
 <section<?php echo $attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>>
-	<div class="container grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,790px)] lg:items-start lg:gap-14">
+	<div class="container grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,58.1%)] lg:items-start lg:gap-14">
 		<?php
 		upskill_section_header(
 			array(
@@ -54,9 +54,9 @@ $attributes = upskill_block_attributes( $block, 'block-course-details section-y 
 		<?php if ( $rows ) : ?>
 			<dl class="course-details__table reveal overflow-hidden rounded-[20px] border border-line bg-white shadow-xs" style="--i:1">
 				<?php foreach ( $rows as $row ) : ?>
-					<div class="course-details__row grid grid-cols-2 gap-4 px-5 py-3.5 odd:bg-gray-25 lg:px-6">
-						<dt class="course-details__label text-xs font-medium tracking-[0.08em] text-gray-500 uppercase"><?php echo esc_html( $row[0] ); ?></dt>
-						<dd class="course-details__value text-sm font-medium text-gray-950"><?php echo esc_html( $row[1] ); ?></dd>
+					<div class="course-details__row grid sm:grid-cols-2 sm:gap-4 px-5 py-4 odd:bg-gray-25 lg:px-6">
+						<dt class="course-details__label text-sm font-medium text-gray-500 uppercase"><?php echo esc_html( $row[0] ); ?></dt>
+						<dd class="course-details__value sm:text-sm font-semibold text-gray-950"><?php echo esc_html( $row[1] ); ?></dd>
 					</div>
 				<?php endforeach; ?>
 			</dl>

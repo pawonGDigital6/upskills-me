@@ -2650,6 +2650,10 @@
     --tw-tracking: 1.4px;
     letter-spacing: 1.4px;
   }
+  .tracking-normal {
+    --tw-tracking: var(--tracking-normal);
+    letter-spacing: var(--tracking-normal);
+  }
   .whitespace-nowrap {
     white-space: nowrap;
   }
@@ -4180,6 +4184,9 @@
     }
     .lg\:grid-cols-\[820fr_524fr\] {
       grid-template-columns: 820fr 524fr;
+    }
+    .lg\:grid-cols-\[minmax\(0\,1fr\)_minmax\(0\,58\.1\%\)\] {
+      grid-template-columns: minmax(0,1fr) minmax(0,58.1%);
     }
     .lg\:grid-cols-\[minmax\(0\,1fr\)_minmax\(0\,790px\)\] {
       grid-template-columns: minmax(0,1fr) minmax(0,790px);
