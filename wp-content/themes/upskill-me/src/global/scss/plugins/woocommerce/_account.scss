@@ -96,4 +96,191 @@
 			display: table;
 		}
 	}
+
+	// ---------------------------------------------------------------
+	// Visual refinement (4 Nov): WooCommerce's markup is unchanged; it takes
+	// the checkout's card, heading, field and button styles (_store.scss).
+	// ---------------------------------------------------------------
+
+	.woocommerce-MyAccount-content {
+		color: var(--color-gray-700);
+		line-height: 1.6;
+
+		// WooCommerce's headings (Billing address, Order details…).
+		h2,
+		h3,
+		legend {
+			margin: 0 0 20px;
+			padding: 0;
+			color: var(--color-gray-950);
+			font-weight: 500;
+			font-size: var(--text-xl);
+			line-height: 1.5;
+		}
+
+		// Its lead-in lines ("The following addresses…", "Order #… was placed…").
+		> p {
+			margin: 0 0 20px;
+			color: var(--color-gray-500);
+		}
+
+		// The order number, date and status inside that line.
+		mark {
+			background: none;
+			color: var(--color-gray-950);
+			font-weight: 500;
+		}
+
+		address {
+			color: var(--color-gray-700);
+			font-style: normal;
+			line-height: 1.6;
+		}
+	}
+
+	// Account details and the billing address form: one white card, as the
+	// checkout's billing card, at a readable width.
+	.woocommerce-EditAccountForm,
+	.woocommerce-MyAccount-content > form:has(.woocommerce-address-fields) {
+		max-width: 800px;
+		padding: 24px;
+		border-radius: 24px;
+		background: var(--color-white);
+		box-shadow: var(--shadow-card);
+
+		@media (min-width: 768px) {
+			padding: 32px;
+		}
+	}
+
+	// "Password change": its own section under a rule. The legend floats so it
+	// sits inside the fieldset rather than on its border.
+	.woocommerce-EditAccountForm fieldset {
+		margin: 28px 0 0;
+		padding: 28px 0 0;
+		border: 0;
+		border-top: 1px solid var(--color-line);
+
+		legend {
+			float: left;
+			width: 100%;
+		}
+	}
+
+	// "This will be how your name will be displayed…".
+	#account_display_name_description {
+		display: block;
+		margin-top: 6px;
+		color: var(--color-gray-500);
+		font-size: var(--text-sm);
+
+		em {
+			font-style: normal;
+		}
+	}
+
+	// Save changes / Save address / Order again: the site's primary pill.
+	.woocommerce-EditAccountForm button.button,
+	.woocommerce-address-fields button.button,
+	.order-again .button {
+		min-height: 50px;
+		margin-top: 8px;
+		padding: 12px 26px;
+		border-color: var(--color-brand-700);
+		background: var(--color-brand-700);
+		color: var(--color-white);
+		font-size: var(--text-base);
+
+		&:hover {
+			border-color: var(--color-brand-800);
+			background: var(--color-brand-800);
+			color: var(--color-white);
+		}
+	}
+
+	// Addresses overview: title and "Edit" on one line, no floats.
+	.woocommerce-Address-title {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 8px 16px;
+		margin-bottom: 12px;
+
+		&::before,
+		&::after {
+			display: none;
+		}
+
+		h2,
+		h3 {
+			float: none;
+			margin: 0;
+			font-size: var(--text-lg);
+		}
+
+		.edit {
+			float: none;
+			color: var(--color-brand-700);
+			font-weight: 500;
+			font-size: var(--text-sm);
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+
+	// Orders: order numbers in the brand colour.
+	.woocommerce-orders-table__cell-order-number a {
+		color: var(--color-brand-700);
+		font-weight: 500;
+	}
+
+	// Single order.
+	.woocommerce-order-details,
+	.woocommerce-customer-details {
+		margin: 0 0 32px;
+	}
+
+	.woocommerce-order-details__title,
+	.woocommerce-column__title {
+		margin-top: 32px;
+	}
+
+	// Line meta (Group Registration's group details) as quiet small print.
+	.wc-item-meta {
+		margin: 8px 0 0;
+		padding: 0;
+		color: var(--color-gray-500);
+		font-size: var(--text-sm);
+		list-style: none;
+
+		li {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 4px;
+		}
+
+		p {
+			margin: 0;
+		}
+
+		strong {
+			font-weight: 500;
+		}
+	}
+
+	.order-again {
+		margin: 20px 0 0;
+	}
+
+	// The billing address as a theme card instead of WooCommerce's bordered box.
+	.woocommerce-customer-details address {
+		max-width: 560px;
+		padding: 24px;
+		border: 1px solid var(--color-line);
+		border-radius: 20px;
+		background: var(--color-white);
+	}
 }
