@@ -147,7 +147,7 @@ if ( ! function_exists( 'upskill_org_dashboard_guard' ) ) {
 	 * @return void
 	 */
 	function upskill_org_dashboard_guard() {
-		if ( ! is_page_template( 'template-org-dashboard.php' ) ) {
+		if ( ! is_page_template( array( 'template-org-dashboard.php', 'template-org-training.php' ) ) ) {
 			return;
 		}
 
@@ -210,32 +210,260 @@ if ( ! function_exists( 'upskill_org_course_groups' ) ) {
 
 			$summary = upskill_org_group_summary( $group_id );
 			unset( $summary['rows'] );
-			$summary['product_id']   = 0;
-			$summary['variation_id'] = 0;
-
-			foreach ( (array) get_post_meta( $group_id, 'wdm_group_reg_order_id_' . $group_id ) as $order_id ) {
-				$order = function_exists( 'wc_get_order' ) ? wc_get_order( (int) $order_id ) : null;
-
-				if ( ! $order ) {
-					continue;
-				}
-
-				foreach ( $order->get_items() as $item ) {
-					$product = $item instanceof WC_Order_Item_Product ? $item->get_product() : null;
-
-					$parent  = $product ? wc_get_product( $item->get_product_id() ) : null;
-
-					if ( $parent && function_exists( 'upskill_product_course' ) && (int) upskill_product_course( $parent ) === (int) $course_id ) {
-						$summary['product_id']   = (int) $item->get_product_id();
-						$summary['variation_id'] = (int) $item->get_variation_id();
-						break 2;
-					}
-				}
-			}
+			$summary = array_merge( $summary, upskill_org_group_purchase( $group_id ) );
 
 			$groups[] = $summary;
 		}
 
 		return $groups;
+	}
+}
+
+if ( ! function_exists( 'upskill_org_training_page_id' ) ) {
+	/**
+	 * The page using the organisation "Courses & seats" template (the
+	 * organisation's full training and team lists, under the dashboard).
+	 *
+	 * @return int
+	 */
+	function upskill_org_training_page_id() {
+		static $id = null;
+
+		if ( null === $id ) {
+			$pages = get_posts(
+				array(
+					'post_type'   => 'page',
+					'post_status' => 'publish',
+					'numberposts' => 1,
+					'fields'      => 'ids',
+					'meta_key'    => '_wp_page_template', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+					'meta_value'  => 'template-org-training.php', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+				)
+			);
+			$id    = $pages ? (int) $pages[0] : 0;
+		}
+
+		return $id;
+	}
+}
+
+if ( ! function_exists( 'upskill_org_urls' ) ) {
+	/**
+	 * Where the organisation pages link to.
+	 *
+	 * @return array { dashboard, training (the Courses & seats page, else the dashboard), team (its people list), manage (Group Registration's groups dashboard), library }
+	 */
+	function upskill_org_urls() {
+		$dashboard = upskill_org_dashboard_page_id() ? (string) get_permalink( upskill_org_dashboard_page_id() ) : '';
+		$training  = upskill_org_training_page_id() ? (string) get_permalink( upskill_org_training_page_id() ) : $dashboard;
+
+		return array(
+			'dashboard' => $dashboard,
+			'training'  => $training,
+			'team'      => $training ? $training . '#org-team' : '',
+			'manage'    => upskill_groups_dashboard_url(),
+			'library'   => function_exists( 'upskill_library_page_url' ) ? upskill_library_page_url() : home_url( '/courses/' ),
+		);
+	}
+}
+
+if ( ! function_exists( 'upskill_org_group_purchase' ) ) {
+	/**
+	 * The WooCommerce product and level (variation) a group was bought as:
+	 * the first line of its orders (Group Registration keeps their IDs on the
+	 * group) that sells one of the group's courses. Seat top-ups are bought at
+	 * this level too.
+	 *
+	 * @param int $group_id Group ID.
+	 * @return array { product_id, variation_id, level (label, '' when none) }
+	 */
+	function upskill_org_group_purchase( $group_id ) {
+		$courses = array_map( 'intval', (array) learndash_group_enrolled_courses( $group_id ) );
+
+		foreach ( (array) get_post_meta( $group_id, 'wdm_group_reg_order_id_' . $group_id ) as $order_id ) {
+			$order = function_exists( 'wc_get_order' ) ? wc_get_order( (int) $order_id ) : null;
+
+			if ( ! $order ) {
+				continue;
+			}
+
+			foreach ( $order->get_items() as $item ) {
+				$parent = $item instanceof WC_Order_Item_Product ? wc_get_product( $item->get_product_id() ) : null;
+
+				if ( $parent && function_exists( 'upskill_product_course' ) && in_array( (int) upskill_product_course( $parent ), $courses, true ) ) {
+					$variation = $item->get_variation_id() ? wc_get_product( $item->get_variation_id() ) : null;
+
+					return array(
+						'product_id'   => (int) $item->get_product_id(),
+						'variation_id' => (int) $item->get_variation_id(),
+						'level'        => $variation && function_exists( 'upskill_store_item' ) ? (string) upskill_store_item( $variation )['level'] : '',
+					);
+				}
+			}
+		}
+
+		return array(
+			'product_id'   => 0,
+			'variation_id' => 0,
+			'level'        => '',
+		);
+	}
+}
+
+if ( ! function_exists( 'upskill_org_overview' ) ) {
+	/**
+	 * Everything the organisation dashboard and its Courses & seats page show,
+	 * read from LearnDash and Group Registration (nothing is stored):
+	 *
+	 * - groups: the groups the user leads, newest first, each with seats,
+	 *   members, completion, its (first) course, category, summary and level;
+	 * - rows: one per member and course of those groups (an "assignment"),
+	 *   with progress, status, last activity, the member's name and email and
+	 *   the group's level ("cohort"), most recent activity first;
+	 * - totals: groups, members (people, once each), assigned (rows),
+	 *   in_progress, completed, not_started (rows by status).
+	 *
+	 * @param int $user_id Group leader.
+	 * @return array { groups, rows, totals }
+	 */
+	function upskill_org_overview( $user_id ) {
+		static $cache = array();
+
+		if ( isset( $cache[ $user_id ] ) ) {
+			return $cache[ $user_id ];
+		}
+
+		$groups  = array();
+		$rows    = array();
+		$members = array();
+
+		$group_ids = upskill_org_groups( $user_id );
+		rsort( $group_ids );
+
+		foreach ( $group_ids as $group_id ) {
+			$group    = upskill_org_group_summary( $group_id );
+			$purchase = upskill_org_group_purchase( $group_id );
+			$course   = $group['courses'] ? (int) $group['courses'][0] : 0;
+			$category = $course ? get_the_terms( $course, 'training_category' ) : null;
+
+			$group = array_merge(
+				$group,
+				$purchase,
+				array(
+					'course'   => $course,
+					'category' => is_array( $category ) ? $category[0]->name : '',
+					'summary'  => $course && function_exists( 'upskill_learner_course_summary' ) ? upskill_learner_course_summary( $course ) : '',
+				)
+			);
+
+			foreach ( $group['rows'] as $row ) {
+				$member = get_userdata( $row['user'] );
+
+				if ( ! $member ) {
+					continue;
+				}
+
+				$rows[]    = array_merge(
+					$row,
+					array(
+						'group' => (int) $group_id,
+						'level' => $purchase['level'],
+						'name'  => $member->display_name,
+						'email' => $member->user_email,
+					)
+				);
+				$members[] = (int) $row['user'];
+			}
+
+			unset( $group['rows'] );
+			$groups[] = $group;
+		}
+
+		usort( $rows, static fn( $a, $b ) => array( $b['activity'], $a['name'] ) <=> array( $a['activity'], $b['name'] ) );
+
+		$status = array_count_values( wp_list_pluck( $rows, 'status' ) );
+
+		$cache[ $user_id ] = array(
+			'groups' => $groups,
+			'rows'   => $rows,
+			'totals' => array(
+				'groups'      => count( $groups ),
+				'members'     => count( array_unique( $members ) ),
+				'assigned'    => count( $rows ),
+				'in_progress' => $status['in_progress'] ?? 0,
+				'completed'   => $status['completed'] ?? 0,
+				'not_started' => $status['not_started'] ?? 0,
+			),
+		);
+
+		return $cache[ $user_id ];
+	}
+}
+
+if ( ! function_exists( 'upskill_org_status_badge' ) ) {
+	/**
+	 * Status pill of the organisation tables (Figma: lilac with a tick for
+	 * Active and Completed, amber with a clock for In progress, grey for Not
+	 * started).
+	 *
+	 * @param string $status active|completed|in_progress|not_started.
+	 * @return void
+	 */
+	function upskill_org_status_badge( $status ) {
+		$badges = array(
+			'active'      => array( __( 'Active', 'upskill-me' ), 'border-[#e5def6] bg-[#f1edfa] text-[#5a3d8c]', 'check' ),
+			'completed'   => array( __( 'Completed', 'upskill-me' ), 'border-[#e5def6] bg-[#f1edfa] text-[#5a3d8c]', 'check' ),
+			'in_progress' => array( __( 'In progress', 'upskill-me' ), 'border-[#f0dfb8] bg-[#fff6e5] text-[#7a5410]', 'clock' ),
+			'not_started' => array( __( 'Not started', 'upskill-me' ), 'border-line bg-gray-25 text-gray-500', '' ),
+		);
+		$badge  = $badges[ $status ] ?? $badges['not_started'];
+		?>
+		<span class="org-badge inline-flex items-center gap-1.5 rounded-full border px-[11px] py-1 text-sm leading-[1.6] font-medium whitespace-nowrap <?php echo esc_attr( $badge[1] ); ?>">
+			<?php if ( $badge[2] ) : ?>
+				<?php upskill_icon( $badge[2], 'size-[11px]' ); ?>
+			<?php endif; ?>
+			<?php echo esc_html( $badge[0] ); ?>
+		</span>
+		<?php
+	}
+}
+
+if ( ! function_exists( 'upskill_org_team_form' ) ) {
+	/**
+	 * A link-like button that opens one group in Group Registration's groups
+	 * dashboard (it reads the group from a POSTed wdm_group_id, so this is a
+	 * small form): "Enrol", "View User", "View".
+	 *
+	 * @param int    $group_id Group ID.
+	 * @param string $label    Visible label.
+	 * @param string $style    link (brand text with arrow) | primary | light (pill buttons).
+	 * @param string $a11y     Extra screen-reader text (e.g. the person's name).
+	 * @return void
+	 */
+	function upskill_org_team_form( $group_id, $label, $style = 'link', $a11y = '' ) {
+		$url = upskill_groups_dashboard_url();
+
+		if ( ! $url || ! $group_id ) {
+			return;
+		}
+		?>
+		<form class="org-team-form inline-flex" action="<?php echo esc_url( $url ); ?>" method="post">
+			<input type="hidden" name="wdm_group_id" value="<?php echo esc_attr( $group_id ); ?>">
+			<?php if ( 'link' === $style ) : ?>
+				<button class="group inline-flex cursor-pointer items-center gap-[7px] text-sm font-medium whitespace-nowrap text-brand-700 hover:underline" type="submit">
+					<?php echo esc_html( $label ); ?>
+					<?php if ( $a11y ) : ?>
+						<span class="screen-reader-text"><?php echo esc_html( $a11y ); ?></span>
+					<?php endif; ?>
+					<?php upskill_icon( 'arrow-up-right', 'size-[11px] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5' ); ?>
+				</button>
+			<?php else : ?>
+				<button class="btn <?php echo 'primary' === $style ? 'btn--primary' : 'btn--light'; ?> btn--sm" type="submit">
+					<span class="btn__label"><?php echo esc_html( $label ); ?></span>
+					<span class="btn__nest" aria-hidden="true"><?php upskill_icon( 'arrow-up-right', 'btn__icon' ); ?></span>
+				</button>
+			<?php endif; ?>
+		</form>
+		<?php
 	}
 }

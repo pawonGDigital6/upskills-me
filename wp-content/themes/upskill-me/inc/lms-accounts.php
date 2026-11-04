@@ -161,10 +161,12 @@ if ( ! function_exists( 'upskill_account_menu_items' ) ) {
 				array( __( 'My Learning', 'upskill-me' ), __( 'The team member view', 'upskill-me' ), $learner ),
 			);
 		} elseif ( in_array( 'group_leader', (array) $user->roles, true ) ) {
-			$items = array(
+			// Training & Seats and Team Results: the Courses & seats page (template-org-training.php), else the dashboard.
+			$org_urls = function_exists( 'upskill_org_urls' ) ? upskill_org_urls() : array( 'training' => $org, 'team' => $org );
+			$items    = array(
 				array( __( 'Dashboard', 'upskill-me' ), __( 'Your training at a glance', 'upskill-me' ), $org ),
-				array( __( 'Training & Seats', 'upskill-me' ), __( 'Courses and seats you have bought', 'upskill-me' ), $org ? $org . '#org-training' : '' ),
-				array( __( 'Team Results', 'upskill-me' ), __( 'Track your team’s progress', 'upskill-me' ), $org ? $org . '#org-team' : '' ),
+				array( __( 'Training & Seats', 'upskill-me' ), __( 'Courses and seats you have bought', 'upskill-me' ), $org_urls['training'] ),
+				array( __( 'Team Results', 'upskill-me' ), __( 'Track your team’s progress', 'upskill-me' ), $org_urls['team'] ),
 				array( __( 'Manage Team', 'upskill-me' ), __( 'Enrol and manage team members', 'upskill-me' ), function_exists( 'upskill_groups_dashboard_url' ) ? upskill_groups_dashboard_url() : '' ),
 				array( __( 'Orders & Billing', 'upskill-me' ), __( 'Invoices and billing details', 'upskill-me' ), function_exists( 'wc_get_account_endpoint_url' ) ? wc_get_account_endpoint_url( 'orders' ) : '' ),
 				array( __( 'Account Details', 'upskill-me' ), __( 'Your name, email and password', 'upskill-me' ), $account ),
