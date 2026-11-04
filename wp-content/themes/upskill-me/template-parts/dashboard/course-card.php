@@ -63,7 +63,7 @@ $upskill_started = 'in_progress' === $upskill_course['status'];
 				),
 				array(
 					'size'  => 'sm',
-					'class' => 'pl-4 text-[0.78125rem] lg:text-sm',
+					'class' => 'pl-4 text-[0.78125rem] lg:text-sm leading-none',
 				)
 			);
 			?>

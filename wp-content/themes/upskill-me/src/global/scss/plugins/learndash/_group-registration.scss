@@ -16,7 +16,6 @@ html .btn:not(:where(.upload-btn-wrapper .btn)) {
 }
 
 .store-content {
-
 	// Group header: logo, name, seats left.
 	.ldgr-group-header,
 	#wdm_groups_tab {
@@ -28,8 +27,7 @@ html .btn:not(:where(.upload-btn-wrapper .btn)) {
 	.ldgr-btn {
 		display: inline-flex;
 		align-items: center;
-		min-height: 44px;
-		padding: 10px 20px;
+		padding: 16px 20px;
 		border: 1px solid var(--color-line);
 		border-radius: 999px;
 		background: var(--color-white);
@@ -37,11 +35,13 @@ html .btn:not(:where(.upload-btn-wrapper .btn)) {
 		font-weight: 500;
 		font-size: var(--text-sm);
 		box-shadow: none;
+		line-height: 1;
 	}
 
 	.ldgr-btn.ldgr-bg-color {
 		border-color: transparent;
 		color: var(--color-white);
+		font-weight: 500; // The theme's button weight (the plugin's is 700).
 	}
 
 	// Tabs.
@@ -90,11 +90,9 @@ $ldgr-muted: #6b6b72; // Figma "Seats" / "Available" labels.
 $ldgr-danger: #b4351f;
 
 .store-content {
-
 	// Team list = Figma "Select training": one white card, a row per team with
 	// the radio circle, the name, and seats left on the right.
 	.ldgr-group-listing {
-
 		.ldgr-search-groups {
 			margin-bottom: 24px;
 
@@ -148,7 +146,9 @@ $ldgr-danger: #b4351f;
 				height: 22px;
 				border: 1px solid $ldgr-border-strong;
 				border-radius: 999px;
-				transition: border-color 0.2s ease, box-shadow 0.2s ease;
+				transition:
+					border-color 0.2s ease,
+					box-shadow 0.2s ease;
 			}
 
 			&:hover::before {
@@ -184,6 +184,32 @@ $ldgr-danger: #b4351f;
 			color: $ldgr-muted;
 			font-size: var(--text-sm);
 			text-align: right;
+		}
+
+		// Phones: seats left under the name, so the name keeps the width.
+		@media (max-width: 600px) {
+			.list .ldgr-main-group-content {
+				flex-wrap: wrap;
+				row-gap: 2px;
+				padding: 16px;
+
+				&::before {
+					align-self: flex-start;
+					margin-top: 2px;
+				}
+			}
+
+			.list .gr-title {
+				flex: 1 1 0;
+				min-width: 0;
+			}
+
+			.list .gr-left {
+				flex-basis: 100%;
+				margin: 0;
+				padding-left: 36px; // Under the name: circle (22) + gap (14).
+				text-align: left;
+			}
 		}
 
 		.ldgr-pagination {
@@ -229,11 +255,17 @@ $ldgr-danger: #b4351f;
 			margin-left: 0;
 		}
 
+		// "Edit group details" beside "Back to Groups" (the plugin stacks them).
 		.ldgr-right-button-container {
 			display: flex;
+			flex-direction: row;
 			flex-wrap: wrap;
 			align-items: center;
-			gap: 12px 20px;
+			gap: 12px 24px;
+
+			> div {
+				flex: none;
+			}
 		}
 
 		.ldgr-edit-group {
@@ -254,9 +286,42 @@ $ldgr-danger: #b4351f;
 	#wdm_groups_tab {
 		margin-top: 40px;
 
+		// The tabs and "Enroll New User" on one line, the button sitting on
+		// the rule (the plugin floats it 16px above the tabs).
 		ul.tabs {
+			display: flex;
+			align-items: flex-end;
+			gap: 8px 32px;
 			margin-bottom: 24px;
+			padding: 0;
 			border-bottom-color: $ldgr-border;
+
+			li {
+				margin: 0;
+			}
+		}
+
+		ul.tabs .enroll-new-user.ldgr-desktop {
+			position: static;
+			margin: 0 0 10px auto;
+		}
+
+		// Phones: the plugin's copy above the tabs, full width; tabs start left.
+		.enroll-new-user.ldgr-mobile {
+			justify-content: center;
+			width: 100%;
+			margin-bottom: 16px;
+			text-align: center;
+		}
+
+		@media (max-width: 767px) {
+			ul.tabs {
+				justify-content: flex-start;
+			}
+		}
+
+		.tab-content {
+			padding: 0;
 		}
 
 		ul.tabs li a {
@@ -317,10 +382,19 @@ $ldgr-danger: #b4351f;
 		border-bottom: 0; // The plugin underlines the actions cell only.
 	}
 
+	// The plugin makes the actions cell a flex box, 5px shorter than its row,
+	// which broke the row lines; back to a table cell above phones.
+	@media (min-width: 601px) {
+		#wdm_group tbody td.ldgr-actions {
+			display: table-cell;
+			text-align: right;
+			white-space: nowrap;
+		}
+	}
+
 	// Phones: the plugin turns each person into a block; draw each as a white
 	// card (no tint or shadow) with label / value lines.
 	@media (max-width: 600px) {
-
 		#wdm_group {
 			overflow: visible;
 			border: 0;
@@ -354,8 +428,8 @@ $ldgr-danger: #b4351f;
 			font-size: var(--text-sm);
 		}
 
-		#wdm_group td.ldgr-actions {
-			border-top: 1px solid $ldgr-border;
+		#wdm_group tbody tr td.ldgr-actions {
+			border-top: 1px solid $ldgr-border; // Also on the first card.
 			text-align: right;
 		}
 	}
@@ -370,19 +444,39 @@ $ldgr-danger: #b4351f;
 	// DataTables' search: the same pill as the team search (ids beat a
 	// plugin's 3px radius).
 	#wdm_group_filter input {
-		height: 44px;
+		height: 52px !important;
+		padding-top: 3px !important;
+		width: 300px !important;
+		border-radius: 999px !important;
+		padding-left: 50px !important;
 		border-color: $ldgr-border;
-		border-radius: 999px;
 		font-size: var(--text-sm);
 
+		text-align: left; // The plugin centres it on phones.
+
 		@media (max-width: 767px) {
-			width: 100%;
+			width: 100% !important; // Over the 300px above.
 			margin-left: 0;
 		}
 	}
 
-	@media (max-width: 767px) {
+	#wdm_group_filter label:before {
+		left: 20px;
+	}
 
+	#wdm_group_wrapper #wdm_group_length select {
+		appearance: none;
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		width: auto;
+		height: auto;
+		padding: 10px 15px 8px;
+		text-align: center;
+		border-radius: 8px;
+		line-height: 1;
+	}
+
+	@media (max-width: 767px) {
 		#wdm_group_filter,
 		#wdm_group_filter label {
 			display: block;
@@ -390,8 +484,19 @@ $ldgr-danger: #b4351f;
 		}
 	}
 
-	// Remove in Figma's delete colour.
+	// No sort arrows on the checkbox and actions columns (they do not sort).
+	#wdm_group thead th:first-child,
+	#wdm_group thead th:last-child {
+		background-image: none !important;
+		cursor: default;
+	}
+
+	// Remove in Figma's delete colour, icon and label on one line.
 	#wdm_group .wdm_remove {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		line-height: 1;
 		padding: 0;
 		border: 0;
 		background: none;
@@ -418,7 +523,6 @@ $ldgr-danger: #b4351f;
 	}
 
 	.dataTables_wrapper {
-
 		.dataTables_info {
 			color: $ldgr-muted;
 			font-size: var(--text-sm);
@@ -450,12 +554,41 @@ $ldgr-danger: #b4351f;
 		}
 	}
 
-	// Report: course picker and button.
+	// Report: the plugin's rules here are id-based (#tab-2 …), so these
+	// carry #tab-2 too.
+	#tab-2 #wdm_ldgr_group_report_wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 16px 24px;
+
+		> * {
+			float: none;
+		}
+
+		.wdm-table-container {
+			flex: 0 0 100%;
+			min-width: 0;
+		}
+
+		.dataTables_info {
+			flex: 1 1 auto;
+			padding-top: 0;
+		}
+
+		.dataTables_paginate {
+			margin: 0;
+			padding: 0;
+		}
+	}
+
 	#tab-2 .wdm-select-wrapper {
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;
-		gap: 12px;
+		gap: 8px 12px;
+		margin: 0;
 
 		h6 {
 			flex-basis: 100%;
@@ -465,17 +598,250 @@ $ldgr-danger: #b4351f;
 			font-size: var(--text-sm);
 			text-transform: uppercase;
 		}
+
+		#wdm_ldgr_course_id {
+			flex: 0 1 360px;
+			max-width: 100%;
+			height: 44px;
+			padding: 0 14px;
+			border: 1px solid $ldgr-border-strong;
+			border-radius: var(--radius-md);
+			background-color: var(--color-white);
+			color: var(--color-gray-900);
+			font-size: var(--text-sm);
+		}
 	}
 
-	#wdm_ldgr_show_report {
-		min-height: 44px;
-		padding: 10px 20px;
+	#tab-2 #wdm_ldgr_show_report {
+		height: 44px;
+		margin: 0;
+		padding: 0 20px;
 		border: 0;
 		border-radius: 999px;
 		color: var(--color-white);
 		font-weight: 500;
 		font-size: var(--text-sm);
+		line-height: 1;
+		white-space: nowrap; // The value carries the template's line breaks.
 		cursor: pointer;
+	}
+
+	// Report selects (course, "Show 10 entries"): no native arrow, the
+	// theme's field chevron (images/icons/field-chevron.svg, #6b6b72) with
+	// room before the border. The plugin's course select sets
+	// background-image: none !important.
+	#tab-2 #wdm_ldgr_course_id,
+	#tab-2 #wdm_ldgr_group_report_length select {
+		appearance: none;
+		padding-right: 44px !important;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M18 9C18 9 13.581 15 12 15C10.419 15 6 9 6 9' stroke='%236b6b72' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") !important;
+		background-position: right 14px center !important;
+		background-size: 18px 18px !important;
+		background-repeat: no-repeat !important;
+		cursor: pointer;
+		line-height: 1;
+	}
+
+	// "Show 10 entries" on both tables: the same small select.
+	.dataTables_length {
+		color: $ldgr-muted;
+		font-size: var(--text-sm);
+
+		select {
+			height: 40px;
+			margin: 0 6px;
+			padding: 0 10px;
+			border: 1px solid $ldgr-border-strong;
+			border-radius: 8px;
+			background-color: var(--color-white);
+			font-size: var(--text-sm);
+		}
+	}
+
+	#tab-2 #wdm_ldgr_group_report {
+		table-layout: auto; // The plugin's fixed layout broke emails mid-word.
+		margin: 0;
+
+		th {
+			text-align: left;
+		}
+
+		tbody td {
+			padding: 16px 20px;
+			color: var(--color-gray-900);
+			font-size: var(--text-sm);
+			line-height: 1.5; // The plugin's 71px row height.
+			text-align: left;
+		}
+
+		td.name,
+		td.email {
+			white-space: nowrap;
+		}
+
+		th.rewards,
+		td.rewards {
+			text-align: center;
+		}
+
+		// Course progress: the bar and "1 / 8 steps completed" on one line.
+		td.course-progress {
+			white-space: nowrap;
+		}
+
+		.ldgr-group-report-item {
+			display: inline-block;
+			width: 96px;
+			margin: 0;
+			vertical-align: middle;
+		}
+
+		.ldgr-course-lesson-progress {
+			display: inline-block;
+			margin-left: 10px;
+			color: $ldgr-muted;
+			font-weight: 500;
+			font-size: 13px;
+			line-height: 1.5;
+			vertical-align: middle;
+		}
+
+		// Tablets: the steps line under the bar, so names and emails keep
+		// one line.
+		@media (min-width: 768px) and (max-width: 1199px) {
+			td.course-progress {
+				white-space: normal;
+
+				> span {
+					flex-direction: column; // The plugin's wrapper is a flex row.
+					align-items: flex-start;
+				}
+			}
+
+			.ldgr-course-lesson-progress {
+				display: block;
+				margin: 6px 0 0;
+			}
+		}
+	}
+
+	// Loading states: a light veil and a small pill instead of the plugin's
+	// black screen and grey gradient bar.
+	.ldgr-black-screen {
+		border-radius: var(--radius-lg);
+		background: color-mix(in srgb, var(--color-white) 70%, transparent) !important;
+		color: var(--color-gray-500);
+		opacity: 1 !important;
+	}
+
+	.dataTables_wrapper .dataTables_processing {
+		top: 96px;
+		left: 50%;
+		width: auto;
+		height: auto;
+		margin: 0;
+		padding: 10px 18px;
+		border: 1px solid $ldgr-border;
+		border-radius: 999px;
+		background: var(--color-white);
+		color: var(--color-gray-500);
+		font-size: var(--text-sm);
+		transform: translateX(-50%);
+	}
+
+	// Phones and small tablets: each report row as a card of label / value lines.
+	@media (max-width: 767px) {
+
+		#tab-2 #wdm_ldgr_group_report {
+			display: block;
+			overflow: visible;
+			border: 0;
+			border-radius: 0;
+			background: transparent;
+
+			thead {
+				display: none;
+			}
+
+			tbody {
+				display: block;
+			}
+
+			tbody tr {
+				display: block;
+				overflow: hidden;
+				margin-bottom: 12px;
+				padding: 8px 0;
+				border: 1px solid $ldgr-border;
+				border-radius: var(--radius-lg);
+				background: var(--color-white);
+			}
+
+			tbody td {
+				display: flex;
+				gap: 16px;
+				align-items: center;
+				justify-content: space-between;
+				min-width: 0;
+				padding: 8px 16px;
+				border: 0;
+				text-align: right;
+
+				// Values shrink and long emails wrap inside the card.
+				> span {
+					min-width: 0;
+					overflow-wrap: anywhere;
+					white-space: normal;
+				}
+
+				&::before {
+					content: attr(data-title);
+					flex: none;
+					color: $ldgr-muted;
+					font-weight: 500;
+					font-size: var(--text-sm);
+					text-align: left;
+				}
+			}
+
+			td.course-progress {
+				flex-wrap: wrap;
+				white-space: normal;
+			}
+		}
+
+		#tab-2 #wdm_ldgr_group_report_wrapper .wdm-table-container {
+			width: 100%;
+		}
+
+		// Controls left-aligned and full width (the plugin centres them).
+		#tab-2 #wdm_ldgr_group_report_wrapper .wdm-select-wrapper {
+			flex: 0 0 100%;
+			flex-direction: column;
+			align-items: stretch;
+			text-align: left;
+
+			h6 {
+				margin: 0;
+				text-align: left;
+			}
+
+			#wdm_ldgr_course_id {
+				flex: none;
+				width: 100%;
+				max-width: 100%;
+			}
+
+			#wdm_ldgr_show_report {
+				align-self: flex-start;
+			}
+		}
+
+		#tab-2 #wdm_ldgr_group_report_wrapper .dataTables_info,
+		#tab-2 #wdm_ldgr_group_report_wrapper .dataTables_paginate {
+			flex: 0 0 100%;
+			text-align: center;
+		}
 	}
 
 	// Pop-ups (Enrol New Users, Edit group details): Figma's rounded panels
@@ -568,7 +934,9 @@ $ldgr-danger: #b4351f;
 			background: var(--color-white);
 			color: var(--color-gray-900);
 			font-size: var(--text-sm);
-			transition: border-color 0.2s ease, box-shadow 0.2s ease;
+			transition:
+				border-color 0.2s ease,
+				box-shadow 0.2s ease;
 
 			&:focus {
 				border-color: var(--color-brand-700);
@@ -679,5 +1047,136 @@ $ldgr-danger: #b4351f;
 				margin: 0;
 			}
 		}
+
+		// Edit group details: the plugin's rules are five classes deep.
+		.ldgr-popup .ldgr-edit-gn input {
+			height: 50px;
+			padding: 12px;
+			border: 1px solid var(--color-gray-200);
+			border-radius: 8px;
+			font-size: var(--text-sm);
+			line-height: normal;
+		}
+
+		.ldgr-popup .ldgr-edit-gicon > div {
+			flex-wrap: wrap;
+			gap: 12px 24px;
+
+			.ldgr-curr-icon {
+				margin: 0;
+			}
+
+			.ldgr-ch-icon,
+			.ldgr-rm-icon {
+				gap: 8px;
+				margin: 0;
+				font-weight: 500;
+				font-size: var(--text-sm);
+
+				i {
+					margin: 0;
+					font-size: 18px;
+				}
+			}
+
+			.ldgr-rm-icon {
+				color: $ldgr-muted;
+			}
+
+			.ldgr-curr-icon img {
+				border-radius: 8px;
+			}
+		}
+
+		.ldgr-popup .ldgr-edit-gicon .ldgr-note {
+			color: $ldgr-muted;
+			font-size: 13px;
+			line-height: 1.5;
+		}
+
+		// Upload via CSV: a full-width drop zone, the sample link under it.
+		.ldgr-upload-wrap {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 16px;
+			margin-top: 16px;
+		}
+
+		.ldgr-uploader {
+			display: flex;
+			flex: 0 0 100%;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			margin: 0;
+			padding: 28px 20px;
+			border: 1px dashed $ldgr-border-strong;
+			border-radius: var(--radius-lg);
+			background: var(--color-gray-25);
+			color: $ldgr-muted;
+			font-size: var(--text-sm);
+			text-align: center;
+
+			> * {
+				margin: 0;
+			}
+
+			// The file input the plugin's button and drop zone feed; kept in
+			// the form, out of the layout.
+			#uploadcsv {
+				position: absolute;
+				width: 1px;
+				height: 1px;
+				overflow: hidden;
+				opacity: 0;
+			}
+
+			// Centred, before and after a file is chosen. The plugin's rules
+			// here are four classes deep (space-between, margin-right: 0,
+			// a 65px gap after the text), so these repeat its path.
+			.ldgr-upload-btn {
+				width: fit-content;
+				margin: 0 auto;
+			}
+		}
+
+		.ldgr-upload-csv .ldgr-upload-wrap .ldgr-uploader {
+			justify-content: center;
+			padding: 28px 20px;
+
+			.ldgr-upload-btn {
+				margin: 0 auto;
+			}
+
+			.ldgr-info {
+				margin: 0;
+			}
+
+			#ldgr-upload-file-info {
+				flex-basis: 100%;
+				color: var(--color-gray-900);
+				font-weight: 500;
+				font-size: 13px;
+				line-height: 1.6;
+
+				> div {
+					margin: 0;
+				}
+			}
+		}
+
+		.ldgr-dlcsv {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			font-weight: 500;
+			font-size: var(--text-sm);
+		}
 	}
+}
+
+#wdm_ldgr_group_report .details-control{
+	display: none !important;
 }

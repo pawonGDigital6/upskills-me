@@ -102,7 +102,7 @@ $upskill_settings = array(
 		</div>
 
 		<?php if ( $upskill_courses['current'] ) : ?>
-			<div class="mt-6 grid gap-5 lg:grid-cols-2">
+			<div class="mt-6 grid gap-5 md:grid-cols-2">
 				<?php
 				foreach ( $upskill_courses['current'] as $upskill_course ) {
 					get_template_part( 'template-parts/dashboard/course-card', null, array( 'course' => $upskill_course ) );
