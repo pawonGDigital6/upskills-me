@@ -171,7 +171,7 @@ $upskill_settings = array(
 								<tr class="max-md:block border-t border-gray-900/10 max-md:p-4 first:border-t-0">
 									<th class="px-5 py-5 text-left align-middle font-normal md:border-t md:border-gray-900/10 max-md:block max-md:px-0 max-md:pt-0 max-md:pb-3" scope="row">
 										<span class="block font-medium"><?php echo esc_html( $upskill_group['title'] ); ?></span>
-										<span class="block pt-1.5 text-sm text-[#666]"><?php echo esc_html( implode( ' · ', array_filter( array( $upskill_group['category'], $upskill_group['level'] ) ) ) ); ?></span>
+										<span class="block pt-1.5 text-sm text-[#666]"><?php echo esc_html( implode( ' · ', array_filter( array( $upskill_group['category'], $upskill_group['level'] && ! str_ends_with( html_entity_decode( get_post_field( 'post_title', $upskill_group['id'] ), ENT_QUOTES ), $upskill_group['level'] ) ? $upskill_group['level'] : '' ) ) ) ); ?></span>
 									</th>
 									<td class="<?php echo esc_attr( $upskill_td ); ?>" data-label="<?php esc_attr_e( 'Seats', 'upskill-me' ); ?>"><?php echo $upskill_group['unlimited'] ? '∞' : esc_html( number_format_i18n( $upskill_group['seats'] ) ); ?></td>
 									<td class="<?php echo esc_attr( $upskill_td ); ?>" data-label="<?php esc_attr_e( 'Used', 'upskill-me' ); ?>"><?php echo esc_html( number_format_i18n( $upskill_group['used'] ) ); ?></td>

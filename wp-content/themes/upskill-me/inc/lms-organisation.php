@@ -185,6 +185,42 @@ if ( ! function_exists( 'upskill_group_registration_needs_assets' ) ) {
 }
 add_filter( 'upskill_needs_learndash_assets', 'upskill_group_registration_needs_assets' );
 
+if ( ! function_exists( 'upskill_group_enrolment_email_once' ) ) {
+	/**
+	 * One "added to group" email per person and group. Group Registration
+	 * (since 4.3.15) sends it from LearnDash's ld_added_group_access, and its
+	 * groups dashboard and group-code enrolment still queue their own copy for
+	 * people who already have an account, so they got two per group. Every
+	 * one of those sends passes this filter; a repeat for the same person and
+	 * group in the same request is dropped. New accounts (their "account
+	 * created" email) are left alone.
+	 *
+	 * @param array[] $emails   Group Registration's queue, keyed by user ID.
+	 * @param int     $group_id Group ID.
+	 * @return array[]
+	 */
+	function upskill_group_enrolment_email_once( $emails, $group_id ) {
+		static $sent = array();
+
+		foreach ( (array) $emails as $user_id => $details ) {
+			if ( ! empty( $details['new'] ) ) {
+				continue;
+			}
+
+			$key = (int) $user_id . ':' . (int) $group_id;
+
+			if ( isset( $sent[ $key ] ) ) {
+				unset( $emails[ $user_id ] );
+			} else {
+				$sent[ $key ] = true;
+			}
+		}
+
+		return $emails;
+	}
+}
+add_filter( 'ldgr_filter_enroll_user_emails', 'upskill_group_enrolment_email_once', 10, 2 );
+
 if ( ! function_exists( 'upskill_org_course_groups' ) ) {
 	/**
 	 * The groups a user leads that hold a course, for the course page's
@@ -269,15 +305,30 @@ if ( ! function_exists( 'upskill_org_urls' ) ) {
 
 if ( ! function_exists( 'upskill_org_group_purchase' ) ) {
 	/**
-	 * The WooCommerce product and level (variation) a group was bought as:
-	 * the first line of its orders (Group Registration keeps their IDs on the
-	 * group) that sells one of the group's courses. Seat top-ups are bought at
-	 * this level too.
+	 * The WooCommerce product and level (variation) a group was bought as.
+	 * Group Registration records the product (the variation, for a level) on
+	 * the group when an order line creates it; that is exact even when one
+	 * order bought the same training at two levels. Groups without it fall
+	 * back to the first line of their orders (Group Registration keeps their
+	 * IDs on the group) that sells one of the group's courses. Seat top-ups
+	 * are bought at this level too.
 	 *
 	 * @param int $group_id Group ID.
 	 * @return array { product_id, variation_id, level (label, '' when none) }
 	 */
 	function upskill_org_group_purchase( $group_id ) {
+		$bought = function_exists( 'wc_get_product' ) ? wc_get_product( (int) get_post_meta( $group_id, 'wdm_group_reg_product_id_' . $group_id, true ) ) : null;
+
+		if ( $bought ) {
+			$is_variation = $bought->is_type( 'variation' );
+
+			return array(
+				'product_id'   => $is_variation ? (int) $bought->get_parent_id() : (int) $bought->get_id(),
+				'variation_id' => $is_variation ? (int) $bought->get_id() : 0,
+				'level'        => $is_variation && function_exists( 'upskill_store_item' ) ? (string) upskill_store_item( $bought )['level'] : '',
+			);
+		}
+
 		$courses = array_map( 'intval', (array) learndash_group_enrolled_courses( $group_id ) );
 
 		foreach ( (array) get_post_meta( $group_id, 'wdm_group_reg_order_id_' . $group_id ) as $order_id ) {

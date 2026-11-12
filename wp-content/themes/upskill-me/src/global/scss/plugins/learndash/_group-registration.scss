@@ -612,6 +612,11 @@ $ldgr-danger: #b4351f;
 		}
 	}
 
+	// A group with one course: the report already shows it, so "Select course" + "Show Report" offer no choice.
+	#tab-2 .wdm-select-wrapper:has(#wdm_ldgr_course_id option:only-child) {
+		display: none;
+	}
+
 	#tab-2 #wdm_ldgr_show_report {
 		height: 44px;
 		margin: 0;

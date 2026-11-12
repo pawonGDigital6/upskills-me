@@ -392,3 +392,30 @@ add_filter(
 	},
 	20
 );
+
+/**
+ * A group bought at a level is named "<training> — <level>". The buy box
+ * names the group after the course, so two levels of one training gave two
+ * groups with the same name on the groups dashboard, the organisation pages
+ * and the course page. Group Registration applies this filter only when an
+ * order line creates a new group (its own callback, priority 10, has already
+ * set the "Group Name" from the line); extra seats for an existing group never
+ * reach it. The level is read from the variation the line was paid for, so it
+ * holds whatever path put the line in the cart (buy box, cart level switch).
+ */
+add_filter(
+	'wdm_group_name',
+	static function ( $group_title, $leader, $product_id, $order_id, $item ) {
+		$variation = $item instanceof WC_Order_Item_Product && $item->get_variation_id() ? wc_get_product( $item->get_variation_id() ) : null;
+		$level     = $variation && function_exists( 'upskill_store_item' ) ? upskill_store_item( $variation )['level'] : '';
+
+		if ( '' === $level || str_ends_with( (string) $group_title, $level ) ) {
+			return $group_title;
+		}
+
+		/* translators: 1: group (training) name, 2: level the seats were bought at. */
+		return sprintf( __( '%1$s — %2$s', 'upskill-me' ), $group_title, $level );
+	},
+	20,
+	5
+);

@@ -174,6 +174,37 @@ add_filter(
 );
 
 /**
+ * Cart line thumbnail: WooCommerce shows the product image (a level falls
+ * back to its product's), so a product without one showed the grey
+ * placeholder. Then the course's featured image is shown, as the order pages
+ * already do (template-parts/commerce/order-items.php), at WooCommerce's own
+ * thumbnail size and markup so the cart styles apply unchanged.
+ */
+add_filter(
+	'woocommerce_cart_item_thumbnail',
+	static function ( $thumbnail, $cart_item ) {
+		$product = $cart_item['data'] ?? false;
+
+		if ( ! $product instanceof WC_Product || $product->get_image_id() ) {
+			return $thumbnail;
+		}
+
+		$parent = $product->is_type( 'variation' ) ? wc_get_product( $product->get_parent_id() ) : null;
+
+		if ( $parent && $parent->get_image_id() ) {
+			return $thumbnail;
+		}
+
+		$course = upskill_store_item( $product )['course'];
+		$image  = $course ? get_post_thumbnail_id( $course ) : 0;
+
+		return $image ? wp_get_attachment_image( $image, 'woocommerce_thumbnail' ) : $thumbnail;
+	},
+	10,
+	2
+);
+
+/**
  * Cart line "Cohort" select (form controls cannot go through the name
  * filter, which WooCommerce prints with wp_kses_post).
  */
@@ -264,6 +295,8 @@ if ( ! function_exists( 'upskill_cart_switch_levels' ) ) {
 		$levels = isset( $_POST['upskill_level'] ) && is_array( $_POST['upskill_level'] ) ? wp_unslash( $_POST['upskill_level'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- WooCommerce verified the cart nonce; values are cast below.
 		$cart   = WC()->cart;
 		$done   = false;
+		$order  = array_keys( $cart->get_cart() ); // Line order before any swap.
+		$moved  = array(); // Old line key => the key of the line that replaced it.
 
 		foreach ( $levels as $key => $variation_id ) {
 			$key          = sanitize_key( $key );
@@ -295,12 +328,31 @@ if ( ! function_exists( 'upskill_cart_switch_levels' ) ) {
 
 			$cart->remove_cart_item( $key );
 
-			if ( $cart->add_to_cart( (int) $line['product_id'], (int) $line['quantity'], $variation_id, $variation->get_variation_attributes(), $data ) ) {
-				$done = true;
+			$new_key = $cart->add_to_cart( (int) $line['product_id'], (int) $line['quantity'], $variation_id, $variation->get_variation_attributes(), $data );
+
+			if ( $new_key ) {
+				$done          = true;
+				$moved[ $key ] = $new_key;
 			} else {
 				// Put the original line back if the new level could not be added.
 				$cart->restore_cart_item( $key );
 			}
+		}
+
+		// WooCommerce adds (and restores) a line at the end of the cart; put every line back where it was.
+		if ( $order !== array_keys( $cart->get_cart_contents() ) ) {
+			$contents = $cart->get_cart_contents();
+			$sorted   = array();
+
+			foreach ( $order as $key ) {
+				$key = $moved[ $key ] ?? $key;
+
+				if ( isset( $contents[ $key ] ) && ! isset( $sorted[ $key ] ) ) {
+					$sorted[ $key ] = $contents[ $key ];
+				}
+			}
+
+			$cart->set_cart_contents( $sorted + $contents );
 		}
 
 		// What changed, for the message (see the woocommerce_add_success filter below).
