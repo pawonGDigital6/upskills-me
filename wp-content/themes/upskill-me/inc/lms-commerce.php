@@ -251,6 +251,36 @@ if ( ! function_exists( 'upskill_product_redirect' ) ) {
 }
 add_action( 'template_redirect', 'upskill_product_redirect' );
 
+/**
+ * A level course opens for the people who have it (its learners and their
+ * organisation admin). Anyone else (a visitor, a learner given another
+ * level) goes to the training's page, which is the one to buy from or ask
+ * about; the level course page would otherwise offer every level under one
+ * level's name.
+ */
+add_action(
+	'template_redirect',
+	static function () {
+		if ( ! is_singular( 'sfwd-courses' ) || current_user_can( 'edit_posts' ) ) {
+			return;
+		}
+
+		$course_id = (int) get_queried_object_id();
+
+		if ( ! in_array( $course_id, upskill_level_course_ids(), true ) || ( is_user_logged_in() && sfwd_lms_has_access( $course_id, get_current_user_id() ) ) ) {
+			return;
+		}
+
+		$product  = upskill_course_product( $course_id );
+		$training = $product ? upskill_product_course( $product ) : 0;
+
+		if ( $training && $training !== $course_id && 'publish' === get_post_status( $training ) ) {
+			wp_safe_redirect( get_permalink( $training ), 302 );
+			exit;
+		}
+	}
+);
+
 if ( ! function_exists( 'upskill_course_duration' ) ) {
 	/**
 	 * Total running time of a course's sessions ("1 hr 24 min"), from the
