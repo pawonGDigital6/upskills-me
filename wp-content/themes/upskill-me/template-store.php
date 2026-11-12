@@ -57,14 +57,14 @@ if ( $upskill_groups ) {
 		<div class="container pb-16 lg:pb-24 <?php echo ! $upskill_header ? 'pt-10 lg:pt-[104px]' : ( $upskill_display ? 'pt-6 lg:pt-20' : 'pt-6 lg:pt-12' ); ?>">
 			<?php if ( $upskill_header ) : ?>
 				<?php if ( $upskill_display ) : ?>
-					<?php // Figma Cart: 10px, #666 links, #ccc separators, current page 500 #5d3a8f (no theme tokens). ?>
-					<nav class="flex flex-wrap items-center gap-2 text-[10px] leading-[1.5] text-gray-500" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
+					<?php // One breadcrumb style site-wide (QA, 9 Nov): the course page's 12px (Figma Product Detail). Figma Cart drew 10px. ?>
+					<nav class="flex flex-wrap items-center gap-2 text-xs leading-[1.62] tracking-[-0.01em] text-[#6b6b72]" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
 						<a class="hover:text-brand-700" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'upskill-me' ); ?></a>
 						<?php foreach ( $upskill_crumbs as $upskill_crumb ) : ?>
-							<span class="text-gray-200" aria-hidden="true">/</span>
+							<span class="text-[#c3c3c8]" aria-hidden="true">/</span>
 							<a class="hover:text-brand-700" href="<?php echo esc_url( $upskill_crumb[0] ); ?>"><?php echo esc_html( $upskill_crumb[1] ); ?></a>
 						<?php endforeach; ?>
-						<span class="text-gray-200" aria-hidden="true">/</span>
+						<span class="text-[#c3c3c8]" aria-hidden="true">/</span>
 						<span class="font-medium text-[#5d3a8f]" aria-current="page"><?php the_title(); ?></span>
 					</nav>
 					<?php upskill_heading( $upskill_heading, 'h1', 'pt-6 text-h1 font-semibold text-gray-900 lg:pt-9' ); ?>
@@ -78,10 +78,10 @@ if ( $upskill_groups ) {
 					</div>
 					<p class="max-w-[960px] pt-4 text-base leading-[1.5] text-[#666] lg:pt-6 lg:text-lead"><?php echo esc_html( $upskill_intro ); ?></p>
 				<?php else : ?>
-					<nav class="flex flex-wrap items-center gap-2 text-sm text-gray-500" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
+					<nav class="flex flex-wrap items-center gap-2 text-xs leading-[1.62] tracking-[-0.01em] text-[#6b6b72]" aria-label="<?php esc_attr_e( 'Breadcrumb', 'upskill-me' ); ?>">
 						<a class="hover:text-brand-700" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Home', 'upskill-me' ); ?></a>
-						<span aria-hidden="true">/</span>
-						<span class="text-gray-950" aria-current="page"><?php the_title(); ?></span>
+						<span class="text-[#c3c3c8]" aria-hidden="true">/</span>
+						<span class="font-medium text-[#5d3a8f]" aria-current="page"><?php the_title(); ?></span>
 					</nav>
 					<h1 class="pt-6 text-h3 font-medium text-gray-950 lg:pt-8"><?php echo wp_kses( $upskill_heading, upskill_inline_kses() ); ?></h1>
 					<?php if ( $upskill_intro ) : ?>

@@ -6,11 +6,5 @@
  * and src/global/js/components/video-player.js.
  */
 
-// Figma's phone cards show only the cover: the transport appears once the
-// session starts, or while a keyboard user is inside it. Tapping the cover plays.
-@media (max-width: 1024.98px) {
-	.free-sessions__video:not(.is-started):not(:focus-within) .video-card__bar {
-		opacity: 0;
-		pointer-events: none;
-	}
-}
+// The transport bar shows at every width, as on desktop (QA, 9 Nov). Figma's
+// phone cards drew only the cover, with the bar appearing once the session started.

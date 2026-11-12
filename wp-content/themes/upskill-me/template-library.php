@@ -19,7 +19,8 @@ get_header();
 
 $upskill_request = upskill_library_request();
 $upskill_base    = get_permalink();
-$upskill_suggest = (array) apply_filters( 'upskill_library_suggestions', array( __( 'Emergency training', 'upskill-me' ), __( 'Training for managers', 'upskill-me' ), __( 'Workplace safety', 'upskill-me' ), __( 'Leadership responsibilities', 'upskill-me' ) ) );
+// Search matches every word in a course's title or text, so each suggestion must lead to training (checked against the catalogue, 12 Nov).
+$upskill_suggest = (array) apply_filters( 'upskill_library_suggestions', array( __( 'Emergency', 'upskill-me' ), __( 'Team leaders', 'upskill-me' ), __( 'Safe work', 'upskill-me' ), __( 'Directors', 'upskill-me' ) ) );
 
 ?>
 <main id="primary" class="site-main bg-gray-25">

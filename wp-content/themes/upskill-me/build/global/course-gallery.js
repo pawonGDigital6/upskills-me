@@ -104,4 +104,4 @@ function CourseGallery(root = document) {
 /***/ }
 
 }]);
-//# sourceMappingURL=course-gallery.js.map?ver=bb0bd8f34e9eaf2e996d
+//# sourceMappingURL=course-gallery.js.map?ver=68e52abf704d24800b08

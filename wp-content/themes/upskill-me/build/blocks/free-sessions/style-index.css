@@ -8,11 +8,5 @@
  * template-parts/video/controls.php, src/global/scss/components/_video-card.scss
  * and src/global/js/components/video-player.js.
  */
-@media (max-width: 1024.98px) {
-  .free-sessions__video:not(.is-started):not(:focus-within) .video-card__bar {
-    opacity: 0;
-    pointer-events: none;
-  }
-}
 
 /*# sourceMappingURL=style-index.css.map*/

@@ -118,7 +118,9 @@ $upskill_checkbox = 'peer size-[19px] flex-none cursor-pointer appearance-none r
 					<span class="grid flex-1 grid-cols-1 grid-rows-1 *:col-start-1 *:row-start-1 lg:w-[203px] lg:flex-none">
 						<select class="h-[46px] w-full cursor-pointer appearance-none rounded-full border border-line bg-white py-[10px_8px] pr-11 pl-4 text-sm font-medium text-[#55555f] focus:border-brand-700 focus:outline-none" id="library-sort" name="sort" data-library-submit>
 							<option value="newest"<?php selected( $upskill_request['sort'], 'newest' ); ?>><?php esc_html_e( 'Newest', 'upskill-me' ); ?></option>
+							<option value="oldest"<?php selected( $upskill_request['sort'], 'oldest' ); ?>><?php esc_html_e( 'Oldest', 'upskill-me' ); ?></option>
 							<option value="title"<?php selected( $upskill_request['sort'], 'title' ); ?>><?php esc_html_e( 'A to Z', 'upskill-me' ); ?></option>
+							<option value="title_desc"<?php selected( $upskill_request['sort'], 'title_desc' ); ?>><?php esc_html_e( 'Z to A', 'upskill-me' ); ?></option>
 						</select>
 						<?php upskill_icon( 'chevron-down', 'pointer-events-none mr-4 size-4 self-center justify-self-end text-gray-700' ); ?>
 					</span>

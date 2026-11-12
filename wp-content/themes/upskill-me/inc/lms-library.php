@@ -50,7 +50,7 @@ if ( ! function_exists( 'upskill_library_request' ) ) {
 		$request = array(
 			'q'    => isset( $source['q'] ) && is_string( $source['q'] ) ? sanitize_text_field( wp_unslash( $source['q'] ) ) : '',
 			'free' => ! empty( $source['free'] ),
-			'sort' => isset( $source['sort'] ) && in_array( $source['sort'], array( 'newest', 'title' ), true ) ? sanitize_key( $source['sort'] ) : 'newest',
+			'sort' => isset( $source['sort'] ) && in_array( $source['sort'], array( 'newest', 'oldest', 'title', 'title_desc' ), true ) ? sanitize_key( $source['sort'] ) : 'newest',
 			'page' => isset( $source['pg'] ) ? max( 1, absint( $source['pg'] ) ) : 1,
 			// A term page's own term was unticked (template-parts/library/term-page.php); page links keep it off.
 			'all'  => ! empty( $source['all'] ),
@@ -283,8 +283,8 @@ if ( ! function_exists( 'upskill_library_query_args' ) ) {
 			'post_status'         => 'publish',
 			'ignore_sticky_posts' => true,
 			'no_found_rows'       => false,
-			'orderby'             => 'title' === $request['sort'] ? 'title' : 'date',
-			'order'               => 'title' === $request['sort'] ? 'ASC' : 'DESC',
+			'orderby'             => in_array( $request['sort'], array( 'title', 'title_desc' ), true ) ? 'title' : 'date',
+			'order'               => in_array( $request['sort'], array( 'title', 'oldest' ), true ) ? 'ASC' : 'DESC',
 			'tax_query'           => array( 'relation' => 'AND' ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
 		);
 

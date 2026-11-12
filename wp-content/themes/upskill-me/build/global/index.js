@@ -1477,7 +1477,7 @@ module.exports = window["wp"]["domReady"];
 /******/ 	
 /******/ 	/* webpack/runtime/get javascript chunk filename */
 /******/ 	// This function allow to reference async chunks
-/******/ 	__webpack_require__.u = (chunkId) => (chunkId + ".js?ver=" + {"vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459":"cb17ec859bff411b533f","course-gallery":"bb0bd8f34e9eaf2e996d"}[chunkId] + "");
+/******/ 	__webpack_require__.u = (chunkId) => (chunkId + ".js?ver=" + {"vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459":"cb17ec859bff411b533f","course-gallery":"68e52abf704d24800b08"}[chunkId] + "");
 /******/ 	
 /******/ 	/* webpack/runtime/get mini-css chunk filename */
 /******/ 	// This function allow to reference async chunks

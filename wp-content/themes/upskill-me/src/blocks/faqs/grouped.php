@@ -6,9 +6,9 @@
  *
  * The header and help card stay in view on the left while every chosen topic
  * lists its questions on the right. Each topic collapses as a whole, and
- * inside it one answer is open at a time (the first, to start). Phones also
- * get topic chips that jump to a topic and a search that filters questions
- * (view.js).
+ * inside it one answer is open at a time (the first, to start). Topic chips
+ * jump to a topic and a search filters questions (view.js); Figma draws them
+ * on phones only, they show at every width since QA (9 Nov).
  *
  * Included from render.php, which provides $block, $attributes and $card.
  *
@@ -78,10 +78,10 @@ $uid = wp_unique_id( 'faq-' );
 
 			<div class="min-w-0 flex-1">
 				<?php if ( count( $groups ) > 1 ) : ?>
-					<?php // Phones only, as drawn: jump to a topic, or search every question. ?>
-					<div class="flex flex-col sm:gap-4 gap-6 sm:pt-6 lg:hidden">
-						<nav class="-mx-gutter overflow-x-auto px-gutter [scrollbar-width:none]" aria-label="<?php esc_attr_e( 'FAQ topics', 'upskill-me' ); ?>">
-							<ul class="flex gap-2 w-max">
+					<?php // Jump to a topic, or search every question. Figma draws these on phones only; shown at every width since QA (9 Nov). Desktop wraps the chips in the column, phones swipe them. ?>
+					<div class="flex flex-col sm:gap-4 gap-6 sm:pt-6 lg:pt-0">
+						<nav class="-mx-gutter overflow-x-auto px-gutter [scrollbar-width:none] lg:mx-0 lg:overflow-visible lg:px-0" aria-label="<?php esc_attr_e( 'FAQ topics', 'upskill-me' ); ?>">
+							<ul class="flex gap-2 w-max lg:w-auto lg:flex-wrap">
 								<?php foreach ( $groups as $group ) : ?>
 									<li class="flex-none">
 										<a class="block rounded-full border border-gray-900/10 px-4 py-2 text-sm whitespace-nowrap text-[#55555a] transition-colors hover:border-brand-700 hover:text-brand-700" href="#<?php echo esc_attr( $uid . '-' . $group['topic']->slug ); ?>"><?php echo esc_html( $group['topic']->name ); ?></a>
