@@ -84,6 +84,12 @@ if ( ! function_exists( 'upskill_product_course' ) ) {
 	 * @return int Course ID or 0.
 	 */
 	function upskill_product_course( $product ) {
+		// A level (variation) belongs to its training: the parent product's course is the training page.
+		if ( $product->is_type( 'variation' ) ) {
+			$parent  = wc_get_product( $product->get_parent_id() );
+			$product = $parent ? $parent : $product;
+		}
+
 		$ids = array( $product->get_id() );
 
 		if ( $product->is_type( 'variable' ) ) {
@@ -101,6 +107,66 @@ if ( ! function_exists( 'upskill_product_course' ) ) {
 		return 0;
 	}
 }
+
+if ( ! function_exists( 'upskill_level_course_ids' ) ) {
+	/**
+	 * Level courses. A training sold at levels keeps its own course (the
+	 * product's "Courses" field: its page and buy box) and has one course per
+	 * level with that level's sessions (each variation's "Courses" field; All
+	 * Levels lists them all). Level courses are opened only by the people
+	 * enrolled in them, so course listings leave them out. Read from the
+	 * plugins' own fields: a course linked from a variation and from no product.
+	 *
+	 * @return int[]
+	 */
+	function upskill_level_course_ids() {
+		static $ids = null;
+
+		if ( null !== $ids ) {
+			return $ids;
+		}
+
+		global $wpdb;
+
+		$rows   = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+			"SELECT p.post_type, m.meta_value FROM {$wpdb->postmeta} m INNER JOIN {$wpdb->posts} p ON p.ID = m.post_id
+			WHERE m.meta_key = '_related_course' AND p.post_type IN ( 'product', 'product_variation' ) AND p.post_status <> 'trash'"
+		);
+		$linked = array(
+			'product'           => array(),
+			'product_variation' => array(),
+		);
+
+		foreach ( $rows as $row ) {
+			$linked[ $row->post_type ] = array_merge( $linked[ $row->post_type ], array_map( 'intval', (array) maybe_unserialize( $row->meta_value ) ) );
+		}
+
+		$ids = array_values( array_diff( array_unique( $linked['product_variation'] ), $linked['product'] ) );
+
+		return $ids;
+	}
+}
+
+/**
+ * Category, industry and level "N sessions" chips count the courses in a
+ * term; level courses are part of a training already counted.
+ */
+add_filter(
+	'upskill_term_session_count',
+	static function ( $count, $term ) {
+		$levels = upskill_level_course_ids();
+
+		if ( ! $levels || ! $term instanceof WP_Term ) {
+			return $count;
+		}
+
+		$in_term = array_filter( $levels, static fn( $course_id ) => has_term( (int) $term->term_id, $term->taxonomy, $course_id ) );
+
+		return max( 0, $count - count( $in_term ) );
+	},
+	10,
+	2
+);
 
 if ( ! function_exists( 'upskill_product_levels' ) ) {
 	/**

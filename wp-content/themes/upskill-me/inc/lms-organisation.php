@@ -240,13 +240,18 @@ if ( ! function_exists( 'upskill_org_course_groups' ) ) {
 		$groups = array();
 
 		foreach ( upskill_org_groups( $user_id ) as $group_id ) {
-			if ( ! in_array( (int) $course_id, array_map( 'intval', (array) learndash_group_enrolled_courses( $group_id ) ), true ) ) {
+			$purchase = upskill_org_group_purchase( $group_id );
+			$product  = $purchase['product_id'] && function_exists( 'wc_get_product' ) ? wc_get_product( $purchase['product_id'] ) : null;
+
+			// The group holds the course, or was bought from the training whose page this course is (a level course group).
+			if ( ! in_array( (int) $course_id, array_map( 'intval', (array) learndash_group_enrolled_courses( $group_id ) ), true )
+				&& ! ( $product && function_exists( 'upskill_product_course' ) && (int) upskill_product_course( $product ) === (int) $course_id ) ) {
 				continue;
 			}
 
 			$summary = upskill_org_group_summary( $group_id );
 			unset( $summary['rows'] );
-			$summary = array_merge( $summary, upskill_org_group_purchase( $group_id ) );
+			$summary = array_merge( $summary, $purchase );
 
 			$groups[] = $summary;
 		}

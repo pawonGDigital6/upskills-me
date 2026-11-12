@@ -49,7 +49,7 @@ $upskill_query = array(
 	'post_status'    => 'publish',
 	'posts_per_page' => 12,
 	'fields'         => 'ids',
-	'post__not_in'   => $upskill_in_cart, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- the few courses in the cart.
+	'post__not_in'   => array_merge( $upskill_in_cart, function_exists( 'upskill_level_course_ids' ) ? upskill_level_course_ids() : array() ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- the few courses in the cart, and level courses.
 	'no_found_rows'  => true,
 );
 

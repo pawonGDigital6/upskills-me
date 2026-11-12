@@ -230,10 +230,11 @@ if ( ! function_exists( 'upskill_library_free_course_ids' ) ) {
 
 		$courses = get_posts(
 			array(
-				'post_type'   => 'sfwd-courses',
-				'post_status' => 'publish',
-				'numberposts' => -1,
-				'fields'      => 'ids',
+				'post_type'    => 'sfwd-courses',
+				'post_status'  => 'publish',
+				'numberposts'  => -1,
+				'fields'       => 'ids',
+				'post__not_in' => function_exists( 'upskill_level_course_ids' ) ? upskill_level_course_ids() : array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- level courses (a few).
 			)
 		);
 
@@ -281,6 +282,7 @@ if ( ! function_exists( 'upskill_library_query_args' ) ) {
 		$args = array(
 			'post_type'           => 'sfwd-courses',
 			'post_status'         => 'publish',
+			'post__not_in'        => function_exists( 'upskill_level_course_ids' ) ? upskill_level_course_ids() : array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- level courses (a few).
 			'ignore_sticky_posts' => true,
 			'no_found_rows'       => false,
 			'orderby'             => in_array( $request['sort'], array( 'title', 'title_desc' ), true ) ? 'title' : 'date',
@@ -373,7 +375,7 @@ if ( ! function_exists( 'upskill_library_next' ) ) {
 	 */
 	function upskill_library_next( $course_id, $user_id, $limit = 3 ) {
 		$exclude = array_map( 'intval', function_exists( 'learndash_user_get_enrolled_courses' ) ? (array) learndash_user_get_enrolled_courses( $user_id ) : array() );
-		$exclude = array_merge( $exclude, array( (int) $course_id ) );
+		$exclude = array_merge( $exclude, array( (int) $course_id ), function_exists( 'upskill_level_course_ids' ) ? upskill_level_course_ids() : array() );
 		$terms   = wp_get_post_terms( $course_id, 'training_category', array( 'fields' => 'ids' ) );
 		$base    = array(
 			'post_type'      => 'sfwd-courses',
@@ -404,15 +406,17 @@ if ( ! function_exists( 'upskill_library_industry_courses' ) ) {
 	 * @return int[]
 	 */
 	function upskill_library_industry_courses( $industry, $count = 3 ) {
-		$args = array(
+		$levels = function_exists( 'upskill_level_course_ids' ) ? upskill_level_course_ids() : array();
+		$args   = array(
 			'post_type'           => 'sfwd-courses',
 			'post_status'         => 'publish',
 			'posts_per_page'      => $count,
 			'fields'              => 'ids',
 			'ignore_sticky_posts' => true,
 			'no_found_rows'       => true,
+			'post__not_in'        => $levels, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- level courses (a few).
 		);
-		$ids  = array();
+		$ids    = array();
 
 		if ( $industry ) {
 			$ids = get_posts(
@@ -438,7 +442,7 @@ if ( ! function_exists( 'upskill_library_industry_courses' ) ) {
 						$args,
 						array(
 							'posts_per_page' => $count - count( $ids ),
-							'post__not_in'   => $ids, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- a handful of IDs.
+							'post__not_in'   => array_merge( $levels, $ids ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- a handful of IDs.
 						)
 					)
 				)

@@ -98,6 +98,18 @@ if ( $upskill_add_to ) {
 	<?php
 	/** This action is documented in the LearnDash course template. */
 	do_action( 'learndash-course-before', get_the_ID(), $course_id, $user_id );
+
+	// An organisation admin whose teams have this training at a level (each level is its own course) still sees their teams here.
+	if ( $upskill_org_groups && ! $upskill_add_to ) {
+		get_template_part(
+			'template-parts/account/course-org-bar',
+			null,
+			array(
+				'groups'    => $upskill_org_groups,
+				'course_id' => $course_id,
+			)
+		);
+	}
 	?>
 
 	<section class="course-hero overflow-hidden bg-gray-25 pt-6 pb-16 lg:pt-10 lg:pb-[72px]">
