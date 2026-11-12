@@ -9,8 +9,8 @@
  * title, text, name).
  *
  * The reviews are LearnDash Course Reviews (comments of type ld_review with
- * "rating" and "review_title" meta): learners who have started a course leave
- * them on LearnDash's own course page (Reviews tab); admins approve and edit
+ * "rating" and "review_title" meta): organisation admins who have the course
+ * leave them on LearnDash's own course page (Reviews tab); admins approve and edit
  * them under Comments. Hidden while the course has reviews switched off
  * (Course → Settings → Show reviews) or has none approved yet.
  *
@@ -33,7 +33,7 @@ if ( ! $summary['enabled'] || ! $summary['count'] ) {
 
 $reviews = get_comments(
 	array(
-		'post_id' => $course_id,
+		'post__in' => function_exists( 'upskill_course_review_ids' ) ? upskill_course_review_ids( $course_id ) : array( $course_id ),
 		'type'    => 'ld_review',
 		'status'  => 'approve',
 		'parent'  => 0,

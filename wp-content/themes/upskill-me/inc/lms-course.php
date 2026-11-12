@@ -119,17 +119,50 @@ if ( ! function_exists( 'upskill_course_reviews' ) ) {
 		}
 
 		$summary['enabled'] = true;
-		$summary['count']   = (int) get_comments(
-			array(
-				'post_id' => $course_id,
-				'type'    => 'ld_review',
-				'status'  => 'approve',
-				'count'   => true,
-			)
-		);
-		$summary['average'] = (float) learndash_course_reviews_get_average_review_score( (int) $course_id );
+		$total              = 0.0;
+
+		// A training's reviews include its level courses' (buyers review the level they bought).
+		foreach ( upskill_course_review_ids( $course_id ) as $id ) {
+			$count = (int) get_comments(
+				array(
+					'post_id' => $id,
+					'type'    => 'ld_review',
+					'status'  => 'approve',
+					'count'   => true,
+				)
+			);
+
+			$summary['count'] += $count;
+			$total            += $count ? $count * (float) learndash_course_reviews_get_average_review_score( $id ) : 0;
+		}
+
+		$summary['average'] = $summary['count'] ? round( $total / $summary['count'], 2 ) : 0.0;
 
 		return $summary;
+	}
+}
+
+if ( ! function_exists( 'upskill_course_review_ids' ) ) {
+	/**
+	 * The courses whose reviews a course page shows: the course, and for a
+	 * training sold at levels, its level courses too (each level is its own
+	 * course, linked from the level variation). Organisation admins review
+	 * the level course they bought, from its Reviews tab.
+	 *
+	 * @param int $course_id Course ID.
+	 * @return int[]
+	 */
+	function upskill_course_review_ids( $course_id ) {
+		$ids     = array( (int) $course_id );
+		$product = function_exists( 'upskill_course_product' ) ? upskill_course_product( $course_id ) : null;
+
+		if ( $product && $product->is_type( 'variable' ) && (int) upskill_product_course( $product ) === (int) $course_id ) {
+			foreach ( $product->get_children() as $variation_id ) {
+				$ids = array_merge( $ids, array_map( 'intval', (array) get_post_meta( $variation_id, '_related_course', true ) ) );
+			}
+		}
+
+		return array_values( array_unique( array_filter( $ids ) ) );
 	}
 }
 

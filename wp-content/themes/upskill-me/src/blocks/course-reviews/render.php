@@ -33,7 +33,7 @@ if ( ! $summary['enabled'] || ! $summary['count'] ) {
 
 $reviews = get_comments(
 	array(
-		'post_id' => $course_id,
+		'post__in' => function_exists( 'upskill_course_review_ids' ) ? upskill_course_review_ids( $course_id ) : array( $course_id ),
 		'type'    => 'ld_review',
 		'status'  => 'approve',
 		'parent'  => 0,
