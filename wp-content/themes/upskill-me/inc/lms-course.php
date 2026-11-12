@@ -101,8 +101,8 @@ if ( ! function_exists( 'upskill_course_reviews' ) ) {
 	/**
 	 * LearnDash Course Reviews for a course: switched on, how many, average.
 	 *
-	 * Reviews are LearnDash's own (Course → Settings → "Show reviews"); learners
-	 * who have started the course can leave one.
+	 * Reviews are LearnDash's own (Course → Settings → "Show reviews");
+	 * organisation admins who have the course leave them (upskill_can_review_course()).
 	 *
 	 * @param int $course_id Course ID.
 	 * @return array{enabled: bool, count: int, average: float}
@@ -132,6 +132,51 @@ if ( ! function_exists( 'upskill_course_reviews' ) ) {
 		return $summary;
 	}
 }
+
+if ( ! function_exists( 'upskill_can_review_course' ) ) {
+	/**
+	 * Who writes course reviews. The client wants reviews from organisation
+	 * users (the buyers), not participants (Integrations document, 24 Oct):
+	 * an organisation admin who has the course through one of their groups.
+	 * Replaces LearnDash's own rule (a learner who has started the course)
+	 * through its Course Reviews filters below; learners still read reviews.
+	 *
+	 * @param int $course_id Course ID.
+	 * @param int $user_id   User ID (default: current user).
+	 * @return bool
+	 */
+	function upskill_can_review_course( $course_id, $user_id = 0 ) {
+		$user_id = $user_id ? (int) $user_id : get_current_user_id();
+
+		return $user_id
+			&& function_exists( 'upskill_is_org_admin' ) && upskill_is_org_admin( $user_id )
+			&& function_exists( 'upskill_org_course_groups' ) && (bool) upskill_org_course_groups( $user_id, (int) $course_id );
+	}
+}
+
+// The review form (LearnDash course page, Reviews tab): organisation admins with the course; signed-in learners see the reviews only.
+add_filter(
+	'learndash_course_reviews_show_review_form',
+	static fn( $show, $course_id ) => $show && ( ! is_user_logged_in() || upskill_can_review_course( (int) $course_id ) ),
+	10,
+	2
+);
+
+// LearnDash asks whether the user "has started the course" before accepting a review; an organisation admin never watches, so this is the review rule instead.
+add_filter(
+	'learndash_course_reviews_user_has_started_course',
+	static fn( $started, $course_id, $user_id ) => upskill_can_review_course( (int) $course_id, (int) $user_id ),
+	10,
+	3
+);
+
+// The same rule on LearnDash's REST endpoint that saves a review, so it cannot be posted around the form.
+add_filter(
+	'learndash_course_reviews_permission_callback_add_review',
+	static fn( $allowed, $request ) => $allowed && $request instanceof WP_REST_Request && upskill_can_review_course( (int) $request->get_param( 'course_id' ) ),
+	10,
+	2
+);
 
 if ( ! function_exists( 'upskill_course_preview_session' ) ) {
 	/**

@@ -28,7 +28,7 @@
             "label": "Reviews",
             "name": "",
             "type": "message",
-            "message": "LearnDash Course Reviews for this course: the average, the count and the six newest approved reviews.\n\n• Switch on/off: this course → Settings tab → Course Reviews → \"Allow Reviews for this Course?\".\n• Who reviews: learners who have started the course, from the Reviews tab on their course page (star rating, title, text).\n• Approve, edit, reply or delete: Comments in the admin menu (a review is a comment of type Review; its rating is edited in the Rating box).\n\nThe section is hidden while reviews are off or none is approved."
+            "message": "LearnDash Course Reviews for this course: the average, the count and the six newest approved reviews.\n\n• Switch on/off: this course → Settings tab → Course Reviews → \"Allow Reviews for this Course?\".\n• Who reviews: organisation admins who have bought the course, from the Reviews tab on their course page (star rating, title, text). Team members read reviews but cannot write one.\n• Approve, edit, reply or delete: Comments in the admin menu (a review is a comment of type Review; its rating is edited in the Rating box).\n\nThe section is hidden while reviews are off or none is approved."
         }
     ],
     "location": [
@@ -49,5 +49,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1793638245
+    "modified": 1794472485
 }
