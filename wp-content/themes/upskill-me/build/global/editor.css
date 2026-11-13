@@ -911,9 +911,6 @@
   .min-h-\[23px\] {
     min-height: 23px;
   }
-  .min-h-\[24px\] {
-    min-height: 24px;
-  }
   .min-h-\[30px\] {
     min-height: 30px;
   }
@@ -1323,9 +1320,6 @@
   }
   .gap-\[2px\] {
     gap: 2px;
-  }
-  .gap-\[5px\] {
-    gap: 5px;
   }
   .gap-\[7px\] {
     gap: 7px;
@@ -2124,9 +2118,6 @@
   }
   .py-\[3px\] {
     padding-block: 3px;
-  }
-  .py-\[5px\] {
-    padding-block: 5px;
   }
   .py-\[7px\] {
     padding-block: 7px;
@@ -3507,10 +3498,6 @@
       border-top-style: var(--tw-border-style);
       border-top-width: 0px;
     }
-    .max-md\:odd\:border-r:nth-child(odd) {
-      border-right-style: var(--tw-border-style);
-      border-right-width: 1px;
-    }
   }
   @media (width < 768px) {
     .max-sm\:-mr-4\! {
@@ -3945,6 +3932,18 @@
     .md\:grid-cols-none {
       grid-template-columns: none;
     }
+    .md\:flex-col {
+      flex-direction: column;
+    }
+    .md\:items-start {
+      align-items: flex-start;
+    }
+    .md\:justify-start {
+      justify-content: flex-start;
+    }
+    .md\:gap-\[5px\] {
+      gap: 5px;
+    }
     .md\:overflow-auto {
       overflow: auto;
     }
@@ -3959,6 +3958,16 @@
       .md\:border-gray-900\/10 {
         border-color: color-mix(in oklab, var(--color-gray-900) 10%, transparent);
       }
+    }
+    .md\:p-5 {
+      padding: calc(var(--spacing) * 5);
+    }
+    .md\:text-left {
+      text-align: left;
+    }
+    .md\:not-first\:border-t-0:not(:first-child) {
+      border-top-style: var(--tw-border-style);
+      border-top-width: 0px;
     }
     .md\:not-first\:border-l:not(:first-child) {
       border-left-style: var(--tw-border-style);
@@ -5108,12 +5117,6 @@
   @media (width >= 1025px) {
     .lg\:\[\&\:not\(\.is-active\)\]\:grow-\[156\]:not(.is-active) {
       flex-grow: 156;
-    }
-  }
-  @media (width < 992px) {
-    .max-md\:\[\&\:nth-child\(n\+3\)\]\:border-t:nth-child(n+3) {
-      border-top-style: var(--tw-border-style);
-      border-top-width: 1px;
     }
   }
   .\[\&\>article\]\:flex-1 > article {

@@ -47,11 +47,12 @@ if ( ! $upskill_paid && $upskill_order->get_payment_method_title() ) {
 		?>
 	</p>
 </header>
-<dl class="order-overview mt-8 grid grid-cols-2 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-card md:grid-flow-col md:auto-cols-fr md:grid-cols-none">
+<?php // Phones: one row per fact, label left and value right (4 or 5 facts, no empty cell; QA UPS-44). From md: one cell per fact in a row (Figma). ?>
+<dl class="order-overview mt-8 grid grid-cols-1 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-card md:grid-flow-col md:auto-cols-fr md:grid-cols-none">
 	<?php foreach ( $upskill_cells as $upskill_label => $upskill_value ) : ?>
-		<div class="flex flex-col gap-[5px] border-gray-100 p-5 max-md:odd:border-r max-md:[&:nth-child(n+3)]:border-t md:not-first:border-l">
-			<dt class="text-sm text-gray-500"><?php echo esc_html( $upskill_label ); ?></dt>
-			<dd class="text-base font-medium text-gray-900"><?php echo esc_html( $upskill_value ); ?></dd>
+		<div class="flex items-baseline justify-between gap-4 border-gray-100 px-5 py-3.5 not-first:border-t md:flex-col md:items-start md:justify-start md:gap-[5px] md:p-5 md:not-first:border-t-0 md:not-first:border-l">
+			<dt class="shrink-0 text-sm text-gray-500"><?php echo esc_html( $upskill_label ); ?></dt>
+			<dd class="text-right text-base font-medium text-gray-900 md:text-left"><?php echo esc_html( $upskill_value ); ?></dd>
 		</div>
 	<?php endforeach; ?>
 </dl>
