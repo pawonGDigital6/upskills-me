@@ -7,17 +7,14 @@
  * (49325:14593) and Categories.
  *
  * A centred section header over a featured card (photo, two-tone title,
- * "Read More"), three training sessions as library cards, and a lilac panel
+ * "Read More"), three resource cards, and a lilac panel
  * with a button and a cut-out photo (desktop only, as drawn).
  *
- * "Show" picks the three cards (QA UPS-35: the section is about resources):
- * - Training sessions (the design, and the default): the LearnDash courses
- *   chosen in the block, or else the newest for the page's industry (a case
- *   study's Industry field, or the industry page being viewed), topped up
- *   with the newest of the rest.
- * - Resources: blog posts, case studies or guides chosen in the block (any
- *   mix), or else case studies for the page's industry, topped up with the
- *   newest resources. Drawn as the Resources page's compact resource card.
+ * The three cards are resources (QA UPS-35; Figma drew training sessions):
+ * blog posts, case studies or guides chosen in the block (any mix), or else
+ * case studies for the page's industry (a case study's Industry field, or
+ * the industry page being viewed), topped up with the newest resources;
+ * never the page itself. Drawn as the Resources page's compact resource card.
  *
  * @param array $block The block settings and attributes.
  *
@@ -31,8 +28,6 @@ $panel_heading  = (string) get_field( 'panel_heading' );
 $panel_text     = (string) get_field( 'panel_text' );
 $panel_image    = (int) get_field( 'panel_image' );
 
-$show_resources = 'resources' === get_field( 'content_type' );
-
 // The page's industry: the industry page being viewed, or a case study's Industry field.
 $industry = 0;
 if ( is_tax( 'industry' ) ) {
@@ -41,56 +36,45 @@ if ( is_tax( 'industry' ) ) {
 	$industry = (int) get_field( 'industry', get_the_ID() );
 }
 
-// Sessions: the chosen courses, else the page's industry.
-$sessions  = array();
-$resources = array();
+// Resources: the chosen ones, else the page's industry's case studies topped up with the newest.
+$types     = array( 'post', 'case_study', 'guide' );
+$resources = array_slice(
+	array_values(
+		array_filter(
+			array_map( 'intval', (array) get_field( 'resources' ) ),
+			// $id > 0 first: get_post_type( 0 ) is the current page.
+			static fn( $id ) => $id > 0 && in_array( get_post_type( $id ), $types, true ) && 'publish' === get_post_status( $id )
+		)
+	),
+	0,
+	3
+);
 
-if ( $show_resources ) {
-	$types     = array( 'post', 'case_study', 'guide' );
-	$resources = array_slice(
-		array_values(
-			array_filter(
-				array_map( 'intval', (array) get_field( 'resources' ) ),
-				// $id > 0 first: get_post_type( 0 ) is the current page.
-				static fn( $id ) => $id > 0 && in_array( get_post_type( $id ), $types, true ) && 'publish' === get_post_status( $id )
-			)
-		),
-		0,
-		3
-	);
+if ( ! $resources ) {
+	$current   = is_singular() ? array( get_the_ID() ) : array();
+	$resources = $industry ? get_posts(
+		array(
+			'post_type'      => 'case_study',
+			'posts_per_page' => 3,
+			'fields'         => 'ids',
+			'post__not_in'   => $current, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- the page itself.
+			'meta_key'       => 'industry', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
+			'meta_value'     => $industry, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
+		)
+	) : array();
 
-	if ( ! $resources ) {
-		$current   = is_singular() ? array( get_the_ID() ) : array();
-		$resources = $industry ? get_posts(
-			array(
-				'post_type'      => 'case_study',
-				'posts_per_page' => 3,
-				'fields'         => 'ids',
-				'post__not_in'   => $current, // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- the page itself.
-				'meta_key'       => 'industry', // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key
-				'meta_value'     => $industry, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_value
-			)
-		) : array();
-
-		if ( count( $resources ) < 3 ) {
-			$resources = array_merge(
-				$resources,
-				get_posts(
-					array(
-						'post_type'      => $types,
-						'posts_per_page' => 3 - count( $resources ),
-						'fields'         => 'ids',
-						'post__not_in'   => array_merge( $current, $resources ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- a handful of IDs.
-					)
+	if ( count( $resources ) < 3 ) {
+		$resources = array_merge(
+			$resources,
+			get_posts(
+				array(
+					'post_type'      => $types,
+					'posts_per_page' => 3 - count( $resources ),
+					'fields'         => 'ids',
+					'post__not_in'   => array_merge( $current, $resources ), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_post__not_in -- a handful of IDs.
 				)
-			);
-		}
-	}
-} elseif ( function_exists( 'upskill_library_card' ) ) {
-	$sessions = array_slice( array_filter( array_map( 'intval', (array) get_field( 'sessions' ) ) ), 0, 3 );
-
-	if ( ! $sessions ) {
-		$sessions = upskill_library_industry_courses( $industry );
+			)
+		);
 	}
 }
 
@@ -153,25 +137,6 @@ $attributes = upskill_block_attributes( $block, 'block-industry-resources sectio
 										'post'    => get_post( $resource_id ),
 										'variant' => 'compact',
 										'index'   => (int) $index + 1,
-									)
-								);
-								?>
-							</li>
-						<?php endforeach; ?>
-					</ul>
-				<?php endif; ?>
-
-				<?php if ( $sessions ) : ?>
-					<ul class="industry-resources__sessions grid gap-4 sm:grid-cols-3" role="list">
-						<?php foreach ( $sessions as $index => $course_id ) : ?>
-							<li class="industry-resources__session reveal flex flex-col *:flex-1" style="--i:<?php echo (int) $index + 1; ?>">
-								<?php
-								get_template_part(
-									'template-parts/cards/training',
-									null,
-									array(
-										'card'    => upskill_library_card( $course_id ),
-										'compact' => true,
 									)
 								);
 								?>

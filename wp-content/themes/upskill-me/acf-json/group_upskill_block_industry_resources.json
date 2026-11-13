@@ -66,7 +66,7 @@
         },
         {
             "key": "field_upskill_industry_resources_acc_sessions",
-            "label": "Cards",
+            "label": "Resources",
             "name": "",
             "type": "accordion",
             "open": 1,
@@ -74,64 +74,11 @@
             "endpoint": 0
         },
         {
-            "key": "field_upskill_industry_resources_content_type",
-            "label": "Show",
-            "name": "content_type",
-            "type": "button_group",
-            "instructions": "Training sessions: course cards (as in the design). Resources: blog posts, case studies or guides, as resource cards.",
-            "choices": {
-                "sessions": "Training sessions",
-                "resources": "Resources"
-            },
-            "default_value": "sessions",
-            "return_format": "value",
-            "allow_null": 0,
-            "layout": "horizontal"
-        },
-        {
-            "key": "field_upskill_industry_resources_sessions",
-            "label": "Sessions",
-            "name": "sessions",
-            "type": "relationship",
-            "instructions": "Optional: up to three. Leave empty to show the newest training for the page's industry (a case study's Industry, or the industry page), topped up with the newest training.",
-            "post_type": [
-                "sfwd-courses"
-            ],
-            "post_status": [
-                "publish"
-            ],
-            "filters": [
-                "search"
-            ],
-            "return_format": "id",
-            "min": 0,
-            "max": 3,
-            "elements": [],
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_upskill_industry_resources_content_type",
-                        "operator": "==",
-                        "value": "sessions"
-                    }
-                ]
-            ]
-        },
-        {
             "key": "field_upskill_industry_resources_resources",
-            "label": "Resources",
+            "label": "Choose resources",
             "name": "resources",
             "type": "relationship",
-            "instructions": "Optional: up to three, any mix of blog posts, case studies and guides (use the type filter to narrow the list). Leave empty to show the newest: case studies for the page's industry first, then the newest resources.",
-            "conditional_logic": [
-                [
-                    {
-                        "field": "field_upskill_industry_resources_content_type",
-                        "operator": "==",
-                        "value": "resources"
-                    }
-                ]
-            ],
+            "instructions": "Optional: up to three, any mix of blog posts, case studies and guides (use the type filter to narrow the list, drag to reorder). Leave empty to show the newest: case studies for the page's industry first, then the newest resources.",
             "post_type": [
                 "post",
                 "case_study",
@@ -217,5 +164,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1794535460
+    "modified": 1794536459
 }

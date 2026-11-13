@@ -210,8 +210,9 @@ fonts/                    Lay Grotesk (TRIAL — 69 glyphs) + Geist fallback
   points, 16px intro via `section-header--base`); Why page's `testimonials`.
 - **Industry Resources (2026-10-23):** block `industry-resources` (Figma 49325:16856, also Industry Hub and
   Categories), placed through the synced pattern "Industry Training Resources" (#1018) on case study 383.
-  Sessions = chosen courses, else `upskill_library_industry_courses()` for the case study's Industry /
-  the industry page, topped up with the newest; cards are `cards/training.php` with `compact`. Synced
+  Since 13 Nov (QA UPS-35) the three cards are resources, not courses: chosen blog posts / case studies /
+  guides (field "Choose resources"), else case studies for the case study's Industry / the industry page,
+  topped up with the newest resources; cards are `cards/resource.php` with `compact`. Synced
   patterns (`core/block`) count as full-width sections in `upskill_contain_editor_text()`.
 - **Training library pagination + video transport (2026-10-28):** "Load more" replaced by numbered
   pages (Figma 49325:14592 / 49347:88528), `template-parts/library/pagination.php`: `pg` parameter
