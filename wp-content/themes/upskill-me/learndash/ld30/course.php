@@ -325,11 +325,15 @@ if ( $upskill_add_to ) {
 								<fieldset class="mt-6">
 									<legend class="float-left text-xl leading-[1.3] font-medium tracking-[-0.02em] text-gray-950"><?php esc_html_e( 'Choose your training level', 'upskill-me' ); ?></legend>
 									<span class="clear-left block pt-1 text-sm text-[#8b8b97] sm:clear-none sm:float-right sm:pt-1"><?php esc_html_e( 'Choose what you need', 'upskill-me' ); ?></span>
-									<?php // Three levels sit in one row (Figma); any other count pairs up so no card is left alone on a row. ?>
-									<div class="clear-both grid gap-2 pt-6 <?php echo 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
+									<?php
+									// Three levels sit in one row (Figma); any other count pairs up so no card is left alone on a row.
+									// The bundle ("All Levels") takes a whole row below them, stacked like the other cards.
+									$upskill_cols = 0 === count( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ) ) % 3 ? 3 : 2;
+									?>
+									<div class="clear-both grid gap-2 pt-6 <?php echo 3 === $upskill_cols ? 'sm:grid-cols-3' : 'sm:grid-cols-2'; ?>">
 										<?php foreach ( $upskill_levels as $upskill_i => $upskill_lvl ) : ?>
 											<?php $upskill_save = $upskill_lvl['bundle'] ? array_sum( wp_list_pluck( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ), 'price' ) ) - $upskill_lvl['price'] : 0; ?>
-											<label class="buy-level relative flex cursor-pointer items-center justify-between gap-1 rounded-[14px] sm:flex-col sm:items-start sm:justify-start border border-line bg-white p-4 py-3.5 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? 'sm:col-span-3 sm:flex-row sm:items-center sm:justify-between' : ''; ?>">
+											<label class="buy-level relative flex cursor-pointer items-center justify-between gap-1 rounded-[14px] sm:flex-col sm:items-start sm:justify-start border border-line bg-white p-4 py-3.5 transition-colors hover:border-brand-300 has-checked:border-brand-700 has-checked:bg-brand-25 <?php echo $upskill_lvl['bundle'] ? ( 3 === $upskill_cols ? 'sm:col-span-3' : 'sm:col-span-2' ) : ''; ?>">
 												<input class="sr-only" type="radio" name="variation_id" value="<?php echo esc_attr( $upskill_lvl['id'] ); ?>" data-price="<?php echo esc_attr( wp_strip_all_tags( $upskill_lvl['price_html'] ) ); ?>" data-label="<?php echo esc_attr( $upskill_lvl['label'] ); ?>" data-text="<?php echo esc_attr( $upskill_lvl['text'] ); ?>" data-attributes="<?php echo esc_attr( wp_json_encode( $upskill_lvl['attributes'] ) ); ?>"<?php checked( 0, $upskill_i ); ?>>
 												<span class="text-sm font-medium text-[#55555f] [.buy-level:has(:checked)_&]:text-[#6b2fe3]">
 													<?php echo esc_html( $upskill_lvl['label'] ); ?>
