@@ -137,10 +137,10 @@ elseif ('compact' === $variant):
 			?>
 			<p class="resource-card__tags relative col-start-1 row-start-1 m-3 flex gap-[7px] self-start">
 				<span
-					class="resource-card__type flex items-center rounded-sm bg-signal px-[9px] py-1 text-2xs leading-none font-semibold tracking-[0.1em] text-gray-950 uppercase"><?php echo esc_html(upskill_post_type_label($post_obj)); ?></span>
+					class="resource-card__type flex items-center rounded-sm bg-signal px-2 text-2xs leading-none font-semibold tracking-[0.1em] text-gray-950 uppercase" style="padding-block: 6px 5px;"><?php echo esc_html(upskill_post_type_label($post_obj)); ?></span>
 				<?php if ($category): ?>
 					<span
-						class="resource-card__category rounded-sm bg-brand-25 px-2.5 py-[5px] text-2xs font-medium text-brand-700 leading-none flex items-center min-h-[24px]"><?php echo esc_html($category->name); ?></span>
+						class="resource-card__category rounded-sm bg-brand-25 px-2.5 py-[5px] text-2xs font-medium text-brand-700 leading-none flex items-center min-h-[24px] hidden"><?php echo esc_html($category->name); ?></span>
 				<?php endif; ?>
 			</p>
 		</div>
