@@ -6,12 +6,15 @@
   "title": "Industry Resources",
   "category": "acf-blocks",
   "icon": "welcome-learn-more",
-  "description": "Centred section header over a featured card, three training sessions for the page's industry and a panel with a button.",
+  "description": "Centred section header over a featured card, three cards (training sessions for the page's industry, or chosen blog posts, case studies and guides) and a panel with a button.",
   "keywords": [
     "industry",
     "training",
     "sessions",
-    "resources"
+    "resources",
+    "case studies",
+    "guides",
+    "blog"
   ],
   "supports": {
     "html": false,

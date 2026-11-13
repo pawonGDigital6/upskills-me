@@ -66,12 +66,27 @@
         },
         {
             "key": "field_upskill_industry_resources_acc_sessions",
-            "label": "Training sessions",
+            "label": "Cards",
             "name": "",
             "type": "accordion",
             "open": 1,
             "multi_expand": 1,
             "endpoint": 0
+        },
+        {
+            "key": "field_upskill_industry_resources_content_type",
+            "label": "Show",
+            "name": "content_type",
+            "type": "button_group",
+            "instructions": "Training sessions: course cards (as in the design). Resources: blog posts, case studies or guides, as resource cards.",
+            "choices": {
+                "sessions": "Training sessions",
+                "resources": "Resources"
+            },
+            "default_value": "sessions",
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_upskill_industry_resources_sessions",
@@ -91,7 +106,51 @@
             "return_format": "id",
             "min": 0,
             "max": 3,
-            "elements": []
+            "elements": [],
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_industry_resources_content_type",
+                        "operator": "==",
+                        "value": "sessions"
+                    }
+                ]
+            ]
+        },
+        {
+            "key": "field_upskill_industry_resources_resources",
+            "label": "Resources",
+            "name": "resources",
+            "type": "relationship",
+            "instructions": "Optional: up to three, any mix of blog posts, case studies and guides (use the type filter to narrow the list). Leave empty to show the newest: case studies for the page's industry first, then the newest resources.",
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_upskill_industry_resources_content_type",
+                        "operator": "==",
+                        "value": "resources"
+                    }
+                ]
+            ],
+            "post_type": [
+                "post",
+                "case_study",
+                "guide"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search",
+                "post_type"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 3,
+            "elements": [
+                "featured_image"
+            ]
         },
         {
             "key": "field_upskill_industry_resources_acc_panel",
@@ -158,5 +217,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1792767000
+    "modified": 1794535460
 }
