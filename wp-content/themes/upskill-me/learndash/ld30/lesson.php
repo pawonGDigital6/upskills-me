@@ -35,6 +35,8 @@ $upskill_category = get_the_terms( $course_id, 'training_category' );
 $upskill_category = is_array( $upskill_category ) ? $upskill_category[0] : null;
 $upskill_previous = $upskill_index > 0 ? get_post( $upskill_sessions[ $upskill_index - 1 ] ) : null;
 $upskill_next     = $upskill_index < $upskill_total - 1 ? get_post( $upskill_sessions[ $upskill_index + 1 ] ) : null;
+// The last session of a finished course leads on to the "Course completed" page (certificate), as LearnDash's own "Continue" does.
+$upskill_finish = ! $upskill_next && $user_id && learndash_course_completed( $user_id, $course_id ) ? learndash_course_get_completion_url( (int) $course_id ) : '';
 $upskill_points   = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) get_field( 'key_points', $post->ID ) ) ) );
 
 // The video and the session text arrive joined (modules/lesson-video.php adds the marker).
@@ -164,7 +166,7 @@ $upskill_session_label = static function ( $index, $session ) use ( $upskill_ses
 							</div>
 						<?php endif; ?>
 
-						<?php if ( $upskill_previous || $upskill_next ) : ?>
+						<?php if ( $upskill_previous || $upskill_next || $upskill_finish ) : ?>
 							<nav class="session__nav" aria-label="<?php esc_attr_e( 'Session navigation', 'upskill-me' ); ?>">
 								<?php if ( $upskill_previous ) : ?>
 									<a class="session__nav-link session__nav-link--previous" href="<?php echo esc_url( learndash_get_step_permalink( $upskill_previous->ID, $course_id ) ); ?>">
@@ -180,6 +182,14 @@ $upskill_session_label = static function ( $index, $session ) use ( $upskill_ses
 										<span class="session__nav-text">
 											<span class="session__nav-label"><?php esc_html_e( 'Next session', 'upskill-me' ); ?></span>
 											<span class="session__nav-title"><?php echo esc_html( $upskill_session_name( $upskill_next ) ); ?></span>
+										</span>
+										<span class="session__nav-icon" aria-hidden="true"><?php upskill_icon( 'arrow-right', 'session__nav-arrow' ); ?></span>
+									</a>
+								<?php elseif ( $upskill_finish ) : ?>
+									<a class="session__nav-link session__nav-link--next" href="<?php echo esc_url( $upskill_finish ); ?>">
+										<span class="session__nav-text">
+											<span class="session__nav-label"><?php esc_html_e( 'Course complete', 'upskill-me' ); ?></span>
+											<span class="session__nav-title"><?php echo esc_html( learndash_get_course_certificate_link( $course_id, $user_id ) ? __( 'View your certificate', 'upskill-me' ) : __( 'See what’s next', 'upskill-me' ) ); ?></span>
 										</span>
 										<span class="session__nav-icon" aria-hidden="true"><?php upskill_icon( 'arrow-right', 'session__nav-arrow' ); ?></span>
 									</a>
