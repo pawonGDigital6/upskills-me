@@ -199,50 +199,81 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Course buy box (learndash/ld30/course.php).
  *
- * A plain form posting to WooCommerce's add-to-cart. Here: choosing a level
- * updates the shown price, the level's line of text (its variation
- * description) and the variation's attribute fields WooCommerce checks, and
- * the − / + buttons step the seat count.
+ * A plain form posting to WooCommerce's add-to-cart; the − / + buttons step
+ * the seats input beside them.
+ *
+ * Seat list (several levels, `data-buy-list`): each level has its own seats
+ * (`upskill_seats[<level>]`, added as one cart line per level by
+ * inc/lms-commerce.php). Here: a level with seats is highlighted, the total
+ * and seat count follow the seats, and Add to Cart waits for at least one.
  */
 function BuyBox(root = document) {
   root.querySelectorAll('[data-buy-box]').forEach(form => {
-    const price = form.querySelector('[data-buy-price]');
-    const unit = form.querySelector('[data-buy-unit]');
-    const text = form.querySelector('[data-buy-text]');
-    const seats = form.querySelector('input[name="quantity"]');
-    const unitText = unit?.textContent.trim().replace(/·.*$/, '').trim();
-    form.addEventListener('change', event => {
-      const level = event.target.closest('input[name="variation_id"]');
-      if (!level) {
-        return;
-      }
-      if (price) {
-        price.textContent = level.dataset.price;
-      }
-      if (unit && unitText) {
-        unit.textContent = `${unitText} · ${level.dataset.label}`;
-      }
-      if (text) {
-        text.textContent = level.dataset.text || '';
-        text.hidden = !level.dataset.text;
-      }
-      form.querySelectorAll('[data-buy-attribute]').forEach(field => field.remove());
-      Object.entries(JSON.parse(level.dataset.attributes || '{}')).forEach(([name, value]) => {
-        const field = document.createElement('input');
-        field.type = 'hidden';
-        field.name = name;
-        field.value = value;
-        field.dataset.buyAttribute = '';
-        form.append(field);
-      });
-    });
     form.querySelectorAll('[data-buy-step]').forEach(button => {
       button.addEventListener('click', () => {
-        const next = Math.min(Number(seats.max) || 999, Math.max(Number(seats.min) || 1, (Number(seats.value) || 1) + Number(button.dataset.buyStep)));
-        seats.value = String(next);
+        const seats = button.parentElement.querySelector('[data-buy-seats]');
+        if (!seats) {
+          return;
+        }
+        const min = Number(seats.min) || 0;
+        const max = Number(seats.max) || 999;
+        seats.value = String(Math.min(max, Math.max(min, (Number(seats.value) || 0) + Number(button.dataset.buyStep))));
+        seats.dispatchEvent(new Event('input', {
+          bubbles: true
+        }));
       });
     });
+    if (form.hasAttribute('data-buy-list')) {
+      seatList(form);
+    }
   });
+}
+function seatList(form) {
+  const total = form.querySelector('[data-buy-total]');
+  const count = form.querySelector('[data-buy-count]');
+  const submit = form.querySelector('[data-buy-submit]');
+  const decimals = Number(form.dataset.decimals ?? 2);
+  let money;
+  try {
+    money = new Intl.NumberFormat(document.documentElement.lang || 'en-AU', {
+      style: 'currency',
+      currency: form.dataset.currency || 'AUD',
+      currencyDisplay: 'narrowSymbol',
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  } catch {
+    money = {
+      format: value => value.toFixed(decimals)
+    };
+  }
+  const update = () => {
+    let seats = 0;
+    let sum = 0;
+    form.querySelectorAll('[data-buy-level]').forEach(level => {
+      const input = level.querySelector('[data-buy-seats]');
+      const value = Math.max(0, Math.floor(Number(input.value) || 0));
+      level.classList.toggle('is-active', value > 0);
+      seats += value;
+      sum += value * (Number(level.dataset.price) || 0);
+    });
+    if (total) {
+      total.textContent = money.format(sum);
+    }
+    if (count && total) {
+      const label = 1 === seats ? total.dataset.labelOne : total.dataset.labelMany;
+      count.textContent = (label || '%s').replace('%s', seats.toLocaleString());
+    }
+    if (submit) {
+      submit.disabled = 0 === seats;
+    }
+  };
+  form.addEventListener('input', event => {
+    if (event.target.matches('[data-buy-seats]')) {
+      update();
+    }
+  });
+  update();
 }
 
 /***/ },
@@ -1008,6 +1039,52 @@ function Navigation() {
 
 /***/ },
 
+/***/ "./src/global/js/components/org-groups.js"
+/*!************************************************!*\
+  !*** ./src/global/js/components/org-groups.js ***!
+  \************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   OrgGroups: () => (/* binding */ OrgGroups)
+/* harmony export */ });
+/**
+ * Organisation Groups page (template-org-groups.php).
+ *
+ * - Forms with `data-org-confirm` (remove a person, delete a group) ask first,
+ *   so nobody is removed by accident.
+ * - "Add people": the search box filters the list by name or email.
+ */
+function OrgGroups(root = document) {
+  root.querySelectorAll('form[data-org-confirm]').forEach(form => {
+    form.addEventListener('submit', event => {
+      // eslint-disable-next-line no-alert
+      if (!window.confirm(form.dataset.orgConfirm)) {
+        event.preventDefault();
+      }
+    });
+  });
+  root.querySelectorAll('[data-org-people]').forEach(form => {
+    const search = form.querySelector('[data-org-people-search]');
+    search?.addEventListener('input', () => {
+      const term = search.value.trim().toLowerCase();
+      form.querySelectorAll('[data-org-person]').forEach(person => {
+        person.hidden = '' !== term && !person.dataset.orgPerson.includes(term);
+      });
+    });
+
+    // Enter in the search box filters instead of submitting the form.
+    search?.addEventListener('keydown', event => {
+      if ('Enter' === event.key) {
+        event.preventDefault();
+      }
+    });
+  });
+}
+
+/***/ },
+
 /***/ "./src/global/js/components/password-toggle.js"
 /*!*****************************************************!*\
   !*** ./src/global/js/components/password-toggle.js ***!
@@ -1336,6 +1413,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_buy_box__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/buy-box */ "./src/global/js/components/buy-box.js");
 /* harmony import */ var _components_cart__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/cart */ "./src/global/js/components/cart.js");
 /* harmony import */ var _components_session_tabs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/session-tabs */ "./src/global/js/components/session-tabs.js");
+/* harmony import */ var _components_org_groups__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/org-groups */ "./src/global/js/components/org-groups.js");
+
 
 
 
@@ -1364,6 +1443,7 @@ _wordpress_dom_ready__WEBPACK_IMPORTED_MODULE_0___default()(() => {
   (0,_components_buy_box__WEBPACK_IMPORTED_MODULE_11__.BuyBox)();
   (0,_components_cart__WEBPACK_IMPORTED_MODULE_12__.Cart)();
   (0,_components_session_tabs__WEBPACK_IMPORTED_MODULE_13__.SessionTabs)();
+  (0,_components_org_groups__WEBPACK_IMPORTED_MODULE_14__.OrgGroups)();
   // The course hero gallery (Swiper) loads only on a course page.
   if (document.querySelector('[data-course-gallery]')) {
     Promise.all(/*! import() | course-gallery */[__webpack_require__.e("vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459"), __webpack_require__.e("course-gallery")]).then(() => (__webpack_require__(/*! ./components/course-gallery */ "./src/global/js/components/course-gallery.js"))).then(({

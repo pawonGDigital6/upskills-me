@@ -589,6 +589,9 @@
   .mt-2\.5 {
     margin-top: calc(var(--spacing) * 2.5);
   }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
   .mt-3\.5 {
     margin-top: calc(var(--spacing) * 3.5);
   }
@@ -1020,6 +1023,9 @@
   .h-9 {
     height: calc(var(--spacing) * 9);
   }
+  .h-10 {
+    height: calc(var(--spacing) * 10);
+  }
   .h-12 {
     height: calc(var(--spacing) * 12);
   }
@@ -1067,6 +1073,9 @@
   }
   .max-h-\[92svh\] {
     max-height: 92svh;
+  }
+  .max-h-\[360px\] {
+    max-height: 360px;
   }
   .max-h-none {
     max-height: none;
@@ -1388,6 +1397,9 @@
   .grid-cols-\[28px_1fr\] {
     grid-template-columns: 28px 1fr;
   }
+  .grid-cols-\[minmax\(0\,1fr\)_auto\] {
+    grid-template-columns: minmax(0,1fr) auto;
+  }
   .grid-rows-1 {
     grid-template-rows: repeat(1, minmax(0, 1fr));
   }
@@ -1519,6 +1531,9 @@
   }
   .gap-x-1 {
     column-gap: var(--spacing);
+  }
+  .gap-x-2 {
+    column-gap: calc(var(--spacing) * 2);
   }
   .gap-x-3 {
     column-gap: calc(var(--spacing) * 3);
@@ -2846,6 +2861,9 @@
     --tw-tracking: 1.4px;
     letter-spacing: 1.4px;
   }
+  .break-all {
+    word-break: break-all;
+  }
   .whitespace-nowrap {
     white-space: nowrap;
   }
@@ -3044,6 +3062,9 @@
   .underline-offset-4 {
     text-underline-offset: 4px;
   }
+  .accent-brand-700 {
+    accent-color: var(--color-brand-700);
+  }
   .opacity-0 {
     opacity: 0%;
   }
@@ -3075,6 +3096,10 @@
   }
   .shadow-\[0_1px_2px_0_rgba\(26\,26\,26\,0\.04\)\,0_4px_14px_-6px_rgba\(47\,26\,81\,0\.10\)\] {
     --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgba(26,26,26,0.04)), 0 4px 14px -6px var(--tw-shadow-color, rgba(47,26,81,0.10));
+    box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+  }
+  .shadow-\[0_1px_2px_0_rgba\(26\,26\,26\,0\.04\)\] {
+    --tw-shadow: 0 1px 2px 0 var(--tw-shadow-color, rgba(26,26,26,0.04));
     box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
   }
   .shadow-\[0_4px_10px_rgb\(26_26_26\/3\%\)\,0_32px_70px_rgb\(47_26_81\/22\%\)\] {
@@ -3512,11 +3537,17 @@
     --tw-outline-style: none;
     outline-style: none;
   }
+  .disabled\:pointer-events-none:disabled {
+    pointer-events: none;
+  }
   .disabled\:cursor-default:disabled {
     cursor: default;
   }
   .disabled\:opacity-40:disabled {
     opacity: 40%;
+  }
+  .disabled\:opacity-50:disabled {
+    opacity: 50%;
   }
   .has-checked\:border-brand-700:has(:checked) {
     border-color: var(--color-brand-700);
@@ -4109,6 +4140,12 @@
     .md\:flex-col {
       flex-direction: column;
     }
+    .md\:flex-row {
+      flex-direction: row;
+    }
+    .md\:items-end {
+      align-items: flex-end;
+    }
     .md\:items-start {
       align-items: flex-start;
     }
@@ -4525,6 +4562,9 @@
     }
     .lg\:grid-cols-\[820fr_524fr\] {
       grid-template-columns: 820fr 524fr;
+    }
+    .lg\:grid-cols-\[minmax\(0\,1fr\)_400px\] {
+      grid-template-columns: minmax(0,1fr) 400px;
     }
     .lg\:grid-cols-\[minmax\(0\,1fr\)_minmax\(0\,58\.1\%\)\] {
       grid-template-columns: minmax(0,1fr) minmax(0,58.1%);
@@ -5284,6 +5324,12 @@
   }
   .\[\&_p\]\:text-gray-700 p {
     color: var(--color-gray-700);
+  }
+  .\[\&\.is-active\]\:border-brand-700.is-active {
+    border-color: var(--color-brand-700);
+  }
+  .\[\&\.is-active\]\:bg-brand-25.is-active {
+    background-color: var(--color-brand-25);
   }
   @media (width >= 1025px) {
     .lg\:\[\&\.is-active\]\:grow-\[502\].is-active {
@@ -9599,6 +9645,14 @@
   border-color: var(--color-brand-700);
   outline: none;
   box-shadow: 0 0 0 3px rgba(109, 66, 175, 0.14);
+}
+.store-content .woocommerce form .form-row select:not(.select2-hidden-accessible) {
+  padding-right: 40px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2712%27 height=%278%27 fill=%27none%27 viewBox=%270 0 12 8%27%3E%3Cpath stroke=%27%23333%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%271.5%27 d=%27m1 1.5 5 5 5-5%27/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 12px 8px;
 }
 .store-content .woocommerce .select2-container .select2-selection--single .select2-selection__rendered {
   padding: 0;
