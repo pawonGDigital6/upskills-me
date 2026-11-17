@@ -1,0 +1,48 @@
+{
+    "key": "group_upskill_user_client",
+    "title": "User: Client portal",
+    "fields": [
+        {
+            "key": "field_upskill_user_client",
+            "label": "Client portal",
+            "name": "upskill_client",
+            "type": "post_object",
+            "instructions": "Set when this person visits or signs in through a client's sign-in page (e.g. /rsl/): the site then shows that client's logo beside Upskillme. Clear it to remove the co-branding.",
+            "post_type": [
+                "page"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "edit"
+            },
+            {
+                "param": "current_user_role",
+                "operator": "==",
+                "value": "administrator"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Which client portal co-brands the site for this user: inc/lms-clients.php.",
+    "show_in_rest": 0,
+    "modified": 1794560400
+}

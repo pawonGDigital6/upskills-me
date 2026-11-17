@@ -51,6 +51,17 @@ $upskill_cta          = upskill_option( 'header_cta' );
 
 <header class="site-header" id="masthead" data-site-header>
 	<div class="container site-header__bar">
+		<?php
+		// A client portal's people (inc/lms-clients.php) see the client's logo first: 62 x 36 with the menu button (480px to 1199px; phones have no room, as Figma has no phone version),
+		// 90 x 52 with the full menu (Figma RSL Product Detail, 1440). The full menu has no room for it below 1360px, so it is hidden
+		// there (the course buy box still shows it).
+		$upskill_client = function_exists( 'upskill_current_client' ) ? upskill_current_client() : null;
+		if ( $upskill_client && $upskill_client['logo'] ) :
+			?>
+			<span class="-mr-2 flex flex-none items-center max-sml:hidden wd:-mr-0.5 wd:max-[1360px]:hidden">
+				<?php upskill_client_logo( $upskill_client, 'h-9 w-auto wd:h-[52px]', '(min-width: 1360px) 90px, 62px' ); ?>
+			</span>
+		<?php endif; ?>
 		<a class="site-header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
 			<img src="<?php echo esc_url( upskill_theme_image( 'logo.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="192" height="44">
 		</a>

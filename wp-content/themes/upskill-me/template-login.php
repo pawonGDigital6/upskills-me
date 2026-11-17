@@ -9,10 +9,13 @@
  * form and the "Sign up" link (shown while sign-up is open). Someone already
  * signed in sees where to continue instead. Routing: inc/lms-accounts.php.
  *
+ * Also renders clients' sign-in pages (template-client-login.php), which show
+ * the client's logo in place of Upskillme's.
+ *
  * @package upskill-me
  */
 
-get_template_part( 'template-parts/account/document-start' );
+get_template_part( 'template-parts/account/document-start', null, array( 'client' => function_exists( 'upskill_client' ) ? upskill_client( get_queried_object_id() ) : null ) );
 
 while ( have_posts() ) :
 	the_post();
@@ -39,6 +42,19 @@ if ( is_user_logged_in() ) :
 		);
 		?>
 		<a class="self-center text-base font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( wp_logout_url() ); ?>"><?php esc_html_e( 'Sign out', 'upskill-me' ); ?></a>
+		<?php
+		// Someone co-branded for a client (inc/lms-clients.php): the way back to the normal site, for their account and browser.
+		$upskill_user_client = function_exists( 'upskill_current_client' ) ? upskill_current_client() : null;
+		if ( $upskill_user_client ) :
+			?>
+			<p class="text-center text-sm text-gray-500">
+				<?php
+				/* translators: %s: client name, e.g. RSL Queensland. */
+				printf( esc_html__( 'Not with %s?', 'upskill-me' ), esc_html( $upskill_user_client['name'] ) );
+				?>
+				<a class="ml-1 font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( upskill_client_switch_url() ); ?>"><?php esc_html_e( 'Switch to the standard site', 'upskill-me' ); ?></a>
+			</p>
+		<?php endif; ?>
 	</div>
 	<?php
 else :
@@ -59,6 +75,20 @@ else :
 			<a class="ml-1 font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( function_exists( 'upskill_library_page_url' ) && upskill_library_page_url() ? upskill_library_page_url() : home_url( '/' ) ); ?>"><?php esc_html_e( 'Find training for your team', 'upskill-me' ); ?></a>
 		</p>
 		<p class="text-center text-sm text-gray-500"><?php esc_html_e( 'Team members: your organisation sets up your account and emails your login details.', 'upskill-me' ); ?></p>
+		<?php
+	endif;
+
+	// A client's sign-in page (e.g. /rsl/): the way back to the normal site; the "Log in" page clears the client branding (inc/lms-clients.php).
+	$upskill_page_client = function_exists( 'upskill_client' ) ? upskill_client( get_queried_object_id() ) : null;
+	if ( $upskill_page_client ) :
+		?>
+		<p class="text-center text-sm text-gray-500">
+			<?php
+			/* translators: %s: client name, e.g. RSL Queensland. */
+			printf( esc_html__( 'Not with %s?', 'upskill-me' ), esc_html( $upskill_page_client['name'] ) );
+			?>
+			<a class="ml-1 font-medium text-brand-700 underline-offset-4 hover:underline" href="<?php echo esc_url( wp_login_url() ); ?>"><?php esc_html_e( 'Use the standard sign-in', 'upskill-me' ); ?></a>
+		</p>
 		<?php
 	endif;
 endif;

@@ -211,15 +211,23 @@ if ( ! function_exists( 'upskill_account_menu_rows' ) ) {
 
 if ( ! function_exists( 'upskill_is_login_url' ) ) {
 	/**
-	 * Does the URL point at the login page (with any query string)?
+	 * Does the URL point at the login page, or a client's sign-in page
+	 * (inc/lms-clients.php), with any query string?
 	 *
 	 * @param string $url URL.
 	 * @return bool
 	 */
 	function upskill_is_login_url( $url ) {
+		$path = strtok( (string) $url, '?#' );
 		$page = upskill_login_page_id();
 
-		return $page && 0 === strpos( strtok( (string) $url, '?#' ), (string) get_permalink( $page ) );
+		if ( $page && 0 === strpos( $path, (string) get_permalink( $page ) ) ) {
+			return true;
+		}
+
+		$client = function_exists( 'upskill_is_client_page' ) ? url_to_postid( $path ) : 0;
+
+		return $client && upskill_is_client_page( $client );
 	}
 }
 

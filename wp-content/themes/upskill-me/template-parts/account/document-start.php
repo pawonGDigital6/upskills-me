@@ -6,6 +6,9 @@
  * Desktop: white page, the 360px column centred in the viewport between 96px
  * and 48px of padding. Phone: grey page, 46px / 16px padding.
  *
+ * A client's sign-in page passes `client` (upskill_client() row) to show the
+ * client's logo instead of Upskillme's.
+ *
  * @package upskill-me
  */
 
@@ -24,6 +27,13 @@
 
 <main id="primary" class="flex min-h-svh flex-col items-center justify-start bg-gray-25 px-4 py-[46px] sm:justify-center sm:bg-white sm:px-8 sm:pt-24 sm:pb-12">
 	<div class="flex w-full max-w-[360px] flex-col gap-8">
-		<a class="self-center" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
-			<img src="<?php echo esc_url( upskill_theme_image( 'logo.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="192" height="44" loading="eager">
-		</a>
+		<?php if ( ! empty( $args['client']['logo'] ) ) : ?>
+			<?php // A client's sign-in page (template-client-login.php): its logo, 90 x 52 (Figma RSL Log in 49315:68514). ?>
+			<a class="self-center" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<?php upskill_client_logo( $args['client'], 'h-[52px] w-auto', '90px' ); ?>
+			</a>
+		<?php else : ?>
+			<a class="self-center" href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">
+				<img src="<?php echo esc_url( upskill_theme_image( 'logo.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="192" height="44" loading="eager">
+			</a>
+		<?php endif; ?>

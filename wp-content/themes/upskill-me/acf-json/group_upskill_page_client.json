@@ -1,0 +1,45 @@
+{
+    "key": "group_upskill_page_client",
+    "title": "Page: Client portal",
+    "fields": [
+        {
+            "key": "field_upskill_client_name",
+            "label": "Client name",
+            "name": "client_name",
+            "type": "text",
+            "instructions": "The organisation, e.g. RSL Queensland. Shown in capitals in the course buy box. Leave empty to use the page title.",
+            "placeholder": "RSL Queensland"
+        },
+        {
+            "key": "field_upskill_client_logo",
+            "label": "Client logo",
+            "name": "client_logo",
+            "type": "image",
+            "instructions": "Shown on this sign-in page, beside the Upskillme logo in the header and in the course buy box for everyone who comes through this page. A transparent PNG or WebP, at least 600px wide.",
+            "required": 1,
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "mime_types": "png,webp,jpg,jpeg,svg"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-client-login.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "acf_after_title",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "A client's branded sign-in page (e.g. /rsl/). Visiting or signing in here co-brands the site for that person: inc/lms-clients.php.",
+    "show_in_rest": 0,
+    "modified": 1794560400
+}

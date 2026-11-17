@@ -244,7 +244,22 @@ if ( $upskill_add_to ) {
 				</div>
 
 				<div class="course-hero__panel flex flex-col rounded-[24px] border border-line bg-white p-5 shadow-xs lg:p-6">
-					<?php upskill_eyebrow( trim( ( $upskill_category ? $upskill_category->name . ' · ' : '' ) . __( 'On The Job Training', 'upskill-me' ) ), 'monitor', 'self-start' ); ?>
+					<?php
+					// A client portal's people (inc/lms-clients.php): the client and Upskillme logos, then the client's name beside the chip (Figma RSL Product Detail 49315:34125 / 34134).
+					$upskill_client = function_exists( 'upskill_current_client' ) ? upskill_current_client() : null;
+					if ( $upskill_client ) :
+						?>
+						<div class="flex items-center gap-6 pb-4">
+							<?php upskill_client_logo( $upskill_client, 'h-[39px] w-auto', '67px' ); ?>
+							<img class="h-[31px] w-auto" src="<?php echo esc_url( upskill_theme_image( 'logo.webp' ) ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="137" height="31">
+						</div>
+						<div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+							<p class="text-lg leading-[1.5] font-medium text-gray-500 uppercase"><?php echo esc_html( $upskill_client['name'] ); ?></p>
+							<?php upskill_eyebrow( trim( ( $upskill_category ? $upskill_category->name . ' · ' : '' ) . __( 'On The Job Training', 'upskill-me' ) ), 'monitor' ); ?>
+						</div>
+					<?php else : ?>
+						<?php upskill_eyebrow( trim( ( $upskill_category ? $upskill_category->name . ' · ' : '' ) . __( 'On The Job Training', 'upskill-me' ) ), 'monitor', 'self-start' ); ?>
+					<?php endif; ?>
 					<?php upskill_heading( $upskill_heading ? $upskill_heading : esc_html( get_the_title( $course_id ) ), 'h1', 'pt-3 text-[clamp(1.5rem,1.2214rem+1.1429vw,2.25rem)] leading-[1.1] font-medium tracking-[-0.01em] text-gray-950' ); ?>
 					<?php if ( $upskill_summary ) : ?>
 						<p class="pt-3 text-base leading-[1.6] text-gray-500"><?php echo esc_html( $upskill_summary ); ?></p>
