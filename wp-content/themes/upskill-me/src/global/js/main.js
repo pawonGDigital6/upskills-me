@@ -12,6 +12,7 @@ import { Library } from './components/library';
 import { BuyBox } from './components/buy-box';
 import { Cart } from './components/cart';
 import { SessionTabs } from './components/session-tabs';
+import { OrgGroups } from './components/org-groups';
 
 domReady( () => {
 	Announcement();
@@ -27,6 +28,7 @@ domReady( () => {
 	BuyBox();
 	Cart();
 	SessionTabs();
+	OrgGroups();
 	// The course hero gallery (Swiper) loads only on a course page.
 	if ( document.querySelector( '[data-course-gallery]' ) ) {
 		import( /* webpackChunkName: "course-gallery" */ './components/course-gallery' ).then( ( { CourseGallery } ) => CourseGallery() );

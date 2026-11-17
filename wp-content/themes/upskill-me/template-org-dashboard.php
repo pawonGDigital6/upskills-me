@@ -245,6 +245,48 @@ $upskill_settings = array(
 		</div>
 	</section>
 
+	<?php
+	// The coordinator's own groups (branches, sites, teams; inc/lms-org-groups.php): the first three, and the Groups page.
+	if ( $upskill_urls['groups'] ) :
+		$upskill_teams = array_filter( array_map( static fn( $id ) => upskill_org_team( $id, get_current_user_id() ), upskill_org_team_ids( get_current_user_id() ) ) );
+		?>
+		<section class="border-b border-gray-900/10 py-12" aria-labelledby="org-groups">
+			<div class="container">
+				<?php
+				get_template_part(
+					'template-parts/organisation/section-head',
+					null,
+					array(
+						'eyebrow' => __( 'Groups', 'upskill-me' ),
+						'icon'    => 'users',
+						'heading' => __( 'Your groups.', 'upskill-me' ),
+						'id'      => 'org-groups',
+						'intro'   => __( 'Group your people by branch, site or team, at any level, and see each group’s progress.', 'upskill-me' ),
+					)
+				);
+				?>
+				<?php if ( $upskill_teams ) : ?>
+					<?php get_template_part( 'template-parts/organisation/groups-table', null, array( 'teams' => array_slice( $upskill_teams, 0, 3 ) ) ); ?>
+				<?php else : ?>
+					<div class="mt-6 rounded-2xl border border-gray-900/10 bg-white p-6">
+						<p class="text-base text-gray-700"><?php esc_html_e( 'No groups yet. Create one for each branch, site or team.', 'upskill-me' ); ?></p>
+					</div>
+				<?php endif; ?>
+				<div class="pt-6">
+					<?php
+					upskill_button(
+						array(
+							'url'   => $upskill_urls['groups'],
+							'title' => $upskill_teams ? __( 'Manage Groups', 'upskill-me' ) : __( 'Create a Group', 'upskill-me' ),
+						),
+						array( 'variant' => $upskill_teams ? 'light' : 'primary' )
+					);
+					?>
+				</div>
+			</div>
+		</section>
+	<?php endif; ?>
+
 	<section class="py-12" aria-labelledby="org-progress">
 		<div class="container">
 			<?php

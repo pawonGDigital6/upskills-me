@@ -147,7 +147,7 @@ if ( ! function_exists( 'upskill_org_dashboard_guard' ) ) {
 	 * @return void
 	 */
 	function upskill_org_dashboard_guard() {
-		if ( ! is_page_template( array( 'template-org-dashboard.php', 'template-org-training.php' ) ) ) {
+		if ( ! is_page_template( array( 'template-org-dashboard.php', 'template-org-training.php', 'template-org-groups.php' ) ) ) {
 			return;
 		}
 
@@ -292,7 +292,7 @@ if ( ! function_exists( 'upskill_org_urls' ) ) {
 	/**
 	 * Where the organisation pages link to.
 	 *
-	 * @return array { dashboard, training (the Courses & seats page, else the dashboard), team (its people list), manage (Group Registration's groups dashboard), library }
+	 * @return array { dashboard, training (the Courses & seats page, else the dashboard), team (its people list), manage (Group Registration's groups dashboard), library, groups (the Groups page, or '') }
 	 */
 	function upskill_org_urls() {
 		$dashboard = upskill_org_dashboard_page_id() ? (string) get_permalink( upskill_org_dashboard_page_id() ) : '';
@@ -304,6 +304,7 @@ if ( ! function_exists( 'upskill_org_urls' ) ) {
 			'team'      => $training ? $training . '#org-team' : '',
 			'manage'    => upskill_groups_dashboard_url(),
 			'library'   => function_exists( 'upskill_library_page_url' ) ? upskill_library_page_url() : home_url( '/courses/' ),
+			'groups'    => function_exists( 'upskill_org_groups_url' ) ? upskill_org_groups_url() : '',
 		);
 	}
 }

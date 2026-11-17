@@ -186,5 +186,6 @@ require get_template_directory() . '/inc/lms-course.php';
 require get_template_directory() . '/inc/lms-store.php';
 require get_template_directory() . '/inc/lms-checkout.php';
 require get_template_directory() . '/inc/lms-organisation.php';
+require get_template_directory() . '/inc/lms-org-groups.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/template-tags.php';
