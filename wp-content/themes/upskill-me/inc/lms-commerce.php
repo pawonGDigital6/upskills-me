@@ -515,3 +515,123 @@ add_filter(
 	20,
 	5
 );
+
+/**
+ * Buy box seat list (call 13 Nov, item 1): one row per level, each with its
+ * own seats, and one "Add to Cart" for all of them. The form posts
+ * `upskill_seats[<variation ID>] = <seats>`; every level above 0 becomes its
+ * own cart line of the same product, so each still buys its own group at its
+ * own price, exactly as when a level was bought on its own.
+ *
+ * Each line goes through WooCommerce's own add-to-cart with the request set
+ * for that level, because Group Registration reads the level, its attributes
+ * and the group name from the request in its cart data hooks. Its add-to-cart
+ * validation is the one exception: it reads the level with filter_input(),
+ * which only sees the original request (no single level here), so it is left
+ * out for these lines and its two effects are set here instead (the group
+ * name for the level, a new group). Other validation still runs, and the
+ * level is checked against the product first. Runs just before WooCommerce's
+ * handler (wp_loaded, 20), which then has nothing left to do.
+ */
+add_action(
+	'wp_loaded',
+	static function () {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing -- WooCommerce's add-to-cart takes no nonce either; every value is checked against the product.
+		if ( empty( $_POST['upskill_seats'] ) || ! is_array( $_POST['upskill_seats'] ) || empty( $_REQUEST['add-to-cart'] ) || ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return;
+		}
+
+		$product_id = absint( wp_unslash( $_REQUEST['add-to-cart'] ) );
+		$product    = wc_get_product( $product_id );
+		$requested  = array_map( 'absint', wp_unslash( $_POST['upskill_seats'] ) );
+
+		// Stop WooCommerce's own handler from adding the form's product a second time.
+		unset( $_REQUEST['add-to-cart'], $_POST['add-to-cart'], $_GET['add-to-cart'] );
+
+		if ( ! $product ) {
+			return;
+		}
+
+		$levels = array();
+		foreach ( upskill_product_levels( $product ) as $level ) {
+			$levels[ (int) $level['id'] ] = $level;
+		}
+
+		// Group Registration's validation (see above), set aside for these lines only.
+		$ldgr_validation = array();
+		foreach ( (array) ( $GLOBALS['wp_filter']['woocommerce_add_to_cart_validation']->callbacks ?? array() ) as $priority => $callbacks ) {
+			foreach ( $callbacks as $callback ) {
+				if ( is_array( $callback['function'] ) && is_object( $callback['function'][0] ) && 'handle_woo_add_to_cart_validation' === $callback['function'][1] ) {
+					$ldgr_validation[] = array( $callback['function'], $priority, $callback['accepted_args'] );
+					remove_filter( 'woocommerce_add_to_cart_validation', $callback['function'], $priority );
+				}
+			}
+		}
+
+		$added  = 0;
+		$seats  = 0;
+		$failed = false;
+
+		foreach ( $requested as $level_id => $quantity ) {
+			$level_id = (int) $level_id;
+
+			if ( $quantity < 1 || ! isset( $levels[ $level_id ] ) ) {
+				continue;
+			}
+
+			$quantity   = min( 999, $quantity );
+			$variation  = $product->is_type( 'variable' ) ? $level_id : 0;
+			$attributes = $levels[ $level_id ]['attributes'];
+
+			// The request as a single-level purchase of this level would send it.
+			$_POST['variation_id'] = $variation;
+			$_POST['quantity']     = $quantity;
+			foreach ( $attributes as $name => $value ) {
+				$_POST[ $name ] = $value;
+			}
+			// What Group Registration's validation would set: a new group, and (with its "autofill group name" option on) the group name for this level.
+			$_POST['ldgr_dynamic_option'] = 'create_new';
+			$_POST['ldgr_dynamic_value']  = '';
+			if ( $variation && isset( $_POST['ldgr_group_name'] ) && 'on' === get_option( 'ldgr_autofill_group_name' ) ) {
+				$_POST[ 'ldgr_group_name_' . $variation ] = sanitize_text_field( wp_unslash( $_POST['ldgr_group_name'] ) );
+			}
+
+			$passed = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation, $attributes );
+
+			if ( $passed && false !== WC()->cart->add_to_cart( $product_id, $quantity, $variation, $attributes ) ) {
+				++$added;
+				$seats += $quantity;
+			} else {
+				$failed = true;
+			}
+
+			foreach ( array_keys( $attributes ) as $name ) {
+				unset( $_POST[ $name ] );
+			}
+		}
+		foreach ( $ldgr_validation as $callback ) {
+			add_filter( 'woocommerce_add_to_cart_validation', $callback[0], $callback[1], $callback[2] );
+		}
+		// phpcs:enable
+
+		if ( ! $added ) {
+			if ( ! $failed ) {
+				wc_add_notice( __( 'Add at least one seat to a level.', 'upskill-me' ), 'error' );
+			}
+			return;
+		}
+
+		wc_add_notice(
+			sprintf(
+				/* translators: 1: number of seats, 2: training name. */
+				_n( '%1$s seat of %2$s added to your cart.', '%1$s seats of %2$s added to your cart.', $seats, 'upskill-me' ),
+				number_format_i18n( $seats ),
+				$product->get_name()
+			)
+		);
+
+		wp_safe_redirect( wc_get_cart_url() );
+		exit;
+	},
+	19
+);

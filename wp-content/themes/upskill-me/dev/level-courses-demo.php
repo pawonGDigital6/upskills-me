@@ -11,7 +11,7 @@
  * setup (it can be run again, and creates no duplicates):
  * - For every published variable product (a training), its own "Courses"
  *   field is the training course (its page and buy box).
- * - Each level variation (Worker, Team Leader, Manager, Officer Director)
+ * - Each level variation (Team Member, Team Leader, Manager, Director)
  *   gets its own course "<training> — <level>". It copies the training's
  *   image, excerpt, category, industry, certificate, review and access settings.
  * - Content per level: a training with enough sessions shares them out
@@ -42,12 +42,12 @@ $upskill_log  = static function ( $line ) {
 	}
 };
 
-// Client's level order (pricing email, 28 Oct): Worker L1 … Officer Director L4.
+// Client's level order (pricing email, 28 Oct; names from the client's 13 Nov answer): Team Member L1 … Director L4.
 $upskill_level_no = array(
-	'Worker'           => 1,
+	'Team Member'      => 1,
 	'Team Leader'      => 2,
 	'Manager'          => 3,
-	'Officer Director' => 4,
+	'Director'         => 4,
 );
 
 if ( ! function_exists( 'wc_get_products' ) || ! class_exists( 'LDLMS_Factory_Post' ) ) {
