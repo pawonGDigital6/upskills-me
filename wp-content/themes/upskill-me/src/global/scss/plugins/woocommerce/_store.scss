@@ -122,6 +122,16 @@
 		}
 	}
 
+	// Native dropdowns (e.g. Organisation type, Industry; inc/lms-checkout.php): a chevron like the Country select's.
+	form .form-row select:not(.select2-hidden-accessible) {
+		padding-right: 40px;
+		appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none' viewBox='0 0 12 8'%3E%3Cpath stroke='%23333' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 16px center;
+		background-size: 12px 8px;
+	}
+
 	.select2-container .select2-selection--single .select2-selection__rendered {
 		padding: 0;
 		line-height: 24px;
