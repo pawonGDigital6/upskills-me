@@ -291,8 +291,8 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Cart (WooCommerce classic cart, inc/lms-store.php).
  *
- * The − / + buttons step a line's seats (WooCommerce's own quantity input),
- * and a changed seat count or "Cohort" select submits WooCommerce's own
+ * The − / + buttons step a level's seats (WooCommerce's own quantity input),
+ * and a changed seat count submits WooCommerce's own
  * "Update cart" button, so WooCommerce updates the cart (by AJAX, replacing
  * the cart and totals) exactly as it would by hand. Listeners sit on the
  * document because WooCommerce replaces the cart markup after each update.
@@ -313,12 +313,13 @@ function submitCart(delay) {
 
 /**
  * The header cart badge (template-parts/commerce/header-cart.php) follows the
- * cart lines as WooCommerce redraws the cart in place (seats, level, remove).
+ * cart's courses (one block each, woocommerce/cart/cart.php) as WooCommerce
+ * redraws the cart in place (seats, remove).
  */
 function syncHeaderCount() {
   const badge = document.querySelector('[data-cart-count]');
   const label = document.querySelector('[data-cart-label]');
-  const count = document.querySelectorAll('.woocommerce-cart-form tr.cart_item').length;
+  const count = document.querySelectorAll('.woocommerce-cart-form [data-cart-package]').length;
   if (badge) {
     badge.textContent = String(count);
     badge.hidden = !count;
@@ -359,8 +360,6 @@ function Cart() {
     if (event.target.matches('.woocommerce-cart-form input.qty')) {
       // A short pause, so several clicks on − / + make one update.
       submitCart(600);
-    } else if (event.target.matches('[data-cart-level]')) {
-      submitCart(0);
     }
   });
 }
@@ -1557,7 +1556,7 @@ module.exports = window["wp"]["domReady"];
 /******/ 	
 /******/ 	/* webpack/runtime/get javascript chunk filename */
 /******/ 	// This function allow to reference async chunks
-/******/ 	__webpack_require__.u = (chunkId) => (chunkId + ".js?ver=" + {"vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459":"cb17ec859bff411b533f","course-gallery":"68e52abf704d24800b08"}[chunkId] + "");
+/******/ 	__webpack_require__.u = (chunkId) => (chunkId + ".js?ver=" + {"vendors-node_modules_swiper_modules_thumbs_css-node_modules_swiper_swiper_css-node_modules_sw-63e459":"cb17ec859bff411b533f","course-gallery":"bb0bd8f34e9eaf2e996d"}[chunkId] + "");
 /******/ 	
 /******/ 	/* webpack/runtime/get mini-css chunk filename */
 /******/ 	// This function allow to reference async chunks
