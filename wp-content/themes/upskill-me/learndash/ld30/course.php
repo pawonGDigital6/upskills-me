@@ -343,15 +343,21 @@ if ( $upskill_add_to ) {
 								<fieldset class="mt-6">
 									<legend class="float-left text-xl leading-[1.3] font-medium tracking-[-0.02em] text-gray-950"><?php esc_html_e( 'Seats for each level', 'upskill-me' ); ?></legend>
 									<span class="clear-left block pt-1 text-sm text-[#8b8b97] sm:clear-none sm:float-right sm:pt-1"><?php esc_html_e( 'Add seats to every level you need', 'upskill-me' ); ?></span>
-									<ul class="clear-both flex flex-col gap-2 pt-6">
+									<?php // The levels two by two, All Levels full width under them (review call 19 Nov, item 2); one column on phones. ?>
+									<ul class="clear-both grid gap-2 pt-6 sm:grid-cols-2">
 										<?php foreach ( $upskill_levels as $upskill_i => $upskill_lvl ) : ?>
 											<?php
 											$upskill_save  = $upskill_lvl['bundle'] ? array_sum( wp_list_pluck( array_filter( $upskill_levels, static fn( $l ) => ! $l['bundle'] ), 'price' ) ) - $upskill_lvl['price'] : 0;
 											$upskill_field = 'buy-seats-' . $upskill_lvl['id'];
 											$upskill_start = 0 === $upskill_i ? 1 : 0;
 											?>
-											<li class="buy-level grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-3 rounded-[14px] border border-line bg-white p-4 transition-colors [&.is-active]:border-brand-700 [&.is-active]:bg-brand-25<?php echo $upskill_start ? ' is-active' : ''; ?>" data-buy-level data-price="<?php echo esc_attr( $upskill_lvl['price'] ); ?>">
-												<div class="min-w-0">
+											<li class="buy-level grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-3 rounded-[14px] border border-line bg-white p-4 transition-colors [&.is-active]:border-brand-700 [&.is-active]:bg-brand-25<?php echo $upskill_lvl['bundle'] ? ' sm:col-span-2' : ''; ?><?php echo $upskill_start ? ' is-active' : ''; ?>" data-buy-level data-price="<?php echo esc_attr( $upskill_lvl['price'] ); ?>">
+												<?php
+												// A level in the grid: name and description across the card, then the price beside the stepper on its bottom row
+												// (19 Nov proposed layout). All Levels, full width: the text beside the stepper as before.
+												$upskill_price = '<span class="font-medium text-gray-950">' . $upskill_lvl['price_html'] . '</span>';
+												?>
+												<div class="min-w-0<?php echo $upskill_lvl['bundle'] ? '' : ' col-span-2 self-start'; ?>">
 													<p class="flex flex-wrap items-center gap-x-2 gap-y-1">
 														<label class="text-base font-medium text-gray-950" for="<?php echo esc_attr( $upskill_field ); ?>"><?php echo esc_html( $upskill_lvl['label'] ); ?></label>
 														<?php if ( $upskill_save > 0 ) : ?>
@@ -366,14 +372,24 @@ if ( $upskill_add_to ) {
 													<?php if ( $upskill_lvl['text'] ) : ?>
 														<p class="pt-0.5 text-sm leading-[1.45] text-[#55555f]"><?php echo esc_html( $upskill_lvl['text'] ); ?></p>
 													<?php endif; ?>
-													<p class="pt-1 text-sm text-gray-500">
+													<?php if ( $upskill_lvl['bundle'] ) : ?>
+														<p class="pt-1 text-sm text-gray-500">
+															<?php
+															/* translators: %s: price per seat. */
+															echo wp_kses_post( sprintf( __( '%s per seat', 'upskill-me' ), $upskill_price ) );
+															?>
+														</p>
+													<?php endif; ?>
+												</div>
+												<?php if ( ! $upskill_lvl['bundle'] ) : ?>
+													<p class="self-end text-sm text-gray-500">
 														<?php
 														/* translators: %s: price per seat. */
-														echo wp_kses_post( sprintf( __( '%s per seat', 'upskill-me' ), '<span class="font-medium text-gray-950">' . $upskill_lvl['price_html'] . '</span>' ) );
+														echo wp_kses_post( sprintf( __( '%s per seat', 'upskill-me' ), $upskill_price ) );
 														?>
 													</p>
-												</div>
-												<span class="flex h-10 items-center rounded-full border border-line bg-white px-1 shadow-[0_1px_2px_0_rgba(26,26,26,0.04)]">
+												<?php endif; ?>
+												<span class="<?php echo $upskill_lvl['bundle'] ? '' : 'self-end '; ?>flex h-10 items-center rounded-full border border-line bg-white px-1 shadow-[0_1px_2px_0_rgba(26,26,26,0.04)]">
 													<button class="grid size-8 place-items-center rounded-full text-lg text-gray-700 hover:text-brand-700" type="button" data-buy-step="-1"><span class="sr-only"><?php echo esc_html( sprintf( /* translators: %s: level name. */ __( 'Fewer %s seats', 'upskill-me' ), $upskill_lvl['label'] ) ); ?></span><span aria-hidden="true">−</span></button>
 													<input class="w-10 appearance-none bg-transparent text-center text-base font-medium text-gray-950 focus:outline-none [&::-webkit-inner-spin-button]:appearance-none" id="<?php echo esc_attr( $upskill_field ); ?>" type="number" name="upskill_seats[<?php echo esc_attr( $upskill_lvl['id'] ); ?>]" value="<?php echo esc_attr( $upskill_start ); ?>" min="0" max="999" inputmode="numeric" data-buy-seats>
 													<button class="grid size-8 place-items-center rounded-full text-lg text-gray-700 hover:text-brand-700" type="button" data-buy-step="1"><span class="sr-only"><?php echo esc_html( sprintf( /* translators: %s: level name. */ __( 'More %s seats', 'upskill-me' ), $upskill_lvl['label'] ) ); ?></span><span aria-hidden="true">+</span></button>
