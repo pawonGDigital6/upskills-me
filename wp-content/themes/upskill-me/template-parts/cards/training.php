@@ -9,6 +9,9 @@
  * A free (Sample) session plays in the card; any other shows its featured
  * image, or the video's first frame, and opens its course.
  *
+ * The title links to the course, as "View Session" does, and so does the
+ * picture unless it is a free session's player (19 Nov review, item 1).
+ *
  * @package upskill-me
  *
  * Compact (Industry Resources, Figma 49325:16856): the picture, title and
@@ -42,7 +45,10 @@ $upskill_player = $upskill_card['free'] && $upskill_card['video'];
 		<div
 			class="grid aspect-[323/174] grid-cols-1 grid-rows-1 overflow-hidden rounded-[8px] bg-gray-950 *:col-start-1 *:row-start-1<?php echo $upskill_player ? ' video-card' : ''; ?>"<?php echo $upskill_player ? ' data-video-card' : ''; ?>>
 			<?php if ($upskill_card['image'] && !$upskill_player): ?>
-				<?php upskill_image($upskill_card['image'], 'large', array('class' => 'size-full object-cover', 'alt' => '', 'sizes' => '(min-width: 1025px) 323px, (min-width: 768px) 50vw, calc(100vw - 48px)')); ?>
+				<?php // The picture opens the course too; one link for screen readers and the keyboard (the title), so this one is skipped by both. ?>
+				<a class="block size-full" href="<?php echo esc_url($upskill_card['url']); ?>" tabindex="-1" aria-hidden="true">
+					<?php upskill_image($upskill_card['image'], 'large', array('class' => 'size-full object-cover', 'alt' => '', 'sizes' => '(min-width: 1025px) 323px, (min-width: 768px) 50vw, calc(100vw - 48px)')); ?>
+				</a>
 			<?php elseif ($upskill_card['video']): ?>
 				<?php if ($upskill_card['free']): ?>
 					<video class="size-full object-cover" preload="metadata" playsinline controls data-video<?php echo $upskill_card['image'] ? ' poster="' . esc_url((string) wp_get_attachment_image_url($upskill_card['image'], 'large')) . '"' : ''; ?> aria-label="<?php echo esc_attr($upskill_card['title']); ?>">
@@ -52,16 +58,20 @@ $upskill_player = $upskill_card['free'] && $upskill_card['video'];
 					<div class="video-card__scrim pointer-events-none<?php echo $upskill_card['image'] ? '' : ' video-card__scrim--tint'; ?>" aria-hidden="true"></div>
 				<?php else: ?>
 					<?php // First frame as the picture; the session itself stays behind the course. ?>
-					<video class="pointer-events-none size-full object-cover" preload="metadata" muted playsinline tabindex="-1"
-						aria-hidden="true">
-						<source src="<?php echo esc_url($upskill_card['video'] . '#t=1'); ?>" type="video/mp4">
-					</video>
+					<a class="block size-full" href="<?php echo esc_url($upskill_card['url']); ?>" tabindex="-1" aria-hidden="true">
+						<video class="pointer-events-none size-full object-cover" preload="metadata" muted playsinline tabindex="-1"
+							aria-hidden="true">
+							<source src="<?php echo esc_url($upskill_card['video'] . '#t=1'); ?>" type="video/mp4">
+						</video>
+					</a>
 				<?php endif; ?>
 			<?php else: ?>
 				<?php // No picture or video yet: the brand mark, so the card never shows an empty box. ?>
-				<img class="w-2/5 max-w-[160px] place-self-center opacity-80"
-					src="<?php echo esc_url(upskill_theme_image('logo-white.webp')); ?>" alt="" width="192" height="44"
-					loading="lazy" decoding="async">
+				<a class="grid size-full place-items-center" href="<?php echo esc_url($upskill_card['url']); ?>" tabindex="-1" aria-hidden="true">
+					<img class="w-2/5 max-w-[160px] opacity-80"
+						src="<?php echo esc_url(upskill_theme_image('logo-white.webp')); ?>" alt="" width="192" height="44"
+						loading="lazy" decoding="async">
+				</a>
 			<?php endif; ?>
 			<div class="pointer-events-none relative z-10 flex items-start gap-[7px] self-start justify-self-start p-2">
 				<?php if ($upskill_card['free'] && !$upskill_compact): ?>
@@ -85,7 +95,7 @@ $upskill_player = $upskill_card['free'] && $upskill_card['video'];
 				</p>
 			<?php endif; ?>
 			<h3 id="<?php echo esc_attr($upskill_title); ?>" class="pt-2 text-lg leading-[1.5] font-medium text-gray-900">
-				<?php echo esc_html($upskill_card['title']); ?>
+				<a class="transition-colors duration-200 hover:text-brand-700" href="<?php echo esc_url($upskill_card['url']); ?>"><?php echo esc_html($upskill_card['title']); ?></a>
 			</h3>
 		</div>
 		<div class="belows">
