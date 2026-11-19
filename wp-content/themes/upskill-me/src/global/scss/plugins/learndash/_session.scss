@@ -457,6 +457,33 @@ $session-bar: #6744a8;
 		transform: translateX(2px);
 	}
 
+	// "Next session" before this session is complete (review call 19 Nov,
+	// item 4): the same card, not a link, greyed, with what unlocks it.
+	&__nav-link.is-locked {
+		cursor: not-allowed;
+
+		&:hover {
+			border-color: var(--color-gray-100) !important;
+			background-color: var(--color-gray-50);
+		}
+
+		.session__nav-icon {
+			background: var(--color-gray-200);
+			box-shadow: none;
+			transform: none;
+		}
+
+		.session__nav-title {
+			color: $session-ink-soft;
+		}
+	}
+
+	&__nav-hint {
+		color: var(--color-brand-700);
+		font-size: var(--text-xs);
+		line-height: 1.5;
+	}
+
 	&__nav-text {
 		display: flex;
 		flex-direction: column;

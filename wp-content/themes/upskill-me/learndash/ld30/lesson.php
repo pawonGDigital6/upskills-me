@@ -37,6 +37,12 @@ $upskill_previous = $upskill_index > 0 ? get_post( $upskill_sessions[ $upskill_i
 $upskill_next     = $upskill_index < $upskill_total - 1 ? get_post( $upskill_sessions[ $upskill_index + 1 ] ) : null;
 // The last session of a finished course leads on to the "Course completed" page (certificate), as LearnDash's own "Continue" does.
 $upskill_finish = ! $upskill_next && $user_id && learndash_course_completed( $user_id, $course_id ) ? learndash_course_get_completion_url( (int) $course_id ) : '';
+// "Next session" stays locked until this session is complete (review call 19 Nov, item 4): the video's end completes it
+// (Video Progression, auto-complete) and reloads the page with Next open. People LearnDash lets bypass course limits
+// (administrators, group leaders, when set) are not held back, as LearnDash's own progression does.
+$upskill_locked = $upskill_next && $user_id && ! empty( $has_access )
+	&& ! learndash_is_lesson_complete( $user_id, $post->ID, $course_id )
+	&& ! learndash_can_user_bypass( $user_id, 'learndash_course_progression', array( $post->ID, $course_id, $post ) );
 $upskill_points   = array_filter( array_map( 'trim', preg_split( '/\r\n|\r|\n/', (string) get_field( 'key_points', $post->ID ) ) ) );
 
 // The video and the session text arrive joined (modules/lesson-video.php adds the marker).
@@ -177,7 +183,16 @@ $upskill_session_label = static function ( $index, $session ) use ( $upskill_ses
 										</span>
 									</a>
 								<?php endif; ?>
-								<?php if ( $upskill_next ) : ?>
+								<?php if ( $upskill_locked ) : ?>
+									<span class="session__nav-link session__nav-link--next is-locked" aria-disabled="true">
+										<span class="session__nav-text">
+											<span class="session__nav-label"><?php esc_html_e( 'Next session', 'upskill-me' ); ?></span>
+											<span class="session__nav-title"><?php echo esc_html( $upskill_session_name( $upskill_next ) ); ?></span>
+											<span class="session__nav-hint"><?php echo esc_html( $upskill_video ? __( 'Finish the video to unlock', 'upskill-me' ) : __( 'Complete this session to unlock', 'upskill-me' ) ); ?></span>
+										</span>
+										<span class="session__nav-icon" aria-hidden="true"><?php upskill_icon( 'arrow-right', 'session__nav-arrow' ); ?></span>
+									</span>
+								<?php elseif ( $upskill_next ) : ?>
 									<a class="session__nav-link session__nav-link--next" href="<?php echo esc_url( learndash_get_step_permalink( $upskill_next->ID, $course_id ) ); ?>">
 										<span class="session__nav-text">
 											<span class="session__nav-label"><?php esc_html_e( 'Next session', 'upskill-me' ); ?></span>
