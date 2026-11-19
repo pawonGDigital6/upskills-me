@@ -517,6 +517,26 @@
 				.product-remove {
 					text-align: right !important;
 				}
+
+				// The old one-line-per-level refinements (_cart.scss, below 568px)
+				// sized these cells for that layout; a level row sizes them itself.
+				.product-quantity {
+					width: auto;
+					margin-left: 0;
+				}
+
+				.product-subtotal {
+					min-width: 0;
+				}
+			}
+
+			// Small phones (320–399): too narrow for seats, price and "Remove" on
+			// one row, so the price and "Remove" sit beside the level name and the
+			// seats take the row under it.
+			@media (width < 400px) {
+				grid-template-areas:
+					"name total remove"
+					"seats seats seats";
 			}
 		}
 
