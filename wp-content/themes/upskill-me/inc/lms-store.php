@@ -96,7 +96,8 @@ if ( ! function_exists( 'upskill_store_reassurance' ) ) {
 		return array(
 			__( 'Three complete sessions are free to watch before you buy.', 'upskill-me' ),
 			__( 'Assign seats to your people after checkout - no learner details needed now.', 'upskill-me' ),
-			__( 'Change cohort depth per role at any point before payment.', 'upskill-me' ),
+			// Until 19 Nov: "Change cohort depth per role…" (the cart's Cohort select, removed with the review's item 3).
+			__( 'Change seats per level at any point before payment.', 'upskill-me' ),
 		);
 	}
 }
