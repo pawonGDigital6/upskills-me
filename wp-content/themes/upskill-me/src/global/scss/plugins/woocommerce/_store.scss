@@ -809,6 +809,15 @@
 
 	// ------------------------------------------------------------ Checkout
 
+	// Paired fields (WooCommerce floats the first left, the second right): each
+	// pair starts on a new line, below the taller field of the pair above.
+	// Without it, a field with an error message under it (e.g. "Please enter
+	// a valid 11-digit ABN.") is taller than its partner, and the next pair's
+	// first field caught on it and slid right.
+	form.checkout .form-row-first {
+		clear: both;
+	}
+
 	// "Returning customer?" / "Have a coupon?" toggles: compact notices.
 	.woocommerce-form-login-toggle,
 	.woocommerce-form-coupon-toggle {
