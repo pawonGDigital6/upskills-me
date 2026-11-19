@@ -8193,6 +8193,26 @@
 .session__nav-link--next:hover .session__nav-icon {
   transform: translateX(2px);
 }
+.session__nav-link.is-locked {
+  cursor: not-allowed;
+}
+.session__nav-link.is-locked:hover {
+  border-color: var(--color-gray-100) !important;
+  background-color: var(--color-gray-50);
+}
+.session__nav-link.is-locked .session__nav-icon {
+  background: var(--color-gray-200);
+  box-shadow: none;
+  transform: none;
+}
+.session__nav-link.is-locked .session__nav-title {
+  color: #4c3073;
+}
+.session__nav-hint {
+  color: var(--color-brand-700);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
 .session__nav-text {
   display: flex;
   flex-direction: column;
