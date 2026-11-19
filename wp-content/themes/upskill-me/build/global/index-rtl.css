@@ -9934,6 +9934,13 @@
   .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level .product-remove {
     text-align: left !important;
   }
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level .product-quantity {
+    width: auto;
+    margin-right: 0;
+  }
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level .product-subtotal {
+    min-width: 0;
+  }
   .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level > .product-name {
     -ms-grid-row: 1;
     -ms-grid-row-span: 1;
@@ -9950,6 +9957,30 @@
   }
   .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level > .product-remove {
     -ms-grid-row: 3;
+    -ms-grid-column: 5;
+  }
+}
+@media (width < 400px) {
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level {
+    grid-template-areas: "name total remove" "seats seats seats";
+  }
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level > .product-name {
+    -ms-grid-row: 1;
+    -ms-grid-row-span: 1;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 1;
+  }
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level > .product-subtotal {
+    -ms-grid-row: 1;
+    -ms-grid-column: 3;
+  }
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level > .product-quantity {
+    -ms-grid-row: 3;
+    -ms-grid-column: 1;
+    -ms-grid-column-span: 5;
+  }
+  .store-content .woocommerce table.shop_table.cart tr.cart_item.cart-group__level > .product-remove {
+    -ms-grid-row: 1;
     -ms-grid-column: 5;
   }
 }
