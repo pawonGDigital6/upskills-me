@@ -2,7 +2,8 @@
 /**
  * Header cart link (beside search and account, on every width).
  *
- * The badge counts the training in the cart (cart lines, not seats) and is
+ * The badge counts the training in the cart (courses, as the cart's order
+ * summary counts packages: upskill_cart_packages(); not seats) and is
  * hidden while the cart is empty. On the cart page js/components/cart.js keeps
  * it in step as WooCommerce updates the cart in place.
  *
@@ -13,7 +14,7 @@ if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
 	return;
 }
 
-$upskill_count = count( WC()->cart->get_cart() );
+$upskill_count = function_exists( 'upskill_cart_packages' ) ? count( upskill_cart_packages() ) : count( WC()->cart->get_cart() );
 ?>
 <a class="site-header__icon site-header__cart" href="<?php echo esc_url( wc_get_cart_url() ); ?>" data-cart-link>
 	<?php /* translators: %d: number of items in the cart (kept as %d for js/components/cart.js). */ ?>

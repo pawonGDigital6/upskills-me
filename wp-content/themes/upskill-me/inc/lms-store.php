@@ -8,12 +8,14 @@
  * validation and order processing are untouched); this file only adds to them
  * through WooCommerce's own hooks and filters:
  *
- * - Cart lines show the course (category, title, summary), its level as a
- *   "Cohort" select, "Access On demand", a seats stepper and "Remove".
- *   Changing the level swaps the line for the chosen level's variation with
- *   the same seats and Group Registration data (native cart API).
- * - The cart totals become the "Order summary" card (packages, seats,
- *   discount, Continue to Checkout, reassurance list).
+ * - The cart shows one block per course (review call 19 Nov, item 3;
+ *   woocommerce/cart/cart.php): the course (category, title, summary) once,
+ *   then a row per level with its price per seat, seats stepper, line price
+ *   and "Remove", then the course total. Each level stays its own cart line
+ *   (upskill_cart_packages() only groups them for display), so the order and
+ *   Group Registration's one team per line are unchanged.
+ * - The cart totals become the "Order summary" card (packages = courses,
+ *   seats, discount, Continue to Checkout, reassurance list).
  * - The order-received page gets the confirmation strip, "What you've
  *   purchased", "What happens next", "Need help?" and an order summary card,
  *   in place of WooCommerce's order details table.
@@ -96,6 +98,41 @@ if ( ! function_exists( 'upskill_store_reassurance' ) ) {
 			__( 'Assign seats to your people after checkout - no learner details needed now.', 'upskill-me' ),
 			__( 'Change cohort depth per role at any point before payment.', 'upskill-me' ),
 		);
+	}
+}
+
+if ( ! function_exists( 'upskill_cart_packages' ) ) {
+	/**
+	 * The cart's lines grouped by course ("packages"), in the order each course
+	 * was first added. Display only: the lines themselves are not changed.
+	 * Extra seats for an existing team (Group Registration's "increase seats")
+	 * are their own package, as they go to that team.
+	 *
+	 * @return array<string, array{product_id: int, add_to: int, keys: string[]}>
+	 */
+	function upskill_cart_packages() {
+		$packages = array();
+
+		if ( ! function_exists( 'WC' ) || ! WC()->cart ) {
+			return $packages;
+		}
+
+		foreach ( WC()->cart->get_cart() as $key => $line ) {
+			$add_to = 'increase_seats' === ( $line['ldgr_dynamic_option'] ?? '' ) ? (int) ( $line['ldgr_dynamic_value'] ?? 0 ) : 0;
+			$group  = (int) $line['product_id'] . ( $add_to ? '-team-' . $add_to : '' );
+
+			if ( ! isset( $packages[ $group ] ) ) {
+				$packages[ $group ] = array(
+					'product_id' => (int) $line['product_id'],
+					'add_to'     => $add_to,
+					'keys'       => array(),
+				);
+			}
+
+			$packages[ $group ]['keys'][] = $key;
+		}
+
+		return $packages;
 	}
 }
 
@@ -205,28 +242,6 @@ add_filter(
 );
 
 /**
- * Cart line "Cohort" select (form controls cannot go through the name
- * filter, which WooCommerce prints with wp_kses_post).
- */
-add_action(
-	'woocommerce_after_cart_item_name',
-	static function ( $cart_item, $cart_item_key ) {
-		get_template_part(
-			'template-parts/commerce/cart-item',
-			null,
-			array(
-				'part'      => 'cohort',
-				'item'      => upskill_store_item( $cart_item['data'] ?? false ),
-				'cart_item' => $cart_item,
-				'key'       => $cart_item_key,
-			)
-		);
-	},
-	10,
-	2
-);
-
-/**
  * Unit price reads "per seat".
  */
 add_filter(
@@ -237,8 +252,9 @@ add_filter(
 );
 
 /**
- * Cart seats: "Access On demand", a − / + stepper around WooCommerce's own
- * quantity input (js/components/cart.js), and "seats".
+ * Cart seats: a − / + stepper around WooCommerce's own quantity input
+ * (js/components/cart.js), and "seats". ("Access On demand" left the level
+ * rows with the 19 Nov one-block-per-course layout.)
  */
 add_filter(
 	'woocommerce_cart_item_quantity',
@@ -248,9 +264,7 @@ add_filter(
 		}
 
 		return sprintf(
-			'<div class="cart-seats"><span class="cart-seats__access">%1$s <strong>%2$s</strong></span><span class="cart-seats__stepper"><button class="cart-seats__step" type="button" data-seat-step="-1" aria-label="%3$s">&minus;</button>%4$s<button class="cart-seats__step" type="button" data-seat-step="1" aria-label="%5$s">+</button></span><span class="cart-seats__unit">%6$s</span></div>',
-			esc_html__( 'Access', 'upskill-me' ),
-			esc_html__( 'On demand', 'upskill-me' ),
+			'<div class="cart-seats"><span class="cart-seats__stepper"><button class="cart-seats__step" type="button" data-seat-step="-1" aria-label="%1$s">&minus;</button>%2$s<button class="cart-seats__step" type="button" data-seat-step="1" aria-label="%3$s">+</button></span><span class="cart-seats__unit">%4$s</span></div>',
 			esc_attr__( 'Fewer seats', 'upskill-me' ),
 			$quantity_html,
 			esc_attr__( 'More seats', 'upskill-me' ),
@@ -262,17 +276,18 @@ add_filter(
 
 /**
  * "Remove" with a bin icon instead of WooCommerce's ×; the link (URL, nonce,
- * data attributes) is WooCommerce's own. Its label names the course only
- * (WooCommerce builds it from the whole line name).
+ * data attributes) is WooCommerce's own. Its label names the level and the
+ * course (WooCommerce builds it from the whole line name).
  */
 add_filter(
 	'woocommerce_cart_item_remove_link',
 	static function ( $link, $cart_item_key ) {
 		$line  = WC()->cart->get_cart_item( $cart_item_key );
-		$title = $line ? upskill_store_item( $line['data'] )['title'] : '';
+		$item  = $line ? upskill_store_item( $line['data'] ) : null;
+		$title = $item ? ( $item['level'] ? $item['level'] . ' – ' . $item['title'] : $item['title'] ) : '';
 
 		if ( $title ) {
-			/* translators: %s: course title. */
+			/* translators: %s: level and course title, e.g. "Team Leader – Workplace Administration Essentials". */
 			$link = preg_replace( '/aria-label="[^"]*"/', 'aria-label="' . esc_attr( sprintf( __( 'Remove %s from cart', 'upskill-me' ), $title ) ) . '"', $link );
 		}
 
@@ -282,90 +297,39 @@ add_filter(
 	2
 );
 
-if ( ! function_exists( 'upskill_cart_switch_levels' ) ) {
-	/**
-	 * Cart "Cohort" selects: swap a line for another level (variation) of the
-	 * same product, keeping its seats and Group Registration data. Runs inside
-	 * WooCommerce's own "Update cart" request (nonce checked by WooCommerce).
-	 *
-	 * @param bool $cart_updated Whether WooCommerce changed the cart.
-	 * @return bool
-	 */
-	function upskill_cart_switch_levels( $cart_updated ) {
-		$levels = isset( $_POST['upskill_level'] ) && is_array( $_POST['upskill_level'] ) ? wp_unslash( $_POST['upskill_level'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing,WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- WooCommerce verified the cart nonce; values are cast below.
-		$cart   = WC()->cart;
-		$done   = false;
-		$order  = array_keys( $cart->get_cart() ); // Line order before any swap.
-		$moved  = array(); // Old line key => the key of the line that replaced it.
+/**
+ * "“Team Leader – Course” removed. Undo?": each cart row is a level, so the
+ * message names it (WooCommerce names the product only).
+ */
+add_filter(
+	'woocommerce_cart_item_removed_title',
+	static function ( $title, $cart_item ) {
+		$item = upskill_store_item( $cart_item['data'] ?? false );
 
-		foreach ( $levels as $key => $variation_id ) {
-			$key          = sanitize_key( $key );
-			$variation_id = absint( $variation_id );
-			$line         = $cart->get_cart_item( $key );
-
-			if ( ! $line || ! $variation_id || (int) $line['variation_id'] === $variation_id ) {
-				continue;
-			}
-
-			// Extra seats for an existing group keep the group's level (re-adding the line would also lose Group Registration's "increase seats" choice).
-			if ( 'increase_seats' === ( $line['ldgr_dynamic_option'] ?? '' ) ) {
-				continue;
-			}
-
-			$variation = wc_get_product( $variation_id );
-
-			// Only another purchasable level of the same product.
-			if ( ! $variation || ! $variation->is_type( 'variation' ) || (int) $variation->get_parent_id() !== (int) $line['product_id'] || ! $variation->is_purchasable() ) {
-				continue;
-			}
-
-			// Keep the line's own data (Group Registration's flag and group name), not WooCommerce's working keys.
-			$data = array_diff_key( $line, array_flip( array( 'key', 'product_id', 'variation_id', 'variation', 'quantity', 'data', 'data_hash', 'line_tax_data', 'line_subtotal', 'line_subtotal_tax', 'line_total', 'line_tax' ) ) );
-
-			if ( isset( $data['ldgr_group_name'] ) ) {
-				$data[ 'ldgr_group_name_' . $variation_id ] = $data['ldgr_group_name'];
-			}
-
-			$cart->remove_cart_item( $key );
-
-			$new_key = $cart->add_to_cart( (int) $line['product_id'], (int) $line['quantity'], $variation_id, $variation->get_variation_attributes(), $data );
-
-			if ( $new_key ) {
-				$done          = true;
-				$moved[ $key ] = $new_key;
-			} else {
-				// Put the original line back if the new level could not be added.
-				$cart->restore_cart_item( $key );
-			}
-		}
-
-		// WooCommerce adds (and restores) a line at the end of the cart; put every line back where it was.
-		if ( $order !== array_keys( $cart->get_cart_contents() ) ) {
-			$contents = $cart->get_cart_contents();
-			$sorted   = array();
-
-			foreach ( $order as $key ) {
-				$key = $moved[ $key ] ?? $key;
-
-				if ( isset( $contents[ $key ] ) && ! isset( $sorted[ $key ] ) ) {
-					$sorted[ $key ] = $contents[ $key ];
-				}
-			}
-
-			$cart->set_cart_contents( $sorted + $contents );
-		}
-
-		// What changed, for the message (see the woocommerce_add_success filter below).
-		$GLOBALS['upskill_cart_change'] = $done ? 'cohort' : ( $cart_updated ? 'seats' : '' );
-
-		return $cart_updated || $done;
-	}
-}
-add_filter( 'woocommerce_update_cart_action_cart_updated', 'upskill_cart_switch_levels' );
+		/* translators: 1: level, 2: course title. */
+		return $item['level'] ? sprintf( _x( '“%1$s – %2$s”', 'removed cart item', 'upskill-me' ), $item['level'], $item['title'] ) : $title;
+	},
+	10,
+	2
+);
 
 /**
- * WooCommerce's "Cart updated." names what changed: the cohort (level) or
- * the number of seats. Only in the update request handled above.
+ * Note when WooCommerce's own "Update cart" changed the seats, for the
+ * message below. (Until 19 Nov this also switched a line's level from the
+ * cart's "Cohort" select; each row is now one level, so that is gone.)
+ */
+add_filter(
+	'woocommerce_update_cart_action_cart_updated',
+	static function ( $cart_updated ) {
+		$GLOBALS['upskill_cart_change'] = $cart_updated ? 'seats' : '';
+
+		return $cart_updated;
+	}
+);
+
+/**
+ * WooCommerce's "Cart updated." says the number of seats changed. Only in
+ * the update request handled above.
  */
 add_filter(
 	'woocommerce_add_success',
@@ -376,7 +340,7 @@ add_filter(
 			return $message;
 		}
 
-		return 'cohort' === $change ? __( 'Cohort updated in cart.', 'upskill-me' ) : __( 'Number of seats updated in cart.', 'upskill-me' );
+		return __( 'Number of seats updated in cart.', 'upskill-me' );
 	}
 );
 
@@ -414,13 +378,14 @@ add_action(
 );
 
 /**
- * Order summary card: heading, packages and seats above WooCommerce's totals.
+ * Order summary card: heading, packages (courses, upskill_cart_packages())
+ * and seats above WooCommerce's totals.
  */
 add_action(
 	'woocommerce_before_cart_totals',
 	static function () {
 		$cart  = WC()->cart;
-		$lines = count( $cart->get_cart() );
+		$lines = count( upskill_cart_packages() );
 		?>
 		<h2 class="cart-summary__title"><?php esc_html_e( 'Order summary', 'upskill-me' ); ?></h2>
 		<dl class="cart-summary__counts">

@@ -1,71 +1,72 @@
 <?php
 /**
- * Cart line: the course part of a cart row (Figma Cart 49325:15876).
+ * Cart: a course block's parts (Figma Cart 49325:15876; one block per course
+ * since the review call of 19 Nov, item 3, woocommerce/cart/cart.php).
  *
- * Category line, title (to the course page) and summary (part "name", the
- * woocommerce_cart_item_name filter, printed through wp_kses_post), then the
- * "Cohort" (level) select (part "cohort", woocommerce_after_cart_item_name,
- * which can hold form controls). The select's name is read by upskill_cart_switch_levels()
- * when WooCommerce's "Update cart" runs (js/components/cart.js submits it on
- * change). The seats stepper, line total and "Remove" are WooCommerce's own
- * cells, refined in inc/lms-store.php and woocommerce/_store.scss.
+ * Part "course": the course, once per block, as the review's proposed cart
+ * layout draws it: title (to the course page), then "Category · On-the-job
+ * training".
+ *
+ * Part "name": the cart line name WooCommerce passes through
+ * woocommerce_cart_item_name (printed with wp_kses_post): category line,
+ * title and summary.
+ *
+ * Part "level": one level row's name: the level and, for extra seats bought
+ * for an existing team (Group Registration's "increase seats"), which team.
+ * The seats stepper, line price and "Remove" are WooCommerce's own cells, refined in inc/lms-store.php and
+ * woocommerce/_store.scss. A level can no longer be switched in the cart
+ * (the "Cohort" select went with the 19 Nov review): each row is one level.
  *
  * @package upskill-me
  *
  * @var array $args {
- *     @type string $part      name|cohort.
+ *     @type string $part      course|name|level.
  *     @type array  $item      upskill_store_item() row.
  *     @type array  $cart_item WooCommerce cart line.
  *     @type string $key       Cart item key.
  * }
  */
 
-$upskill_item   = $args['item'];
-$upskill_line   = $args['cart_item'];
-$upskill_key    = $args['key'];
-$upskill_parent = ! empty( $upskill_line['variation_id'] ) ? wc_get_product( $upskill_line['product_id'] ) : null;
-$upskill_levels = $upskill_parent && function_exists( 'upskill_product_levels' ) ? upskill_product_levels( $upskill_parent ) : array();
-// Extra seats for an existing group (Group Registration's "increase seats"): the level is the group's, so it is not switchable here.
+$upskill_item = $args['item'];
+$upskill_line = $args['cart_item'];
+// Extra seats for an existing group (Group Registration's "increase seats").
 $upskill_add_to = 'increase_seats' === ( $upskill_line['ldgr_dynamic_option'] ?? '' ) ? (int) ( $upskill_line['ldgr_dynamic_value'] ?? 0 ) : 0;
 
-if ( 'name' === ( $args['part'] ?? 'name' ) ) :
+if ( 'level' === ( $args['part'] ?? 'name' ) ) :
 	?>
+<span class="cart-level">
+	<span class="cart-level__name block"><?php echo esc_html( $upskill_item['level'] ? $upskill_item['level'] : $upskill_item['title'] ); ?></span>
+	<?php if ( $upskill_add_to ) : ?>
+		<span class="cart-line__seats-for block pt-1 text-sm text-gray-500">
+			<?php
+			/* translators: %s: group (team) name. */
+			printf( esc_html__( 'Extra seats for %s', 'upskill-me' ), '<strong class="font-medium text-[#55555f]">' . esc_html( get_the_title( $upskill_add_to ) ) . '</strong>' );
+			?>
+		</span>
+	<?php endif; ?>
+</span>
+	<?php
+	return;
+endif;
+
+$upskill_category = trim( ( $upskill_item['category'] ? $upskill_item['category'] . ' · ' : '' ) . __( 'On-the-job training', 'upskill-me' ) );
+
+if ( 'course' === $args['part'] ) :
+	?>
+<span class="cart-course">
+	<a class="cart-course__title block" href="<?php echo esc_url( $upskill_item['url'] ); ?>"><?php echo esc_html( $upskill_item['title'] ); ?></a>
+	<span class="cart-course__category block"><?php echo esc_html( $upskill_category ); ?></span>
+</span>
+	<?php
+	return;
+endif;
+?>
 <span class="cart-line">
 	<span class="cart-line__category text-[10px] leading-[1.5] text-brand-700">
-		<?php echo esc_html( trim( ( $upskill_item['category'] ? $upskill_item['category'] . ' · ' : '' ) . __( 'On-the-job training', 'upskill-me' ) ) ); ?>
+		<?php echo esc_html( $upskill_category ); ?>
 	</span>
 	<a class="cart-line__title block pt-1 text-base font-medium text-gray-900 hover:text-brand-700" href="<?php echo esc_url( $upskill_item['url'] ); ?>"><?php echo esc_html( $upskill_item['title'] ); ?></a>
 	<?php if ( $upskill_item['summary'] ) : ?>
 		<span class="cart-line__summary block pt-1.5 text-base text-gray-500"><?php echo esc_html( $upskill_item['summary'] ); ?></span>
 	<?php endif; ?>
 </span>
-	<?php
-	return;
-endif;
-?>
-	<?php if ( $upskill_add_to ) : ?>
-		<?php if ( $upskill_item['level'] ) : ?>
-			<span class="cart-line__cohort flex items-center gap-2.5 pt-4 text-sm text-gray-500"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?> <strong class="font-medium text-[#55555f]"><?php echo esc_html( $upskill_item['level'] ); ?></strong></span>
-		<?php endif; ?>
-		<span class="cart-line__seats-for block pt-2 text-sm text-gray-500">
-			<?php
-			/* translators: %s: group (team) name. */
-			printf( esc_html__( 'Extra seats for %s', 'upskill-me' ), '<strong class="font-medium text-[#55555f]">' . esc_html( get_the_title( $upskill_add_to ) ) . '</strong>' );
-			?>
-		</span>
-	<?php elseif ( count( $upskill_levels ) > 1 ) : ?>
-		<span class="cart-line__cohort flex max-smlr:flex-col smlr:items-center gap-2.5 pt-4">
-			<label class="text-sm text-gray-500" for="<?php echo esc_attr( 'cohort-' . $upskill_key ); ?>"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?></label>
-			<?php // Figma dropdown: 203x46 pill, 14/500 #55555f. ?>
-			<span class="inline-grid *:col-start-1 *:row-start-1">
-				<select class="cart-line__select h-[46px] smlr:w-[203px] w-full indent-0.5 max-w-full cursor-pointer appearance-none rounded-full border border-line bg-white pr-11! pl-4! text-sm font-medium text-[#55555f] focus:border-brand-700 focus:outline-none" id="<?php echo esc_attr( 'cohort-' . $upskill_key ); ?>" name="<?php echo esc_attr( 'upskill_level[' . $upskill_key . ']' ); ?>" data-cart-level>
-					<?php foreach ( $upskill_levels as $upskill_level ) : ?>
-						<option value="<?php echo esc_attr( $upskill_level['id'] ); ?>"<?php selected( (int) $upskill_line['variation_id'], (int) $upskill_level['id'] ); ?>><?php echo esc_html( $upskill_level['label'] ); ?></option>
-					<?php endforeach; ?>
-				</select>
-				<span class="pointer-events-none mr-4 self-center justify-self-end text-gray-950" aria-hidden="true"><?php upskill_icon( 'field-chevron', 'size-6' ); ?></span>
-			</span>
-		</span>
-	<?php elseif ( $upskill_item['level'] ) : ?>
-		<span class="cart-line__cohort flex items-center gap-2.5 pt-4 text-sm text-gray-500"><?php esc_html_e( 'Cohort', 'upskill-me' ); ?> <strong class="font-medium text-[#55555f]"><?php echo esc_html( $upskill_item['level'] ); ?></strong></span>
-	<?php endif; ?>

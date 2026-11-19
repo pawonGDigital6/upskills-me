@@ -370,6 +370,197 @@
 			}
 		}
 
+		// One block per course (review call 19 Nov, item 3, its proposed cart;
+		// woocommerce/cart/cart.php): a bordered block with the course (picture,
+		// title, category), a row per level under the title (level, seats,
+		// line price, a small "Remove" icon) and the course total. The block's
+		// border runs down its three kinds of row; the rules between them are
+		// background lines inset to the title.
+		tbody:has(.cart-group__head) {
+			border-top: 0;
+		}
+
+		tr.cart-group__head,
+		tr.cart_item.cart-group__level,
+		tr.cart-group__total {
+			--cart-group-inset: 140px;
+			--cart-group-pad: 20px;
+
+			border: 1px solid var(--color-brand-500);
+			background: var(--color-white);
+
+			@media (width < 640px) {
+				--cart-group-inset: 16px;
+				--cart-group-pad: 16px;
+			}
+		}
+
+		tr.cart-group__head {
+			display: grid;
+			grid-template-columns: 100px minmax(0, 1fr);
+			gap: 0 20px;
+			align-items: center;
+			margin-top: 16px;
+			padding: var(--cart-group-pad) var(--cart-group-pad) 16px;
+			border-bottom: 0;
+			border-radius: 12px 12px 0 0;
+
+			&:first-child {
+				margin-top: 0;
+			}
+
+			.product-thumbnail {
+				grid-area: auto;
+
+				img {
+					width: 100px;
+					aspect-ratio: 100 / 66;
+					border-radius: 6px;
+				}
+			}
+
+			@media (width < 640px) {
+				grid-template-columns: 72px minmax(0, 1fr);
+				gap: 0 14px;
+				padding-bottom: 12px;
+
+				.product-thumbnail img {
+					width: 72px;
+				}
+			}
+		}
+
+		.cart-course__title {
+			color: var(--color-gray-900);
+			font-weight: 600;
+			font-size: var(--text-lg);
+			line-height: 1.4;
+
+			&:hover {
+				color: var(--color-brand-700);
+			}
+		}
+
+		.cart-course__category {
+			padding-top: 4px;
+			color: var(--color-gray-500);
+			font-size: 15px;
+			line-height: 1.5;
+		}
+
+		tr.cart_item.cart-group__level,
+		tr.cart-group__total {
+			border-top: 0;
+			background:
+				linear-gradient(var(--cart-group-rule), var(--cart-group-rule)) no-repeat var(--cart-group-inset) 0 / calc(100% - var(--cart-group-inset) - var(--cart-group-pad)) 1px,
+				var(--color-white);
+		}
+
+		tr.cart_item.cart-group__level {
+			--cart-group-rule: var(--color-gray-100);
+
+			grid-template-columns: minmax(0, 1fr) auto minmax(72px, auto) 20px;
+			grid-template-areas: "name seats total remove";
+			gap: 0 16px;
+			align-items: center;
+			margin: 0;
+			padding: 8px var(--cart-group-pad) 8px var(--cart-group-inset);
+			border-bottom: 0;
+
+			.product-name,
+			.product-quantity,
+			.product-remove {
+				padding: 0;
+			}
+
+			.product-subtotal {
+				font-weight: 400;
+				font-size: var(--text-base);
+
+				.woocommerce-Price-amount {
+					font-weight: 400;
+				}
+			}
+
+			.product-remove a.remove {
+				display: flex;
+				line-height: 1;
+			}
+
+			.cart-remove__icon {
+				width: 15px;
+				height: 15px;
+				margin: 0;
+			}
+
+			// The icon alone, as the proposed layout has no "Remove" text; the link keeps its label.
+			.cart-remove__label {
+				position: absolute;
+				width: 1px;
+				height: 1px;
+				overflow: hidden;
+				clip-path: inset(50%);
+				white-space: nowrap;
+			}
+
+			// Phones: the level, then its seats, line price and "Remove" on one row.
+			@media (width < 640px) {
+				grid-template-columns: minmax(0, 1fr) auto 20px;
+				grid-template-areas:
+					"name name name"
+					"seats total remove";
+				gap: 8px 12px;
+				padding-top: 12px;
+				padding-bottom: 12px;
+
+				.product-subtotal,
+				.product-remove {
+					text-align: right !important;
+				}
+			}
+		}
+
+		.cart-level__name {
+			color: var(--color-gray-900);
+			font-size: var(--text-base);
+		}
+
+		tr.cart-group__total {
+			--cart-group-rule: var(--color-gray-200);
+
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			align-items: center;
+			padding: 16px var(--cart-group-pad) var(--cart-group-pad) var(--cart-group-inset);
+			border-radius: 0 0 12px 12px;
+
+			td {
+				padding: 0;
+				border: 0;
+			}
+
+			@media (width < 640px) {
+				padding-top: 14px;
+			}
+		}
+
+		.cart-group__total-label {
+			color: var(--color-gray-900);
+			font-weight: 600;
+			font-size: var(--text-lg);
+		}
+
+		.cart-group__total-price {
+			color: var(--color-gray-900);
+			font-size: var(--text-lg);
+			line-height: 1.5;
+			text-align: right !important;
+
+			.woocommerce-Price-amount {
+				font-weight: 700;
+			}
+		}
+
 		// The coupon / "Update cart" row: coupons are entered at checkout, and
 		// the cart updates itself (js/components/cart.js).
 		td.actions {
